@@ -20,7 +20,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          submodules: true     # pulls the theme submodule
+          submodules: true
           fetch-depth: 0
 
       - name: Setup Hugo (Extended)
@@ -47,4 +47,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-
