@@ -1,0 +1,19 @@
+backend:
+  name: github
+  repo: weisslabmit/lab-website
+  branch: main
+
+media_folder: "static/uploads"
+public_folder: "/uploads"
+
+collections:
+  - name: "home"
+    label: "Homepage"
+    files:
+      - label: "Banner"
+        name: "banner"
+        file: "data/banner.yml"
+        fields:
+          - {label: "Title", name: "title", widget: "string"}
+          - {label: "Subtitle", name: "subtitle", widget: "text", required: false}
+          - {label: "Image", name: "image", widget: "image", required: false}
