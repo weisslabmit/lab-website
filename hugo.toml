@@ -7,8 +7,6 @@ languageCode = "en-us"
 ## Basic Configuration
 ## -----------------------------------------------
 
-theme = "hugo-story"
-
 ## -----------------------------------------------
 ## Publish
 ## -----------------------------------------------
@@ -17,7 +15,6 @@ relativeURLs = "true"
 #canonifyURLs = "true"
 
 # Local
-baseURL = "/"
 publishDir = "public"
 
 # Remote
