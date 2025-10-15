@@ -1,3 +1,8 @@
+baseURL = "https://weisslabmit.github.io/lab-website/"
+title = "Weiss Lab"
+theme = "hugo-story"
+languageCode = "en-us"
+
 ## -----------------------------------------------
 ## Basic Configuration
 ## -----------------------------------------------
