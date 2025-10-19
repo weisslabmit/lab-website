@@ -2,6 +2,7 @@ backend:
   name: github
   repo: weisslabmit/lab-website
   branch: main
+  base_url: https://weisslab-cms-oauth.onrender.com
 
 media_folder: "static/uploads"
 public_folder: "/uploads"
