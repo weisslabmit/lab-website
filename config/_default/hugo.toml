@@ -4,6 +4,7 @@
 
 [params.banner]
 title = "The Weiss<br>Lab @ MIT"
+theme = "hugo-story"
 
 
 ## -----------------------------------------------
