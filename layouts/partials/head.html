@@ -9,7 +9,7 @@
     {{ partial "favicon" }}
   {{ end }}
 
-  <!-- THEME CSS (load first) -->
+  <!-- THEME CSS (builds from SCSS) -->
   {{ if hugo.IsServer }}
     {{ $style := resources.Get "sass/main.scss" | resources.ExecuteAsTemplate "scss/main.scss" . | toCSS (dict "targetPath" "css/main.css" "outputStyle" "compressed" "enableSourceMap" false) }}
     <link rel="stylesheet" href="{{ ($style).RelPermalink }}">
@@ -24,17 +24,16 @@
   {{ else }}
     {{ $noscript := resources.Get "sass/noscript.scss" | resources.ExecuteAsTemplate "noscript.scss" . | toCSS (dict "targetPath" "css/noscript.css" "enableSourceMap" false) }}
     <noscript><link rel="stylesheet" href="{{ ($noscript | minify).RelPermalink }}" /></noscript>
-  {{end}}
+  {{ end }}
 
-  <!-- FontAwesome CSS -->
+  <!-- FontAwesome CSS (if configured) -->
   {{ range .Site.Params.asset.fontawesome_css -}}
     <link rel="stylesheet" href="{{ . | absURL }}">
   {{- end }}
 
-  <!-- Adobe Fonts (after theme CSS so our overrides can win) -->
+  <!-- Adobe Fonts: load AFTER theme CSS -->
   <link rel="stylesheet" href="https://use.typekit.net/qyd0ftr.css">
 
   <!-- Your overrides LAST (cache-busted) -->
-  <link rel="stylesheet" href="{{ "css/custom.css?v=2" | relURL }}">
+  <link rel="stylesheet" href="{{ "css/custom.css?v=3" | relURL }}">
 </head>
-

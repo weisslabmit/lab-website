@@ -1,10 +1,34 @@
 /* static/css/custom.css */
-:root{
+
+/* -------------------------------
+   Font definition (MIT Font)
+--------------------------------*/
+:root {
   --mit-font-family: "neue-haas-grotesk-display", sans-serif;
   --mit-font-weight: 700;
   --mit-font-style: normal;
 }
 
+/* -------------------------------
+   Banner: visible + only title
+--------------------------------*/
+#banner {
+  padding: 6rem 1.5rem;
+  margin: 0 auto;
+  max-width: 1200px;
+  text-align: center;
+  background: none;           /* remove background image if any */
+  border: none;
+}
+
+#banner .content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Apply Neue Haas Grotesk only to the banner title */
 #banner .content > h1,
 #banner h1 {
   font-family: var(--mit-font-family) !important;
@@ -12,4 +36,30 @@
   font-style: var(--mit-font-style) !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  line-height: 1.1;
+  font-size: 3rem;            /* adjust as you like */
+  color: #000;                /* or #fff if your background is dark */
+}
+
+/* -------------------------------
+   Hide any other banner elements
+--------------------------------*/
+#banner .image,
+#banner .actions,
+#banner p,
+#banner .button,
+#banner .icons,
+#banner .subtitle {
+  display: none !important;
+}
+
+/* -------------------------------
+   Generic body reset (optional)
+--------------------------------*/
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: #222;
+  background: #fff;
 }
