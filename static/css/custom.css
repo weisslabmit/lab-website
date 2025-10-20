@@ -80,9 +80,7 @@ body {
   background: #fff;
 }
 /* -------------------------------------------
-   Menu iframe (GWD export)
-   Fixed base 500×350, scales perfectly
-   on all devices and stays centered
+   Scaled menu iframe (no side scrollbars)
 ------------------------------------------- */
 .embed-frame {
   --menu-base-w: 500;
@@ -93,13 +91,14 @@ body {
   z-index: 5;
   width: calc(var(--menu-base-w) * 1px * var(--menu-scale));
   height: calc(var(--menu-base-h) * 1px * var(--menu-scale));
-  margin-top: 0.5rem;
-  transform-origin: top center;
+  margin: 0.5rem auto;            /* center horizontally */
+  overflow: hidden;               /* prevent side scroll */
   display: flex;
   justify-content: center;
+  transform-origin: top center;
 }
 
-/* the iframe itself keeps its original size, then scales */
+/* the iframe itself */
 .embed-frame iframe {
   width: calc(var(--menu-base-w) * 1px);
   height: calc(var(--menu-base-h) * 1px);
@@ -109,7 +108,7 @@ body {
   transform: scale(var(--menu-scale));
 }
 
-/* -------- Responsive breakpoints -------- */
+/* responsive scaling */
 @media (max-width: 800px) {
   .embed-frame { --menu-scale: 0.9; }
 }
