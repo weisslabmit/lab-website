@@ -1,11 +1,8 @@
+<!-- layouts/partials/banner.html -->
 <section id="banner">
   <div class="content">
     <h1>
-      {{ with site.Params.banner.title }}
-        {{ . | safeHTML }}
-      {{ else }}
-        {{ site.Title | safeHTML }}
-      {{ end }}
+      {{ with site.Params.banner.title }}{{ . }}{{ else }}{{ site.Title }}{{ end }}
     </h1>
   </div>
 </section>
