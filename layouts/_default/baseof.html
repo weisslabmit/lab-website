@@ -1,13 +1,9 @@
-<!DOCTYPE HTML>
-<!-- Minimal base using Hugo Story head/scripts partials if present -->
-<html>
-  {{ partial "head" . }}
-
-  <body class="is-preload">
+<!DOCTYPE html>
+<html lang="en">
+  {{ partial "head.html" . }}
+  <body>
     <div id="wrapper" class="divided">
-      {{- block "main" . }}{{- end }}
+      {{ block "main" . }}{{ end }}
     </div>
-
-    {{ partial "scripts" . }}
   </body>
 </html>

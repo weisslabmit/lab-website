@@ -1,17 +1,7 @@
 {{ define "main" }}
 
-	 <!-- Minimal banner with only a title -->
-  <section id="banner" class="banner-only-title">
-    <div class="content">
-      <h1>
-        {{ with .Site.Params.banner.title }}
-          {{ . }}
-        {{ else }}
-          {{ .Site.Title }}
-        {{ end }}
-      </h1>
-    </div>
-  </section>
+  {{ partial "banner.html" . }}
+  {{ .Content }}
 	{{ partial "spotlight" site.Data.spotlight1 }}
 	{{ partial "spotlight" site.Data.spotlight2 }}
 	{{ partial "spotlight" site.Data.spotlight3 }}
