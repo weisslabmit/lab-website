@@ -81,17 +81,19 @@ body {
 }
 
 /* -------------------------------
-   Embedded menu: centered below title
+   Embedded menu (GWD export)
+   Responsive: stays centered, scales down
 --------------------------------*/
 .embed-frame {
   position: relative;
   z-index: 5;
-  width: min(100%, 500px);   /* match GWD width */
-  height: 350px;             /* match GWD height */
-  margin-top: 0.5rem;        /* small gap below title */
+  width: min(100%, 500px);   /* same as your GWD canvas width */
+  aspect-ratio: 500 / 350;   /* keeps correct proportions */
+  margin-top: 0.5rem;        /* small gap under title */
   border: none;
 }
 
+/* make the iframe itself fill that box */
 .embed-frame iframe {
   position: absolute;
   inset: 0;
@@ -101,11 +103,10 @@ body {
   display: block;
 }
 
-/* Optional: tighten gap on very small screens */
+/* optional: add a soft limit for smaller screens */
 @media (max-width: 600px) {
   .embed-frame {
-    width: 90vw;              /* use 90% of screen width */
-    height: auto;             /* let browser scale proportionally */
-    aspect-ratio: 500 / 350;  /* maintain ratio */
+    width: 90vw;              /* shrink slightly on small devices */
+    aspect-ratio: 500 / 350;  /* keep proportional scaling */
   }
 }
