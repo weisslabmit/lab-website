@@ -79,24 +79,31 @@ body {
   color: #222;
   background: #fff;
 }
-/* Scalable iframe wrapper — no gutters, no scrollbars */
+/* Responsive, no-scroll iframe scaler
+   Base canvas: 500 x 350 (your GWD size) */
 .embed-frame {
   position: relative;
-  width: 100%;            /* fill the content width */
-  max-width: 500px;       /* base width from GWD canvas */
-  margin: 0.5rem auto;    /* centered under the title */
-  overflow: hidden;       /* never show bars outside */
-  height: 0;              /* JS will set the real height */
+  z-index: 5;
+
+  /* The wrapper’s width becomes the smaller of 90vw or 500px */
+  width: min(90vw, 500px);
+
+  /* Height follows the 500x350 ratio: h = w * 350/500 */
+  height: calc(min(90vw, 500px) * 350 / 500);
+
+  margin: 0.5rem auto;     /* centered under the title */
+  overflow: hidden;        /* hide any overspill just in case */
+  border: 0;
 }
 
-/* The iframe keeps its native size; we scale it with JS */
+/* The iframe keeps its native size, then scales to fit the wrapper */
 .embed-frame iframe {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 500px;           /* base width from GWD canvas */
-  height: 350px;          /* base height from GWD canvas */
+  width: 500px; 
+  height: 350px;
   border: 0;
-  transform-origin: top left;
   display: block;
+
+  /* Scale to the wrapper’s width: scale = min(90vw, 500px) / 500px */
+  transform: scale(calc(min(90vw, 500px) / 500));
+  transform-origin: top center;
 }
