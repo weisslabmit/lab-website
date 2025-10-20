@@ -1,0 +1,24 @@
+/* static/css/custom.css */
+
+/* define MIT font as a reusable variable */
+:root {
+  --mit-font-family: "neue-haas-grotesk-display", sans-serif;
+  --mit-font-weight: 700;
+  --mit-font-style: normal;
+}
+
+/* apply globally */
+html, body {
+  font-family: var(--mit-font-family);
+  font-weight: var(--mit-font-weight);
+  font-style: var(--mit-font-style);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* optionally reinforce on headings/navigation */
+h1, h2, h3, .site-title, .menu-item {
+  font-family: var(--mit-font-family);
+  font-weight: var(--mit-font-weight);
+  font-style: var(--mit-font-style);
+}
