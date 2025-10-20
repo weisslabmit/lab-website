@@ -4,9 +4,12 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <title>CMS</title>
-    <script src="https://unpkg.com/decap-cms@latest/dist/decap-cms.js"></script>
   </head>
   <body>
-    <p>CMS is loading…</p>
+    <!-- Mount point (optional; CMS will create one, but this is safe) -->
+    <div id="nc-root"></div>
+
+    <!-- Load CMS after the body so document.body is ready -->
+    <script src="https://unpkg.com/decap-cms@latest/dist/decap-cms.js" defer></script>
   </body>
 </html>
