@@ -79,24 +79,46 @@ body {
   color: #222;
   background: #fff;
 }
-/* -------------------------------
-   Responsive menu iframe
-   Scales fluidly with screen width
---------------------------------*/
+/* -------------------------------------------
+   Menu iframe (GWD export)
+   Fixed base 500×350, scales perfectly
+   on all devices and stays centered
+------------------------------------------- */
 .embed-frame {
+  --menu-base-w: 500;
+  --menu-base-h: 350;
+  --menu-scale: 1;
+
   position: relative;
   z-index: 5;
-  width: 90vw;                   /* fills 90% of the screen width */
-  max-width: 500px;              /* don’t exceed original menu width */
-  aspect-ratio: 500 / 350;       /* keeps correct proportions */
+  width: calc(var(--menu-base-w) * 1px * var(--menu-scale));
+  height: calc(var(--menu-base-h) * 1px * var(--menu-scale));
   margin-top: 0.5rem;
-  border: none;
-  overflow: hidden;
+  transform-origin: top center;
+  display: flex;
+  justify-content: center;
 }
 
+/* the iframe itself keeps its original size, then scales */
 .embed-frame iframe {
-  width: 100%;
-  height: 100%;
+  width: calc(var(--menu-base-w) * 1px);
+  height: calc(var(--menu-base-h) * 1px);
   border: 0;
   display: block;
+  transform-origin: top center;
+  transform: scale(var(--menu-scale));
+}
+
+/* -------- Responsive breakpoints -------- */
+@media (max-width: 800px) {
+  .embed-frame { --menu-scale: 0.9; }
+}
+@media (max-width: 600px) {
+  .embed-frame { --menu-scale: 0.8; }
+}
+@media (max-width: 480px) {
+  .embed-frame { --menu-scale: 0.7; }
+}
+@media (max-width: 400px) {
+  .embed-frame { --menu-scale: 0.6; }
 }
