@@ -79,23 +79,24 @@ body {
   color: #222;
   background: #fff;
 }
-/* Make the iframe align flush with the banner title */
+/* Scalable iframe wrapper — no gutters, no scrollbars */
 .embed-frame {
   position: relative;
-  width: 100vw;               /* full viewport width */
-  max-width: none;            /* override any max limits */
-  margin: 0;                  /* remove side gaps */
-  left: 50%;                  /* center trick */
-  right: 50%;
-  transform: translateX(-50%);/* center it relative to viewport */
-  aspect-ratio: 500 / 350;    /* adjust if menu is taller or wider */
-  overflow: hidden;
-  border: none;
+  width: 100%;            /* fill the content width */
+  max-width: 500px;       /* base width from GWD canvas */
+  margin: 0.5rem auto;    /* centered under the title */
+  overflow: hidden;       /* never show bars outside */
+  height: 0;              /* JS will set the real height */
 }
 
+/* The iframe keeps its native size; we scale it with JS */
 .embed-frame iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 500px;           /* base width from GWD canvas */
+  height: 350px;          /* base height from GWD canvas */
+  border: 0;
+  transform-origin: top left;
   display: block;
 }
