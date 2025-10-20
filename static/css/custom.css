@@ -31,24 +31,7 @@
   overflow: hidden;
 }
 
-/* Optional background image — replace the URL if desired */
-#banner::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: url("/images/banner.jpg") center center / cover no-repeat;
-  opacity: 0.35;                   /* dark overlay for readability */
-  z-index: 0;
-}
 
-/* Optional dark gradient overlay */
-#banner::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.55));
-  z-index: 1;
-}
 
 /* Centered banner content */
 #banner .content {
