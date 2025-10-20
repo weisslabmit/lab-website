@@ -13,7 +13,7 @@
 }
 
 /* -------------------------------
-   Banner: full-screen hero with title only
+   Banner: full-screen hero with title + centered menu
 --------------------------------*/
 #banner {
   position: relative;
@@ -23,26 +23,26 @@
   margin: 0;
   padding: 0 1.5rem;
   display: flex;
-  align-items: center;
+  align-items: center;              /* centers the whole content block */
   justify-content: center;
   text-align: center;
   border: none;
-  background: none;                /* no background by default */
+  background: none;                 /* no background by default */
   overflow: hidden;
 }
 
-
-
-/* Centered banner content */
+/* Centered banner content (title + menu) */
 #banner .content {
   position: relative;
   z-index: 2;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;          /* vertical centering inside the hero */
+  gap: 1.25rem;                     /* space between title and menu */
   padding: 4rem 1.5rem;
   max-width: 1100px;
+  width: 100%;
 }
 
 /* Banner title */
@@ -55,12 +55,12 @@
   -moz-osx-font-smoothing: grayscale;
   margin: 0;
   line-height: 1.1;
-  font-size: clamp(2.5rem, 6vw, 4.5rem); /* responsive size */
-  color: #000;                            /* change to #fff if using dark bg */
-  white-space: pre-line !important;       /* allows line breaks */
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  color: #000;                      /* change to #fff if using dark bg */
+  white-space: pre-line !important; /* allows <br> */
 }
 
-/* Hide all other banner elements (buttons, icons, etc.) */
+/* Hide other theme-injected banner bits */
 #banner .image,
 #banner .actions,
 #banner p,
@@ -80,15 +80,15 @@ body {
   background: #fff;
 }
 
-/* Ensure embed is above banner overlays and has height */
+/* -------------------------------
+   Embedded menu: centered below title
+--------------------------------*/
 .embed-frame {
   position: relative;
-  z-index: 5;
-  margin-top: 1.5rem;
-  width: min(100%, 1100px);
-  height: auto;
-  aspect-ratio: 16 / 9;
-  min-height: 400px;  
+  /* removed margin-top; spacing handled by #banner .content gap */
+  width: min(100%, 900px);          /* keep it elegant on big screens */
+  aspect-ratio: 16 / 9;             /* adjust to your menu’s canvas ratio */
+  min-height: 400px;                /* safety on very narrow screens */
   border: none;
 }
 
@@ -99,4 +99,9 @@ body {
   height: 100%;
   border: 0;
   display: block;
+}
+
+/* Optional: tighten gap on very small screens */
+@media (max-width: 480px) {
+  #banner .content { gap: 1rem; padding: 3rem 1rem; }
 }
