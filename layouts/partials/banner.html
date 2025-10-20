@@ -2,9 +2,7 @@
   <div class="content">
     <h1>The Weiss<br>Lab @MIT</h1>
 
-<div class="embed-frame"
-     data-base-w="500"
-     data-base-h="350">
+  <div class="embed-frame">
   <iframe
     src='{{ "embeds/menu/index.html" | relURL }}?v={{ now.Unix }}'
     title="Weiss Lab Menu"
@@ -14,43 +12,6 @@
     scrolling="no">
   </iframe>
 </div>
-
-<script>
-(function () {
-  function fit(el) {
-    var baseW = parseFloat(el.getAttribute('data-base-w')) || 500;
-    var baseH = parseFloat(el.getAttribute('data-base-h')) || 350;
-    var iframe = el.querySelector('iframe');
-    if (!iframe) return;
-
-    // available width in CSS pixels
-    var avail = el.clientWidth;
-    // scale <= 1 (don’t upscale beyond native)
-    var scale = Math.min(1, avail / baseW);
-
-    // visually scale the iframe
-    iframe.style.transform = 'scale(' + scale + ')';
-    // set the wrapper's layout height to the scaled height
-    el.style.height = (baseH * scale) + 'px';
-  }
-
-  // Run on load + resize using ResizeObserver (with fallback)
-  function attach(el) {
-    fit(el);
-    if (window.ResizeObserver) {
-      var ro = new ResizeObserver(function () { fit(el); });
-      ro.observe(el);
-    } else {
-      window.addEventListener('resize', function () { fit(el); });
-    }
-  }
-
-  document.addEventListener('DOMContentLoaded', function () {
-    document.querySelectorAll('.embed-frame').forEach(attach);
-  });
-})();
-</script>
-
 
 
 
