@@ -46,6 +46,7 @@
    Hide any other banner elements
 --------------------------------*/
 #banner .image,
+#banner h1 { white-space: pre-line !important; }
 #banner .actions,
 #banner p,
 #banner .button,
