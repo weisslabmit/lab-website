@@ -2,7 +2,8 @@
 ## Basic Configuration
 ## -----------------------------------------------
 
-title = "The Weiss<br>Lab @MIT"
+[params.banner]
+title = "The Weiss<br>Lab @ MIT"
 copyright = "{year}"
 
 ## -----------------------------------------------
