@@ -1,11 +1,19 @@
 <section id="banner">
   <div class="content">
     <h1>
-      {{ with .Site.Params.banner.title }}
-        {{ . }}
-      {{ else }}
-        {{ .Site.Title }}
-      {{ end }}
+      {{- if .IsHome -}}
+        {{ with .Title }}
+          {{ . | safeHTML }}
+        {{ else }}
+          {{ with site.Params.banner.title }}
+            {{ . | safeHTML }}
+          {{ else }}
+            {{ site.Title | safeHTML }}
+          {{ end }}
+        {{ end }}
+      {{- else -}}
+        {{ .Title | safeHTML }}
+      {{- end -}}
     </h1>
   </div>
 </section>
