@@ -79,31 +79,36 @@ body {
   color: #222;
   background: #fff;
 }
-/* Responsive, no-scroll iframe scaler
-   Base canvas: 500 x 350 (your GWD size) */
+/* =========================================
+   Centered, responsive menu without scrollbars
+   Base canvas: 500 × 350 (GWD export)
+   - The iframe itself stays 500×350 (no inner scrollbars)
+   - The wrapper size shrinks/grows (so layout fits)
+   - Visual scaling uses transform (crisp + proportional)
+========================================= */
+
 .embed-frame {
+  /* scale factor = available width / base width */
+  --base-w: 500;
+  --base-h: 350;
+  --avail: min(100vw, 900px);             /* cap how wide the banner area can be */
+  --scale: calc( min(var(--avail), var(--base-w)*1px) / (var(--base-w)*1px) );
+
   position: relative;
   z-index: 5;
-
-  /* The wrapper’s width becomes the smaller of 90vw or 500px */
-  width: min(90vw, 500px);
-
-  /* Height follows the 500x350 ratio: h = w * 350/500 */
-  height: calc(min(90vw, 500px) * 350 / 500);
-
-  margin: 0.5rem auto;     /* centered under the title */
-  overflow: hidden;        /* hide any overspill just in case */
-  border: 0;
+  /* wrapper is the *scaled* size so the page layout matches the visual size */
+  width: calc(var(--base-w) * 1px * var(--scale));
+  height: calc(var(--base-h) * 1px * var(--scale));
+  margin: 0.5rem auto 0;                  /* centered under the title */
+  overflow: hidden;                        /* no side gutters */
 }
 
-/* The iframe keeps its native size, then scales to fit the wrapper */
+/* The iframe keeps its native viewport (500×350), then is scaled visually */
 .embed-frame iframe {
-  width: 500px; 
-  height: 350px;
+  width: calc(var(--base-w) * 1px);
+  height: calc(var(--base-h) * 1px);
   border: 0;
   display: block;
-
-  /* Scale to the wrapper’s width: scale = min(90vw, 500px) / 500px */
-  transform: scale(calc(min(90vw, 500px) / 500));
   transform-origin: top center;
+  transform: scale(var(--scale));
 }
