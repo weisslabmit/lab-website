@@ -7,8 +7,8 @@
   --mit-font-style: normal;
 }
 
-/* apply globally */
-html, body {
+/* apply only to the banner's main header */
+#banner h1 {
   font-family: var(--mit-font-family);
   font-weight: var(--mit-font-weight);
   font-style: var(--mit-font-style);
@@ -16,9 +16,4 @@ html, body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* optionally reinforce on headings/navigation */
-h1, h2, h3, .site-title, .menu-item {
-  font-family: var(--mit-font-family);
-  font-weight: var(--mit-font-weight);
-  font-style: var(--mit-font-style);
-}
+/* keep other text as the theme’s default */
