@@ -79,45 +79,31 @@ body {
   color: #222;
   background: #fff;
 }
-/* -------------------------------------------
-   Scaled menu iframe (no side scrollbars)
-------------------------------------------- */
+/* Responsive, no-scroll iframe scaler
+   Base canvas: 500 x 350 (your GWD size) */
 .embed-frame {
-  --menu-base-w: 500;
-  --menu-base-h: 350;
-  --menu-scale: 1;
-
   position: relative;
   z-index: 5;
-  width: calc(var(--menu-base-w) * 1px * var(--menu-scale));
-  height: calc(var(--menu-base-h) * 1px * var(--menu-scale));
-  margin: 0.5rem auto;            /* center horizontally */
-  overflow: hidden;               /* prevent side scroll */
-  display: flex;
-  justify-content: center;
-  transform-origin: top center;
+
+  /* The wrapper’s width becomes the smaller of 90vw or 500px */
+  width: min(90vw, 500px);
+
+  /* Height follows the 500x350 ratio: h = w * 350/500 */
+  height: calc(min(90vw, 500px) * 350 / 500);
+
+  margin: 0.5rem auto;     /* centered under the title */
+  overflow: hidden;        /* hide any overspill just in case */
+  border: 0;
 }
 
-/* the iframe itself */
+/* The iframe keeps its native size, then scales to fit the wrapper */
 .embed-frame iframe {
-  width: calc(var(--menu-base-w) * 1px);
-  height: calc(var(--menu-base-h) * 1px);
+  width: 500px; 
+  height: 350px;
   border: 0;
   display: block;
-  transform-origin: top center;
-  transform: scale(var(--menu-scale));
-}
 
-/* responsive scaling */
-@media (max-width: 800px) {
-  .embed-frame { --menu-scale: 0.9; }
-}
-@media (max-width: 600px) {
-  .embed-frame { --menu-scale: 0.8; }
-}
-@media (max-width: 480px) {
-  .embed-frame { --menu-scale: 0.7; }
-}
-@media (max-width: 400px) {
-  .embed-frame { --menu-scale: 0.6; }
+  /* Scale to the wrapper’s width: scale = min(90vw, 500px) / 500px */
+  transform: scale(calc(min(90vw, 500px) / 500));
+  transform-origin: top center;
 }
