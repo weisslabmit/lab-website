@@ -2,13 +2,15 @@
   <div class="content">
     <h1>{{ .Site.Title }}</h1>
 
-    <div class="embed-frame">
-      <iframe
-        src='{{ "embeds/main2/index.html" | relURL }}?v={{ now.Unix }}'
-        loading="lazy"
-        referrerpolicy="no-referrer">
-      </iframe>
-      <p style="color:red">TEST123</p>
-    </div>
+   <div class="embed-frame">
+  <iframe
+    src='{{ "embeds/main2/index.html" | relURL }}?v={{ now.Unix }}'
+    title="Weiss Lab Menu"
+    loading="lazy"
+    referrerpolicy="no-referrer"
+    sandbox="allow-scripts allow-same-origin">
+  </iframe>
+</div>
+
   </div>
 </section>
