@@ -4,36 +4,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
   <meta name="description" content="">
   <meta name="author" content="">
+  {{ if .Site.Params.favicon }}{{ partial "favicon" . }}{{ end }}
 
-  {{ if .Site.Params.favicon }}
-    {{ partial "favicon" }}
-  {{ end }}
+  <!-- Adobe Fonts -->
+  <link rel="stylesheet" href="https://use.typekit.net/qyd0ftr.css">
 
-  <!-- THEME CSS (builds from SCSS) -->
+  <!-- THEME CSS (main + noscript) -->
   {{ if hugo.IsServer }}
     {{ $style := resources.Get "sass/main.scss" | resources.ExecuteAsTemplate "scss/main.scss" . | toCSS (dict "targetPath" "css/main.css" "outputStyle" "compressed" "enableSourceMap" false) }}
-    <link rel="stylesheet" href="{{ ($style).RelPermalink }}">
+    <link rel="stylesheet" href="{{ $style.RelPermalink }}">
+    {{ $noscript := resources.Get "sass/noscript.scss" | resources.ExecuteAsTemplate "noscript.scss" . | toCSS (dict "targetPath" "css/noscript.css" "enableSourceMap" false) }}
+    <noscript><link rel="stylesheet" href="{{ $noscript.RelPermalink }}" /></noscript>
   {{ else }}
-    {{ $style := resources.Get "sass/main.scss" | resources.ExecuteAsTemplate "scss/main.scss" . | toCSS (dict "targetPath" "css/main.css" "enableSourceMap" false) }}
-    <link rel="stylesheet" href="{{ ($style | minify).RelPermalink }}">
+    {{ $style := resources.Get "sass/main.scss" | resources.ExecuteAsTemplate "scss/main.scss" . | toCSS (dict "targetPath" "css/main.css" "enableSourceMap" false) | minify }}
+    <link rel="stylesheet" href="{{ $style.RelPermalink }}">
+    {{ $noscript := resources.Get "sass/noscript.scss" | resources.ExecuteAsTemplate "noscript.scss" . | toCSS (dict "targetPath" "css/noscript.css" "enableSourceMap" false) | minify }}
+    <noscript><link rel="stylesheet" href="{{ $noscript.RelPermalink }}" /></noscript>
   {{ end }}
 
-  {{ if hugo.IsServer }}
-    {{ $noscript := resources.Get "sass/noscript.scss" | resources.ExecuteAsTemplate "noscript.scss" . | toCSS (dict "targetPath" "css/noscript.css" "enableSourceMap" false) }}
-    <noscript><link rel="stylesheet" href="{{ ($noscript).RelPermalink }}" /></noscript>
-  {{ else }}
-    {{ $noscript := resources.Get "sass/noscript.scss" | resources.ExecuteAsTemplate "noscript.scss" . | toCSS (dict "targetPath" "css/noscript.css" "enableSourceMap" false) }}
-    <noscript><link rel="stylesheet" href="{{ ($noscript | minify).RelPermalink }}" /></noscript>
-  {{ end }}
-
-  <!-- FontAwesome CSS (if configured) -->
+  <!-- FontAwesome -->
   {{ range .Site.Params.asset.fontawesome_css -}}
     <link rel="stylesheet" href="{{ . | absURL }}">
   {{- end }}
 
-  <!-- Adobe Fonts: load AFTER theme CSS -->
-  <link rel="stylesheet" href="https://use.typekit.net/qyd0ftr.css">
-
-  <!-- Your overrides LAST (cache-busted) -->
-  <link rel="stylesheet" href="{{ "css/custom.css?v=3" | relURL }}">
+  <!-- YOUR overrides LAST -->
+  <link rel="stylesheet" href="{{ "css/custom.css" | relURL }}?v={{ now.Unix }}">
 </head>
