@@ -79,34 +79,52 @@ body {
   color: #222;
   background: #fff;
 }
-
-/* -------------------------------
-   Embedded menu (GWD export)
-   Responsive: stays centered, scales down
---------------------------------*/
+/* -------------------------------------------
+   Responsive scaler for the menu iframe
+   Base canvas: 500 x 350 (from GWD)
+   Scales down on small screens, stays centered
+------------------------------------------- */
 .embed-frame {
+  /* base size + scale variable */
+  --menu-base-w: 500;
+  --menu-base-h: 350;
+  --menu-scale: 1;
+
   position: relative;
   z-index: 5;
-  width: min(100%, 500px);   /* same as your GWD canvas width */
-  aspect-ratio: 500 / 350;   /* keeps correct proportions */
-  margin-top: 0.5rem;        /* small gap under title */
-  border: none;
+  /* the wrapper size equals the scaled size (so layout space is correct) */
+  width: calc(var(--menu-base-w) * 1px * var(--menu-scale));
+  height: calc(var(--menu-base-h) * 1px * var(--menu-scale));
+  margin-top: 0.5rem;            /* gap under title */
 }
 
-/* make the iframe itself fill that box */
+/* the actual iframe is kept at base size, then scaled */
 .embed-frame iframe {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+  width: calc(var(--menu-base-w) * 1px);
+  height: calc(var(--menu-base-h) * 1px);
   border: 0;
   display: block;
+  transform-origin: top center;   /* scale from the top center */
+  transform: scale(var(--menu-scale));
 }
 
-/* optional: add a soft limit for smaller screens */
+/* -------- Responsive breakpoints (tweak if you like) -------- */
+/* shrink slightly below 600px */
 @media (max-width: 600px) {
-  .embed-frame {
-    width: 90vw;              /* shrink slightly on small devices */
-    aspect-ratio: 500 / 350;  /* keep proportional scaling */
-  }
+  .embed-frame { --menu-scale: 0.9; }
+}
+/* phones ~540px */
+@media (max-width: 540px) {
+  .embed-frame { --menu-scale: 0.8; }
+}
+/* small phones ~480px */
+@media (max-width: 480px) {
+  .embed-frame { --menu-scale: 0.72; }
+}
+/* very small devices */
+@media (max-width: 420px) {
+  .embed-frame { --menu-scale: 0.64; }
+}
+@media (max-width: 360px) {
+  .embed-frame { --menu-scale: 0.56; }
 }
