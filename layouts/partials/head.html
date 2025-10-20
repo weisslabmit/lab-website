@@ -8,6 +8,8 @@
 	{{ partial "favicon" }}
 	{{ end }}
 	
+	<link rel="stylesheet" href="https://use.typekit.net/qyd0ftr.css">
+	
 	<!-- CSS -->
 	{{ if hugo.IsServer }}
 	{{ $style := resources.Get "sass/main.scss" | resources.ExecuteAsTemplate "scss/main.scss" . | toCSS (dict "targetPath" "css/main.css" "outputStyle" "compressed" "enableSourceMap" false) }}
