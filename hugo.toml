@@ -1,6 +1,5 @@
 baseURL = "https://weisslabmit.github.io/lab-website/"
-title = "The Weiss
-Lab @MIT"
+title = "The Weiss Lab @MIT"
 theme = "hugo-story"
 languageCode = "en-us"
 
