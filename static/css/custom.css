@@ -1,19 +1,15 @@
 /* static/css/custom.css */
-
-/* define MIT font as a reusable variable */
-:root {
+:root{
   --mit-font-family: "neue-haas-grotesk-display", sans-serif;
   --mit-font-weight: 700;
   --mit-font-style: normal;
 }
 
-/* apply only to the banner's main header */
+#banner .content > h1,
 #banner h1 {
-  font-family: var(--mit-font-family);
-  font-weight: var(--mit-font-weight);
-  font-style: var(--mit-font-style);
+  font-family: var(--mit-font-family) !important;
+  font-weight: var(--mit-font-weight) !important;
+  font-style: var(--mit-font-style) !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
-/* keep other text as the theme’s default */
