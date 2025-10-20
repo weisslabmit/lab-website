@@ -1,4 +1,7 @@
-/* static/css/custom.css */
+/* ======================================
+   MIT Custom Styles for Hugo Story
+   File: static/css/custom.css
+====================================== */
 
 /* -------------------------------
    Font definition (MIT Font)
@@ -10,25 +13,56 @@
 }
 
 /* -------------------------------
-   Banner: visible + only title
+   Banner: full-screen hero with title only
 --------------------------------*/
 #banner {
-  padding: 6rem 1.5rem;
-  margin: 0 auto;
-  max-width: 1200px;
+  position: relative;
+  width: 100%;
+  min-height: 100svh;              /* full viewport height (mobile safe) */
+  min-height: 100vh;
+  margin: 0;
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
-  background: none;           /* remove background image if any */
   border: none;
+  background: none;                /* no background by default */
+  overflow: hidden;
 }
 
+/* Optional background image — replace the URL if desired */
+#banner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("/images/banner.jpg") center center / cover no-repeat;
+  opacity: 0.35;                   /* dark overlay for readability */
+  z-index: 0;
+}
+
+/* Optional dark gradient overlay */
+#banner::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.55));
+  z-index: 1;
+}
+
+/* Centered banner content */
 #banner .content {
+  position: relative;
+  z-index: 2;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 4rem 1.5rem;
+  max-width: 1100px;
 }
 
-/* Apply Neue Haas Grotesk only to the banner title */
+/* Banner title */
 #banner .content > h1,
 #banner h1 {
   font-family: var(--mit-font-family) !important;
@@ -38,15 +72,13 @@
   -moz-osx-font-smoothing: grayscale;
   margin: 0;
   line-height: 1.1;
-  font-size: 3rem;            /* adjust as you like */
-  color: #000;                /* or #fff if your background is dark */
+  font-size: clamp(2.5rem, 6vw, 4.5rem); /* responsive size */
+  color: #000;                            /* change to #fff if using dark bg */
+  white-space: pre-line !important;       /* allows line breaks */
 }
 
-/* -------------------------------
-   Hide any other banner elements
---------------------------------*/
+/* Hide all other banner elements (buttons, icons, etc.) */
 #banner .image,
-#banner h1 { white-space: pre-line !important; }
 #banner .actions,
 #banner p,
 #banner .button,
@@ -56,7 +88,7 @@
 }
 
 /* -------------------------------
-   Generic body reset (optional)
+   Generic body reset
 --------------------------------*/
 body {
   margin: 0;
