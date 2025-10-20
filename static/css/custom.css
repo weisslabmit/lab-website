@@ -85,10 +85,10 @@ body {
 --------------------------------*/
 .embed-frame {
   position: relative;
-  /* removed margin-top; spacing handled by #banner .content gap */
-  width: min(100%, 900px);          /* keep it elegant on big screens */
-  aspect-ratio: 16 / 9;             /* adjust to your menu’s canvas ratio */
-  min-height: 400px;                /* safety on very narrow screens */
+  z-index: 5;
+  width: min(100%, 500px);   /* match GWD width */
+  height: 350px;             /* match GWD height */
+  margin-top: 0.5rem;        /* small gap below title */
   border: none;
 }
 
@@ -102,6 +102,10 @@ body {
 }
 
 /* Optional: tighten gap on very small screens */
-@media (max-width: 480px) {
-  #banner .content { gap: 1rem; padding: 3rem 1rem; }
+@media (max-width: 600px) {
+  .embed-frame {
+    width: 90vw;              /* use 90% of screen width */
+    height: auto;             /* let browser scale proportionally */
+    aspect-ratio: 500 / 350;  /* maintain ratio */
+  }
 }
