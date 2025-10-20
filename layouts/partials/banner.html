@@ -8,25 +8,15 @@
         {{ site.Title | safeHTML }}
       {{ end }}
     </h1>
-    <!-- DEBUG: start -->
-    <div id="embed-debug" style="margin-top:16px;padding:8px;border:2px dashed red;background:#fff8;">
-      <div style="font:14px/1.4 monospace;margin-bottom:8px">
-    If you see this red box, the partial is rendering.<br>
-    Iframe URL:
-       <a href='{{ "embeds/weiss-menu/index.html?v=1" | absURL }}' target="_blank" rel="noopener">
-      {{ "embeds/weiss-menu/index.html?v=1" | absURL }}
-       </a>
-     </div>
-
-    <iframe
-      src='{{ "embeds/weiss-menu/index.html?v=1" | absURL }}'
-     title="Weiss Lab Menu"
-     style="width:100%;height:360px;border:0;background:#fafafa"
-     loading="eager"
-     referrerpolicy="no-referrer"
-      sandbox="allow-scripts allow-same-origin"
-     ></iframe>
-    </div>
+  <div class="embed-frame embed-weiss-menu">
+  <iframe
+    src='{{ "embeds/main2.html?v=1" | absURL }}'
+    title="Weiss Lab Menu"
+    loading="lazy"
+    referrerpolicy="no-referrer"
+    sandbox="allow-scripts allow-same-origin"
+  ></iframe>
+  </div> 
 <!-- DEBUG: end -->
 
   </div>
