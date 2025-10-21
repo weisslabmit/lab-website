@@ -1,35 +1,7 @@
 {{ define "main" }}
 
-  {{ partial "banner.html" . }}
-  {{ .Content }}
-	{{/* 2) Your Research as Story-style spotlights, right under banner */}}
-		<section id="research" class="spotlights">
-			{{ with site.GetPage "section" "research" }}
-			{{ range .Pages.ByWeight }}
-				<section>
-				<a href="{{ .RelPermalink }}" class="image">
-					{{ $img := .Params.image }}
-					{{ if $img }}
-					<img src="{{ $img | relURL }}" alt="{{ .Title }}">
-					{{ else }}
-					<img src="{{ "images/pic01.jpg" | relURL }}" alt="{{ .Title }}">
-					{{ end }}
-				</a>
-				<div class="content">
-					<div class="inner">
-					<header class="major">
-						<h3>{{ .Title }}</h3>
-					</header>
-					{{ with .Params.summary }}<p>{{ . }}</p>{{ end }}
-					<ul class="actions">
-						<li><a href="{{ .RelPermalink }}" class="button">Learn more</a></li>
-					</ul>
-					</div>
-				</div>
-				</section>
-			{{ end }}
-			{{ end }}
-		</section>
+ 	 {{ partial "banner.html" . }}
+  	{{ partial "research-home.html" . }}
 	{{ partial "people.html" . }}
 	{{ partial "spotlight" site.Data.spotlight1 }}
 	{{ partial "spotlight" site.Data.spotlight2 }}
