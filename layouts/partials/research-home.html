@@ -1,21 +1,21 @@
 <section id="research" class="wrapper">
   {{ with site.GetPage "section" "research" }}
-    {{ $pages := .Pages.ByWeight }}
-    {{ range $i, $p := $pages }}
-      <section class="spotlight {{ if modBool $i 2 }}alt{{ end }}">
-        <div class="inner">
-          <a href="{{ $p.RelPermalink }}" class="image">
-            {{ with $p.Params.image }}
-              <img src="{{ . | relURL }}" alt="{{ $p.Title }}" data-position="center center">
-            {{ else }}
-              <img src="{{ "images/pic01.jpg" | relURL }}" alt="{{ $p.Title }}" data-position="center center">
-            {{ end }}
-          </a>
-          <div class="content">
-            <h2 class="major">{{ $p.Title }}</h2>
-            {{ with $p.Params.summary }}<p>{{ . }}</p>{{ end }}
-            <a href="{{ $p.RelPermalink }}" class="special">Learn more</a>
-          </div>
+    {{ range $i, $p := .Pages.ByWeight }}
+      {{/* alternate orientation by index */}}
+      {{ $orient := cond (modBool $i 2) "orient-right" "orient-left" }}
+
+      <section class="spotlight style1 {{ $orient }} onload-content-fade-in onload-image-fade-in">
+        <div class="content">
+          <h2 class="major">{{ $p.Title }}</h2>
+          {{ with $p.Params.summary }}<p>{{ . }}</p>{{ end }}
+          <a href="{{ $p.RelPermalink }}" class="special">Learn more</a>
+        </div>
+        <div class="image">
+          {{ with $p.Params.image }}
+            <img src="{{ . | relURL }}" alt="{{ $p.Title }}" />
+          {{ else }}
+            <img src="{{ "images/pic01.jpg" | relURL }}" alt="{{ $p.Title }}" />
+          {{ end }}
         </div>
       </section>
     {{ end }}
