@@ -1,5 +1,4 @@
 {{ define "main" }}
-  <div id="page-root">
     {{ partial "banner.html" . }}
     {{ partial "research-home.html" . }}
     {{ partial "people.html" . }}
@@ -10,7 +9,5 @@
     {{ partial "items" site.Data.items }}
     {{ partial "elements" . }}
     {{ partial "elements_reference" . }}
-  </div>
-
-  {{ partial "footer" . }}
+  	{{ partial "footer" . }}
 {{ end }}

@@ -3,11 +3,7 @@
   {{ partial "head.html" . }}
   <body>
 
-    <!-- Universal page loader -->
-    <noscript><style>#page-loader{display:none}</style></noscript>
-    <div id="page-loader" aria-hidden="true" role="status">
-      <div class="pl-spinner" aria-label="Loading"></div>
-    </div>
+
 
     <div id="wrapper" class="divided">
       {{ block "main" . }}{{ end }}
