@@ -168,17 +168,17 @@ body {
 }
 
 @media (min-width: 640px) {   /* small screens */
-  .people-section .people-grid { grid-template-columns: repeat(2, 1fr); }
-}
-
-@media (min-width: 900px) {   /* medium screens - fit 3 */
   .people-section .people-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
-@media (min-width: 1280px) {  /* large screens - fit 4 */
+@media (min-width: 900px) {   /* medium screens - fit 3 */
   .people-section .people-grid { grid-template-columns: repeat(4, 1fr); }
 }
 
-@media (min-width: 1680px) {  /* extra large - fit 5 */
+@media (min-width: 1280px) {  /* large screens - fit 4 */
   .people-section .people-grid { grid-template-columns: repeat(5, 1fr); }
+}
+
+@media (min-width: 1680px) {  /* extra large - fit 5 */
+  .people-section .people-grid { grid-template-columns: repeat(6, 1fr); }
 }
