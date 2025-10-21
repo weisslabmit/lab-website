@@ -520,16 +520,14 @@ h.prototype.getPseudoIds=h.prototype.D;h.prototype.getGroupName=h.prototype.B;})
     </gwd-pagedeck>
   </gwd-google-ad>
 
-  <script>
+<script>
 window.addEventListener('load', () => {
-  // wait a bit for menu animations / fonts
   setTimeout(() => {
     console.log("Sending menuReady");
-    window.parent.postMessage({ type: 'menuReady' }, '*');
+    window.parent.postMessage({ type: 'menuReady' }, window.location.origin);
   }, 1200);
 });
 </script>
-
   <script type="text/javascript" id="gwd-init-code">
     (function() {
       var gwdAd = document.getElementById('gwd-ad');

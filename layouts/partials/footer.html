@@ -15,26 +15,25 @@
 </footer>
 
 <script>
-(function () {
+(function() {
   const overlay = document.getElementById('menu-loader');
   const iframe = document.querySelector('#banner iframe');
   if (!overlay || !iframe) return;
 
-  function hideSpinner() {
-    if (!overlay.classList.contains('hidden')) {
-      overlay.classList.add('hidden');
-      console.log("Spinner hidden.");
-    }
-  }
+  const expectedOrigin = window.location.origin;
 
   window.addEventListener('message', (event) => {
+    if (event.origin !== expectedOrigin) {
+      console.warn("Ignored message from origin:", event.origin);
+      return;
+    }
     if (event.data && event.data.type === 'menuReady') {
-      console.log("Received menuReady");
-      hideSpinner();
+      console.log("Received menuReady from iframe ✅");
+      overlay.classList.add('hidden');
     }
   });
 
-  // Failsafe after 15s
-  setTimeout(hideSpinner, 15000);
+  // failsafe
+  setTimeout(() => overlay.classList.add('hidden'), 15000);
 })();
 </script>
