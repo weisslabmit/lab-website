@@ -16,22 +16,28 @@
 
 <script>
 (function () {
-  // Target the menu iframe inside the banner
-  var root = document.querySelector('#banner .menu-frame');
+  const root = document.querySelector('#banner .menu-frame');
   if (!root) return;
 
-  var frame = root.querySelector('iframe');
+  const frame = root.querySelector('iframe');
   if (!frame) return;
 
-  function done() {
+  function hideSpinner() {
     root.classList.add('menu-frame--ready');
   }
 
-  // Hide the overlay once the iframe is fully loaded
-  frame.addEventListener('load', done, { once: true });
+  // ✅ Listen for the message from inside the iframe
+  window.addEventListener('message', function (event) {
+    if (event.data && event.data.type === 'menuReady') hideSpinner();
+  });
 
-  // Safety timeout so it never gets stuck (e.g., if load event is blocked)
-  setTimeout(done, 2000);
+  // Also use iframe load as backup
+  frame.addEventListener('load', () => {
+    // don’t remove immediately—wait a little for layout to stabilize
+    setTimeout(hideSpinner, 400);
+  });
+
+  // Ultimate fallback: never leave the spinner forever
+  setTimeout(hideSpinner, 8000);
 })();
 </script>
-
