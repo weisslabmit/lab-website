@@ -229,3 +229,39 @@ p, li, blockquote, .content {
   font-size: clamp(1rem, 0.3vw + 0.6rem, 1.2rem);
   opacity: 0.85;
 }
+
+/* --- Menu loading spinner + fade-in --- */
+#menu {
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: opacity .25s ease, transform .25s ease;
+  position: relative;
+}
+
+#menu.is-ready {
+  opacity: 1;
+  transform: none;
+}
+
+/* Show spinner only while loading */
+#menu .menu-spinner {
+  position: absolute;
+  top: 0.9rem;
+  right: 1rem;
+  width: 16px;
+  height: 16px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 9999px;
+  animation: menu-spin .8s linear infinite;
+  opacity: .6;
+  pointer-events: none;
+}
+
+#menu:not(.is-loading) .menu-spinner {
+  display: none;
+}
+
+@keyframes menu-spin {
+  to { transform: rotate(360deg); }
+}
