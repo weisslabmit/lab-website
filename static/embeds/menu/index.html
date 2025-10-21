@@ -519,6 +519,17 @@ h.prototype.getPseudoIds=h.prototype.D;h.prototype.getGroupName=h.prototype.B;})
       </gwd-page>
     </gwd-pagedeck>
   </gwd-google-ad>
+
+  <script>
+window.addEventListener('load', () => {
+  // wait a bit for menu animations / fonts
+  setTimeout(() => {
+    console.log("Sending menuReady");
+    window.parent.postMessage({ type: 'menuReady' }, '*');
+  }, 1200);
+});
+</script>
+
   <script type="text/javascript" id="gwd-init-code">
     (function() {
       var gwdAd = document.getElementById('gwd-ad');
@@ -559,17 +570,7 @@ h.prototype.getPseudoIds=h.prototype.D;h.prototype.getGroupName=h.prototype.B;})
     })();
   </script>
 
-<script>
-  // Notify parent only when everything—including layout—is stable
-  window.addEventListener('load', () => {
-    // Wait an extra animation frame + short buffer for JS/CSS setup
-    requestAnimationFrame(() => {
-      setTimeout(() => {
-        window.parent.postMessage({ type: 'menuReady', ts: Date.now() }, '*');
-      }, 500); // you can increase this to 1000–1500 ms if animations run later
-    });
-  });
-</script>
+
 
 <script data-exports-type="gwd-studio-registration">function StudioExports() {
 }</script><script type="text/gwd-admetadata">{"version":1,"type":"GoogleAd","format":"","template":"Banner 3.0.0","politeload":true,"fullscreen":false,"counters":[],"timers":[],"exits":[],"creativeProperties":{"minWidth":500,"minHeight":350,"maxWidth":500,"maxHeight":350},"components":["gwd-google-ad","gwd-image","gwd-page","gwd-pagedeck"],"responsive":false}</script></body></html>

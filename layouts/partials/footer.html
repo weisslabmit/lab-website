@@ -16,42 +16,25 @@
 
 <script>
 (function () {
-  const iframe = document.querySelector('#banner iframe');
   const overlay = document.getElementById('menu-loader');
-  if (!iframe || !overlay) return;
+  const iframe = document.querySelector('#banner iframe');
+  if (!overlay || !iframe) return;
 
   function hideSpinner() {
-    overlay.classList.add('hidden');
+    if (!overlay.classList.contains('hidden')) {
+      overlay.classList.add('hidden');
+      console.log("Spinner hidden.");
+    }
   }
 
-  // Receive signal from iframe
   window.addEventListener('message', (event) => {
     if (event.data && event.data.type === 'menuReady') {
+      console.log("Received menuReady");
       hideSpinner();
     }
   });
 
-  // Backup timeout in case message never arrives
-  setTimeout(hideSpinner, 15000); // 15 s failsafe
+  // Failsafe after 15s
+  setTimeout(hideSpinner, 15000);
 })();
 </script>
-
-<style>
-#menu-loader {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-  transition: opacity .4s ease;
-  z-index: 10;
-}
-#menu-loader.hidden {
-  opacity: 0;
-  visibility: hidden;
-}
-</style>
