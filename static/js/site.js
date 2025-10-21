@@ -1,12 +1,15 @@
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-  var menu = document.getElementById('menu');
+(function () {
+  // Find the menu panel used by Story theme variants
+  var menu =
+    document.getElementById('menu') ||
+    document.querySelector('section#menu, nav#menu, .menu, [data-panel="menu"]');
+
   if (!menu) return;
 
-  // put menu in loading state (shows spinner, hides content)
+  // Mark as loading so spinner shows and opacity is 0
   menu.classList.add('is-loading');
 
-  // inject spinner if it doesn't exist
+  // Inject spinner once
   if (!menu.querySelector('.menu-spinner')) {
     var s = document.createElement('span');
     s.className = 'menu-spinner';
@@ -15,22 +18,21 @@ document.addEventListener('DOMContentLoaded', function () {
     menu.appendChild(s);
   }
 
-  // when DOM is ready, reveal menu with fade; remove loading
-  requestAnimationFrame(function () {
+  // When the DOM is ready, fade the menu in (first time it becomes visible)
+  window.requestAnimationFrame(function () {
+    // mark ready (enables fade-in CSS)
     menu.classList.add('is-ready');
     menu.classList.remove('is-loading');
   });
 
-  // ensure the fade runs each time the menu is opened (if your theme toggles #menu via links)
+  // If your theme toggles the panel via a link to #menu, replay fade on open
   var triggers = document.querySelectorAll('a[href="#menu"], [data-target="#menu"]');
   triggers.forEach(function (t) {
     t.addEventListener('click', function () {
-      // re-trigger transition on open
+      // replay fade on each open
       menu.classList.remove('is-ready');
-      // force reflow
-      void menu.offsetWidth;
+      void menu.offsetWidth; // reflow
       menu.classList.add('is-ready');
     });
   });
-});
-</script>
+})();

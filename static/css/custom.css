@@ -231,20 +231,24 @@ p, li, blockquote, .content {
 }
 
 /* --- Menu loading spinner + fade-in --- */
-#menu {
+#menu, section#menu, nav#menu, .menu, [data-panel="menu"] {
   opacity: 0;
   transform: translateY(-6px);
   transition: opacity .25s ease, transform .25s ease;
   position: relative;
 }
 
-#menu.is-ready {
+#menu.is-ready,
+section#menu.is-ready,
+nav#menu.is-ready,
+.menu.is-ready,
+[data-panel="menu"].is-ready {
   opacity: 1;
   transform: none;
 }
 
-/* Show spinner only while loading */
-#menu .menu-spinner {
+/* Spinner appears only while .is-loading is present */
+.menu-spinner {
   position: absolute;
   top: 0.9rem;
   right: 1rem;
@@ -256,10 +260,15 @@ p, li, blockquote, .content {
   animation: menu-spin .8s linear infinite;
   opacity: .6;
   pointer-events: none;
+  display: none;
 }
 
-#menu:not(.is-loading) .menu-spinner {
-  display: none;
+#menu.is-loading .menu-spinner,
+section#menu.is-loading .menu-spinner,
+nav#menu.is-loading .menu-spinner,
+.menu.is-loading .menu-spinner,
+[data-panel="menu"].is-loading .menu-spinner {
+  display: inline-block;
 }
 
 @keyframes menu-spin {
