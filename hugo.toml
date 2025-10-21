@@ -34,5 +34,6 @@ disableKinds = ["taxonomy", "section"]
 ## -----------------------------------------------
 
 [Params]
+  customCSS = ["css/custom.css"]
 
 [Params.social]
