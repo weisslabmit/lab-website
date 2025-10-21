@@ -9,13 +9,31 @@ media_folder: "static/uploads"
 public_folder: "/uploads"
 
 collections:
-  - name: "home"
-    label: "Homepage"
-    files:
-      - label: "Banner"
-        name: "banner"
-        file: "data/banner.yml"
-        fields:
-          - {label: "Title", name: "title", widget: "string"}
-          - {label: "Subtitle", name: "subtitle", widget: "text", required: false}
-          - {label: "Image", name: "image", widget: "image", required: false}
+  - name: "research"
+    label: "Research Topics"
+    folder: "content/research"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: "title"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Weight (order)", name: "weight", widget: "number", default: 1, min: 1, step: 1 }
+      - { label: "Summary", name: "summary", widget: "text" }
+      - { label: "Image", name: "image", widget: "image", allow_multiple: false }
+      - { label: "Body", name: "body", widget: "markdown", required: false }
+
+  - name: "people"
+    label: "People"
+    folder: "content/people"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: "title"
+    fields:
+      - { label: "Name", name: "title", widget: "string" }
+      - { label: "Weight (order)", name: "weight", widget: "number", default: 1, min: 1, step: 1 }
+      - { label: "Role", name: "role", widget: "string", required: false }
+      - { label: "Email", name: "email", widget: "string", required: false }
+      - { label: "Website", name: "website", widget: "string", required: false }
+      - { label: "Image", name: "image", widget: "image", required: false }
+      - { label: "Short Bio", name: "summary", widget: "text", required: false }
+      - { label: "Body", name: "body", widget: "markdown", required: false }
