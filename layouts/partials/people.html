@@ -1,0 +1,32 @@
+<section id="people" class="wrapper style1 align-center">
+  <div class="inner">
+    <h2>People</h2>
+    <p class="major">Our group brings together engineers, biologists, and computational scientists to build the future of synthetic biology.</p>
+  </div>
+
+  <div class="items style1 medium onscroll-fade-in">
+    {{ range sort (where .Site.RegularPages "Section" "people") "Weight" }}
+    <section class="spotlight">
+      <div class="image">
+        {{ if .Params.image }}
+          <img src="{{ .Params.image | relURL }}" alt="{{ .Title }}">
+        {{ else }}
+          <img src="{{ "images/people/default.jpg" | relURL }}" alt="{{ .Title }}">
+        {{ end }}
+      </div>
+      <div class="content">
+        <h3>{{ .Title }}</h3>
+        {{ with .Params.role }}<p><strong>{{ . }}</strong></p>{{ end }}
+        {{ with .Params.summary }}<p>{{ . }}</p>{{ end }}
+
+        <ul class="actions stacked">
+          {{ if .Params.website }}
+            <li><a href="{{ .Params.website }}" class="button" target="_blank">Website</a></li>
+          {{ end }}
+          <li><a href="{{ .RelPermalink }}" class="button">More</a></li>
+        </ul>
+      </div>
+    </section>
+    {{ end }}
+  </div>
+</section>
