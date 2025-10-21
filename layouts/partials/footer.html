@@ -15,72 +15,14 @@
 </footer>
 
 <script>
-(function () {
-  function $sel(q) { return document.querySelector(q); }
-  var body = document.body;
-
-  // Find a menu element by common IDs/classes
-  var menu = $sel('#menu') || $sel('section#menu') || $sel('nav#menu') || $sel('.menu');
-  if (!menu) {
-    console.log('[menu] not found'); 
-    return;
+(function() {
+  function ready() {
+    document.body.classList.add('is-ready');
   }
-
-  // Mark spinner as "active" during initial open, then stop it
-  function markReadySoon() {
-    // give the DOM a tick to layout; then mark ready (hides spinner)
-    requestAnimationFrame(function () {
-      body.classList.add('menu-ready');
-      menu.classList.add('menu-ready');
-    });
-  }
-
-  // 1) If your theme toggles body class (HTML5-UP style)
-  //    we watch for 'is-menu-visible' added/removed
-  var obs = new MutationObserver(function (muts) {
-    muts.forEach(function (m) {
-      if (m.attributeName === 'class') {
-        if (body.classList.contains('is-menu-visible')) {
-          body.classList.remove('menu-ready');
-          menu.classList.remove('menu-ready');
-          markReadySoon();
-        }
-      }
-    });
-  });
-  obs.observe(body, { attributes: true });
-
-  // 2) If your theme uses anchor links (#menu), replay when those are clicked
-  document.addEventListener('click', function (e) {
-    var a = e.target.closest('a[href="#menu"]');
-    if (a) {
-      body.classList.remove('menu-ready');
-      menu.classList.remove('menu-ready');
-      markReadySoon();
-    }
-  });
-
-  // 3) If some script toggles a class directly on the menu (e.g., .is-open)
-  var menuObs = new MutationObserver(function (muts) {
-    muts.forEach(function (m) {
-      if (m.attributeName === 'class' && menu.classList.contains('is-open')) {
-        body.classList.remove('menu-ready');
-        menu.classList.remove('menu-ready');
-        markReadySoon();
-      }
-    });
-  });
-  menuObs.observe(menu, { attributes: true });
-
-  // First paint: ensure we don’t show spinner forever
-  // If the menu is already visible on load, mark ready shortly after.
-  if (body.classList.contains('is-menu-visible') || window.location.hash === '#menu' || menu.classList.contains('is-open')) {
-    markReadySoon();
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', ready);
+  } else {
+    ready();
   }
 })();
 </script>
-
-<!-- FontAwesome JS -->
-{{ range .Site.Params.asset.fontawesome_js -}}
-    <script type="text/javascript" src="{{ . | absURL }}"></script>
-{{- end }}

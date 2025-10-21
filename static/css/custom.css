@@ -229,63 +229,36 @@ p, li, blockquote, .content {
   font-size: clamp(1rem, 0.3vw + 0.6rem, 1.2rem);
   opacity: 0.85;
 }
+/* ===== Header fade-in + small loader ===== */
 
-/* ===== Menu fade-in & spinner (robust) ===== */
-
-/* 1) Default: menu hidden before open */
-#menu,
-section#menu,
-nav#menu,
-.menu {
+body:not(.is-ready) #header {
   opacity: 0;
   transform: translateY(-8px);
-  transition: opacity .25s ease, transform .25s ease;
-  position: relative;
 }
 
-/* 2) When menu is visible (any of these states), fade it in */
-body.is-menu-visible #menu,
-body.is-menu-visible section#menu,
-body.is-menu-visible nav#menu,
-body.is-menu-visible .menu,
-#menu:target,
-section#menu:target,
-nav#menu:target,
-.menu.is-open {
-  opacity: 1;
-  transform: none;
+#header {
+  transition: opacity .3s ease, transform .3s ease;
 }
 
-/* 3) Spinner (shown while loading/first open) */
-#menu::after,
-section#menu::after,
-nav#menu::after,
-.menu::after {
-  content: "";
-  position: absolute;
-  top: 0.9rem;
+/* Small top-right spinner */
+#menu-loader {
+  position: fixed;
+  top: 0.8rem;
   right: 1rem;
   width: 16px;
   height: 16px;
   border: 2px solid currentColor;
-  border-right-color: transparent;
+  border-top-color: transparent;
   border-radius: 50%;
-  opacity: .6;
-  animation: menu-spin .8s linear infinite;
-  display: none; /* default hidden */
+  animation: spin .8s linear infinite;
+  opacity: 0;
   pointer-events: none;
+  z-index: 9999;
+}
+body:not(.is-ready) #menu-loader {
+  opacity: .5;
 }
 
-/* Show spinner only while opening and not yet marked ready */
-body.is-menu-visible:not(.menu-ready) #menu::after,
-body.is-menu-visible:not(.menu-ready) section#menu::after,
-body.is-menu-visible:not(.menu-ready) nav#menu::after,
-body.is-menu-visible:not(.menu-ready) .menu::after,
-#menu:target:not(.menu-ready)::after,
-section#menu:target:not(.menu-ready)::after,
-nav#menu:target:not(.menu-ready)::after,
-.menu.is-open:not(.menu-ready)::after {
-  display: block;
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
-
-@keyframes menu-spin { to { transform: rotate(360deg); } }
