@@ -2,19 +2,21 @@
   <div class="content">
     <h1>The Weiss<br>Lab @MIT</h1>
 
-   <div class="embed-frame">
-  <iframe
-    src='{{ "embeds/menu/index.html" | relURL }}?v={{ now.Unix }}'
-    title="Weiss Lab Menu"
-    loading="lazy"
-    referrerpolicy="no-referrer"
-    sandbox="allow-scripts allow-same-origin"
-    scrolling="no">
-  </iframe>
-</div>
+    <!-- Wrap the menu iframe + loader together -->
+    <div class="embed-frame menu-frame">
+      <iframe
+        src='{{ "embeds/menu/index.html" | relURL }}?v={{ now.Unix }}'
+        title="Weiss Lab Menu"
+        loading="lazy"
+        referrerpolicy="no-referrer"
+        sandbox="allow-scripts allow-same-origin"
+        scrolling="no">
+      </iframe>
 
+      <!-- Loader that covers ONLY the iframe area -->
+      <div class="menu-frame__loader" aria-hidden="true" role="status">
+        <span class="menu-frame__spinner" aria-label="Loading"></span>
+      </div>
+    </div>
   </div>
-
-  <div id="menu-loader" aria-hidden="true"></div>
-
 </section>
