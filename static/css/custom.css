@@ -229,36 +229,33 @@ p, li, blockquote, .content {
   font-size: clamp(1rem, 0.3vw + 0.6rem, 1.2rem);
   opacity: 0.85;
 }
-/* ===== Header fade-in + small loader ===== */
 
-body:not(.is-ready) #header {
-  opacity: 0;
-  transform: translateY(-8px);
+/* ===== Universal page loader + global fade-in ===== */
+html:not(.is-ready) body { opacity: 1; }  /* keep body visible for the overlay */
+html:not(.is-ready) #page-root { opacity: 0; transform: translateY(-6px); }
+#page-root { transition: opacity .28s ease, transform .28s ease; }
+
+/* Fullscreen overlay */
+#page-loader {
+  position: fixed; inset: 0;
+  display: grid; place-items: start end;   /* top-right */
+  padding: .8rem 1rem;
+  background: transparent;                 /* transparent, so banner still shows if you want */
+  z-index: 9999;
+  pointer-events: none;
+  opacity: .7;
 }
 
-#header {
-  transition: opacity .3s ease, transform .3s ease;
-}
-
-/* Small top-right spinner */
-#menu-loader {
-  position: fixed;
-  top: 0.8rem;
-  right: 1rem;
-  width: 16px;
-  height: 16px;
+/* Tiny spinner */
+#page-loader .pl-spinner{
+  width: 16px; height: 16px;
   border: 2px solid currentColor;
   border-top-color: transparent;
   border-radius: 50%;
-  animation: spin .8s linear infinite;
-  opacity: 0;
-  pointer-events: none;
-  z-index: 9999;
-}
-body:not(.is-ready) #menu-loader {
-  opacity: .5;
+  animation: plspin .8s linear infinite;
 }
 
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
+@keyframes plspin { to { transform: rotate(360deg); } }
+
+/* Hide overlay once ready */
+html.is-ready #page-loader { display: none; }
