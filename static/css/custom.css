@@ -117,14 +117,13 @@ body {
 /* Tighten side spacing on small screens */
 @media (max-width: 520px) {
   #banner {
-    padding-left: 0.25rem;
-    padding-right: 0.25rem;
+    padding: 0;              /* no outer spacing */
   }
 
   #banner .content {
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
+    padding: 0;              /* no inner spacing */
   }
+
 
   .embed-frame {
     max-width: 100%;     /* allow full device width */
