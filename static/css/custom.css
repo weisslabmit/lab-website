@@ -55,7 +55,7 @@
   -moz-osx-font-smoothing: grayscale;
   margin: 0;
   line-height: 1.1;
-  font-size: clamp(4rem, 4vw, 4.5rem);
+  font-size: clamp(3.5rem, calc(2rem + 3vw), 5rem);
   letter-spacing: 0.0005em;  /* <-- adds subtle spacing between letters */
   color: #000;                      /* change to #fff if using dark bg */
   white-space: pre-line !important; /* allows <br> */
