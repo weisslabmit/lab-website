@@ -22,7 +22,6 @@ collections:
       - { label: "Image", name: "image", widget: "image", allow_multiple: false }
       - { label: "Body", name: "body", widget: "markdown", required: false }
 
-collections:
   - name: "people"
     label: "People"
     file: "data/people.yml"
