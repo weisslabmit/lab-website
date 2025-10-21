@@ -80,31 +80,40 @@ body {
   color: #222;
   background: #fff;
 }
-/* Responsive, no-scroll iframe scaler
-   Base canvas: 500 x 350 (your GWD size) */
+/* Responsive GWD menu iframe
+   - scales only below 500px
+   - fills available width (no side white space)
+   - no inner scrollbars */
 .embed-frame {
   position: relative;
   z-index: 5;
 
-  /* The wrapper’s width becomes the smaller of 90vw or 500px */
-  width: min(90vw, 500px);
-
-  /* Height follows the 500x350 ratio: h = w * 350/500 */
-  height: calc(min(90vw, 500px) * 350 / 500);
-
-  margin: 0.5rem auto;     /* centered under the title */
-  overflow: hidden;        /* hide any overspill just in case */
+  /* Let the wrapper use all the space the banner content gives it, capped at 500px */
+  width: 100%;
+  max-width: 500px;
+  aspect-ratio: 500 / 350;   /* auto height == width * 350/500 */
+  margin: 0.5rem auto;
+  overflow: hidden;
   border: 0;
+
+  /* enable container query units (cqw/cqh) for this box */
+  container-type: inline-size;
 }
 
-/* The iframe keeps its native size, then scales to fit the wrapper */
+/* Keep the iframe’s internal viewport at 500x350.
+   Scale the element visually to fit the wrapper width. */
 .embed-frame iframe {
-  width: 500px; 
+  position: absolute; inset: 0;
+  width: 500px;
   height: 350px;
   border: 0;
   display: block;
+  transform-origin: top left;
 
-  /* Scale to the wrapper’s width: scale = min(90vw, 500px) / 500px */
-  transform: scale(calc(min(90vw, 500px) / 500));
-  transform-origin: top center;
+  /* scale = container width / 500, but never exceed 1 (no upscaling) */
+  transform: scale( clamp(0.2, calc(100cqw / 500px), 1) );
+}
+
+@media (max-width: 520px) {
+  #banner { padding-left: 0.75rem; padding-right: 0.75rem; }
 }
