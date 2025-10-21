@@ -14,12 +14,12 @@ collections:
     folder: "content/research"
     create: true
     slug: "{{slug}}"
-    identifier_field: "title"
+    extension: "md"
     fields:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Weight (order)", name: "weight", widget: "number", default: 1, min: 1, step: 1 }
-      - { label: "Summary", name: "summary", widget: "text" }
-      - { label: "Image", name: "image", widget: "image", allow_multiple: false }
+      - { label: "Summary", name: "summary", widget: "text", required: false }
+      - { label: "Image", name: "image", widget: "image", required: false }
       - { label: "Body", name: "body", widget: "markdown", required: false }
 
   - name: "people"
@@ -32,7 +32,7 @@ collections:
         fields:
           - { label: "Name", name: "name", widget: "string" }
           - { label: "Role", name: "role", widget: "string", required: false }
-          - { label: "Photo", name: "photo", widget: "image" }
+          - { label: "Photo", name: "photo", widget: "image", required: false }
           - { label: "Email", name: "email", widget: "string", required: false }
           - { label: "Website", name: "website", widget: "string", required: false }
           - { label: "Google Scholar", name: "scholar", widget: "string", required: false }
