@@ -2,6 +2,7 @@
 
   {{ partial "banner.html" . }}
   {{ .Content }}
+	{{< research >}}
 	{{ partial "people.html" . }}
 	{{ partial "spotlight" site.Data.spotlight1 }}
 	{{ partial "spotlight" site.Data.spotlight2 }}
