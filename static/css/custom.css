@@ -230,25 +230,38 @@ p, li, blockquote, .content {
   opacity: 0.85;
 }
 
-/* --- Menu loading spinner + fade-in --- */
-#menu, section#menu, nav#menu, .menu, [data-panel="menu"] {
+/* ===== Menu fade-in & spinner (robust) ===== */
+
+/* 1) Default: menu hidden before open */
+#menu,
+section#menu,
+nav#menu,
+.menu {
   opacity: 0;
-  transform: translateY(-6px);
+  transform: translateY(-8px);
   transition: opacity .25s ease, transform .25s ease;
   position: relative;
 }
 
-#menu.is-ready,
-section#menu.is-ready,
-nav#menu.is-ready,
-.menu.is-ready,
-[data-panel="menu"].is-ready {
+/* 2) When menu is visible (any of these states), fade it in */
+body.is-menu-visible #menu,
+body.is-menu-visible section#menu,
+body.is-menu-visible nav#menu,
+body.is-menu-visible .menu,
+#menu:target,
+section#menu:target,
+nav#menu:target,
+.menu.is-open {
   opacity: 1;
   transform: none;
 }
 
-/* Spinner appears only while .is-loading is present */
-.menu-spinner {
+/* 3) Spinner (shown while loading/first open) */
+#menu::after,
+section#menu::after,
+nav#menu::after,
+.menu::after {
+  content: "";
   position: absolute;
   top: 0.9rem;
   right: 1rem;
@@ -256,21 +269,23 @@ nav#menu.is-ready,
   height: 16px;
   border: 2px solid currentColor;
   border-right-color: transparent;
-  border-radius: 9999px;
-  animation: menu-spin .8s linear infinite;
+  border-radius: 50%;
   opacity: .6;
+  animation: menu-spin .8s linear infinite;
+  display: none; /* default hidden */
   pointer-events: none;
-  display: none;
 }
 
-#menu.is-loading .menu-spinner,
-section#menu.is-loading .menu-spinner,
-nav#menu.is-loading .menu-spinner,
-.menu.is-loading .menu-spinner,
-[data-panel="menu"].is-loading .menu-spinner {
-  display: inline-block;
+/* Show spinner only while opening and not yet marked ready */
+body.is-menu-visible:not(.menu-ready) #menu::after,
+body.is-menu-visible:not(.menu-ready) section#menu::after,
+body.is-menu-visible:not(.menu-ready) nav#menu::after,
+body.is-menu-visible:not(.menu-ready) .menu::after,
+#menu:target:not(.menu-ready)::after,
+section#menu:target:not(.menu-ready)::after,
+nav#menu:target:not(.menu-ready)::after,
+.menu.is-open:not(.menu-ready)::after {
+  display: block;
 }
 
-@keyframes menu-spin {
-  to { transform: rotate(360deg); }
-}
+@keyframes menu-spin { to { transform: rotate(360deg); } }
