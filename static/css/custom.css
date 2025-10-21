@@ -40,7 +40,7 @@
   align-items: center;
   justify-content: center;          /* vertical centering inside the hero */
   gap: 0.5rem;                     /* space between title and menu */
-  padding: 2rem 1.5rem;
+  padding: 0rem 0rem;
   max-width: 1100px;
   width: 100%;
 }
@@ -98,6 +98,7 @@ body {
 
   /* enable container query units (cqw/cqh) for this box */
   container-type: inline-size;
+  max-width: 100%;     /* allow full device width */
 }
 
 /* Keep the iframe’s internal viewport at 500x350.
@@ -114,18 +115,5 @@ body {
   transform: scale( clamp(0.2, calc(100cqw / 500px), 1) );
 }
 
-/* Tighten side spacing on small screens */
-@media (max-width: 520px) {
-  #banner {
-    padding: 0;              /* no outer spacing */
-  }
 
-  #banner .content {
-    padding: 0;              /* no inner spacing */
-  }
-
-
-  .embed-frame {
-    max-width: 100%;     /* allow full device width */
-  }
 }
