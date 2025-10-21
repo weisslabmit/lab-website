@@ -114,6 +114,19 @@ body {
   transform: scale( clamp(0.2, calc(100cqw / 500px), 1) );
 }
 
+/* Tighten side spacing on small screens */
 @media (max-width: 520px) {
-  #banner { padding-left: 0.75rem; padding-right: 0.75rem; }
+  #banner {
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+  }
+
+  #banner .content {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  .embed-frame {
+    max-width: 100%;     /* allow full device width */
+  }
 }
