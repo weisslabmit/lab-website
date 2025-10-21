@@ -15,25 +15,39 @@
 </footer>
 
 <script>
-(function() {
-  const overlay = document.getElementById('menu-loader');
-  const iframe = document.querySelector('#banner iframe');
-  if (!overlay || !iframe) return;
+(function () {
+  // Root wrapper and the iframe itself
+  var root  = document.querySelector('#banner .menu-frame');
+  if (!root) return;
+  var frame = root.querySelector('iframe');
+  if (!frame) return;
 
-  const expectedOrigin = window.location.origin;
-
-  window.addEventListener('message', (event) => {
-    if (event.origin !== expectedOrigin) {
-      console.warn("Ignored message from origin:", event.origin);
-      return;
+  // Hide spinner
+  function hide() {
+    if (!root.classList.contains('menu-frame--ready')) {
+      root.classList.add('menu-frame--ready');
+      console.log('Spinner fade-out triggered');
     }
-    if (event.data && event.data.type === 'menuReady') {
-      console.log("Received menuReady from iframe ✅");
-      overlay.classList.add('hidden');
+  }
+
+  // Robust message handler:
+  // - accepts either {type:'menuReady'} or 'menuReady'
+  // - verifies it came from THIS iframe via e.source
+  window.addEventListener('message', function (e) {
+    if (e.source !== frame.contentWindow) return;
+    var ok = (e.data === 'menuReady') || (e.data && e.data.type === 'menuReady');
+    if (ok) {
+      console.log('Received menuReady from iframe ✅');
+      hide();
     }
   });
 
-  // failsafe
-  setTimeout(() => overlay.classList.add('hidden'), 15000);
+  // Fallback: if iframe fires load but inner scripts still init, wait a bit
+  frame.addEventListener('load', function () {
+    setTimeout(hide, 1200);
+  });
+
+  // Ultimate failsafe so spinner never sticks forever
+  setTimeout(hide, 15000);
 })();
 </script>
