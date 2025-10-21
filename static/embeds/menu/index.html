@@ -521,25 +521,46 @@ h.prototype.getPseudoIds=h.prototype.D;h.prototype.getGroupName=h.prototype.B;})
   </gwd-google-ad>
 
 <script>
-window.addEventListener('load', () => {
-  setTimeout(() => {
-    console.log("Sending menuReady");
-    window.parent.postMessage({ type: 'menuReady' }, window.location.origin);
-  }, 1200);
-});
-</script>
+(function () {
+  function sendSize() {
+    // measure the tallest doc height we can
+    var h = Math.max(
+      document.documentElement.offsetHeight,
+      document.body ? document.body.offsetHeight : 0,
+      document.documentElement.scrollHeight
+    );
+    window.parent.postMessage({ type: 'menuSize', height: h }, '*');
+  }
 
- <script>
-window.addEventListener('load', function () {
-  // buffer to let fonts/animations settle; tweak as needed
-  setTimeout(function () {
-    console.log('Sending menuReady');
-    // Either object…
-    window.parent.postMessage({ type: 'menuReady' }, '*');
-    // …or a simple string (parent accepts both)
-    // window.parent.postMessage('menuReady', '*');
-  }, 1200);
-});
+  // Send ready AFTER first layout/animations settle a bit
+  window.addEventListener('load', function () {
+    // initial size
+    sendSize();
+
+    // let fonts/animations settle a touch, then confirm ready
+    requestAnimationFrame(function () {
+      setTimeout(function () {
+        sendSize(); // re-check after layout settles
+        window.parent.postMessage({ type: 'menuReady' }, '*');
+      }, 500);
+    });
+  });
+
+  // Reply if parent explicitly asks for size
+  window.addEventListener('message', function (e) {
+    if (e.data && e.data.type === 'requestMenuSize') sendSize();
+  });
+
+  // Keep size in sync if the menu content changes
+  if ('ResizeObserver' in window) {
+    var ro = new ResizeObserver(function () { sendSize(); });
+    ro.observe(document.documentElement);
+    if (document.body) ro.observe(document.body);
+  } else {
+    // crude fallback
+    setInterval(sendSize, 1000);
+  }
+})();
 </script>
 
 

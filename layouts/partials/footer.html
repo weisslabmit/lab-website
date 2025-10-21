@@ -16,38 +16,55 @@
 
 <script>
 (function () {
-  // Root wrapper and the iframe itself
-  var root  = document.querySelector('#banner .menu-frame');
+  const root  = document.querySelector('#banner .menu-frame');
   if (!root) return;
-  var frame = root.querySelector('iframe');
+
+  const frame = root.querySelector('iframe');
+  const overlay = root.querySelector('.menu-frame__loader');
   if (!frame) return;
 
-  // Hide spinner
-  function hide() {
-    if (!root.classList.contains('menu-frame--ready')) {
-      root.classList.add('menu-frame--ready');
-      console.log('Spinner fade-out triggered');
-    }
+  // Give the wrapper a sensible starting height so it doesn't collapse
+  // (will be replaced by real height from the iframe)
+  frame.style.display = 'block';
+  frame.style.width = '100%';
+  frame.style.height = '64px'; // fallback until we get the real height
+
+  function hideSpinner() {
+    if (overlay) overlay.style.opacity = '0', overlay.style.visibility = 'hidden';
+    root.classList.add('menu-frame--ready');
   }
 
-  // Robust message handler:
-  // - accepts either {type:'menuReady'} or 'menuReady'
-  // - verifies it came from THIS iframe via e.source
+  // Only accept messages from this iframe
+  function fromThisFrame(e) { return e.source === frame.contentWindow; }
+
   window.addEventListener('message', function (e) {
-    if (e.source !== frame.contentWindow) return;
-    var ok = (e.data === 'menuReady') || (e.data && e.data.type === 'menuReady');
-    if (ok) {
-      console.log('Received menuReady from iframe ✅');
-      hide();
+    if (!fromThisFrame(e) || !e.data) return;
+
+    // Height messages from the iframe
+    if (e.data.type === 'menuSize' && typeof e.data.height === 'number') {
+      // clamp to sane bounds
+      const h = Math.max(40, Math.min(e.data.height, 1000));
+      frame.style.height = h + 'px';
+      // if we already got ready, make sure spinner is gone
+      if (root.classList.contains('menu-frame--ready')) hideSpinner();
+      return;
+    }
+
+    // Ready message from the iframe
+    if (e.data.type === 'menuReady') {
+      hideSpinner();
+      return;
     }
   });
 
-  // Fallback: if iframe fires load but inner scripts still init, wait a bit
+  // Fallbacks: if iframe 'load' fires but no messages, nudge after a moment
   frame.addEventListener('load', function () {
-    setTimeout(hide, 1200);
+    // Ask the iframe to report height (in case its script missed load timing)
+    try { frame.contentWindow.postMessage({ type: 'requestMenuSize' }, '*'); } catch {}
+    setTimeout(hideSpinner, 2000);
   });
 
-  // Ultimate failsafe so spinner never sticks forever
-  setTimeout(hide, 15000);
+  // Ultimate failsafe
+  setTimeout(hideSpinner, 15000);
 })();
 </script>
