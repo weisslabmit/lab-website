@@ -1,32 +1,27 @@
-<section id="people" class="wrapper style1 align-center">
+<section id="people" class="people-section">
   <div class="inner">
-    <h2>People</h2>
-    <p class="major">Our group brings together engineers, biologists, and computational scientists to build the future of synthetic biology.</p>
-  </div>
+    <header class="major">
+      <h2>People</h2>
+    </header>
 
-  <div class="items style1 medium onscroll-fade-in">
-    {{ range sort (where .Site.RegularPages "Section" "people") "Weight" }}
-    <section class="spotlight">
-      <div class="image">
-        {{ if .Params.image }}
-          <img src="{{ .Params.image | relURL }}" alt="{{ .Title }}">
-        {{ else }}
-          <img src="{{ "images/people/default.jpg" | relURL }}" alt="{{ .Title }}">
-        {{ end }}
-      </div>
-      <div class="content">
-        <h3>{{ .Title }}</h3>
-        {{ with .Params.role }}<p><strong>{{ . }}</strong></p>{{ end }}
-        {{ with .Params.summary }}<p>{{ . }}</p>{{ end }}
+    <div class="people-grid">
+      {{ range .Site.Data.people.people }}
+      <article class="person-card">
+        <span class="image avatar">
+          <img src="{{ .photo | relURL }}" alt="{{ .name }}">
+        </span>
+        <h3>{{ .name }}</h3>
+        {{ with .role }}<p class="role">{{ . }}</p>{{ end }}
+        {{ with .bio }}<p class="bio">{{ . }}</p>{{ end }}
 
-        <ul class="actions stacked">
-          {{ if .Params.website }}
-            <li><a href="{{ .Params.website }}" class="button" target="_blank">Website</a></li>
-          {{ end }}
-          <li><a href="{{ .RelPermalink }}" class="button">More</a></li>
+        <ul class="icons">
+          {{ with .email }}<li><a href="mailto:{{ . }}" class="icon solid fa-envelope"><span class="label">Email</span></a></li>{{ end }}
+          {{ with .website }}<li><a href="{{ . }}" class="icon solid fa-globe"><span class="label">Website</span></a></li>{{ end }}
+          {{ with .scholar }}<li><a href="{{ . }}" class="icon solid fa-graduation-cap"><span class="label">Scholar</span></a></li>{{ end }}
+          {{ with .github }}<li><a href="{{ . }}" class="icon brands fa-github"><span class="label">GitHub</span></a></li>{{ end }}
         </ul>
-      </div>
-    </section>
-    {{ end }}
+      </article>
+      {{ end }}
+    </div>
   </div>
 </section>
