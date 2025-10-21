@@ -1,8 +1,8 @@
 ---
-title: "Ron weiss"
+title: Ron weiss
 weight: 1
-role: "The boss"
-summary: "Bio things"
-image: "/images/people/ron.jpg"
-website: "https://janedoe.mit.edu"
+role: The boss
+website: https://janedoe.mit.edu
+image: /uploads/ron.jpeg
+summary: Bio things
 ---
