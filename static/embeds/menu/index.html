@@ -558,11 +558,16 @@ h.prototype.getPseudoIds=h.prototype.D;h.prototype.getGroupName=h.prototype.B;})
         handleAdInitialized, false);
     })();
   </script>
-  
+
 <script>
-  // Send a message to the parent page once the menu is really ready
-  window.addEventListener('load', function() {
-    window.parent.postMessage({ type: 'menuReady' }, '*');
+  // Notify parent only when everything—including layout—is stable
+  window.addEventListener('load', () => {
+    // Wait an extra animation frame + short buffer for JS/CSS setup
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        window.parent.postMessage({ type: 'menuReady', ts: Date.now() }, '*');
+      }, 500); // you can increase this to 1000–1500 ms if animations run later
+    });
   });
 </script>
 

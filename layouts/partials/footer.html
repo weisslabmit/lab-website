@@ -16,28 +16,42 @@
 
 <script>
 (function () {
-  const root = document.querySelector('#banner .menu-frame');
-  if (!root) return;
-
-  const frame = root.querySelector('iframe');
-  if (!frame) return;
+  const iframe = document.querySelector('#banner iframe');
+  const overlay = document.getElementById('menu-loader');
+  if (!iframe || !overlay) return;
 
   function hideSpinner() {
-    root.classList.add('menu-frame--ready');
+    overlay.classList.add('hidden');
   }
 
-  // ✅ Listen for the message from inside the iframe
-  window.addEventListener('message', function (event) {
-    if (event.data && event.data.type === 'menuReady') hideSpinner();
+  // Receive signal from iframe
+  window.addEventListener('message', (event) => {
+    if (event.data && event.data.type === 'menuReady') {
+      hideSpinner();
+    }
   });
 
-  // Also use iframe load as backup
-  frame.addEventListener('load', () => {
-    // don’t remove immediately—wait a little for layout to stabilize
-    setTimeout(hideSpinner, 400);
-  });
-
-  // Ultimate fallback: never leave the spinner forever
-  setTimeout(hideSpinner, 8000);
+  // Backup timeout in case message never arrives
+  setTimeout(hideSpinner, 15000); // 15 s failsafe
 })();
 </script>
+
+<style>
+#menu-loader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  transition: opacity .4s ease;
+  z-index: 10;
+}
+#menu-loader.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+</style>
