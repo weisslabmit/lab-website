@@ -111,8 +111,11 @@ body {
   display: block;
   transform-origin: top left;
 
-  /* scale = container width / 500, but never exceed 1 (no upscaling) */
-  transform: scale( clamp(0.2, calc(100cqw / 500px), 1) );
+  /* center first, then scale to wrapper width (cqw needs container-type set on .embed-frame) */
+  transform-origin: top left;
+  transform:
+    translateX(-50%)
+    scale( clamp(0.2, calc(100cqw / 500px), 1) );
 }
 
 /* Tighten side spacing on small screens */
