@@ -73,34 +73,82 @@
 
 <script>
 (function () {
-  const frame = document.getElementById('lab-timeline');
-  const target = document.getElementById('research-timeline');
-  if (!frame || !target) return;
+  const frame  = document.getElementById('lab-timeline');
+  const block  = document.getElementById('research-timeline'); // the wrapper DIV inside #research
+  const banner = document.getElementById('banner');
+  const nav    = document.getElementById('floating-nav');
+  if (!frame || !block) return;
 
   const wantedSrc = frame.getAttribute('data-src');
+  let loaded = false;
+  let timelineIO = null;
 
   function loadTimeline() {
-    if (!frame.src || frame.src === '' || frame.src === 'about:blank') {
-      frame.src = wantedSrc;
-    }
+    if (loaded) return;
+    loaded = true;
+    frame.src = wantedSrc;
+    if (timelineIO) timelineIO.disconnect();
   }
 
-
-  // Clicking “Research” should load immediately
+  // Click on “Research” => load immediately
   const researchLink =
     document.querySelector('#floating-nav a[href="#research"]') ||
     document.querySelector('a[href="#research"][data-scroll]');
   if (researchLink) {
-    researchLink.addEventListener('click', () => { loadTimeline(); }, { once: false });
+    researchLink.addEventListener('click', () => loadTimeline());
   }
 
-  // If landing on #research, load right away
+  // Deep-link or hash change to #research => load immediately
   if (location.hash === '#research') loadTimeline();
   window.addEventListener('hashchange', () => {
     if (location.hash === '#research') loadTimeline();
   });
 
-  // Failsafe: prewarm shortly after page load in case nothing triggered yet
-  setTimeout(loadTimeline, 900);
+  // Create the timeline observer, but we’ll attach it only when the banner is gone
+  function makeTimelineObserver() {
+    if (timelineIO || loaded) return;
+
+    timelineIO = new IntersectionObserver((entries) => {
+      const e = entries[0];
+      if (e && e.isIntersecting) loadTimeline();
+    }, {
+      // Require the timeline block to be **mostly** in view before loading.
+      // This prevents early loads from high viewports.
+      root: null,
+      rootMargin: '-10% 0px -75% 0px',  // top buffer, strong bottom buffer
+      threshold: 0                      // any intersection after those margins
+    });
+
+    timelineIO.observe(block);
+  }
+
+  // Watch the banner: only after it’s NOT visible do we arm the timeline observer
+  if (banner) {
+    const bannerIO = new IntersectionObserver((entries) => {
+      const e = entries[0];
+      const bannerVisible = e && e.isIntersecting && e.intersectionRatio > 0.15;
+
+      if (!bannerVisible && !loaded) {
+        // Banner is out of view: safe to start watching the timeline block
+        makeTimelineObserver();
+        bannerIO.disconnect(); // we don’t need to keep watching the banner
+      }
+    }, { threshold: [0, 0.15, 0.3] });
+
+    bannerIO.observe(banner);
+  } else {
+    // No banner? Just arm the timeline observer right away.
+    makeTimelineObserver();
+  }
+
+  // Extra safety: if the user scrolls manually past ~150px and banner script didn’t fire,
+  // arm the observer then (but still won’t load until block actually intersects).
+  let armed = false;
+  window.addEventListener('scroll', () => {
+    if (!armed && !loaded && window.pageYOffset > 150) {
+      armed = true;
+      makeTimelineObserver();
+    }
+  }, { passive: true });
 })();
 </script>
