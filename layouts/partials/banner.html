@@ -4,14 +4,14 @@
 
     <div class="embed-frame menu-frame">
       <iframe
-      src='{{ "embeds/menu/index.html" | relURL }}?v={{ now.Unix }}'
-      title="Weiss Lab Menu"
-      loading="lazy"
-      referrerpolicy="no-referrer"
-      sandbox="allow-same-origin allow-scripts"
-      scrolling="no"
-      style="opacity:0; transition: opacity .35s ease;"
-    ></iframe>
+        src='{{ "embeds/menu/index.html" | absURL }}?v={{ now.Unix }}'
+        title="Weiss Lab Menu"
+        loading="lazy"
+        referrerpolicy="no-referrer"
+        sandbox="allow-same-origin allow-scripts"
+        scrolling="no"
+        style="width: 100%; height: 100%; border: none;"
+      ></iframe>
 
       <!-- Spinner overlay ONLY over the iframe -->
       <div class="menu-frame__loader" aria-hidden="true" role="status">
