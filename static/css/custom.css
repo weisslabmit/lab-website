@@ -300,7 +300,9 @@ p, li, blockquote, .content {
 }
 /* ===== Floating menu active link ===== */
 #floating-nav a.is-active {
-  font-weight: 700;
+  font-weight: 800;
   opacity: 1;
-  text-decoration: underline;
+  color: #fff;
+  text-shadow: 0 0 6px rgba(255,255,255,0.2);
 }
+
