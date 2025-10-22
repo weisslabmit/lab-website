@@ -316,10 +316,6 @@ p, li, blockquote, .content {
 }
 
 
-/* Add top padding to all main sections except banner */
-section:not(#banner) {
-  padding-top: 4rem;       /* creates visible breathing space under menu */
-}
 
 /* --- Floating bar height variable --- */
 :root { --floating-nav-h: 56px; }

@@ -16,23 +16,30 @@
 
 <script>
 (function () {
-  const nav = document.getElementById('floating-nav');
+  const nav   = document.getElementById('floating-nav');
   if (!nav) return;
 
+  const root  = document.documentElement;
   const links = [...nav.querySelectorAll('a[data-scroll]')];
-  const ids = links.map(a => a.getAttribute('href')).filter(h => h && h.startsWith('#')).map(h => h.slice(1));
-  const sections = ids.map(id => document.getElementById(id)).filter(Boolean);
-  const banner = document.getElementById('banner');
 
+  // --- set CSS var to the actual bar height ---
+  function setNavHeightVar() {
+    const h = Math.round(nav.getBoundingClientRect().height) || 56;
+    root.style.setProperty('--floating-nav-h', h + 'px');
+  }
+  setNavHeightVar();
+  window.addEventListener('resize', setNavHeightVar);
+
+  // show/hide while banner is really on screen
   const show = () => nav.classList.add('is-visible');
   const hide = () => nav.classList.remove('is-visible');
 
-  // Only hide while a meaningful chunk of banner is visible
-  if (!banner) {
-    show();
-  } else {
+  const banner = document.getElementById('banner');
+  if (!banner) show();
+  else {
     const io = new IntersectionObserver(entries => {
       entries.forEach(entry => {
+        // hide only while >=20% of banner is visible
         if (entry.isIntersecting && entry.intersectionRatio > 0.2) hide();
         else show();
       });
@@ -40,29 +47,29 @@
     io.observe(banner);
   }
 
-  // Smooth-scroll + force the bar visible immediately on click
+  // smooth scroll & make the bar visible immediately
   nav.addEventListener('click', e => {
     const a = e.target.closest('a[data-scroll]');
     if (!a) return;
     const href = a.getAttribute('href') || '';
     if (href.startsWith('#')) {
       e.preventDefault();
-      show(); // ensure bar is visible right away
+      show();
       const target = document.querySelector(href);
       if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   });
 
-  // Active link highlight
+  // Active link highlight on scroll
   const highlight = id => {
-    links.forEach(link => {
-      link.classList.toggle('is-active', link.getAttribute('href') === '#' + id);
-    });
+    links.forEach(link =>
+      link.classList.toggle('is-active', link.getAttribute('href') === '#' + id)
+    );
   };
+  const ids = links.map(a => a.getAttribute('href')).filter(h => h && h.startsWith('#')).map(h => h.slice(1));
+  const sections = ids.map(id => document.getElementById(id)).filter(Boolean);
   const secObserver = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) highlight(entry.target.id);
-    });
+    entries.forEach(entry => { if (entry.isIntersecting) highlight(entry.target.id); });
   }, { rootMargin: '-40% 0px -40% 0px', threshold: 0 });
   sections.forEach(sec => secObserver.observe(sec));
 })();
