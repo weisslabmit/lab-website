@@ -93,7 +93,7 @@ body {
   width: 100%;
   max-width: 500px;
   aspect-ratio: 500 / 350;   /* auto height == width * 350/500 */
-  margin: 0.5rem auto;
+  margin-top: 0 !important;
   overflow: hidden;
   border: 0;
 
