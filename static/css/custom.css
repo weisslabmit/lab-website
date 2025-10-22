@@ -316,36 +316,37 @@ section[id]:not(#banner) {
   padding-top: calc(var(--menu-height) + 1.5rem);  /* real visible white space */
 }
 
-/* ===== Research timeline embed (fixed subsection at top) ===== */
+/* ===============================
+   Timeline block inside Research
+   =============================== */
 .timeline-block {
   display: flex;
-  justify-content: center;
-  margin: 2rem auto 3rem;         /* space around the timeline */
-  width: 100%;
+  justify-content: center;         /* horizontally center the inner frame */
+  align-items: center;             /* vertically center it (if taller section) */
+  padding: 3rem 1rem;
+  background: transparent;
+  text-align: center;              /* safeguard centering alignment */
 }
 
 .timeline-frame {
   position: relative;
   width: 100%;
-  max-width: 1200px;              /* intrinsic width */
-  aspect-ratio: 1200 / 500;       /* intrinsic height */
-  margin: 0 auto;
+  max-width: 1200px;               /* natural HTML size */
+  aspect-ratio: 1200 / 500;
   overflow: hidden;
-  container-type: inline-size;    /* enables 100cqw used below */
+  margin: 0 auto;                  /* double ensure centering */
 }
 
-/* The iframe keeps an internal viewport of 1200x500,
-   and scales down smoothly on smaller screens */
+/* Center + scale iframe correctly */
 .timeline-frame iframe {
+  display: block;
   position: absolute;
   top: 50%;
   left: 50%;
   width: 1200px;
   height: 500px;
-  border: 0;
-  display: block;
-  transform-origin: top left;
-  transform:
-    translate(-50%, -50%)
-    scale(clamp(0.2, calc(100cqw / 1200px), 1));
+  border: none;
+  transform: translate(-50%, -50%)
+             scale(clamp(0.2, calc(100% / 1200), 1)); /* scales responsively */
+  transform-origin: center center; /* center scaling anchor */
 }
