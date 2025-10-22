@@ -16,69 +16,13 @@
 
 <script>
 (function () {
-  const nav = document.getElementById('floating-nav');
-  if (!nav) return;
-
-  const inner  = nav.querySelector('.floating-nav__inner');
-  const links  = Array.from(nav.querySelectorAll('a[data-scroll]'));
-  const ids    = links
-    .map(a => a.getAttribute('href'))
-    .filter(h => h && h.startsWith('#'))
-    .map(h => h.slice(1));
-  const sections = ids
-    .map(id => document.getElementById(id))
-    .filter(Boolean);
-
-  const banner = document.getElementById('banner');
-
-  /* --- Show/hide nav only based on banner visibility --- */
-  function showNav() { nav.classList.add('is-visible'); }
-  function hideNav() { nav.classList.remove('is-visible'); }
-
-  if (banner) {
-    const vis = new IntersectionObserver(([entry]) => {
-      if (entry && entry.isIntersecting && entry.intersectionRatio > 0.2) hideNav();
-      else showNav();
-    }, { threshold: [0, 0.2, 0.4] });
-    vis.observe(banner);
-  } else {
-    showNav();
-  }
-
-  /* --- Active link on scroll (no custom scrolling, no offsets) --- */
-  function setActive(id) {
-    let any = false;
-    links.forEach(a => {
-      const active = (a.getAttribute('href') === '#' + id);
-      a.classList.toggle('is-active', active);
-      any = any || active;
-    });
-    inner.classList.toggle('has-active', any);
-  }
-
-  const spy = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) setActive(entry.target.id);
-    });
-  }, {
-    // “middle of viewport” counts as active
-    rootMargin: '-45% 0px -45% 0px',
-    threshold: 0
-  });
-
-  sections.forEach(sec => spy.observe(sec));
-})();
-</script>
-
-
-<script>
-(function () {
   const iframe = document.getElementById('lab-timeline');
   const timelineBlock = document.getElementById('research-timeline');
   if (!iframe || !timelineBlock) return;
 
   const wanted = iframe.getAttribute('data-src');
   let loaded = false;
+  let delayTimer = null;
 
   function loadTimeline() {
     if (loaded) return;
@@ -101,17 +45,25 @@
     if (location.hash === '#research') loadTimeline();
   });
 
-  // ❸ Load once any pixel of the TIMELINE wrapper enters view
+  // ❸ Load once any pixel of the TIMELINE wrapper enters view (after 0.3 s)
   const io = new IntersectionObserver((entries) => {
     if (loaded) return;
     for (const e of entries) {
-      if (e.isIntersecting) { loadTimeline(); break; }
+      if (e.isIntersecting) {
+        // start 300ms delay before actually loading
+        clearTimeout(delayTimer);
+        delayTimer = setTimeout(loadTimeline, 300);
+        break;
+      } else {
+        // cancel if it scrolled out before delay ends
+        clearTimeout(delayTimer);
+      }
     }
   }, { threshold: 0, rootMargin: '0px' });
 
   io.observe(timelineBlock);
 
-  // ❹ Failsafe: load after 2 s no matter what (in case observer fails)
+  // ❹ Failsafe: load after 2 s no matter what
   setTimeout(() => { if (!loaded) loadTimeline(); }, 2000);
 })();
 </script>
