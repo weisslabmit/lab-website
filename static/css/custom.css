@@ -39,8 +39,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;          /* vertical centering inside the hero */
-  gap: 0.5rem;                     /* space between title and menu */
-  padding: 2rem 1.5rem;
+  gap: 0rem;                     /* space between title and menu */
+  padding: 0rem 1.5rem;
   max-width: 1100px;
   width: 100%;
 }
@@ -257,9 +257,3 @@ p, li, blockquote, .content {
   to { transform: rotate(360deg); }
 }
 
-.menu-frame__spinner {
-  width: 160px;
-  height: 160px;
-  opacity: 1;
-  animation: menuspin 3s linear infinite;
-}
