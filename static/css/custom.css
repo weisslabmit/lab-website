@@ -317,13 +317,39 @@ p, li, blockquote, .content {
 
 
 
-/* --- Floating bar height variable --- */
-:root { --floating-nav-h: 56px; }
+/* Use the real measured nav height everywhere */
+:root { --floating-nav-h: 56px; } /* JS overwrites this to exact px on load */
 
-/* Space INSIDE sections (not the banner) */
-section:not(#banner) {
-  /* visible breathing room inside the section */
-  padding-top: calc(var(--floating-nav-h) + 1.25rem);
-  /* anchor jumps land below the bar */
-  scroll-margin-top: calc(var(--floating-nav-h) + 0.75rem);
+/* Apply INSIDE spacing to the actual sections only */
+#research, #people, #resources, #contact, #publications {
+  /* Where anchor jumps land: exactly below the bar (+2px breathing) */
+  scroll-margin-top: calc(var(--floating-nav-h) + 2px);
+
+  /* Visible gap INSIDE the section (tiny, so it won’t snowball) */
+  padding-top: 0.5rem;
+}
+
+/* Headings often have their own top margins; zero the first child to avoid double gap */
+#research > *:first-child,
+#people > *:first-child,
+#resources > *:first-child,
+#contact > *:first-child,
+#publications > *:first-child {
+  margin-top: 0;
+}
+
+/* Some Story theme blocks add inner padding/margins; keep their top tight */
+#research .inner, #people .inner,
+#resources .inner, #contact .inner, #publications .inner {
+  padding-top: 0;
+  margin-top: 0;
+}
+
+/* If your section titles are h2/h3, reduce their default top margins just in case */
+#research h2:first-child, #research h3:first-child,
+#people h2:first-child, #people h3:first-child,
+#resources h2:first-child, #resources h3:first-child,
+#contact h2:first-child, #contact h3:first-child,
+#publications h2:first-child, #publications h3:first-child {
+  margin-top: 0.15rem;
 }
