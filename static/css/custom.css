@@ -284,18 +284,18 @@ p, li, blockquote, .content {
   transition: opacity .2s ease, filter .2s ease;
 }
 
-/* Dim others when one is active (JS toggles .has-active) */
-#floating-nav.has-active a { opacity: .45; }
+html { scroll-behavior: smooth; }
 
-/* Active link (JS adds .is-active AND inline weight 700!important) */
+/* dim all when there is an active link */
+#floating-nav .floating-nav__inner.has-active a { opacity: .4; transition: opacity .2s ease; }
+/* restore the active one */
 #floating-nav a.is-active {
+  font-weight: 700 !important;  /* wins over your global 400!important */
   opacity: 1 !important;
-  filter: brightness(1.2);
+  color: #fff !important;
   text-decoration: none !important;
 }
-
-/* Hover: no underline, slight brighten */
-#floating-nav a:hover { opacity: .95; text-decoration: none; }
+#floating-nav a:hover { opacity: .8; text-decoration: none; }
 
 /* Anchor landing: add small internal space at top of sections */
 :root { --floating-nav-h: 56px; } /* tweak if your bar is taller */
@@ -313,3 +313,4 @@ section[id]:not(#banner) .inner { padding-top: 0 !important; margin-top: 0 !impo
 section[id]:not(#banner) {
   padding-top: calc(var(--menu-height) + 1.5rem);  /* real visible white space */
 }
+
