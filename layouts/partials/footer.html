@@ -19,87 +19,53 @@
   const nav = document.getElementById('floating-nav');
   if (!nav) return;
 
-  const inner = nav.querySelector('.floating-nav__inner');
-  const links = Array.from(nav.querySelectorAll('a[data-scroll]'));
-  const hrefToId = (href) => href && href.startsWith('#') ? href.slice(1) : null;
-  const ids = links.map(a => hrefToId(a.getAttribute('href'))).filter(Boolean);
-  const sections = ids.map(id => document.getElementById(id)).filter(Boolean);
+  const inner  = nav.querySelector('.floating-nav__inner');
+  const links  = Array.from(nav.querySelectorAll('a[data-scroll]'));
+  const ids    = links
+    .map(a => a.getAttribute('href'))
+    .filter(h => h && h.startsWith('#'))
+    .map(h => h.slice(1));
+  const sections = ids
+    .map(id => document.getElementById(id))
+    .filter(Boolean);
+
   const banner = document.getElementById('banner');
 
-  /* --- show/hide nav only based on banner visibility --- */
+  /* --- Show/hide nav only based on banner visibility --- */
   function showNav() { nav.classList.add('is-visible'); }
   function hideNav() { nav.classList.remove('is-visible'); }
 
-  let io;
-  function connectObserver() {
-    if (!banner) { showNav(); return; }
-    io = new IntersectionObserver(entries => {
-      const e = entries[0];
-      if (e && e.isIntersecting && e.intersectionRatio > 0.2) {
-        // Banner clearly visible: hide bar
-        hideNav();
-      } else {
-        showNav();
-      }
+  if (banner) {
+    const vis = new IntersectionObserver(([entry]) => {
+      if (entry && entry.isIntersecting && entry.intersectionRatio > 0.2) hideNav();
+      else showNav();
     }, { threshold: [0, 0.2, 0.4] });
-    io.observe(banner);
+    vis.observe(banner);
+  } else {
+    showNav();
   }
-  connectObserver();
 
-  /* --- active link styling (bold + dim others) --- */
+  /* --- Active link on scroll (no custom scrolling, no offsets) --- */
   function setActive(id) {
     let any = false;
     links.forEach(a => {
       const active = (a.getAttribute('href') === '#' + id);
       a.classList.toggle('is-active', active);
-      if (active) {
-        // force bold over your global 400!important
-        a.style.setProperty('font-weight', '700', 'important');
-        any = true;
-      } else {
-        a.style.removeProperty('font-weight');
-      }
+      any = any || active;
     });
     inner.classList.toggle('has-active', any);
   }
 
-  const sectionIO = new IntersectionObserver(entries => {
+  const spy = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) setActive(entry.target.id);
     });
-  }, { rootMargin: '-40% 0px -40% 0px', threshold: 0 });
-  sections.forEach(sec => sectionIO.observe(sec));
-
-  /* --- smooth scroll with exact offset so no previous section shows --- */
-  function navHeight() {
-    const h = Math.round(nav.getBoundingClientRect().height);
-    return h || 56;
-  }
-  function scrollToSection(el) {
-    if (!el) return;
-    const extraClear = 14; // push a touch further so previous section never peeks
-    const y = el.getBoundingClientRect().top + window.pageYOffset - navHeight() - extraClear;
-    window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
-  }
-
-  nav.addEventListener('click', (e) => {
-    const a = e.target.closest('a[data-scroll]');
-    if (!a) return;
-    const href = a.getAttribute('href') || '';
-    if (!href.startsWith('#')) return;
-    e.preventDefault();
-    showNav(); // ensure bar is visible during the jump
-    if (io) io.disconnect(); // avoid flicker while scrolling
-    scrollToSection(document.querySelector(href));
-    setTimeout(connectObserver, 600); // resume after motion
+  }, {
+    // “middle of viewport” counts as active
+    rootMargin: '-45% 0px -45% 0px',
+    threshold: 0
   });
 
-  /* --- handle loading with an initial hash --- */
-  window.addEventListener('load', () => {
-    if (location.hash) {
-      const t = document.querySelector(location.hash);
-      setTimeout(() => scrollToSection(t), 0);
-    }
-  });
+  sections.forEach(sec => spy.observe(sec));
 })();
 </script>
