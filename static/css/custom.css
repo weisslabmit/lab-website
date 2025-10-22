@@ -333,36 +333,37 @@ p, li, blockquote, .content {
   opacity: 0.8;
 }
 
-/* Use the real measured nav height everywhere */
-:root { --floating-nav-h: 56px; } /* JS overwrites this to exact px on load */
+/* === Fixed top offset for anchor jumps (pure CSS; no JS) === */
+/* Set your floating menu height once here. Measure if needed. */
+:root { --floating-nav-h: 56px; }  /* change to 60–64px if your bar is taller */
 
-/* Apply INSIDE spacing to the actual sections only */
-#research, #people, #resources, #contact, #publications {
-  /* Where anchor jumps land: exactly below the bar (+2px breathing) */
-  padding-top: 0.5rem;
+/* Give sections a small visible gap INSIDE them */
+section[id]:not(#banner) {
+  position: relative;
+  padding-top: 0.75rem;  /* small white space under the bar */
 }
 
-/* Headings often have their own top margins; zero the first child to avoid double gap */
-#research > *:first-child,
-#people > *:first-child,
-#resources > *:first-child,
-#contact > *:first-child,
-#publications > *:first-child {
-  margin-top: 0;
+/* Anchor-offset trick:
+   - The pseudo-element creates invisible space equal to the nav height (+ a bit),
+   - Negative margin pulls the layout back so only scroll position is affected.
+   - Result: clicking a link lands the section perfectly below the fixed bar.
+*/
+section[id]:not(#banner)::before {
+  content: "";
+  display: block;
+  height: calc(var(--floating-nav-h) + 12px);   /* bump +12px if you still see a sliver */
+  margin-top: calc(-1 * (var(--floating-nav-h) + 12px));
+  visibility: hidden;
+  pointer-events: none;
 }
 
-/* Some Story theme blocks add inner padding/margins; keep their top tight */
-#research .inner, #people .inner,
-#resources .inner, #contact .inner, #publications .inner {
-  padding-top: 0;
-  margin-top: 0;
+/* Tighten the very first child so headings don’t add extra top gap */
+section[id]:not(#banner) > *:first-child {
+  margin-top: 0 !important;
 }
 
-/* If your section titles are h2/h3, reduce their default top margins just in case */
-#research h2:first-child, #research h3:first-child,
-#people h2:first-child, #people h3:first-child,
-#resources h2:first-child, #resources h3:first-child,
-#contact h2:first-child, #contact h3:first-child,
-#publications h2:first-child, #publications h3:first-child {
-  margin-top: 0.15rem;
+/* Some Story blocks add inner padding; keep their top tight */
+section[id]:not(#banner) .inner {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
 }
