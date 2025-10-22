@@ -580,7 +580,7 @@ h.prototype.getPseudoIds=h.prototype.D;h.prototype.getGroupName=h.prototype.B;})
       setTimeout(function () {
         sendSize();
         window.parent.postMessage({ type: 'menuReady' }, '*');
-      }, 600); // bump if your animations run longer
+      }, 600); // bump if your iframe animations take longer
     });
   });
 
@@ -595,6 +595,7 @@ h.prototype.getPseudoIds=h.prototype.D;h.prototype.getGroupName=h.prototype.B;})
   }
 })();
 </script>
+
 
 
 </body>

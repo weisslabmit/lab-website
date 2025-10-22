@@ -238,33 +238,34 @@ p, li, blockquote, .content {
   border: 0;
 }
 
-/* Overlay sits on top of the iframe only while loading */
+/* Spinner overlay stays as you had it */
 .menu-frame__loader {
   position: absolute;
   inset: 0;
-  display: flex;                 /* will be toggled by JS */
+  display: flex;
   align-items: center;
   justify-content: center;
-  background: transparent;
-  pointer-events: none;          /* clicks pass through once hidden */
-  transition: opacity .2s ease, visibility .2s ease;
+  background: transparent;               /* no gray veil */
+  pointer-events: none;
+  transition: opacity .3s ease, visibility .3s ease;
   z-index: 2;
 }
 
-/* Tiny spinner */
+/* Rotate your plasmid.svg as the spinner */
 .menu-frame__spinner {
-  width: 16px; height: 16px;
-  border: 2px solid currentColor;
-  border-right-color: transparent;
-  border-radius: 50%;
-  animation: menuspin .8s linear infinite;
-  opacity: .7;
+  width: 28px;
+  height: 28px;
+  display: block;
+  animation: plasmid-spin 1s linear infinite;
+  transform-origin: 50% 50%;
 }
-@keyframes menuspin { to { transform: rotate(360deg); } }
 
-/* Hidden state after iframe is ready */
+/* Keep this so the overlay fades out when ready */
 .menu-frame--ready .menu-frame__loader {
   opacity: 0;
   visibility: hidden;
 }
 
+@keyframes plasmid-spin {
+  to { transform: rotate(360deg); }
+}

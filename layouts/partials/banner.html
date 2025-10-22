@@ -2,7 +2,6 @@
   <div class="content">
     <h1>The Weiss<br>Lab @MIT</h1>
 
-    <!-- Wrap the menu iframe + loader together -->
     <div class="embed-frame menu-frame">
       <iframe
         src='{{ "embeds/menu/index.html" | relURL }}?v={{ now.Unix }}'
@@ -11,14 +10,13 @@
         referrerpolicy="no-referrer"
         sandbox="allow-same-origin allow-scripts"
         scrolling="no"
-        style="opacity:0; transition: opacity .35s ease;">
-        
-      </iframe>
+        style="opacity:0; transition: opacity .35s ease;"  <!-- fade target -->
+      ></iframe>
 
-      <!-- Loader that covers ONLY the iframe area -->
-      <div class="menu-frame__loader">
-        <span class="menu-frame__spinner">
-        </span>
+      <!-- Spinner overlay ONLY over the iframe -->
+      <div class="menu-frame__loader" aria-hidden="true" role="status">
+        <!-- ⬇️ Use your plasmid.svg; put it under /static/ as shown in step 2 -->
+        <img class="menu-frame__spinner" src='{{ "plasmid.svg" | relURL }}' alt="" />
       </div>
     </div>
   </div>

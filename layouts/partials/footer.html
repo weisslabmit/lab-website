@@ -30,28 +30,31 @@
   }
 
   function reveal() {
-    // fade the iframe in
+    // Fade iframe (menu) in
     frame.style.opacity = '1';
+    root.classList.add('menu-frame--ready'); // keeps overlay fade-out rule active
 
-    // optional: keep your class in case you use it elsewhere
-    root.classList.add('menu-frame--ready');
-
-    // hide spinner slightly after fade starts (nice cross-fade)
+    // Hide overlay a beat after the iframe starts fading (cross-fade)
     if (overlay) {
       setTimeout(function () {
         overlay.style.opacity = '0';
         overlay.style.visibility = 'hidden';
-      }, 350); // match the .35s in the iframe's transition
+      }, 350); // match the iframe transition
     }
   }
 
-  window.addEventListener('message', function (e) {
-    if (e.source !== frame.contentWindow || !e.data) return;
+  // Only accept messages from THIS iframe
+  function fromThisFrame(e){ return e.source === frame.contentWindow; }
 
+  window.addEventListener('message', function (e) {
+    if (!fromThisFrame(e) || !e.data) return;
+
+    // optional dynamic height support if the iframe sends it
     if (e.data.type === 'menuSize' && typeof e.data.height === 'number') {
       setHeight(e.data.height);
       return;
     }
+
     if (e.data.type === 'menuReady') {
       reveal();
       return;
@@ -59,12 +62,12 @@
   });
 
   frame.addEventListener('load', function () {
+    // ask iframe to report its height when it’s ready
     try { frame.contentWindow.postMessage({ type: 'requestMenuSize' }, '*'); } catch {}
-    // no early reveal here
+    // no early reveal here; we wait for menuReady
   });
 
-  // failsafe
+  // Ultimate failsafe (never stuck)
   setTimeout(reveal, 30000);
 })();
 </script>
-
