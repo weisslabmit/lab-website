@@ -18,6 +18,7 @@
     {{ $noscript := resources.Get "sass/noscript.scss" | resources.ExecuteAsTemplate "noscript.scss" . | toCSS (dict "targetPath" "css/noscript.css" "enableSourceMap" false) | minify }}
     <noscript><link rel="stylesheet" href="{{ $noscript.RelPermalink }}" /></noscript>
   {{ end }}
+  
 
   <!-- FontAwesome (if configured) -->
   {{ range .Site.Params.asset.fontawesome_css -}}
@@ -26,4 +27,10 @@
 
   <!-- Your overrides LAST -->
   <link rel="stylesheet" href="{{ "css/custom.css" | relURL }}?v={{ now.Unix }}">
+
+      {{ $tl := (printf "%s?v=%d" ("embeds/timeline-lab/index.html" | relURL) (now.Unix)) }}
+    <link rel="preload" href="{{ $tl }}" as="document" importance="high">
+    <link rel="prefetch" href="{{ $tl }}" as="document">
+
+  
 </head>

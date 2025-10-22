@@ -73,57 +73,45 @@
 
 <script>
 (function () {
-  const frame  = document.getElementById('lab-timeline');
-  const block  = document.getElementById('research-timeline'); // wrapper div inside #research
-  const banner = document.getElementById('banner');
-  if (!frame || !block) return;
+  const iframe = document.getElementById('lab-timeline');
+  const timelineBlock = document.getElementById('research-timeline');
+  if (!iframe || !timelineBlock) return;
 
-  const wantedSrc = frame.getAttribute('data-src');
+  const wanted = iframe.getAttribute('data-src');
   let loaded = false;
-  let timelineIO = null;
 
   function loadTimeline() {
     if (loaded) return;
     loaded = true;
-    frame.src = wantedSrc;
-    if (timelineIO) timelineIO.disconnect();
+    iframe.src = wanted;
+    if (io) io.disconnect();
   }
 
-  // Load immediately if user clicks “Research”
+  // ❶ Load immediately if "Research" is clicked
   const researchLink =
     document.querySelector('#floating-nav a[href="#research"]') ||
     document.querySelector('a[href="#research"][data-scroll]');
   if (researchLink) {
-    researchLink.addEventListener('click', () => loadTimeline());
+    researchLink.addEventListener('click', loadTimeline, { once: true });
   }
 
-  // Load immediately if landing on #research
+  // ❷ Load immediately if arriving directly on #research
   if (location.hash === '#research') loadTimeline();
   window.addEventListener('hashchange', () => {
     if (location.hash === '#research') loadTimeline();
   });
 
-  // Observer: trigger when top of research is 100px above viewport top
-  timelineIO = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.boundingClientRect.top <= 100 && entry.isIntersecting) {
-        loadTimeline();
-      }
-    });
-  }, {
-    root: null,
-    rootMargin: '-100px 0px 0px 0px',  // start when about 100px into Research
-    threshold: 0
-  });
-
-  timelineIO.observe(block);
-
-  // Extra safety: scroll-based fallback
-  window.addEventListener('scroll', () => {
-    if (!loaded) {
-      const researchTop = block.getBoundingClientRect().top + window.scrollY;
-      if (window.scrollY > researchTop - 100) loadTimeline();
+  // ❸ Load once any pixel of the TIMELINE wrapper enters view
+  const io = new IntersectionObserver((entries) => {
+    if (loaded) return;
+    for (const e of entries) {
+      if (e.isIntersecting) { loadTimeline(); break; }
     }
-  }, { passive: true });
+  }, { threshold: 0, rootMargin: '0px' });
+
+  io.observe(timelineBlock);
+
+  // ❹ Failsafe: load after 2 s no matter what (in case observer fails)
+  setTimeout(() => { if (!loaded) loadTimeline(); }, 2000);
 })();
 </script>
