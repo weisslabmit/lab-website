@@ -267,3 +267,13 @@ p, li, blockquote, .content {
   opacity: 0;
   visibility: hidden;
 }
+
+/* Smooth reveal for the menu iframe */
+#banner .menu-frame iframe {
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+#banner .menu-frame.menu-frame--ready iframe {
+  opacity: 1;
+}
