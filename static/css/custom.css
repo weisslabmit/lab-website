@@ -311,7 +311,27 @@ p, li, blockquote, .content {
   filter: brightness(1.2);
 }
 
+/* ===== Dim inactive menu links when a section is active ===== */
 
+/* Base state when any link is active — dim all links a bit */
+#floating-nav .floating-nav__inner:has(a.is-active) a {
+  opacity: 0.4; /* makes everything faint */
+  transition: opacity 0.3s ease;
+}
+
+/* Restore full brightness for the active link */
+#floating-nav .floating-nav__inner a.is-active {
+  opacity: 1 !important;
+  font-weight: 700 !important;
+  color: #fff !important;
+  text-decoration: none !important;
+  filter: brightness(1.2);
+}
+
+/* Slight hover boost even if not active */
+#floating-nav .floating-nav__inner a:hover {
+  opacity: 0.8;
+}
 
 /* Use the real measured nav height everywhere */
 :root { --floating-nav-h: 56px; } /* JS overwrites this to exact px on load */
