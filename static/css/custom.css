@@ -256,7 +256,7 @@ p, li, blockquote, .content {
   width: 280px;
   height: 280px;
   display: block;
-  animation: plasmid-spin 1s linear infinite;
+  animation: plasmid-spin 2s linear infinite;
   transform-origin: 50% 50%;
 }
 
