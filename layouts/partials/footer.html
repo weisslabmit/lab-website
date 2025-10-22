@@ -88,7 +88,7 @@
   // Preload early as the timeline block approaches (tweak rootMargin to be earlier/later)
   const io = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) { loadTimeline(); io.disconnect(); } });
-  }, { rootMargin: '600px 0px', threshold: 0 });
+  }, { rootMargin: '0px 0px', threshold: 0 });
   io.observe(target);
 
   // Clicking “Research” should load immediately
