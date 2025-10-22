@@ -69,3 +69,44 @@
   sections.forEach(sec => spy.observe(sec));
 })();
 </script>
+
+
+<script>
+(function () {
+  const iframe = document.getElementById('lab-timeline');
+  const research = document.getElementById('research');
+  if (!iframe || !research) return;
+
+  let started = false;
+  const startTimeline = () => {
+    if (started) return;
+    started = true;
+    const url = iframe.getAttribute('data-src');
+    if (url) iframe.src = url;
+  };
+
+  // If page loads with #research, start immediately (after layout)
+  window.addEventListener('load', () => {
+    if (location.hash === '#research') {
+      setTimeout(startTimeline, 0);
+    }
+  });
+
+  // Also start on first intersection
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting && e.intersectionRatio > 0.2) {
+        startTimeline();
+        io.disconnect();
+      }
+    });
+  }, { threshold: [0, 0.2, 0.4] });
+  io.observe(research);
+
+  // Safety: also start if the user clicks a nav link to #research
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest('a[href="#research"]');
+    if (a) setTimeout(startTimeline, 180); // after the scroll kicks in
+  });
+})();
+</script>
