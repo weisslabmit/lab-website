@@ -73,40 +73,39 @@
 
 <script>
 (function () {
-  const iframe = document.getElementById('lab-timeline');
-  const research = document.getElementById('research');
-  if (!iframe || !research) return;
+  const frame = document.getElementById('lab-timeline');
+  const target = document.getElementById('research-timeline');
+  if (!frame || !target) return;
 
-  let started = false;
-  const startTimeline = () => {
-    if (started) return;
-    started = true;
-    const url = iframe.getAttribute('data-src');
-    if (url) iframe.src = url;
-  };
+  const wantedSrc = frame.getAttribute('data-src');
 
-  // If page loads with #research, start immediately (after layout)
-  window.addEventListener('load', () => {
-    if (location.hash === '#research') {
-      setTimeout(startTimeline, 0);
+  function loadTimeline() {
+    if (!frame.src || frame.src === '' || frame.src === 'about:blank') {
+      frame.src = wantedSrc;
     }
+  }
+
+  // Preload early as the timeline block approaches (tweak rootMargin to be earlier/later)
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { loadTimeline(); io.disconnect(); } });
+  }, { rootMargin: '600px 0px', threshold: 0 });
+  io.observe(target);
+
+  // Clicking “Research” should load immediately
+  const researchLink =
+    document.querySelector('#floating-nav a[href="#research"]') ||
+    document.querySelector('a[href="#research"][data-scroll]');
+  if (researchLink) {
+    researchLink.addEventListener('click', () => { loadTimeline(); }, { once: false });
+  }
+
+  // If landing on #research, load right away
+  if (location.hash === '#research') loadTimeline();
+  window.addEventListener('hashchange', () => {
+    if (location.hash === '#research') loadTimeline();
   });
 
-  // Also start on first intersection
-  const io = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting && e.intersectionRatio > 0.2) {
-        startTimeline();
-        io.disconnect();
-      }
-    });
-  }, { threshold: [0, 0.2, 0.4] });
-  io.observe(research);
-
-  // Safety: also start if the user clicks a nav link to #research
-  document.addEventListener('click', (e) => {
-    const a = e.target.closest('a[href="#research"]');
-    if (a) setTimeout(startTimeline, 180); // after the scroll kicks in
-  });
+  // Failsafe: prewarm shortly after page load in case nothing triggered yet
+  setTimeout(loadTimeline, 900);
 })();
 </script>
