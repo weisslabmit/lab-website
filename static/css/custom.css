@@ -306,3 +306,8 @@ p, li, blockquote, .content {
   text-shadow: 0 0 6px rgba(255,255,255,0.2);
 }
 
+/* Add top padding to all main sections except banner */
+section:not(#banner) {
+  scroll-margin-top: 6rem; /* ensures smooth scroll lands below the menu */
+  padding-top: 7rem;       /* creates visible breathing space under menu */
+}
