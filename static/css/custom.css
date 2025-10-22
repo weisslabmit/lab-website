@@ -59,6 +59,7 @@
   letter-spacing: 0.0005em;  /* <-- adds subtle spacing between letters */
   color: #000;                      /* change to #fff if using dark bg */
   white-space: pre-line !important; /* allows <br> */
+  margin-bottom: 0 !important;
 }
 
 /* Hide other theme-injected banner bits */
@@ -248,8 +249,8 @@ p, li, blockquote, .content {
 
 
 .menu-frame__spinner {
-  width: 120px;
-  height: 120px;
+  width: 140px;
+  height: 140px;
   animation: menuspin 2.4s linear infinite;
 }
 
