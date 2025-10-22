@@ -321,32 +321,33 @@ section[id]:not(#banner) {
    =============================== */
 .timeline-block {
   display: flex;
-  justify-content: center;         /* horizontally center the inner frame */
-  align-items: center;             /* vertically center it (if taller section) */
+  justify-content: center;
+  align-items: center;
   padding: 3rem 1rem;
   background: transparent;
-  text-align: center;              /* safeguard centering alignment */
 }
 
 .timeline-frame {
   position: relative;
+  z-index: 5;
   width: 100%;
-  max-width: 1200px;               /* natural HTML size */
+  max-width: 1200px;
   aspect-ratio: 1200 / 500;
+  margin: 0 auto;
   overflow: hidden;
-  margin: 0 auto;                  /* double ensure centering */
+  container-type: inline-size; /* enables responsive scaling */
 }
 
-/* Center + scale iframe correctly */
 .timeline-frame iframe {
-  display: block;
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 1200px;
+  width: 1200px;           /* internal stage size */
   height: 500px;
-  border: none;
-  transform: translate(-50%, -50%)
-             scale(clamp(0.2, calc(100% / 1200), 1)); /* scales responsively */
-  transform-origin: center center; /* center scaling anchor */
+  border: 0;
+  display: block;
+  transform-origin: top left;
+  transform:
+    translate(-50%, -50%)
+    scale( clamp(0.2, calc(100cqw / 1200px), 1) );
 }
