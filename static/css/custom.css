@@ -253,8 +253,8 @@ p, li, blockquote, .content {
 
 /* Rotate your plasmid.svg as the spinner */
 .menu-frame__spinner {
-  width: 28px;
-  height: 28px;
+  width: 280px;
+  height: 280px;
   display: block;
   animation: plasmid-spin 1s linear infinite;
   transform-origin: 50% 50%;
