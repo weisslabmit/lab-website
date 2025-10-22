@@ -233,20 +233,24 @@ p, li, blockquote, .content {
   position: relative;
 }
 
+/* White overlay covers the menu iframe */
 .menu-frame__loader {
   position: absolute;
   inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: transparent;
+  background: white;                 /* <-- white background */
   z-index: 2;
+  opacity: 1;
+  transition: opacity 0.8s ease;     /* fade smoothly */
 }
+
 
 .menu-frame__spinner {
   width: 160px;
   height: 160px;
-  animation: menuspin 3s linear infinite;
+  animation: menuspin 2s linear infinite;
 }
 
 @keyframes menuspin {

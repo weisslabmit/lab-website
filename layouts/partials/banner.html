@@ -22,3 +22,16 @@
     
   </div>
 </section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const loader = document.querySelector('.menu-frame__loader');
+    if (!loader) return;
+
+    // Wait 3 seconds, then fade out
+    setTimeout(() => {
+      loader.style.opacity = '0';
+      setTimeout(() => loader.style.display = 'none', 800);
+    }, 3000);
+  });
+</script>
