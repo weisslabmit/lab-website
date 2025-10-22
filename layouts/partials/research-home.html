@@ -1,16 +1,15 @@
 <!-- Fixed, non-CMS timeline block at the top of Research -->
-<div class="timeline-block">
-  <div class="timeline-frame">
-    <iframe
-      src='{{ "embeds/timeline-lab/index.html" | relURL }}?v={{ now.Unix }}'
-      title="Research Timeline"
-      loading="lazy"
-      referrerpolicy="no-referrer"
-      sandbox="allow-same-origin allow-scripts"
-      scrolling="no">
-    </iframe>
-  </div>
+<div class="timeline-frame">
+  <iframe
+    src='{{ "embeds/timeline-lab/index.html" | relURL }}?v={{ now.Unix }}'
+    title="Lab Timeline"
+    loading="lazy"
+    referrerpolicy="no-referrer"
+    sandbox="allow-scripts allow-same-origin"
+    scrolling="no">
+  </iframe>
 </div>
+
 
 <section id="research" class="wrapper">
   {{ with site.GetPage "section" "research" }}
