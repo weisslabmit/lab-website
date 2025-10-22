@@ -308,6 +308,5 @@ p, li, blockquote, .content {
 
 /* Add top padding to all main sections except banner */
 section:not(#banner) {
-  scroll-margin-top: 3rem; /* ensures smooth scroll lands below the menu */
   padding-top: 4rem;       /* creates visible breathing space under menu */
 }
