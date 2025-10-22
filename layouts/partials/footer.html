@@ -16,38 +16,65 @@
 
 <script>
 (function () {
-  var nav = document.getElementById('floating-nav');
+  const nav = document.getElementById('floating-nav');
   if (!nav) return;
+
+  const links = [...nav.querySelectorAll('a[data-scroll]')];
+  const sectionIds = links
+    .map(a => a.getAttribute('href'))
+    .filter(h => h.startsWith('#'))
+    .map(h => h.substring(1));
+
+  const sections = sectionIds
+    .map(id => document.getElementById(id))
+    .filter(Boolean);
 
   function show() { nav.classList.add('is-visible'); }
   function hide() { nav.classList.remove('is-visible'); }
 
-  var banner = document.getElementById('banner');
-
-  // On pages without a banner: show the nav immediately
-  if (!banner) {
-    show();
-  } else {
-    // Toggle based on banner visibility
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting && entry.intersectionRatio > 0) hide();
-        else show();
-      });
-    }, { root: null, threshold: [0, 0.01] });
+  const banner = document.getElementById('banner');
+  if (!banner) show();
+  else {
+    const io = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && entry.intersectionRatio > 0) hide();
+          else show();
+        });
+      },
+      { root: null, threshold: [0, 0.01] }
+    );
     io.observe(banner);
   }
 
-  // Smooth-scroll for internal links (hash links)
-  nav.addEventListener('click', function (e) {
-    var a = e.target.closest('a[data-scroll]');
+  // Smooth-scroll behavior
+  nav.addEventListener('click', e => {
+    const a = e.target.closest('a[data-scroll]');
     if (!a) return;
-    var href = a.getAttribute('href') || '';
+    const href = a.getAttribute('href') || '';
     if (href.startsWith('#')) {
       e.preventDefault();
-      var target = document.querySelector(href);
+      const target = document.querySelector(href);
       if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   });
+
+  // Highlight active section
+  const highlight = id => {
+    links.forEach(link => {
+      link.classList.toggle('is-active', link.getAttribute('href') === '#' + id);
+    });
+  };
+
+  const observer = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) highlight(entry.target.id);
+      });
+    },
+    { rootMargin: '-40% 0px -40% 0px', threshold: 0 }
+  );
+
+  sections.forEach(sec => observer.observe(sec));
 })();
 </script>

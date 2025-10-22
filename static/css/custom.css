@@ -298,3 +298,9 @@ p, li, blockquote, .content {
     padding: .5rem .75rem;
   }
 }
+/* ===== Floating menu active link ===== */
+#floating-nav a.is-active {
+  font-weight: 700;
+  opacity: 1;
+  text-decoration: underline;
+}
