@@ -1,8 +1,8 @@
 ---
-title: Ron weiss
-weight: 1
+title: Ron Weiss
 role: The boss
 website: https://janedoe.mit.edu
 image: /uploads/ron.jpeg
-summary: Bio things
+weight: 1
+summary: ""
 ---
