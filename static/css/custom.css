@@ -298,15 +298,36 @@ p, li, blockquote, .content {
     padding: .5rem .75rem;
   }
 }
-/* ===== Floating menu active link ===== */
-#floating-nav a.is-active {
-  font-weight: 800;
+/* Hover: no underline */
+#floating-nav a:hover,
+#floating-nav a:focus {
+  text-decoration: none;
   opacity: 1;
-  color: #fff;
-  text-shadow: 0 0 15px rgba(255,255,255,0.2);
 }
+
+/* Active: win over the global !important + use real loaded weight (700) */
+#floating-nav .floating-nav__inner a.is-active {
+  font-weight: 700 !important;      /* Roboto Mono supports 700, not 800 */
+  color: #fff !important;
+  opacity: 1 !important;
+  text-decoration: none !important;
+  /* subtle contrast boost so it pops on black */
+  filter: brightness(1.2);
+}
+You
 
 /* Add top padding to all main sections except banner */
 section:not(#banner) {
   padding-top: 4rem;       /* creates visible breathing space under menu */
+}
+
+/* --- Floating bar height variable --- */
+:root { --floating-nav-h: 56px; }
+
+/* Space INSIDE sections (not the banner) */
+section:not(#banner) {
+  /* visible breathing room inside the section */
+  padding-top: calc(var(--floating-nav-h) + 1.25rem);
+  /* anchor jumps land below the bar */
+  scroll-margin-top: calc(var(--floating-nav-h) + 0.75rem);
 }
