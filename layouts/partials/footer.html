@@ -15,57 +15,15 @@
 </footer>
 
 <script>
-(function () {
-  var root    = document.querySelector('#banner .menu-frame');
-  if (!root) return;
+  document.addEventListener("DOMContentLoaded", () => {
+    const loader = document.querySelector('.menu-frame__loader');
+    if (!loader) return;
 
-  var frame   = root.querySelector('iframe');
-  var overlay = root.querySelector('.menu-frame__loader');
-  if (!frame) return;
-
-  function setHeight(px){
-    if (!px || !isFinite(px)) return;
-    var h = Math.max(40, Math.min(px, 1000));
-    frame.style.height = h + 'px';
-  }
-
-  function reveal() {
-    // Fade iframe (menu) in
-    frame.style.opacity = '1';
-    root.classList.add('menu-frame--ready'); // keeps overlay fade-out rule active
-
-    // Hide overlay a beat after the iframe starts fading (cross-fade)
-    if (overlay) {
-        setTimeout(() => overlay.style.display = 'none', 2000); // 2 seconds before hiding
-
-    }
-  }
-
-  // Only accept messages from THIS iframe
-  function fromThisFrame(e){ return e.source === frame.contentWindow; }
-
-  window.addEventListener('message', function (e) {
-    if (!fromThisFrame(e) || !e.data) return;
-
-    // optional dynamic height support if the iframe sends it
-    if (e.data.type === 'menuSize' && typeof e.data.height === 'number') {
-      setHeight(e.data.height);
-      return;
-    }
-
-    if (e.data.type === 'menuReady') {
-      reveal();
-      return;
-    }
+    // Wait 3 seconds, then fade out
+    setTimeout(() => {
+      loader.style.transition = 'opacity 0.8s ease';
+      loader.style.opacity = '0';
+      setTimeout(() => loader.style.display = 'none', 800);
+    }, 4000);
   });
-
-  frame.addEventListener('load', function () {
-    // ask iframe to report its height when it’s ready
-    try { frame.contentWindow.postMessage({ type: 'requestMenuSize' }, '*'); } catch {}
-    // no early reveal here; we wait for menuReady
-  });
-
-  // Ultimate failsafe (never stuck)
-  setTimeout(reveal, 30000);
-})();
 </script>
