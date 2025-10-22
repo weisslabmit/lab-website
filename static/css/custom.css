@@ -233,6 +233,9 @@ p, li, blockquote, .content {
   transition: opacity 0.8s ease;     /* fade smoothly */
 }
 
+/* =========================================================
+   Menu Spinner + Floating Nav + Section Offset
+========================================================= */
 
 .menu-frame__spinner {
   width: 200px;
@@ -244,23 +247,13 @@ p, li, blockquote, .content {
   to { transform: rotate(360deg); }
 }
 
-/* ===== Floating menu (appears when banner not visible) ===== */
+/* ===== Sticky Floating Menu ===== */
 #floating-nav {
-  position: fixed;
-  top: 0; left: 0; right: 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
   background: #000;
   color: #fff;
-  z-index: 1000;
-  transform: translateY(-100%);
-  opacity: 0;
-  pointer-events: none;                /* no clicks while hidden */
-  transition: transform .28s ease, opacity .28s ease;
-}
-
-#floating-nav.is-visible {
-  transform: translateY(0);
-  opacity: 1;
-  pointer-events: auto;
 }
 
 #floating-nav .floating-nav__inner {
@@ -270,7 +263,7 @@ p, li, blockquote, .content {
   display: flex;
   gap: 1.25rem;
   align-items: center;
-  justify-content: center;             /* center the items */
+  justify-content: center; /* centered layout */
 }
 
 #floating-nav a {
@@ -279,90 +272,73 @@ p, li, blockquote, .content {
   font-weight: 400;
   letter-spacing: .02em;
   opacity: .9;
-}
-#floating-nav a:hover,
-#floating-nav a:focus {
-  text-decoration: underline;
-  opacity: 1;
+  transition: opacity 0.3s ease, filter 0.3s ease;
 }
 
-
-/* Small screens: tighten spacing a bit */
-@media (max-width: 520px) {
-  #floating-nav .floating-nav__inner {
-    gap: .9rem;
-    padding: .5rem .75rem;
-  }
-}
-/* Hover: no underline */
 #floating-nav a:hover,
 #floating-nav a:focus {
   text-decoration: none;
   opacity: 1;
 }
 
-/* Active: win over the global !important + use real loaded weight (700) */
-#floating-nav .floating-nav__inner a.is-active {
-  font-weight: 700 !important;      /* Roboto Mono supports 700, not 800 */
-  color: #fff !important;
-  opacity: 1 !important;
-  text-decoration: none !important;
-  /* subtle contrast boost so it pops on black */
-  filter: brightness(1.2);
-}
+/* ===== Active + Dimming Behavior ===== */
 
-/* ===== Dim inactive menu links when a section is active ===== */
-
-/* Base state when any link is active — dim all links a bit */
+/* Dim all when one is active */
 #floating-nav .floating-nav__inner:has(a.is-active) a {
-  opacity: 0.4; /* makes everything faint */
-  transition: opacity 0.3s ease;
+  opacity: 0.4;
 }
 
-/* Restore full brightness for the active link */
+/* Active link stands out strongly */
 #floating-nav .floating-nav__inner a.is-active {
   opacity: 1 !important;
-  font-weight: 700 !important;
+  font-weight: 700 !important; /* Roboto Mono max weight */
   color: #fff !important;
   text-decoration: none !important;
   filter: brightness(1.2);
 }
 
-/* Slight hover boost even if not active */
+/* Slight hover boost even if dimmed */
 #floating-nav .floating-nav__inner a:hover {
   opacity: 0.8;
 }
 
-/* === Fixed top offset for anchor jumps (pure CSS; no JS) === */
-/* Set your floating menu height once here. Measure if needed. */
-:root { --floating-nav-h: 56px; }  /* change to 60–64px if your bar is taller */
-
-/* Give sections a small visible gap INSIDE them */
-section[id]:not(#banner) {
-  position: relative;
-  padding-top: 0.75rem;  /* small white space under the bar */
+/* ===== Responsive tweaks ===== */
+@media (max-width: 520px) {
+  #floating-nav .floating-nav__inner {
+    gap: .9rem;
+    padding: .5rem .75rem;
+  }
 }
 
-/* Anchor-offset trick:
-   - The pseudo-element creates invisible space equal to the nav height (+ a bit),
-   - Negative margin pulls the layout back so only scroll position is affected.
-   - Result: clicking a link lands the section perfectly below the fixed bar.
-*/
+/* ===== Section Spacing / Anchor Offset ===== */
+
+/* Adjust this if your bar is taller */
+:root {
+  --floating-nav-h: 56px;
+}
+
+/* Give sections small visible space inside */
+section[id]:not(#banner) {
+  position: relative;
+  padding-top: 0.75rem; /* space below the bar */
+}
+
+/* Anchor-offset trick for clean jumps */
 section[id]:not(#banner)::before {
   content: "";
   display: block;
-  height: calc(var(--floating-nav-h) + 12px);   /* bump +12px if you still see a sliver */
+  height: calc(var(--floating-nav-h) + 12px);
   margin-top: calc(-1 * (var(--floating-nav-h) + 12px));
   visibility: hidden;
   pointer-events: none;
 }
 
-/* Tighten the very first child so headings don’t add extra top gap */
+/* Tighten heading tops */
 section[id]:not(#banner) > *:first-child {
   margin-top: 0 !important;
 }
 
-/* Some Story blocks add inner padding; keep their top tight */
+/* Remove inner padding if any */
 section[id]:not(#banner) .inner {
   padding-top: 0 !important;
   margin-top: 0 !important;
