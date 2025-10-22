@@ -229,58 +229,40 @@ p, li, blockquote, .content {
   font-size: clamp(1rem, 0.3vw + 0.6rem, 1.2rem);
   opacity: 0.85;
 }
-/* ===== Menu iframe wrapper ===== */
-#banner .menu-frame {
-  position: relative;
-  width: 100%;
-  height: 72px;           /* visible area for the menu */
-  min-height: 56px;       /* safety for small screens */
-  overflow: hidden;
-}
-
-@media (max-width: 640px) {
-  #banner .menu-frame { height: 56px; }
-}
-@media (min-width: 1024px) {
-  #banner .menu-frame { height: 80px; }
-}
-
-/* ===== The iframe itself ===== */
-#banner .menu-frame iframe {
+/* ===== Menu iframe loader (covers only the iframe area) ===== */
+.menu-frame { position: relative; }
+.menu-frame iframe {
   display: block;
   width: 100%;
   height: 100%;
   border: 0;
-  transition: opacity 0.3s ease;
-  opacity: 1;
 }
 
-/* ===== Overlay spinner covers only the menu iframe ===== */
+/* Overlay sits on top of the iframe only while loading */
 .menu-frame__loader {
   position: absolute;
   inset: 0;
-  display: flex;
+  display: flex;                 /* will be toggled by JS */
   align-items: center;
   justify-content: center;
-  background: transparent;       /* transparent overlay */
+  background: transparent;
   pointer-events: none;          /* clicks pass through once hidden */
-  transition: opacity 0.3s ease, visibility 0.3s ease;
+  transition: opacity .2s ease, visibility .2s ease;
   z-index: 2;
 }
 
-/* Spinner itself */
+/* Tiny spinner */
 .menu-frame__spinner {
-  width: 18px;
-  height: 18px;
+  width: 16px; height: 16px;
   border: 2px solid currentColor;
   border-right-color: transparent;
   border-radius: 50%;
-  animation: menuspin 0.8s linear infinite;
-  opacity: 0.8;
+  animation: menuspin .8s linear infinite;
+  opacity: .7;
 }
 @keyframes menuspin { to { transform: rotate(360deg); } }
 
-/* ===== Hidden state once iframe reports ready ===== */
+/* Hidden state after iframe is ready */
 .menu-frame--ready .menu-frame__loader {
   opacity: 0;
   visibility: hidden;
