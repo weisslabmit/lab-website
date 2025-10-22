@@ -248,9 +248,9 @@ p, li, blockquote, .content {
 
 
 .menu-frame__spinner {
-  width: 160px;
-  height: 160px;
-  animation: menuspin 2s linear infinite;
+  width: 120px;
+  height: 120px;
+  animation: menuspin 2.4s linear infinite;
 }
 
 @keyframes menuspin {
