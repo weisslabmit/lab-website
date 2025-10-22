@@ -303,13 +303,13 @@ section[id]:not(#banner) {
   position: relative;
   padding-top: 0.75rem; /* visible white space under the bar */
 }
-section[id]:not(#banner)::before {
-  content: "";
-  display: block;
-  height: calc(var(--floating-nav-h) + 10px);
-  margin-top: calc(-1 * (var(--floating-nav-h) + 10px));
-  visibility: hidden;
-  pointer-events: none;
-}
+
 section[id]:not(#banner) > *:first-child { margin-top: 0 !important; }
 section[id]:not(#banner) .inner { padding-top: 0 !important; margin-top: 0 !important; }
+
+/* === Real internal top spacing for sections === */
+:root { --menu-height: 56px; } /* exact height of your floating nav */
+
+section[id]:not(#banner) {
+  padding-top: calc(var(--menu-height) + 1.5rem);  /* real visible white space */
+}
