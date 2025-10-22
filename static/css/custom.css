@@ -314,7 +314,7 @@ p, li, blockquote, .content {
   /* subtle contrast boost so it pops on black */
   filter: brightness(1.2);
 }
-You
+
 
 /* Add top padding to all main sections except banner */
 section:not(#banner) {
