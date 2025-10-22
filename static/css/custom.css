@@ -286,10 +286,6 @@ p, li, blockquote, .content {
   opacity: 1;
 }
 
-/* Make anchor jumps land below the fixed bar */
-#research, #people, #resources, #contact, #publications {
-  scroll-margin-top: 56px;             /* keeps content out from under the bar */
-}
 
 /* Small screens: tighten spacing a bit */
 @media (max-width: 520px) {
