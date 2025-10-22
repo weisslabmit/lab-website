@@ -256,3 +256,10 @@ p, li, blockquote, .content {
 @keyframes menuspin {
   to { transform: rotate(360deg); }
 }
+
+.menu-frame__spinner {
+  width: 160px;
+  height: 160px;
+  opacity: 1;
+  animation: menuspin 3s linear infinite;
+}

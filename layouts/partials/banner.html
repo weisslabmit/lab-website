@@ -26,12 +26,20 @@
 <script>
   document.addEventListener("DOMContentLoaded", () => {
     const loader = document.querySelector('.menu-frame__loader');
-    if (!loader) return;
+    const spinner = document.querySelector('.menu-frame__spinner');
+    if (!loader || !spinner) return;
 
-    // Wait 3 seconds, then fade out
+    // After 3s → fade out spinner
     setTimeout(() => {
-      loader.style.opacity = '0';
-      setTimeout(() => loader.style.display = 'none', 800);
+      spinner.style.transition = 'opacity 0.8s ease';
+      spinner.style.opacity = '0';
+
+      // After another 0.5s → fade out white background
+      setTimeout(() => {
+        loader.style.transition = 'opacity 0.8s ease';
+        loader.style.opacity = '0';
+        setTimeout(() => loader.style.display = 'none', 800);
+      }, 500);
     }, 3000);
   });
 </script>
