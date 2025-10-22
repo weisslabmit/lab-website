@@ -291,6 +291,7 @@ html { scroll-behavior: smooth; }
 
 /* Active link (JS adds .is-active AND inline weight 700!important) */
 #floating-nav a.is-active {
+  font-weight: 700 !important;  /* wins over your global 400!important */
   opacity: 1 !important;
   filter: brightness(1.2);
   text-decoration: none !important;
