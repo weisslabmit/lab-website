@@ -247,13 +247,22 @@ p, li, blockquote, .content {
   to { transform: rotate(360deg); }
 }
 
-/* ===== Sticky Floating Menu ===== */
+/* ===== Floating nav: hidden over banner, fixed after ===== */
 #floating-nav {
-  position: sticky;
-  top: 0;
+  position: fixed;
+  top: 0; left: 0; right: 0;
   z-index: 1000;
   background: #000;
   color: #fff;
+  transform: translateY(-100%); /* hidden by default */
+  opacity: 0;
+  pointer-events: none;
+  transition: transform .25s ease, opacity .25s ease;
+}
+#floating-nav.is-visible {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
 }
 
 #floating-nav .floating-nav__inner {
@@ -263,83 +272,44 @@ p, li, blockquote, .content {
   display: flex;
   gap: 1.25rem;
   align-items: center;
-  justify-content: center; /* centered layout */
+  justify-content: center;
 }
 
+/* Baseline link style */
 #floating-nav a {
   color: #fff;
   text-decoration: none;
-  font-weight: 400;
   letter-spacing: .02em;
   opacity: .9;
-  transition: opacity 0.3s ease, filter 0.3s ease;
+  transition: opacity .2s ease, filter .2s ease;
 }
 
-#floating-nav a:hover,
-#floating-nav a:focus {
-  text-decoration: none;
-  opacity: 1;
-}
+/* Dim others when one is active (JS toggles .has-active) */
+#floating-nav.has-active a { opacity: .45; }
 
-/* ===== Active + Dimming Behavior ===== */
-
-/* Dim all when one is active */
-#floating-nav .floating-nav__inner:has(a.is-active) a {
-  opacity: 0.4;
-}
-
-/* Active link stands out strongly */
-#floating-nav .floating-nav__inner a.is-active {
+/* Active link (JS adds .is-active AND inline weight 700!important) */
+#floating-nav a.is-active {
   opacity: 1 !important;
-  font-weight: 700 !important; /* Roboto Mono max weight */
-  color: #fff !important;
-  text-decoration: none !important;
   filter: brightness(1.2);
+  text-decoration: none !important;
 }
 
-/* Slight hover boost even if dimmed */
-#floating-nav .floating-nav__inner a:hover {
-  opacity: 0.8;
-}
+/* Hover: no underline, slight brighten */
+#floating-nav a:hover { opacity: .95; text-decoration: none; }
 
-/* ===== Responsive tweaks ===== */
-@media (max-width: 520px) {
-  #floating-nav .floating-nav__inner {
-    gap: .9rem;
-    padding: .5rem .75rem;
-  }
-}
-
-/* ===== Section Spacing / Anchor Offset ===== */
-
-/* Adjust this if your bar is taller */
-:root {
-  --floating-nav-h: 56px;
-}
-
-/* Give sections small visible space inside */
+/* Anchor landing: add small internal space at top of sections */
+:root { --floating-nav-h: 56px; } /* tweak if your bar is taller */
 section[id]:not(#banner) {
   position: relative;
-  padding-top: 0.75rem; /* space below the bar */
+  padding-top: 0.75rem; /* visible white space under the bar */
 }
-
-/* Anchor-offset trick for clean jumps */
 section[id]:not(#banner)::before {
   content: "";
   display: block;
-  height: calc(var(--floating-nav-h) + 12px);
-  margin-top: calc(-1 * (var(--floating-nav-h) + 12px));
+  height: calc(var(--floating-nav-h) + 10px);
+  margin-top: calc(-1 * (var(--floating-nav-h) + 10px));
   visibility: hidden;
   pointer-events: none;
 }
-
-/* Tighten heading tops */
-section[id]:not(#banner) > *:first-child {
-  margin-top: 0 !important;
-}
-
-/* Remove inner padding if any */
-section[id]:not(#banner) .inner {
-  padding-top: 0 !important;
-  margin-top: 0 !important;
-}
+section[id]:not(#banner) > *:first-child { margin-top: 0 !important; }
+section[id]:not(#banner) .inner { padding-top: 0 !important; margin-top: 0 !important; }
