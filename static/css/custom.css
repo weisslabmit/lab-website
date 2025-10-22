@@ -319,9 +319,6 @@ p, li, blockquote, .content {
 /* Apply INSIDE spacing to the actual sections only */
 #research, #people, #resources, #contact, #publications {
   /* Where anchor jumps land: exactly below the bar (+2px breathing) */
-  scroll-margin-top: calc(var(--floating-nav-h) + 2px);
-
-  /* Visible gap INSIDE the section (tiny, so it won’t snowball) */
   padding-top: 0.5rem;
 }
 

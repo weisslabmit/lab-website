@@ -20,15 +20,21 @@
   if (!nav) return;
 
   const links = [...nav.querySelectorAll('a[data-scroll]')];
+  const ids = links.map(a => a.getAttribute('href')).filter(h => h && h.startsWith('#')).map(h => h.slice(1));
+  const sections = ids.map(id => document.getElementById(id)).filter(Boolean);
   const banner = document.getElementById('banner');
 
   const show = () => nav.classList.add('is-visible');
   const hide = () => nav.classList.remove('is-visible');
 
-  // Show/hide based on banner visibility (same as before)
-  if (!banner) show();
-  else {
-    const io = new IntersectionObserver(entries => {
+  // --- measure nav height
+  function navH() { return Math.round(nav.getBoundingClientRect().height) || 56; }
+
+  // --- IO that hides the bar only while banner is clearly visible
+  let io;
+  function connectObserver() {
+    if (!banner) { show(); return; }
+    io = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting && entry.intersectionRatio > 0.2) hide();
         else show();
@@ -36,50 +42,59 @@
     }, { threshold: [0, 0.2, 0.4] });
     io.observe(banner);
   }
+  connectObserver();
 
-  // --- precise smooth scroll with custom offset ---
-  function scrollToWithOffset(target) {
+  // --- exact smooth scroll (no leftover sliver)
+  function scrollToSection(target) {
     if (!target) return;
-    // measure current nav height in case it wraps on small screens
-    const navH = Math.round(nav.getBoundingClientRect().height) || 56;
-    const extra = 12; // scroll a bit further so NO previous section is visible
-    const y = target.getBoundingClientRect().top + window.pageYOffset - navH - extra;
+    // extraClear: push a bit further so NO previous section remains visible
+    const extraClear = 28; // tweak 24–36 if needed
+    const y = target.getBoundingClientRect().top + window.pageYOffset - navH() - extraClear;
     window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
   }
 
-  // Handle clicks
+  // --- click: force bar visible + freeze observer briefly so height is stable
   nav.addEventListener('click', e => {
     const a = e.target.closest('a[data-scroll]');
     if (!a) return;
     const href = a.getAttribute('href') || '';
-    if (href.startsWith('#')) {
-      e.preventDefault();
-      show(); // make sure bar is visible immediately
-      const target = document.querySelector(href);
-      scrollToWithOffset(target);
-    }
+    if (!href.startsWith('#')) return;
+
+    e.preventDefault();
+    show();
+
+    // pause observer to avoid hide/show during scroll
+    if (io) io.disconnect();
+    const target = document.querySelector(href);
+    scrollToSection(target);
+
+    // resume after scroll settles
+    setTimeout(connectObserver, 600);
   });
 
-  // Optional: if someone loads with a hash, align it perfectly too
-  window.addEventListener('load', () => {
-    if (location.hash) {
-      const t = document.querySelector(location.hash);
-      // small timeout so layout settles before measuring
-      setTimeout(() => scrollToWithOffset(t), 0);
-    }
-  });
-
-  // Active link highlighting (unchanged)
-  const highlight = id => {
+  // highlight active link
+  function highlight(id) {
     links.forEach(link => {
-      link.classList.toggle('is-active', link.getAttribute('href') === '#' + id);
+      const active = (link.getAttribute('href') === '#' + id);
+      link.classList.toggle('is-active', active);
+
+      // Make bold un-ignorable even if theme CSS loads later:
+      if (active) link.style.setProperty('font-weight', '700', 'important');
+      else link.style.removeProperty('font-weight');
     });
-  };
-  const ids = links.map(a => a.getAttribute('href')).filter(h => h && h.startsWith('#')).map(h => h.slice(1));
-  const sections = ids.map(id => document.getElementById(id)).filter(Boolean);
+  }
+
   const secObserver = new IntersectionObserver(entries => {
     entries.forEach(entry => { if (entry.isIntersecting) highlight(entry.target.id); });
   }, { rootMargin: '-40% 0px -40% 0px', threshold: 0 });
   sections.forEach(sec => secObserver.observe(sec));
+
+  // if load with a hash, align perfectly
+  window.addEventListener('load', () => {
+    if (location.hash) {
+      const t = document.querySelector(location.hash);
+      setTimeout(() => scrollToSection(t), 0);
+    }
+  });
 })();
 </script>
