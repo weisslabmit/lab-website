@@ -286,16 +286,18 @@ p, li, blockquote, .content {
 
 html { scroll-behavior: smooth; }
 
-/* dim all when there is an active link */
-#floating-nav .floating-nav__inner.has-active a { opacity: .4; transition: opacity .2s ease; }
-/* restore the active one */
+/* Dim others when one is active (JS toggles .has-active) */
+#floating-nav.has-active a { opacity: .45; }
+
+/* Active link (JS adds .is-active AND inline weight 700!important) */
 #floating-nav a.is-active {
-  font-weight: 700 !important;  /* wins over your global 400!important */
   opacity: 1 !important;
-  color: #fff !important;
+  filter: brightness(1.2);
   text-decoration: none !important;
 }
-#floating-nav a:hover { opacity: .8; text-decoration: none; }
+
+/* Hover: no underline, slight brighten */
+#floating-nav a:hover { opacity: .95; text-decoration: none; }
 
 /* Anchor landing: add small internal space at top of sections */
 :root { --floating-nav-h: 56px; } /* tweak if your bar is taller */
@@ -314,3 +316,36 @@ section[id]:not(#banner) {
   padding-top: calc(var(--menu-height) + 1.5rem);  /* real visible white space */
 }
 
+/* ===== Research timeline embed (fixed subsection at top) ===== */
+.timeline-block {
+  display: flex;
+  justify-content: center;
+  margin: 2rem auto 3rem;         /* space around the timeline */
+  width: 100%;
+}
+
+.timeline-frame {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;              /* intrinsic width */
+  aspect-ratio: 1200 / 500;       /* intrinsic height */
+  margin: 0 auto;
+  overflow: hidden;
+  container-type: inline-size;    /* enables 100cqw used below */
+}
+
+/* The iframe keeps an internal viewport of 1200x500,
+   and scales down smoothly on smaller screens */
+.timeline-frame iframe {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1200px;
+  height: 500px;
+  border: 0;
+  display: block;
+  transform-origin: top left;
+  transform:
+    translate(-50%, -50%)
+    scale(clamp(0.2, calc(100cqw / 1200px), 1));
+}
