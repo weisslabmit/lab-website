@@ -1,21 +1,16 @@
 <section id="research" class="wrapper">
-
-<div class="timeline-frame">
-  <div id="timeline-loader" class="timeline-frame__loader" aria-hidden="true">
-    <!-- If the image 404s, onerror removes src so CSS fallback spinner appears -->
-    <img class="menu-frame__spinner" src='{{ "plasmid.svg" | absURL }}?v={{ now.Unix }}' alt="" />
-
-  </div>
-    <iframe
-      id="lab-timeline"
-      src="about:blank"
-      data-src='{{ "embeds/timeline-lab/index.html" | relURL }}?v={{ now.Unix }}'
-      title="Lab Timeline"
-      loading="lazy"
-      referrerpolicy="no-referrer"
-      sandbox="allow-scripts allow-same-origin"
-      scrolling="no">
-    </iframe>
+  <div class="inner">
+    <!-- Fixed, non-CMS timeline at the top of Research -->
+    <div class="timeline-frame">
+      <iframe
+        src='{{ "embeds/timeline-lab/index.html" | absURL }}?v={{ now.Unix }}'
+        title="Lab Timeline"
+        loading="lazy"
+        referrerpolicy="no-referrer"
+        sandbox="allow-same-origin allow-scripts"
+        scrolling="no">
+      </iframe>
+    </div>
   </div>
 
   {{ with site.GetPage "section" "research" }}
@@ -37,5 +32,4 @@
       </section>
     {{ end }}
   {{ end }}
-
 </section>
