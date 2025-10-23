@@ -3,7 +3,7 @@
 <div class="timeline-frame">
   <div id="timeline-loader" class="timeline-frame__loader" aria-hidden="true">
     <!-- If the image 404s, onerror removes src so CSS fallback spinner appears -->
-    <img src='{{ "images/plasmid.svg" | relURL }}'
+    <img src='{{ "embeds/menu/index.html" | absURL }}?v={{ now.Unix }}'
          alt=""
          class="timeline-frame__spinner"
          onerror="this.removeAttribute('src')" />
