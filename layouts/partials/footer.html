@@ -77,45 +77,36 @@
 
 <script>
 (function () {
-  const holder = document.getElementById('research-timeline');
   const iframe = document.getElementById('lab-timeline');
-  if (!holder || !iframe) return;
+  const holder = document.getElementById('research-timeline');
+  if (!iframe || !holder) return;
 
   const url = iframe.getAttribute('data-src');
   let loaded = false;
 
-  function hideSpinner() {
-    holder.classList.add('timeline-frame--ready');
-  }
-
   function loadTimeline() {
     if (loaded) return;
     loaded = true;
-
-    // hide spinner when the document is actually ready
-    iframe.addEventListener('load', hideSpinner, { once: true });
-
-    // fail-safe: don’t leave the spinner forever if load never fires
-    setTimeout(hideSpinner, 5000);
-
     iframe.src = url;
     if (io) io.disconnect();
   }
 
-  // Prewarm cache ASAP without executing it
+  // A) Prewarm the cache early, without executing the document
   const idle = ('requestIdleCallback' in window) ? requestIdleCallback : (fn)=>setTimeout(fn, 0);
-  idle(() => { try { fetch(url, { cache: 'force-cache' }); } catch (_) {} });
+  idle(() => {
+    try { fetch(url, { cache: 'force-cache' }); } catch (e) {}
+  });
 
-  // Load when ANY pixel of the holder hits the viewport
+  // B) Only set the iframe src when ANY pixel is visible
   const io = new IntersectionObserver((entries) => {
     for (const e of entries) {
       if (e.isIntersecting) { loadTimeline(); break; }
     }
-  }, { threshold: 0 });
+  }, { root: null, threshold: 0, rootMargin: '0px' });
 
   io.observe(holder);
 
-  // If arriving via hash directly on research/timeline, load immediately
+  // If user lands directly on the section (hash in URL), load now
   if (location.hash === '#research' || location.hash === '#research-timeline') {
     loadTimeline();
   }
