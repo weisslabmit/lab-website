@@ -312,15 +312,15 @@ section[id]:not(#banner) {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: .3rem .6rem;
+    row-gap: .3rem;
   }
-  #floating-nav a { flex: 0 1 auto; white-space: nowrap; }
+  #floating-nav a {
+    flex: 0 1 auto;       /* don't force a width */
+    white-space: nowrap;  /* keep words on one line */
+    padding: 0 .5rem;
+  }
+}
 
-  /* Force wrap after the 3rd item */
-  #floating-nav .floating-nav__inner a:nth-child(4) {
-    flex-basis: 100%;     /* line break here */
-    height: 0;            /* don't add space */
-  }
 section[id]:not(#banner) > *:first-child { margin-top: 0 !important; }
 section[id]:not(#banner) .inner { padding-top: 0 !important; margin-top: 0 !important; }
 
