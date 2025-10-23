@@ -362,7 +362,7 @@ section[id]:not(#banner) {
 }
 
 /* Timeline spinner overlay: hidden by default */
-.timeline-frame__loader {
+.timeline-loader {
   position: absolute;
   inset: 0;
   display: flex;
@@ -376,7 +376,7 @@ section[id]:not(#banner) {
 }
 
 /* Plasmid spinner size + spin */
-.timeline-frame__spinner {
+.timeline-spinner {
   width: 140px;
   height: 140px;
   animation: timelinespin 2.4s linear infinite;
@@ -384,7 +384,7 @@ section[id]:not(#banner) {
 @keyframes timelinespin { to { transform: rotate(360deg); } }
 
 /* When loading is active, show the overlay smoothly */
-.timeline-frame.is-loading .timeline-frame__loader {
+.timeline-frame.is-loading .timeline-loader {
   opacity: 1;
   visibility: visible;
 }
