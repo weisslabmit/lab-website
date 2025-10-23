@@ -28,9 +28,12 @@
   <!-- Your overrides LAST -->
   <link rel="stylesheet" href="{{ "css/custom.css" | relURL }}?v={{ now.Unix }}">
 
-      {{ $tl := (printf "%s?v=%d" ("embeds/timeline-lab/index.html" | relURL) (now.Unix)) }}
-    <link rel="preload" href="{{ $tl }}" as="document" importance="high">
-    <link rel="prefetch" href="{{ $tl }}" as="document">
+{{- $tl := "embeds/timeline-lab/index.html" | relURL -}}
+<!-- Preconnect is cheap; harmless even on same-origin -->
+<link rel="preconnect" href="{{ $tl }}">
 
+<!-- Warm the cache as early as possible -->
+<link rel="preload"  href="{{ $tl }}" as="document" fetchpriority="low">
+<link rel="prefetch" href="{{ $tl }}" as="document">
   
 </head>

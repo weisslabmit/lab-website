@@ -78,40 +78,37 @@
 <script>
 (function () {
   const iframe = document.getElementById('lab-timeline');
-  const timelineBlock = document.getElementById('research-timeline');
-  if (!iframe || !timelineBlock) return;
+  const holder = document.getElementById('research-timeline');
+  if (!iframe || !holder) return;
 
-  const wanted = iframe.getAttribute('data-src');
+  const url = iframe.getAttribute('data-src');
   let loaded = false;
 
   function loadTimeline() {
     if (loaded) return;
     loaded = true;
-    iframe.src = wanted;
+    iframe.src = url;
     if (io) io.disconnect();
   }
 
-  // 1️⃣ Load if "Research" link is clicked
-  const researchLink =
-    document.querySelector('#floating-nav a[href="#research"]') ||
-    document.querySelector('a[href="#research"][data-scroll]');
-  if (researchLink) researchLink.addEventListener('click', loadTimeline, { once: true });
+  // A) Prewarm the cache early, without executing the document
+  const idle = ('requestIdleCallback' in window) ? requestIdleCallback : (fn)=>setTimeout(fn, 0);
+  idle(() => {
+    try { fetch(url, { cache: 'force-cache' }); } catch (e) {}
+  });
 
-  // 2️⃣ Load if user lands directly on #research or #research-timeline
-  function checkHash() {
-    if (location.hash === '#research' || location.hash === '#research-timeline') loadTimeline();
-  }
-  checkHash();
-  window.addEventListener('hashchange', checkHash);
-
-  // 3️⃣ Load immediately once #research-timeline becomes visible
+  // B) Only set the iframe src when ANY pixel is visible
   const io = new IntersectionObserver((entries) => {
-    if (loaded) return;
     for (const e of entries) {
       if (e.isIntersecting) { loadTimeline(); break; }
     }
-  }, { threshold: 0 });
+  }, { root: null, threshold: 0, rootMargin: '0px' });
 
-  io.observe(timelineBlock);
+  io.observe(holder);
+
+  // If user lands directly on the section (hash in URL), load now
+  if (location.hash === '#research' || location.hash === '#research-timeline') {
+    loadTimeline();
+  }
 })();
 </script>
