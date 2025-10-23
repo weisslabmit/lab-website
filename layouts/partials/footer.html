@@ -75,41 +75,37 @@
 
 <script>
 (function () {
-  // Elements
-  const wrapper = document.getElementById('research-timeline');
-  const iframe  = document.getElementById('lab-timeline');
-  const researchSection = document.getElementById('research');
-  if (!wrapper || !iframe || !researchSection) return;
+  const wrap   = document.getElementById('research-timeline');
+  const iframe = document.getElementById('lab-timeline');
+  if (!wrap || !iframe) return;
 
   let fired = false;
 
-  // Fire as soon as ANY pixel of #research is visible
   const io = new IntersectionObserver((entries) => {
     if (fired) return;
     const e = entries[0];
     if (!e) return;
 
+    // fire as soon as any pixel of the timeline is visible
     if (e.isIntersecting && e.intersectionRatio > 0) {
       fired = true;
 
-      // 1) Show spinner immediately (fade in)
-      wrapper.classList.add('is-loading');
+      // show spinner overlay (your CSS/markup handles the look)
+      wrap.classList.add('is-loading');
 
-      // 2) Kick the timeline load if still blank
-      if (!iframe.src || iframe.src === 'about:blank') {
-        const url = iframe.getAttribute('data-src');
-        if (url) iframe.src = url;
-      }
+      // kick the timeline load if still blank
+      const url = iframe.getAttribute('data-src');
+      if (iframe.src === 'about:blank' && url) iframe.src = url;
 
-      // 3) Keep spinner for 2s, then fade it out (CSS transition)
+      // hide overlay after 2s
       setTimeout(() => {
-        wrapper.classList.remove('is-loading');
+        wrap.classList.remove('is-loading');
       }, 2000);
 
       io.disconnect();
     }
   }, { threshold: [0] });
 
-  io.observe(researchSection);
+  io.observe(wrap);
 })();
 </script>
