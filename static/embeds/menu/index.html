@@ -261,7 +261,7 @@ h.prototype.getPseudoIds=h.prototype.D;h.prototype.getGroupName=h.prototype.B;})
       <p class="gwd-p-3ok3 gwd-grp-1sje">Contact</p>
     </div>
     </div>
-          <div class="gwd-div-143y" data-gwd-group="Group4" id="Contact">
+              <div class="gwd-div-143y" data-gwd-group="Group4" id="Contact" data-nav="#contact">
       <svg data-gwd-shape="rectangle" class="gwd-svg-1ndn gwd-grp-1lsf" data-gwd-grp-id="R4"></svg>
       <p class="gwd-p-cti6 gwd-grp-1lsf">Contact</p>
     </div>
@@ -371,15 +371,15 @@ h.prototype.getPseudoIds=h.prototype.D;h.prototype.getGroupName=h.prototype.B;})
       </svg>
     </div>
     </div>
-          <div class="gwd-div-17hd" data-gwd-group="Group1" id="Pub">
+              <div class="gwd-div-17hd" data-gwd-group="Group1" id="Pub" data-nav="#publications">
       <div class="gwd-div-141b gwd-grp-3z9j" data-gwd-grp-id="R1"></div>
       <p class="gwd-p-jxb9 gwd-grp-3z9j">Publications</p>
     </div>
-          <div class="gwd-div-fi9v" data-gwd-group="Group2" id="peopl">
+              <div class="gwd-div-fi9v" data-gwd-group="Group2" id="peopl" data-nav="#research-timeline">
       <div class="gwd-div-1h07 gwd-grp-16r6" data-gwd-grp-id="R2"></div>
       <p class="gwd-p-az1p gwd-grp-16r6">Research</p>
     </div>
-          <div class="gwd-div-sp94" data-gwd-group="Resources" id="Resources">
+              <div class="gwd-div-sp94" data-gwd-group="Resources" id="Resources" data-nav="#resources">
       <svg data-gwd-shape="rectangle" class="gwd-svg-k1oq gwd-grp-e3z3"></svg>
       <p class="gwd-p-10in gwd-grp-e3z3">Resources</p>
     </div>
@@ -510,7 +510,7 @@ h.prototype.getPseudoIds=h.prototype.D;h.prototype.getGroupName=h.prototype.B;})
             <ellipse cx="50%" cy="50%" rx="4.845" ry="4.845"></ellipse>
           </svg>
           <div class="gwd-div-194t" id="whitecover"></div>
-          <div class="gwd-div-1vay" data-gwd-group="Group3" id="Res">
+              <div class="gwd-div-1vay" data-gwd-group="Group3" id="Res" data-nav="#people">
       <svg data-gwd-shape="rectangle" class="gwd-svg-bhss gwd-grp-1wfi" data-gwd-grp-id="R3"></svg>
       <p class="gwd-p-k5w1 gwd-grp-1wfi">People</p>
     </div>
@@ -597,35 +597,19 @@ h.prototype.getPseudoIds=h.prototype.D;h.prototype.getGroupName=h.prototype.B;})
 </script>
 
 <script>
-window.addEventListener("WebComponentsReady", () => {
-  const map = [
-    { id: "Pub",     target: "#publications" },
-    { id: "peopl",   target: "#research" },
-    { id: "Res",     target: "#people" },
-    { id: "Resources", target: "#resources" },
-    { id: "Contact", target: "#contact" }
-  ];
+(function () {
+  // Delegate clicks anywhere inside a group having data-nav
+  document.addEventListener('click', (e) => {
+    const group = e.target.closest('[data-nav]');
+    if (!group) return;
+    const target = group.getAttribute('data-nav');
+    if (!target) return;
 
-  map.forEach(({ id, target }) => {
-    const el = document.getElementById(id);
-    if (!el) return;
-
-    // Make element look and behave like a button
-    el.style.cursor = "pointer";
-    el.style.userSelect = "none";
-
-    el.addEventListener("click", () => {
-      try {
-        // Smoothly scroll main page to the section
-        window.parent.location.hash = target;
-      } catch (err) {
-        console.warn(`Navigation error for ${id}:`, err);
-      }
-    });
+    // Send a message to the parent (sandbox-safe)
+    window.parent.postMessage({ type: 'lab-nav', target }, '*');
   });
-});
+})();
 </script>
-
 
 </body>
 </html>

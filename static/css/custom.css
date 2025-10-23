@@ -407,3 +407,12 @@ section[id]:not(#banner) {
   padding: 0;                /* clean slate */
   color: #000;
 }
+
+
+<style>
+  /* Make groups look clickable */
+  #Pub, #peopl, #Resources, #Res, #Contact {
+    cursor: pointer !important;
+    pointer-events: auto !important;
+  }
+</style>
