@@ -118,62 +118,24 @@
 
 <script>
 (function () {
-  const loader   = document.getElementById('timeline-loader');
-  const timeline = document.getElementById('lab-timeline');
-  const research = document.getElementById('research');
-  if (!loader || !timeline || !research) return;
+  const nav = document.getElementById('floating-nav');
+  const banner = document.getElementById('banner');
+  if (!nav || !banner) return;
 
-  // --- Prewarm the spinner image (non-blocking)
-  const spImg = loader.querySelector('.timeline-frame__spinner[src]');
-  if (spImg && spImg.getAttribute('src')) {
-    const pre = new Image();
-    pre.src = spImg.getAttribute('src');
+  function refresh() {
+    // If the bottom of the banner is still at or below the top of the viewport,
+    // we are still "on the banner" => hide the floating nav.
+    const bottom = banner.getBoundingClientRect().bottom;
+    if (bottom > 0) {
+      nav.classList.remove('is-visible');
+    } else {
+      nav.classList.add('is-visible');
+    }
   }
 
-  let shown = false;     // ensure we only show once
-  let armed = false;     // don’t trigger at initial page load
-
-  // Arm on first user scroll (natural entry into the section)
-  const armOnScroll = () => { armed = true; window.removeEventListener('scroll', armOnScroll); };
-  window.addEventListener('scroll', armOnScroll, { once: true, passive: true });
-
-  // If we load directly at #research (or #research in hash), arm immediately
-  window.addEventListener('load', () => {
-    if (location.hash && location.hash.replace('#','') === 'research') {
-      armed = true;
-    }
-  });
-
-  // Also arm if they click a link to #research (from your floating menu)
-  document.addEventListener('click', (e) => {
-    const a = e.target.closest('a[href^="#"]');
-    if (!a) return;
-    const h = a.getAttribute('href');
-    if (h === '#research') armed = true;
-  }, { passive: true });
-
-  // Show/hide helpers
-  function showSpinner() {
-    if (shown) return;
-    shown = true;
-    loader.classList.add('is-visible');
-
-    // Hide after ~1s; adjust if you want longer/shorter
-    setTimeout(() => {
-      loader.classList.remove('is-visible');
-    }, 2300);
-  }
-
-  // Trigger as soon as ANY pixel of the research section is visible, but only after armed
-  const io = new IntersectionObserver((entries) => {
-    const e = entries[0];
-    if (!e) return;
-    if (armed && e.isIntersecting && !shown) {
-      showSpinner();
-      io.disconnect();
-    }
-  }, { threshold: 0.001 });
-
-  io.observe(research);
+  // Run once and on scroll/resize
+  refresh();
+  window.addEventListener('scroll', refresh, { passive: true });
+  window.addEventListener('resize', refresh);
 })();
 </script>
