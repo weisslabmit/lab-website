@@ -12,6 +12,7 @@ blockquote, figcaption, small, strong, em,
 }
 
 
+
 /* ======================================
    MIT Custom Styles for Hugo Story
    File: static/css/custom.css
@@ -24,6 +25,15 @@ blockquote, figcaption, small, strong, em,
   --mit-font-family: "neue-haas-grotesk-display", sans-serif;
   --mit-font-weight: 700;
   --mit-font-style: normal;
+}
+
+/* -------------------------------
+   Headings: use MIT font
+--------------------------------*/
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--mit-font-family) !important;
+  font-weight: var(--mit-font-weight) !important;
+  font-style: var(--mit-font-style) !important;
 }
 
 /* -------------------------------
