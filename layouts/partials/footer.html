@@ -73,59 +73,43 @@
 
 
 
-
-
-
 <script>
 (function () {
-  const frame   = document.getElementById('research-timeline');
+  // Elements
+  const wrapper = document.getElementById('research-timeline');
   const iframe  = document.getElementById('lab-timeline');
-  const section = document.getElementById('research');
-  if (!frame || !iframe || !section) return;
+  const researchSection = document.getElementById('research');
+  if (!wrapper || !iframe || !researchSection) return;
 
   let fired = false;
 
+  // Fire as soon as ANY pixel of #research is visible
   const io = new IntersectionObserver((entries) => {
     if (fired) return;
     const e = entries[0];
     if (!e) return;
 
-    // "any pixel" visible:
     if (e.isIntersecting && e.intersectionRatio > 0) {
       fired = true;
 
-      // show spinner overlay immediately
-      frame.classList.add('is-loading');
+      // 1) Show spinner immediately (fade in)
+      wrapper.classList.add('is-loading');
 
-      // kick timeline load
-      const url = iframe.getAttribute('data-src');
-      if (url) iframe.src = url;
+      // 2) Kick the timeline load if still blank
+      if (!iframe.src || iframe.src === 'about:blank') {
+        const url = iframe.getAttribute('data-src');
+        if (url) iframe.src = url;
+      }
 
-      // hide overlay after 2 seconds (exact requirement)
+      // 3) Keep spinner for 2s, then fade it out (CSS transition)
       setTimeout(() => {
-        frame.classList.remove('is-loading');
+        wrapper.classList.remove('is-loading');
       }, 2000);
 
       io.disconnect();
     }
-  }, {
-    root: null,
-    threshold: [0]   // fire as soon as any pixel is visible
-  });
+  }, { threshold: [0] });
 
-  io.observe(section);
+  io.observe(researchSection);
 })();
-</script>
-
-
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const frame = document.getElementById("lab-timeline");
-  const wrapper = frame?.closest(".timeline-frame");
-  if (!frame || !wrapper) return;
-
-  frame.addEventListener("load", () => {
-    wrapper.classList.add("timeline-frame--ready");
-  });
-});
 </script>

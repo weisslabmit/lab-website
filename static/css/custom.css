@@ -388,8 +388,8 @@ section[id]:not(#banner) {
 
 @keyframes timelineSpin { to { transform: rotate(360deg); } }
 
-/* Hidden state once timeline is ready */
-.timeline-frame--ready .timeline-frame__loader {
-  opacity: 0;
-  visibility: hidden;
+/* When loading is active, show the overlay smoothly */
+.timeline-frame.is-loading .timeline-frame__loader {
+  opacity: 1;
+  visibility: visible;
 }
