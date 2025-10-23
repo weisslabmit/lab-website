@@ -317,53 +317,48 @@ section[id]:not(#banner) {
   padding-top: calc(var(--menu-height) + 1.5rem);  /* real visible white space */
 }
 
-/* ===== Timeline: center + responsive downscale (no drift) ===== */
+/* ====== Timeline wrapper: center + responsive scale (design: 1200×400) ====== */
 .timeline-frame {
   position: relative;
   z-index: 5;
   width: 100%;
-  max-width: 1200px;          /* timeline design width */
-  aspect-ratio: 1200 / 500;   /* auto height from width */
-  margin: 0 auto;             /* center wrapper itself */
+  max-width: 1200px;           /* design width */
+  aspect-ratio: 1200 / 400;    /* auto height based on width */
+  margin: 0 auto;              /* centers the wrapper block */
   overflow: hidden;
-  container-type: inline-size; /* enable 100cqw */
+  container-type: inline-size; /* enables 100cqw in children */
 }
 
+/* Center the 1200×400 stage, then scale down as the wrapper shrinks */
 .timeline-frame iframe {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 1200px;    /* internal stage size from GWD */
-  height: 500px;
+  width: 1200px;               /* design width */
+  height: 400px;               /* design height (matches the GWD file) */
   border: 0;
   display: block;
   transform-origin: top left;
   transform:
     translate(-50%, -50%)
-    scale( clamp(0.2, calc(100cqw / 1200px), 1) ); /* downscale only */
+    scale( clamp(0.2, calc(100cqw / 1200px), 1) );
 }
 
-/* ===== Timeline spinner overlay (covers only the timeline area) ===== */
+/* Spinner overlay for the timeline (centered over the iframe) */
 .timeline-loader {
   position: absolute;
   inset: 0;
-  display: none;                 /* shown only while loading */
+  display: none;               /* JS will toggle to flex when needed */
   align-items: center;
   justify-content: center;
-  background: #fff;              /* white card behind spinner */
+  background: #fff;            /* same white as page to cover the iframe while loading */
   z-index: 2;
-  opacity: 1;
-  transition: opacity 0.3s ease;
+  transition: opacity .25s ease;
 }
 
-/* Show overlay only when .is-loading is on the frame */
-.timeline-frame.is-loading .timeline-loader { display: flex; }
-
-/* Spinner (use your plasmid.svg) */
 .timeline-spinner {
   width: 120px;
   height: 120px;
-  animation: timelineSpin 2s linear infinite;
+  animation: menuspin 2.4s linear infinite;
 }
-
-@keyframes timelineSpin { to { transform: rotate(360deg); } }
+@keyframes menuspin { to { transform: rotate(360deg); } }
