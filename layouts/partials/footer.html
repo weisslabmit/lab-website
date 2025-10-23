@@ -115,3 +115,25 @@
   io.observe(timelineBlock);
 })();
 </script>
+
+<script>
+(function () {
+  const research = document.getElementById('research');
+  const loader   = document.getElementById('timeline-loader');
+  if (!research || !loader) return;
+
+  let shown = false;
+  const io = new IntersectionObserver(entries => {
+    const e = entries[0];
+    if (e.isIntersecting && !shown) {
+      shown = true;
+      loader.classList.add('is-visible');
+      setTimeout(() => loader.classList.remove('is-visible'), 1000);
+      io.disconnect();
+    }
+  }, { threshold: 0 });
+
+  io.observe(research);
+})();
+</script>
+
