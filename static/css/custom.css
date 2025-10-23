@@ -392,9 +392,10 @@ section[id]:not(#banner) {
 /* --- Adjust header spacing in timeline & research sections --- */
 #research-timeline header.major,
 #research header.major {
-  margin-top: 0.5rem;        /* small top margin (tight to section start) */
+  margin-top: 0rem;        /* small top margin (tight to section start) */
   margin-bottom: 2.5rem;     /* more space before the content below */
   text-align: center;
+  padding: 0;                /* clean slate */
 }
 
 /* Make their titles visually balanced */
