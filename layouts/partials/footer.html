@@ -81,23 +81,21 @@
 
   let fired = false;
 
-  const io = new IntersectionObserver((entries) => {
-    if (fired) return;
-    const e = entries[0];
-    if (!e) return;
+  const io = new IntersectionObserver(([entry]) => {
+    if (fired || !entry) return;
 
-    // fire as soon as any pixel of the timeline is visible
-    if (e.isIntersecting && e.intersectionRatio > 0) {
+    // Fire as soon as ANY pixel of the timeline frame is visible
+    if (entry.isIntersecting && entry.intersectionRatio > 0) {
       fired = true;
 
-      // show spinner overlay (your CSS/markup handles the look)
+      // 1) Show spinner overlay immediately
       wrap.classList.add('is-loading');
 
-      // kick the timeline load if still blank
+      // 2) Kick the iframe load if still blank
       const url = iframe.getAttribute('data-src');
       if (iframe.src === 'about:blank' && url) iframe.src = url;
 
-      // hide overlay after 2s
+      // 3) Keep spinner for 2s, then fade it out (CSS handles fade)
       setTimeout(() => {
         wrap.classList.remove('is-loading');
       }, 2000);

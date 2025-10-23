@@ -362,7 +362,7 @@ section[id]:not(#banner) {
 }
 
 /* Timeline spinner overlay: hidden by default */
-.timeline-loader {
+.timeline-frame__loader {
   position: absolute;
   inset: 0;
   display: flex;
@@ -376,7 +376,7 @@ section[id]:not(#banner) {
 }
 
 /* Plasmid spinner size + spin */
-.timeline-spinner {
+.timeline-frame__spinner {
   width: 140px;
   height: 140px;
   animation: timelinespin 2.4s linear infinite;

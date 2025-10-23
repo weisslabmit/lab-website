@@ -6,6 +6,11 @@
   </header>
   <!-- The timeline wrapper you observe for the spinner -->
   <div id="research-timeline" class="timeline-frame">
+     
+      <div class="timeline-frame__loader" aria-hidden="true" role="status">
+      <img class="timeline-frame__spinner" src='{{ "plasmid.svg" | relURL }}' alt="">
+      </div>
+      
     <iframe
       id="lab-timeline"
       src="about:blank"
@@ -18,9 +23,7 @@
     </iframe>
 
 
-    <div class="timeline-frame__loader" aria-hidden="true" role="status">
-      <img class="timeline-frame__spinner" src='{{ "plasmid.svg" | relURL }}' alt="">
-    </div>
+  
   </div>
 
 
