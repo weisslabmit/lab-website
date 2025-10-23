@@ -1,46 +1,52 @@
-{{/* ========= PEOPLE SECTION (PI first; category fallback from role) ========= */}}
+{{/* ========= PEOPLE SECTION (deploy-safe, PI first, categories inferred) ========= */}}
 
-{{/* Find people pages robustly */}}
-{{ $root := site.GetPage "section" "people" | default (site.GetPage "people") }}
-{{ $bySection := where site.Pages "Section" "people" }}
-{{ $all := cond (and $root (gt (len $root.Pages) 0)) $root.Pages $bySection }}
+{{/* Collect all people pages from the "people" section */}}
+{{ $people := where site.RegularPages "Section" "people" }}
 
-{{/* Helper: map a page to a category. If .Params.category is missing, infer from .Params.role */}}
-{{- define "getCat" -}}
-  {{- $p := . -}}
-  {{- with $p.Params.category -}}
-    {{- . -}}
-  {{- else -}}
-    {{- $r := lower (default "" $p.Params.role) -}}
-    {{- if (findRE "(^|\\b)(pi|principal investigator|professor)(\\b|$)" $r) -}}PI
-    {{- else if (findRE "postdoc" $r) -}}Postdocs
-    {{- else if (findRE "phd|doctoral|doctorand|grad(uate)?" $r) -}}PhD Students
-    {{- else if (findRE "undergrad|u\\/?g|bsc|ba|intern" $r) -}}Undergrads
-    {{- else if (findRE "staff|engineer|technician|manager|coordinator|admin" $r) -}}Staff
-    {{- else -}}Other
-    {{- end -}}
-  {{- end -}}
-{{- end }}
-
-{{ if gt (len $all) 0 }}
+{{ if gt (len $people) 0 }}
 <section id="people" class="people-section">
-  <!-- DEBUG: found {{ len $all }} people pages -->
 
-  {{/* Desired order */}}
-  {{ $order := slice "PI" "Staff" "PhD Students" "Postdocs" "Other" "Undergrads" }}
-
-  {{/* ---------------- PI (first, highlighted) ---------------- */}}
-  {{ $pi := nil }}
-  {{ range $all.ByWeight }}
-    {{- if eq (trim (template "getCat" .)) "PI" -}}
-      {{- $pi = . -}}
-      {{- break -}}
-    {{- end -}}
+  {{/* Prepare buckets */}}
+  {{ $s := newScratch }}
+  {{ range slice "PI" "Staff" "PhD Students" "Postdocs" "Other" "Undergrads" }}
+    {{ $s.Set . (slice) }}
   {{ end }}
 
-  {{ if $pi }}
+  {{/* Helper: categorize each person (explicit category wins; else infer from role) */}}
+  {{ range $people.ByWeight }}
+    {{ $cat := "" }}
+    {{ if .Params.category }}
+      {{ $cat = .Params.category }}
+    {{ else }}
+      {{ $role := lower (default "" .Params.role) }}
+      {{ if or (findRE "(^|\\b)(pi|principal investigator|professor)(\\b|$)" $role) (eq (lower .Title) "pi") }}
+        {{ $cat = "PI" }}
+      {{ else if findRE "postdoc" $role }}
+        {{ $cat = "Postdocs" }}
+      {{ else if findRE "phd|doctoral|doctorand|grad(uate)?" $role }}
+        {{ $cat = "PhD Students" }}
+      {{ else if findRE "undergrad|u/?g|bsc|ba|intern" $role }}
+        {{ $cat = "Undergrads" }}
+      {{ else if findRE "staff|engineer|technician|manager|coordinator|admin" $role }}
+        {{ $cat = "Staff" }}
+      {{ else }}
+        {{ $cat = "Other" }}
+      {{ end }}
+    {{ end }}
+
+    {{/* Ensure unknown categories fall into "Other" instead of erroring */}}
+    {{ $known := in (slice "PI" "Staff" "PhD Students" "Postdocs" "Other" "Undergrads") $cat }}
+    {{ if not $known }}{{ $cat = "Other" }}{{ end }}
+
+    {{ $s.Add $cat (slice .) }}
+  {{ end }}
+
+  {{/* ---------------- PI block (first card highlighted) ---------------- */}}
+  {{ $piList := $s.Get "PI" }}
+  {{ if gt (len $piList) 0 }}
     <h3 class="people-group-title">PI</h3>
     <div class="people-grid">
+      {{ $pi := index $piList 0 }}
       <article class="person-card person-highlight">
         <a href="{{ $pi.RelPermalink }}" class="image avatar" aria-label="{{ $pi.Title }}">
           {{ with $pi.Params.image }}
@@ -49,17 +55,15 @@
             <img src="{{ "images/avatar.jpg" | relURL }}" alt="{{ $pi.Title }}">
           {{ end }}
         </a>
-
         <div class="content">
           <h3>{{ $pi.Title }}</h3>
           {{ with $pi.Params.role }}<div class="role">{{ . }}</div>{{ end }}
           {{ with $pi.Params.summary }}<p class="bio">{{ . }}</p>{{ end }}
-
           {{ with $pi.Params.email }}
-            {{ $safe := replace (replace . "@" " (at) ") "." " (dot) " }}
+            {{ $tmp := replace . "@" " (at) " }}
+            {{ $safe := replace $tmp "." " (dot) " }}
             <span class="person-email">{{ $safe }}</span>
           {{ end }}
-
           <div class="person-links">
             {{ with $pi.Params.website }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="Website"><i class="icon solid fa-globe"></i></a>{{ end }}
             {{ with $pi.Params.scholar }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="Google Scholar"><i class="icon solid fa-graduation-cap"></i></a>{{ end }}
@@ -70,50 +74,42 @@
     </div>
   {{ end }}
 
-  {{/* --------------- The rest, in fixed order (skipping PI) --------------- */}}
+  {{/* ---------------- Remaining categories in fixed order ---------------- */}}
+  {{ $order := slice "Staff" "PhD Students" "Postdocs" "Other" "Undergrads" }}
   {{ range $order }}
-    {{- $cat := . -}}
-    {{- if ne $cat "PI" -}}
-      {{- $items := slice -}}
-      {{- range $all.ByWeight -}}
-        {{- $found := trim (template "getCat" .) -}}
-        {{- if eq $found $cat -}}
-          {{- $items = $items | append . -}}
-        {{- end -}}
-      {{- end -}}
-
-      {{ if gt (len $items) 0 }}
-        <h3 class="people-group-title">{{ $cat }}</h3>
-        <div class="people-grid">
-          {{ range $items }}
-            <article class="person-card">
-              <a href="{{ .RelPermalink }}" class="image avatar" aria-label="{{ .Title }}">
-                {{ with .Params.image }}
-                  <img src="{{ . | relURL }}" alt="{{ .Title }}">
-                {{ else }}
-                  <img src="{{ "images/avatar.jpg" | relURL }}" alt="{{ .Title }}">
-                {{ end }}
-              </a>
-
-              <h3>{{ .Title }}</h3>
-              {{ with .Params.role }}<div class="role">{{ . }}</div>{{ end }}
-              {{ with .Params.summary }}<p class="bio">{{ . }}</p>{{ end }}
-
-              {{ with .Params.email }}
-                {{ $safe := replace (replace . "@" " (at) ") "." " (dot) " }}
-                <span class="person-email">{{ $safe }}</span>
+    {{ $cat := . }}
+    {{ $items := $s.Get $cat }}
+    {{ if gt (len $items) 0 }}
+      <h3 class="people-group-title">{{ $cat }}</h3>
+      <div class="people-grid">
+        {{ range $items }}
+          <article class="person-card">
+            <a href="{{ .RelPermalink }}" class="image avatar" aria-label="{{ .Title }}">
+              {{ with .Params.image }}
+                <img src="{{ . | relURL }}" alt="{{ .Title }}">
+              {{ else }}
+                <img src="{{ "images/avatar.jpg" | relURL }}" alt="{{ .Title }}">
               {{ end }}
+            </a>
+            <h3>{{ .Title }}</h3>
+            {{ with .Params.role }}<div class="role">{{ . }}</div>{{ end }}
+            {{ with .Params.summary }}<p class="bio">{{ . }}</p>{{ end }}
 
-              <div class="person-links">
-                {{ with .Params.website }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="Website"><i class="icon solid fa-globe"></i></a>{{ end }}
-                {{ with .Params.scholar }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="Google Scholar"><i class="icon solid fa-graduation-cap"></i></a>{{ end }}
-                {{ with .Params.github  }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="GitHub"><i class="icon brands fa-github"></i></a>{{ end }}
-              </div>
-            </article>
-          {{ end }}
-        </div>
-      {{ end }}
-    {{- end -}}
+            {{ with .Params.email }}
+              {{ $tmp := replace . "@" " (at) " }}
+              {{ $safe := replace $tmp "." " (dot) " }}
+              <span class="person-email">{{ $safe }}</span>
+            {{ end }}
+
+            <div class="person-links">
+              {{ with .Params.website }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="Website"><i class="icon solid fa-globe"></i></a>{{ end }}
+              {{ with .Params.scholar }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="Google Scholar"><i class="icon solid fa-graduation-cap"></i></a>{{ end }}
+              {{ with .Params.github  }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="GitHub"><i class="icon brands fa-github"></i></a>{{ end }}
+            </div>
+          </article>
+        {{ end }}
+      </div>
+    {{ end }}
   {{ end }}
 
 </section>
