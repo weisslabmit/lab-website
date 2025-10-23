@@ -607,6 +607,13 @@ document.addEventListener("DOMContentLoaded", () => {
       window.parent.location.hash = "#publications";
     });
   }
+  const peopl= document.getElementById("Research");
+if (peopl) {
+  peopl.style.cursor = "pointer";
+  peopl.addEventListener("click", () => {
+    window.parent.location.hash = "#research";
+  });
+}
 });
 </script>
 
