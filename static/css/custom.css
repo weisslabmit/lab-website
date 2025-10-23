@@ -120,7 +120,7 @@ body {
   display: block;
 
   /* center first, then scale to wrapper width */
-  transform-origin: top left;
+  transform-origin: center;
   transform:
     translate(-50%, -50%)
     scale( clamp(0.2, calc(100cqw / 500px), 1) );
