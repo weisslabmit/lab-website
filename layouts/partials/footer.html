@@ -108,7 +108,7 @@
     for (const e of entries) {
       if (e.isIntersecting) {
         clearTimeout(delayTimer);
-        delayTimer = setTimeout(loadTimeline, 300); // 0.3s delay
+        delayTimer = setTimeout(loadTimeline, 10); 
       } else {
         clearTimeout(delayTimer); // scrolled away before delay finished
       }
