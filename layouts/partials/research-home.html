@@ -1,7 +1,9 @@
+<!-- Fixed, non-CMS timeline block at the top of Research -->
 <div id="research-timeline" class="timeline-frame">
   <iframe
     id="lab-timeline"
-    src='{{ "embeds/timeline-lab/index.html" | relURL }}?v={{ now.Unix }}'
+    src="about:blank"  
+    data-src='{{ "embeds/timeline-lab/index.html" | relURL }}?v={{ now.Unix }}'
     title="Lab Timeline"
     loading="lazy"
     referrerpolicy="no-referrer"
@@ -9,11 +11,11 @@
     scrolling="no">
   </iframe>
 
+  <!-- Spinner overlay ONLY over the timeline iframe -->
   <div class="timeline-loader" aria-hidden="true" role="status">
     <img class="timeline-spinner" src='{{ "plasmid.svg" | relURL }}' alt="" />
   </div>
 </div>
-
 
 <section id="research" class="wrapper">
   {{ with site.GetPage "section" "research" }}
