@@ -371,7 +371,9 @@ section[id]:not(#banner) {
   background: #fff;              /* white card behind spinner */
   z-index: 2;
   opacity: 1;
-  transition: opacity 0.3s ease;
+  visibility: visible;
+  transition: opacity 0.8s ease, visibility 0.8s ease; /* smooth fade-out */
+
 }
 
 /* Show overlay only when .is-loading is on the frame */
@@ -381,7 +383,13 @@ section[id]:not(#banner) {
 .timeline-spinner {
   width: 120px;
   height: 120px;
-  animation: timelineSpin 2s linear infinite;
+  animation: timelineSpin 2.5s linear infinite;
 }
 
 @keyframes timelineSpin { to { transform: rotate(360deg); } }
+
+/* Hidden state once timeline is ready */
+.timeline-frame--ready .timeline-frame__loader {
+  opacity: 0;
+  visibility: hidden;
+}

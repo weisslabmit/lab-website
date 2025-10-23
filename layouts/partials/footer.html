@@ -116,3 +116,16 @@
   io.observe(section);
 })();
 </script>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const frame = document.getElementById("lab-timeline");
+  const wrapper = frame?.closest(".timeline-frame");
+  if (!frame || !wrapper) return;
+
+  frame.addEventListener("load", () => {
+    wrapper.classList.add("timeline-frame--ready");
+  });
+});
+</script>
