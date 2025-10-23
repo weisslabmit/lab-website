@@ -369,18 +369,6 @@ section[id]:not(#banner) {
     scale(clamp(0.2, calc(100cqw / 1200px), 1));
 }
 
-/* Overlay sits above iframe; does not affect centering rules */
-.timeline-frame__loader {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #fff;
-  z-index: 3;
-  opacity: 1;
-  transition: opacity .3s ease, visibility .3s ease;
-}
 
 .timeline-frame__spinner {
   width: 120px;
