@@ -152,75 +152,6 @@ body {
     max-width: 100%;     /* allow full device width */
   }
 }
-/* People: side margins */
-.people-section .inner,
-.person-page .inner { max-width: 1100px; margin: 0 auto; }
-
-/* PI highlight row */
-.person-highlight {
-  display: grid;
-  grid-template-columns: 280px 1fr;
-  gap: 2rem;
-  align-items: center;
-  margin: 2rem 0 2.5rem;
-}
-.person-highlight .photo img {
-  width: 260px; height: 260px; object-fit: cover; border-radius: 9999px;
-}
-.person-highlight .name { margin: 0 0 .25rem; }
-.person-highlight .roleline { font-weight: 600; opacity:.8; margin-bottom:.5rem; }
-.person-highlight .links { margin-top: .75rem; display: flex; gap: .5rem; flex-wrap: wrap; }
-
-/* Group title + separator */
-.people-group-title { margin: 2rem 0 1rem; text-align: left; }
-.people-sep { border: 0; border-top: 1px solid #eee; margin: 2rem 0; }
-
-/* Grid for other roles */
-.people-grid {
-  display: grid;
-  grid-template-columns: repeat(6, minmax(0,1fr));
-  gap: 1.5rem;
-}
-@media (max-width: 980px){ .people-grid { grid-template-columns: repeat(2,1fr); } }
-@media (max-width: 600px){ .people-grid { grid-template-columns: 1fr; } }
-
-.person-card { text-align: center; }
-.person-card .image.avatar img {
-  width: 200px; height: 200px; object-fit: cover; border-radius: 9999px; display: inline-block;
-}
-.person-card .name { margin: .75rem 0 .25rem; }
-.person-card .role { font-weight: 600; opacity: .8; }
-.person-card .bio { font-size: .95rem; line-height: 1.4; opacity: .9; margin-top: .25rem; }
-.person-card .email, .person-highlight .email { margin-top: .5rem; font-family: monospace; opacity: .9; }
-
-/* Buttons (tiny & normal) */
-.btn {
-  display: inline-flex; align-items: center; gap: .4rem;
-  border: 1px solid #ddd; border-radius: 9999px; padding: .4rem .7rem;
-  text-decoration: none; color: inherit; font-size: .95rem;
-}
-.btn.tiny { padding: .3rem .55rem; font-size: .9rem; }
-.btn:hover { background: #f6f6f6; }
-
-/* Person page layout */
-.person-detail {
-  display: grid;
-  grid-template-columns: 300px 1fr;
-  gap: 2rem;
-}
-.person-detail .photo img { width: 280px; height: 280px; object-fit: cover; border-radius: 9999px; }
-.person-detail .name { margin: 0 0 .25rem; }
-.person-detail .roleline { font-weight: 600; opacity: .8; margin-bottom: .5rem; }
-.person-detail .links { margin: 1rem 0 1.25rem; display: flex; gap: .6rem; flex-wrap: wrap; }
-.person-detail .long-bio p { margin: .6rem 0; }
-
-@media (max-width: 800px){
-  .person-highlight { grid-template-columns: 1fr; text-align: center; }
-  .person-highlight .photo { justify-self: center; }
-  .person-detail { grid-template-columns: 1fr; text-align: center; }
-  .person-detail .photo { justify-self: center; }
-}
-
 
 
 /* ======================================
@@ -437,3 +368,190 @@ section[id]:not(#banner) {
 }
 
 
+/* ============================
+   PEOPLE SECTION — UNIFIED CSS
+============================ */
+
+/* Section wrapper + side breathing room */
+.people-section {
+  padding-inline: clamp(1rem, 4vw, 3rem);
+}
+
+/* Group headers inside People (e.g., PI, Staff, PhD Students...) */
+.people-section .people-group-title {
+  font-family: var(--mit-font-family, "neue-haas-grotesk-display", sans-serif);
+  font-weight: 700;
+  line-height: 1.15;
+  margin: clamp(1rem, 2.2vw, 2rem) 0 clamp(0.5rem, 1.4vw, 1rem);
+  text-align: left;
+}
+
+/* Responsive grid (unified):
+   1 → 2 → 3 → 4 → 5 → 6 columns as width grows */
+.people-section .people-grid {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 2rem;
+}
+
+@media (min-width: 600px)   { .people-section .people-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 980px)   { .people-section .people-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 1280px)  { .people-section .people-grid { grid-template-columns: repeat(4, 1fr); } }
+@media (min-width: 1680px)  { .people-section .people-grid { grid-template-columns: repeat(5, 1fr); } }
+@media (min-width: 1920px)  { .people-section .people-grid { grid-template-columns: repeat(6, 1fr); } }
+
+/* ============================
+   PERSON CARD (shared styles)
+============================ */
+.person-card {
+  text-align: center;
+  padding: 0;         /* keep clean; theme often adds inner wrappers */
+}
+
+.person-card .image.avatar {
+  display: inline-block;
+  margin-bottom: 0.75rem;
+}
+
+.person-card .image.avatar img {
+  display: block;
+  width: 160px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 9999px;
+}
+
+@media (min-width: 900px) {
+  .person-card .image.avatar img {
+    width: 200px;
+    height: 200px;
+  }
+}
+
+.person-card h3 {
+  margin: 0.25rem 0 0.25rem;
+  line-height: 1.2;
+  word-break: break-word;
+}
+
+.person-card .role {
+  font-weight: 600;
+  opacity: 0.85;
+  margin-top: -0.15rem;
+}
+
+.person-card .bio {
+  font-size: 0.9rem;       /* ~14–15px depending on root */
+  line-height: 1.45;
+  opacity: 0.9;
+  margin-top: 0.35rem;
+}
+
+/* Obfuscated email (rendered by template as "name (at) domain (dot) com") */
+.person-card .person-email {
+  display: block;
+  margin-top: 0.5rem;
+  font-family: "Roboto Mono", monospace;
+  font-size: 0.9rem;
+  opacity: 0.95;
+}
+
+/* Links row (website, scholar, github) */
+.person-card .person-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-top: 0.5rem;
+}
+
+.person-card .person-links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 34px;
+  height: 34px;
+  padding: 0 0.6rem;
+  border-radius: 999px;
+  text-decoration: none;
+  border: 1px solid rgba(0,0,0,0.2);
+  transition: transform .15s ease, opacity .15s ease, border-color .15s ease;
+  opacity: 0.9;
+}
+
+.person-card .person-links a:hover {
+  opacity: 1;
+  transform: translateY(-1px);
+  border-color: rgba(0,0,0,0.35);
+}
+
+/* If using Font Awesome icons inside links */
+.person-card .person-links i,
+.person-card .person-links .icon {
+  font-size: 0.95rem;
+  line-height: 1;
+}
+
+/* ============================
+   PI HIGHLIGHT (first row wide)
+============================ */
+/* Make the PI card span the full grid width */
+.person-card.person-highlight {
+  grid-column: 1 / -1;
+  text-align: left;
+}
+
+/* Two-column layout for PI on medium+ screens */
+@media (min-width: 900px) {
+  .person-card.person-highlight {
+    display: grid;
+    grid-template-columns: 240px 1fr;   /* avatar column + text column */
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .person-card.person-highlight .image.avatar {
+    margin: 0;               /* align flush in the left column */
+    justify-self: center;    /* keep avatar centered in its column */
+  }
+
+  .person-card.person-highlight .content {
+    text-align: left;
+  }
+}
+
+/* Tweak sizes a bit larger for PI */
+.person-card.person-highlight .image.avatar img {
+  width: 200px;
+  height: 200px;
+}
+@media (min-width: 1200px) {
+  .person-card.person-highlight .image.avatar img {
+    width: 220px;
+    height: 220px;
+  }
+}
+
+/* Spacing inside PI card text */
+.person-card.person-highlight h3 {
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+.person-card.person-highlight .role {
+  margin-top: 0;
+}
+.person-card.person-highlight .bio {
+  margin-top: 0.5rem;
+}
+
+/* Optional: ensure individual person pages use same avatar sizing */
+.person-profile .image.avatar img {
+  width: 240px;
+  height: 240px;
+}
+@media (min-width: 1200px) {
+  .person-profile .image.avatar img {
+    width: 280px;
+    height: 280px;
+  }
+}
