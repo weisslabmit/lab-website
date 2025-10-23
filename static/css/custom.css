@@ -34,6 +34,7 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: var(--mit-font-weight) !important;
   font-style: var(--mit-font-style) !important;
   letter-spacing: 0.0005em;  /* <-- adds subtle spacing between letters */
+  color: #515151; 
 }
 
 /* -------------------------------
