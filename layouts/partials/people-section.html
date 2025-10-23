@@ -1,88 +1,91 @@
-{{/* ========= PEOPLE SECTION (ordered with PI on top) ========= */}}
+{{/* ========= PEOPLE SECTION (PI first, fixed order groups) ========= */}}
 
-{{ with site.GetPage "section" "people" }}
-  {{ $peopleSection := . }}
+{{- $all := where .Site.RegularPages "Section" "people" -}}
+{{- if gt (len $all) 0 -}}
 
-  {{/* Target order after PI */}}
-  {{ $order := slice "Staff" "PhD Students" "Postdocs" "Other" "Undergrads" }}
+<section id="people" class="people-section">
 
-  <section id="people" class="people-section">
+  {{/* Desired order after PI */}}
+  {{- $order := slice "Staff" "PhD Students" "Postdocs" "Other" "Undergrads" -}}
 
-    {{/* ---------------------------- PI (first, highlighted) ---------------------------- */}}
-    {{ $piPages := where $peopleSection.Pages ".Params.category" "eq" "PI" | default (slice) }}
-    {{ if gt (len $piPages) 0 }}
-      {{ $pi := index ($piPages.ByWeight) 0 }}
-      <h3 class="people-group-title">PI</h3>
+  {{/* ---------------------------- PI (first, highlighted) ---------------------------- */}}
+  {{- $piPages := where $all ".Params.category" "eq" "PI" | default (slice) -}}
+  {{- if gt (len $piPages) 0 -}}
+    {{- $pi := index ($piPages.ByWeight) 0 -}}
+    <h3 class="people-group-title">PI</h3>
 
+    <div class="people-grid">
+      <article class="person-card person-highlight">
+        <a href="{{ $pi.RelPermalink }}" class="image avatar" aria-label="{{ $pi.Title }}">
+          {{ with $pi.Params.image }}
+            <img src="{{ . | relURL }}" alt="{{ $pi.Title }}">
+          {{ else }}
+            <img src="{{ "images/avatar.jpg" | relURL }}" alt="{{ $pi.Title }}">
+          {{ end }}
+        </a>
+
+        <div class="content">
+          <h3>{{ $pi.Title }}</h3>
+          {{ with $pi.Params.role }}<div class="role">{{ . }}</div>{{ end }}
+          {{ with $pi.Params.summary }}<p class="bio">{{ . }}</p>{{ end }}
+
+          {{ with $pi.Params.email }}
+            {{ $safe := replace (replace . "@" " (at) ") "." " (dot) " }}
+            <span class="person-email">{{ $safe }}</span>
+          {{ end }}
+
+          <div class="person-links">
+            {{ with $pi.Params.website }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="Website"><i class="icon solid fa-globe"></i></a>{{ end }}
+            {{ with $pi.Params.scholar }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="Google Scholar"><i class="icon solid fa-graduation-cap"></i></a>{{ end }}
+            {{ with $pi.Params.github  }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="GitHub"><i class="icon brands fa-github"></i></a>{{ end }}
+          </div>
+        </div>
+      </article>
+    </div>
+  {{- end -}}
+
+  {{/* ---------------------------- The rest, in fixed order ---------------------------- */}}
+  {{- $nonPI := where $all ".Params.category" "ne" "PI" -}}
+  {{- range $order -}}
+    {{- $cat := . -}}
+    {{/* Slightly tolerant match: exact case plus lowercase fallback */}}
+    {{- $pages := union
+          (where $nonPI "Params.category" "eq" $cat)
+          (where $nonPI "Params.category" "eq" (lower $cat))
+      | default (slice) -}}
+    {{- if gt (len $pages) 0 -}}
+      <h3 class="people-group-title">{{ $cat }}</h3>
       <div class="people-grid">
-        <article class="person-card person-highlight">
-          <a href="{{ $pi.RelPermalink }}" class="image avatar" aria-label="{{ $pi.Title }}">
-            {{ with $pi.Params.image }}
-              <img src="{{ . | relURL }}" alt="{{ $pi.Title }}">
-            {{ else }}
-              <img src="{{ "images/avatar.jpg" | relURL }}" alt="{{ $pi.Title }}">
-            {{ end }}
-          </a>
+        {{- range $pages.ByWeight -}}
+          <article class="person-card">
+            <a href="{{ .RelPermalink }}" class="image avatar" aria-label="{{ .Title }}">
+              {{ with .Params.image }}
+                <img src="{{ . | relURL }}" alt="{{ .Title }}">
+              {{ else }}
+                <img src="{{ "images/avatar.jpg" | relURL }}" alt="{{ .Title }}">
+              {{ end }}
+            </a>
 
-          <div class="content">
-            <h3>{{ $pi.Title }}</h3>
-            {{ with $pi.Params.role }}<div class="role">{{ . }}</div>{{ end }}
-            {{ with $pi.Params.summary }}<p class="bio">{{ . }}</p>{{ end }}
+            <h3>{{ .Title }}</h3>
+            {{ with .Params.role }}<div class="role">{{ . }}</div>{{ end }}
+            {{ with .Params.summary }}<p class="bio">{{ . }}</p>{{ end }}
 
-            {{ with $pi.Params.email }}
+            {{ with .Params.email }}
               {{ $safe := replace (replace . "@" " (at) ") "." " (dot) " }}
               <span class="person-email">{{ $safe }}</span>
             {{ end }}
 
             <div class="person-links">
-              {{ with $pi.Params.website }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="Website"><i class="icon solid fa-globe"></i></a>{{ end }}
-              {{ with $pi.Params.scholar }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="Google Scholar"><i class="icon solid fa-graduation-cap"></i></a>{{ end }}
-              {{ with $pi.Params.github  }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="GitHub"><i class="icon brands fa-github"></i></a>{{ end }}
+              {{ with .Params.website }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="Website"><i class="icon solid fa-globe"></i></a>{{ end }}
+              {{ with .Params.scholar }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="Google Scholar"><i class="icon solid fa-graduation-cap"></i></a>{{ end }}
+              {{ with .Params.github  }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="GitHub"><i class="icon brands fa-github"></i></a>{{ end }}
             </div>
-          </div>
-        </article>
+          </article>
+        {{- end -}}
       </div>
-    {{ end }}
+    {{- end -}}
+  {{- end -}}
 
-    {{/* ---------------------------- The rest, in fixed order ---------------------------- */}}
-    {{ $nonPI := where $peopleSection.Pages ".Params.category" "ne" "PI" }}
-    {{ range $order }}
-      {{ $cat := . }}
-      {{ $pages := where $nonPI "Params.category" "eq" $cat | default (slice) }}
-      {{ if gt (len $pages) 0 }}
-        <h3 class="people-group-title">{{ $cat }}</h3>
-        <div class="people-grid">
-          {{ range $pages.ByWeight }}
-            <article class="person-card">
-              <a href="{{ .RelPermalink }}" class="image avatar" aria-label="{{ .Title }}">
-                {{ with .Params.image }}
-                  <img src="{{ . | relURL }}" alt="{{ .Title }}">
-                {{ else }}
-                  <img src="{{ "images/avatar.jpg" | relURL }}" alt="{{ .Title }}">
-                {{ end }}
-              </a>
+</section>
 
-              <h3>{{ .Title }}</h3>
-              {{ with .Params.role }}<div class="role">{{ . }}</div>{{ end }}
-              {{ with .Params.summary }}<p class="bio">{{ . }}</p>{{ end }}
-
-              {{ with .Params.email }}
-                {{ $safe := replace (replace . "@" " (at) ") "." " (dot) " }}
-                <span class="person-email">{{ $safe }}</span>
-              {{ end }}
-
-              <div class="person-links">
-                {{ with .Params.website }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="Website"><i class="icon solid fa-globe"></i></a>{{ end }}
-                {{ with .Params.scholar }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="Google Scholar"><i class="icon solid fa-graduation-cap"></i></a>{{ end }}
-                {{ with .Params.github  }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="GitHub"><i class="icon brands fa-github"></i></a>{{ end }}
-              </div>
-            </article>
-          {{ end }}
-        </div>
-      {{ end }}
-    {{ end }}
-
-  </section>
-{{ else }}
-  {{/* People section missing — render nothing, don’t fail build */}}
-{{ end }}
+{{- end -}}
