@@ -597,25 +597,35 @@ h.prototype.getPseudoIds=h.prototype.D;h.prototype.getGroupName=h.prototype.B;})
 </script>
 
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-  // Example button for "Publications"
-  const pub = document.getElementById("Pub");
-  if (pub) {
-    pub.style.cursor = "pointer";  // show clickable hand cursor
-    pub.addEventListener("click", () => {
-      // open the section in the parent page
-      window.parent.location.hash = "#publications";
+window.addEventListener("WebComponentsReady", () => {
+  const map = [
+    { id: "Pub",     target: "#publications" },
+    { id: "peopl",   target: "#research" },
+    { id: "Res",     target: "#people" },
+    { id: "Resources", target: "#resources" },
+    { id: "Contact", target: "#contact" }
+  ];
+
+  map.forEach(({ id, target }) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+
+    // Make element look and behave like a button
+    el.style.cursor = "pointer";
+    el.style.userSelect = "none";
+
+    el.addEventListener("click", () => {
+      try {
+        // Smoothly scroll main page to the section
+        window.parent.location.hash = target;
+      } catch (err) {
+        console.warn(`Navigation error for ${id}:`, err);
+      }
     });
-  }
-  const peopl= document.getElementById("Research");
-if (peopl) {
-  peopl.style.cursor = "pointer";
-  peopl.addEventListener("click", () => {
-    window.parent.location.hash = "#research";
   });
-}
 });
 </script>
+
 
 </body>
 </html>
