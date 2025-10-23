@@ -139,6 +139,7 @@ body {
 
   .embed-frame {
     max-width: 100%;     /* allow full device width */
+    padding: 0;
   }
 }
 .people-section .people-grid {
