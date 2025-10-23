@@ -4,7 +4,7 @@
 html, body,
 p, li, a, nav, button, input, textarea, select,
 blockquote, figcaption, small, strong, em,
-.section, .inner, .content, .major, .button, .actions, .icons {
+.section, .inner, .content, .button, .actions, .icons {
   font-family: "Roboto Mono", monospace !important;
   font-weight: 400 !important;
   font-style: normal !important;
@@ -34,7 +34,7 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: var(--mit-font-weight) !important;
   font-style: var(--mit-font-style) !important;
   letter-spacing: 0.0005em;  /* <-- adds subtle spacing between letters */
-  color: #515151; 
+  color: #6c6c6c; 
 }
 
 /* -------------------------------
@@ -403,7 +403,7 @@ section[id]:not(#banner) {
 /* --- Adjust header spacing in timeline & research sections --- */
 #research-timeline header.major,
 #research header.major {
-  margin-top: 0rem;        /* small top margin (tight to section start) */
+  margin-top: 1rem;        /* small top margin (tight to section start) */
   margin-bottom: 2.5rem;     /* more space before the content below */
   text-align: center;
 }
