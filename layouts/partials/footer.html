@@ -73,29 +73,7 @@
 
 
 
-<script>
-(function () {
-  const nav = document.getElementById('floating-nav');
-  const banner = document.getElementById('banner');
-  if (!nav || !banner) return;
 
-  function refresh() {
-    // If the bottom of the banner is still at or below the top of the viewport,
-    // we are still "on the banner" => hide the floating nav.
-    const bottom = banner.getBoundingClientRect().bottom;
-    if (bottom > 150) {
-      nav.classList.remove('is-visible');
-    } else {
-      nav.classList.add('is-visible');
-    }
-  }
-
-  // Run once and on scroll/resize
-  refresh();
-  window.addEventListener('scroll', refresh, { passive: true });
-  window.addEventListener('resize', refresh);
-})();
-</script>
 
 
 <script>
