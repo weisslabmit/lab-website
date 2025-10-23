@@ -209,7 +209,7 @@ body {
 /* ======================================
    Limit global text scaling (balanced)
 ====================================== */
-html { font-size: clamp(13px, 0.9vw + 0.45rem, 17px); }
+html { font-size: clamp v
 
 h1, h2, h3, h4, h5, h6 {
   font-size: clamp(1rem, 0.7vw + 0.7rem, 1.8rem);
@@ -226,6 +226,7 @@ p, li, blockquote, .content {
 .people-section .role,
 .people-section .bio { font-size: clamp(0.85rem, 0.35vw + 0.45rem, 1rem); }
 
+.content p { font-size: clamp(0.7rem, 0.50vw + 0.45rem, 0.9rem); }
 
 .menu-frame {
   position: relative;
@@ -263,7 +264,7 @@ p, li, blockquote, .content {
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 1000;
-  background: #000;
+  background: #282828;
   color: #fff;
   transform: translateY(-100%); /* hidden by default */
   opacity: 0;
@@ -416,7 +417,7 @@ section[id]:not(#banner) {
   line-height: 1.2;
   margin: 0;                 /* remove any default heading margins */
   padding: 0;                /* clean slate */
-  color: #000;
+  color: #2a2a2a;
 }
 
 
