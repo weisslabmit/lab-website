@@ -1,3 +1,4 @@
+<section id="research" class="wrapper"></section>
 <!-- Fixed, non-CMS timeline block at the top of Research -->
 <div id="research-timeline" class="timeline-frame">
   <iframe
@@ -17,7 +18,7 @@
   </div>
 </div>
 
-<section id="research" class="wrapper">
+
   {{ with site.GetPage "section" "research" }}
     {{ range $i, $p := .Pages.ByWeight }}
       {{ $orient := cond (modBool $i 2) "orient-right" "orient-left" }}
