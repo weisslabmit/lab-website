@@ -1,20 +1,18 @@
 <section id="research" class="wrapper">
-  
-<div class="timeline-frame">
-  <div id="timeline-loader" class="timeline-frame__loader" aria-hidden="true">
-    <img class="timeline-frame__spinner" src='{{ "images/plasmid.svg" | relURL }}' alt="">
-  </div>
 
-  <iframe
-    id="lab-timeline"
-    src='{{ "embeds/timeline-lab/index.html" | relURL }}?v={{ now.Unix }}'
-    title="Lab Timeline"
-    loading="lazy"
-    referrerpolicy="no-referrer"
-    sandbox="allow-scripts allow-same-origin"
-    scrolling="no">
-  </iframe>
-</div>
+  <!-- Fixed, non-CMS timeline block (once, at the top of Research) -->
+  <div id="research-timeline" class="timeline-frame">
+    <iframe
+      id="lab-timeline"
+      src="about:blank"
+      data-src='{{ "embeds/timeline-lab/index.html" | relURL }}?v={{ now.Unix }}'
+      title="Lab Timeline"
+      loading="lazy"
+      referrerpolicy="no-referrer"
+      sandbox="allow-scripts allow-same-origin"
+      scrolling="no">
+    </iframe>
+  </div>
 
   {{ with site.GetPage "section" "research" }}
     {{ range $i, $p := .Pages.ByWeight }}

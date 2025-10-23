@@ -115,16 +115,3 @@
   io.observe(timelineBlock);
 })();
 </script>
-
-<script>
-(function () {
-  const frame  = document.getElementById('lab-timeline');
-  const holder = document.querySelector('.timeline-frame');
-  const loader = document.getElementById('timeline-loader');
-  if (!frame || !holder || !loader) return;
-
-  function hide() { holder.classList.add('timeline-frame--ready'); }
-  frame.addEventListener('load', hide, { once: true });
-  setTimeout(hide, 5000); // failsafe so spinner never sticks
-})();
-</script>
