@@ -596,6 +596,19 @@ h.prototype.getPseudoIds=h.prototype.D;h.prototype.getGroupName=h.prototype.B;})
 })();
 </script>
 
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  // Example button for "Publications"
+  const pub = document.getElementById("Pub");
+  if (pub) {
+    pub.style.cursor = "pointer";  // show clickable hand cursor
+    pub.addEventListener("click", () => {
+      // open the section in the parent page
+      window.parent.location.hash = "#publications";
+    });
+  }
+});
+</script>
 
 </body>
 </html>
