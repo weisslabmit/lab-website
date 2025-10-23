@@ -209,7 +209,7 @@ body {
 /* ======================================
    Limit global text scaling (balanced)
 ====================================== */
-html { font-size: clamp v
+html { font-size: clamp(13px, 0.9vw + 0.45rem, 17px); }
 
 h1, h2, h3, h4, h5, h6 {
   font-size: clamp(1rem, 0.7vw + 0.7rem, 1.8rem);
@@ -226,7 +226,6 @@ p, li, blockquote, .content {
 .people-section .role,
 .people-section .bio { font-size: clamp(0.85rem, 0.35vw + 0.45rem, 1rem); }
 
-.content p { font-size: clamp(0.7rem, 0.50vw + 0.45rem, 0.9rem); }
 
 .menu-frame {
   position: relative;
