@@ -14,15 +14,33 @@ collections:
     folder: "content/people"
     create: true
     slug: "{{slug}}"
-    extension: "md"
     fields:
-      - { label: "Title (Name)", name: "title", widget: "string" }
-      - { label: "Role", name: "role", widget: "string", required: false }
+      - { label: "Name", name: "title", widget: "string" }
+      - label: "Role"
+        name: "role"
+        widget: "select"
+        options:
+          - PI
+          - Staff
+          - PhD student
+          - Postdoc
+          - Other
+          - Undergrad
+          - Lab Manager
+          - Lab Administration
+          - Emeritus Colleage
+          - Visiting Scientist
+          - Lab Pet
+
+      - { label: "Email", name: "email", widget: "string", required: false }
       - { label: "Website", name: "website", widget: "string", required: false }
-      - { label: "Image", name: "image", widget: "image", required: false }
-      - { label: "Weight (order)", name: "weight", widget: "number", default: 1, min: 1, step: 1, required: false }
-      - { label: "Summary", name: "summary", widget: "text", required: false }
-      - { label: "Body", name: "body", widget: "markdown", required: false }
+      - { label: "Google Scholar", name: "scholar", widget: "string", required: false }
+      - { label: "GitHub", name: "github", widget: "string", required: false }
+      - { label: "Photo", name: "image", widget: "image", required: false }
+      - { label: "Short Bio", name: "short_bio", widget: "text", required: false }
+      - { label: "Long Bio", name: "bio", widget: "markdown", required: false }
+      - { label: "CV (PDF)", name: "cv", widget: "file", required: false }
+      - { label: "Weight (within role)", name: "weight", widget: "number", required: false, default: 1 }
 
   - name: "research"
     label: "Research Topics"

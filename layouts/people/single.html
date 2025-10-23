@@ -1,0 +1,47 @@
+{{ define "main" }}
+<section class="wrapper person-page">
+  <div class="inner person-detail">
+    <div class="photo">
+      <img src="{{ .Params.image | relURL }}" alt="{{ .Title }}">
+    </div>
+    <div class="info">
+      <h1 class="name">{{ .Title }}</h1>
+      {{ with .Params.role }}<div class="roleline">{{ . }}</div>{{ end }}
+
+      {{ with .Params.email }}
+        {{ $masked := . | replace "@" " (at) " | replace "." " (dot) " }}
+        <div class="email">{{ $masked }}</div>
+      {{ end }}
+
+      <div class="links">
+        {{ with .Params.website }}
+          <a class="btn" href="{{ . }}" target="_blank" rel="noopener">
+            <span class="icon fa-globe"></span> Website
+          </a>
+        {{ end }}
+        {{ with .Params.scholar }}
+          <a class="btn" href="{{ . }}" target="_blank" rel="noopener">
+            <span class="icon fa-graduation-cap"></span> Scholar
+          </a>
+        {{ end }}
+        {{ with .Params.github }}
+          <a class="btn" href="{{ . }}" target="_blank" rel="noopener">
+            <span class="icon brands fa-github"></span> GitHub
+          </a>
+        {{ end }}
+        {{ with .Params.cv }}
+          <a class="btn" href="{{ . | relURL }}" target="_blank" rel="noopener">
+            <span class="icon fa-file"></span> CV
+          </a>
+        {{ end }}
+      </div>
+
+      {{ with .Params.bio }}
+        <div class="long-bio">
+          {{ . | markdownify }}
+        </div>
+      {{ end }}
+    </div>
+  </div>
+</section>
+{{ end }}
