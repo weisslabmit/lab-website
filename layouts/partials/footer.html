@@ -71,6 +71,10 @@
 </script>
 
 
+<!-- Prewarm the timeline file so it’s cached when needed -->
+<link rel="preload" href='{{ "embeds/timeline-lab/index.html" | relURL }}' as="document">
+<link rel="prefetch" href='{{ "embeds/timeline-lab/index.html" | relURL }}' as="document">
+
 <script>
 (function () {
   const iframe = document.getElementById('lab-timeline');
@@ -79,7 +83,6 @@
 
   const wanted = iframe.getAttribute('data-src');
   let loaded = false;
-  let delayTimer = null;
 
   function loadTimeline() {
     if (loaded) return;
@@ -88,38 +91,27 @@
     if (io) io.disconnect();
   }
 
-  // 1) Immediate load if you click the Research link in the floating nav
+  // 1️⃣ Load if "Research" link is clicked
   const researchLink =
     document.querySelector('#floating-nav a[href="#research"]') ||
     document.querySelector('a[href="#research"][data-scroll]');
   if (researchLink) researchLink.addEventListener('click', loadTimeline, { once: true });
 
-  // 2) Immediate load if the page is opened at #research
+  // 2️⃣ Load if user lands directly on #research or #research-timeline
   function checkHash() {
-    if (location.hash === '#research-timeline') loadTimeline();
+    if (location.hash === '#research' || location.hash === '#research-timeline') loadTimeline();
   }
   checkHash();
   window.addEventListener('hashchange', checkHash);
 
-  // 3) Load only when any pixel of #research-timeline is visible (after 0.3s)
-  //    (No failsafe — so it won't trigger on initial load unless visible)
+  // 3️⃣ Load immediately once #research-timeline becomes visible
   const io = new IntersectionObserver((entries) => {
     if (loaded) return;
     for (const e of entries) {
-      if (e.isIntersecting) {
-        clearTimeout(delayTimer);
-        delayTimer = setTimeout(loadTimeline, 10); 
-      } else {
-        clearTimeout(delayTimer); // scrolled away before delay finished
-      }
+      if (e.isIntersecting) { loadTimeline(); break; }
     }
-  }, {
-    root: null,
-    threshold: 0,
-    rootMargin: '0px'
-  });
+  }, { threshold: 0 });
 
-  // Start observing just after layout settles
-  window.requestAnimationFrame(() => io.observe(timelineBlock));
+  io.observe(timelineBlock);
 })();
 </script>
