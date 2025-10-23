@@ -365,13 +365,13 @@ section[id]:not(#banner) {
 .timeline-loader {
   position: absolute;
   inset: 0;
-  display: none;                 /* shown only while loading */
+  display: flex;                 /* shown only while loading */
   align-items: center;
   justify-content: center;
   background: #fff;              /* white card behind spinner */
-  z-index: 2;
-  opacity: 1;
-  visibility: visible;
+  z-index: 3;
+  opacity: 0;
+  visibility: hidden;
   transition: opacity 0.8s ease, visibility 0.8s ease; /* smooth fade-out */
 
 }
