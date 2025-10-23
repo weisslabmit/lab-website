@@ -307,6 +307,21 @@ section[id]:not(#banner) {
   padding-top: 0.75rem; /* visible white space under the bar */
 }
 
+/* === Responsive tweak: 2-row floating menu on small screens === */
+@media (max-width: 520px) {
+  #floating-nav .floating-nav__inner {
+    flex-wrap: wrap;            /* allow wrapping to next line */
+    row-gap: 0.3rem;            /* a bit of vertical spacing between rows */
+    justify-content: center;    /* keep centered even when wrapped */
+    padding: 0.6rem 0.75rem;    /* slightly tighter padding */
+  }
+
+  #floating-nav a {
+    flex: 1 1 45%;              /* roughly half width per link, wraps nicely */
+    text-align: center;
+  }
+}
+
 section[id]:not(#banner) > *:first-child { margin-top: 0 !important; }
 section[id]:not(#banner) .inner { padding-top: 0 !important; margin-top: 0 !important; }
 
