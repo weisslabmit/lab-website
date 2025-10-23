@@ -96,7 +96,7 @@
 
   // 2) Immediate load if the page is opened at #research
   function checkHash() {
-    if (location.hash === '#research' || location.hash === '#research-timeline') loadTimeline();
+    if (location.hash === '#research-timeline') loadTimeline();
   }
   checkHash();
   window.addEventListener('hashchange', checkHash);
