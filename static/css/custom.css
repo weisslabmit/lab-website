@@ -317,6 +317,10 @@ section[id]:not(#banner) {
   padding-top: calc(var(--menu-height) + 1.5rem);  /* real visible white space */
 }
 
+#research-timeline {
+  scroll-margin-top: var(--menu-height);
+}
+
 /* ===== Timeline: center + responsive downscale (no drift) ===== */
 .timeline-frame {
   position: relative;
