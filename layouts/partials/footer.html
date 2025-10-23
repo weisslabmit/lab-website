@@ -118,22 +118,62 @@
 
 <script>
 (function () {
-  const research = document.getElementById('research');
   const loader   = document.getElementById('timeline-loader');
-  if (!research || !loader) return;
+  const timeline = document.getElementById('lab-timeline');
+  const research = document.getElementById('research');
+  if (!loader || !timeline || !research) return;
 
-  let shown = false;
-  const io = new IntersectionObserver(entries => {
+  // --- Prewarm the spinner image (non-blocking)
+  const spImg = loader.querySelector('.timeline-frame__spinner[src]');
+  if (spImg && spImg.getAttribute('src')) {
+    const pre = new Image();
+    pre.src = spImg.getAttribute('src');
+  }
+
+  let shown = false;     // ensure we only show once
+  let armed = false;     // don’t trigger at initial page load
+
+  // Arm on first user scroll (natural entry into the section)
+  const armOnScroll = () => { armed = true; window.removeEventListener('scroll', armOnScroll); };
+  window.addEventListener('scroll', armOnScroll, { once: true, passive: true });
+
+  // If we load directly at #research (or #research in hash), arm immediately
+  window.addEventListener('load', () => {
+    if (location.hash && location.hash.replace('#','') === 'research') {
+      armed = true;
+    }
+  });
+
+  // Also arm if they click a link to #research (from your floating menu)
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest('a[href^="#"]');
+    if (!a) return;
+    const h = a.getAttribute('href');
+    if (h === '#research') armed = true;
+  }, { passive: true });
+
+  // Show/hide helpers
+  function showSpinner() {
+    if (shown) return;
+    shown = true;
+    loader.classList.add('is-visible');
+
+    // Hide after ~1s; adjust if you want longer/shorter
+    setTimeout(() => {
+      loader.classList.remove('is-visible');
+    }, 1000);
+  }
+
+  // Trigger as soon as ANY pixel of the research section is visible, but only after armed
+  const io = new IntersectionObserver((entries) => {
     const e = entries[0];
-    if (e.isIntersecting && !shown) {
-      shown = true;
-      loader.classList.add('is-visible');
-      setTimeout(() => loader.classList.remove('is-visible'), 1000);
+    if (!e) return;
+    if (armed && e.isIntersecting && !shown) {
+      showSpinner();
       io.disconnect();
     }
-  }, { threshold: 0 });
+  }, { threshold: 0.001 });
 
   io.observe(research);
 })();
 </script>
-

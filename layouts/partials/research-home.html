@@ -1,10 +1,13 @@
 <section id="research" class="wrapper">
 
-  <!-- Fixed, non-CMS timeline block (once, at the top of Research) -->
-  <div id="research-timeline" class="timeline-frame">
-      <div id="timeline-loader" class="timeline-frame__loader" aria-hidden="true">
-      <img class="timeline-frame__spinner" src='{{ "images/plasmid.svg" | relURL }}' alt="">
-      </div>
+<div class="timeline-frame">
+  <div id="timeline-loader" class="timeline-frame__loader" aria-hidden="true">
+    <!-- If the image 404s, onerror removes src so CSS fallback spinner appears -->
+    <img src='{{ "images/plasmid.svg" | relURL }}'
+         alt=""
+         class="timeline-frame__spinner"
+         onerror="this.removeAttribute('src')" />
+  </div>
     <iframe
       id="lab-timeline"
       src="about:blank"
