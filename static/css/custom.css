@@ -317,33 +317,31 @@ section[id]:not(#banner) {
   padding-top: calc(var(--menu-height) + 1.5rem);  /* real visible white space */
 }
 
-/* ===== Research timeline: perfectly centered & responsive ===== */
+/* ===== Timeline: center + responsive downscale (no drift) ===== */
 .timeline-frame {
   position: relative;
+  z-index: 5;
   width: 100%;
-  max-width: 1200px;         /* design width */
-  aspect-ratio: 1200 / 500;  /* keeps the box proportional */
-  margin: 0 auto 2.5rem;     /* center in the column, add a little bottom gap */
+  max-width: 1200px;          /* timeline design width */
+  aspect-ratio: 1200 / 500;   /* auto height from width */
+  margin: 0 auto;             /* center wrapper itself */
   overflow: hidden;
-  container-type: inline-size; /* enables 100cqw inside */
+  container-type: inline-size; /* enable 100cqw */
 }
 
-/* Center the 1200x500 stage and scale from its center so it never drifts */
 .timeline-frame iframe {
   position: absolute;
-  inset: 0;
-  margin: auto;              /* centers the 1200x500 box within the wrapper */
-  width: 1200px;
+  top: 50%;
+  left: 50%;
+  width: 1200px;    /* internal stage size from GWD */
   height: 500px;
   border: 0;
   display: block;
-
-  /* scale based on the wrapper’s width, but never upscale */
-  transform-origin: center center;
-  transform: scale( clamp(0.2, calc(100cqw / 1200px), 1) );
+  transform-origin: top left;
+  transform:
+    translate(-50%, -50%)
+    scale( clamp(0.2, calc(100cqw / 1200px), 1) ); /* downscale only */
 }
-
-
 
 /* ===== Timeline spinner overlay (covers only the timeline area) ===== */
 .timeline-loader {
