@@ -361,32 +361,27 @@ section[id]:not(#banner) {
     scale( clamp(0.2, calc(100cqw / 1200px), 1) ); /* downscale only */
 }
 
-/* ===== Timeline spinner overlay (covers only the timeline area) ===== */
-.timeline-loader {
+/* Timeline spinner overlay: hidden by default */
+.timeline-frame__loader {
   position: absolute;
   inset: 0;
-  display: flex;                 /* shown only while loading */
+  display: flex;
   align-items: center;
   justify-content: center;
-  background: #fff;              /* white card behind spinner */
+  background: white;
   z-index: 3;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.8s ease, visibility 0.8s ease; /* smooth fade-out */
-
+  transition: opacity 0.8s ease, visibility 0.8s ease;
 }
 
-/* Show overlay only when .is-loading is on the frame */
-.timeline-frame.is-loading .timeline-loader { display: flex; }
-
-/* Spinner (use your plasmid.svg) */
-.timeline-spinner {
-  width: 120px;
-  height: 120px;
-  animation: timelineSpin 2.5s linear infinite;
+/* Plasmid spinner size + spin */
+.timeline-frame__spinner {
+  width: 140px;
+  height: 140px;
+  animation: timelinespin 2.4s linear infinite;
 }
-
-@keyframes timelineSpin { to { transform: rotate(360deg); } }
+@keyframes timelinespin { to { transform: rotate(360deg); } }
 
 /* When loading is active, show the overlay smoothly */
 .timeline-frame.is-loading .timeline-frame__loader {
