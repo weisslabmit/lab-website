@@ -317,31 +317,30 @@ section[id]:not(#banner) {
   padding-top: calc(var(--menu-height) + 1.5rem);  /* real visible white space */
 }
 
-/* === Timeline (center + scale, design size 1200×400) === */
+/* ===== Research timeline: perfectly centered & responsive ===== */
 .timeline-frame {
   position: relative;
-  z-index: 5;
   width: 100%;
-  max-width: 1200px;           /* design width */
-  aspect-ratio: 1200 / 400;    /* auto height */
-  margin: 0 auto;              /* centers the wrapper */
+  max-width: 1200px;         /* design width */
+  aspect-ratio: 1200 / 500;  /* keeps the box proportional */
+  margin: 0 auto 2.5rem;     /* center in the column, add a little bottom gap */
   overflow: hidden;
-  container-type: inline-size; /* enables 100cqw below */
+  container-type: inline-size; /* enables 100cqw inside */
 }
 
-/* Keep the internal stage centered, then scale to the wrapper width */
+/* Center the 1200x500 stage and scale from its center so it never drifts */
 .timeline-frame iframe {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 1200px;               /* design width */
-  height: 400px;               /* design height */
+  inset: 0;
+  margin: auto;              /* centers the 1200x500 box within the wrapper */
+  width: 1200px;
+  height: 500px;
   border: 0;
   display: block;
-  transform-origin: top left;
-  transform:
-    translate(-50%, -50%)
-    scale( clamp(0.2, calc(100cqw / 1200px), 1) );
+
+  /* scale based on the wrapper’s width, but never upscale */
+  transform-origin: center center;
+  transform: scale( clamp(0.2, calc(100cqw / 1200px), 1) );
 }
 
 
