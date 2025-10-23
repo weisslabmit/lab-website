@@ -71,50 +71,7 @@
 </script>
 
 
-<!-- Prewarm the timeline file so it’s cached when needed -->
-<link rel="preload" href='{{ "embeds/timeline-lab/index.html" | relURL }}' as="document">
-<link rel="prefetch" href='{{ "embeds/timeline-lab/index.html" | relURL }}' as="document">
 
-<script>
-(function () {
-  const iframe = document.getElementById('lab-timeline');
-  const timelineBlock = document.getElementById('research-timeline');
-  if (!iframe || !timelineBlock) return;
-
-  const wanted = iframe.getAttribute('data-src');
-  let loaded = false;
-
-  function loadTimeline() {
-    if (loaded) return;
-    loaded = true;
-    iframe.src = wanted;
-    if (io) io.disconnect();
-  }
-
-  // 1️⃣ Load if "Research" link is clicked
-  const researchLink =
-    document.querySelector('#floating-nav a[href="#research"]') ||
-    document.querySelector('a[href="#research"][data-scroll]');
-  if (researchLink) researchLink.addEventListener('click', loadTimeline, { once: true });
-
-  // 2️⃣ Load if user lands directly on #research or #research-timeline
-  function checkHash() {
-    if (location.hash === '#research' || location.hash === '#research-timeline') loadTimeline();
-  }
-  checkHash();
-  window.addEventListener('hashchange', checkHash);
-
-  // 3️⃣ Load immediately once #research-timeline becomes visible
-  const io = new IntersectionObserver((entries) => {
-    if (loaded) return;
-    for (const e of entries) {
-      if (e.isIntersecting) { loadTimeline(); break; }
-    }
-  }, { threshold: 0 });
-
-  io.observe(timelineBlock);
-})();
-</script>
 
 <script>
 (function () {
@@ -137,5 +94,47 @@
   refresh();
   window.addEventListener('scroll', refresh, { passive: true });
   window.addEventListener('resize', refresh);
+})();
+</script>
+
+
+<script>
+(function () {
+  const frame   = document.getElementById('research-timeline');
+  const iframe  = document.getElementById('lab-timeline');
+  const section = document.getElementById('research');
+  if (!frame || !iframe || !section) return;
+
+  let fired = false;
+
+  const io = new IntersectionObserver((entries) => {
+    if (fired) return;
+    const e = entries[0];
+    if (!e) return;
+
+    // "any pixel" visible:
+    if (e.isIntersecting && e.intersectionRatio > 0) {
+      fired = true;
+
+      // show spinner overlay immediately
+      frame.classList.add('is-loading');
+
+      // kick timeline load
+      const url = iframe.getAttribute('data-src');
+      if (url) iframe.src = url;
+
+      // hide overlay after 2 seconds (exact requirement)
+      setTimeout(() => {
+        frame.classList.remove('is-loading');
+      }, 2000);
+
+      io.disconnect();
+    }
+  }, {
+    root: null,
+    threshold: [0]   // fire as soon as any pixel is visible
+  });
+
+  io.observe(section);
 })();
 </script>

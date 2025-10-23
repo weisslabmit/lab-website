@@ -317,58 +317,53 @@ section[id]:not(#banner) {
   padding-top: calc(var(--menu-height) + 1.5rem);  /* real visible white space */
 }
 
-/* ===== Research timeline: center + responsive scale (like the menu) ===== */
+/* ===== Timeline: center + responsive downscale (no drift) ===== */
 .timeline-frame {
   position: relative;
+  z-index: 5;
   width: 100%;
-  max-width: 1200px;              /* design width */
-  margin: 0 auto;                 /* center in page */
-  aspect-ratio: 1200 / 500;       /* maintain height automatically */
+  max-width: 1200px;          /* timeline design width */
+  aspect-ratio: 1200 / 500;   /* auto height from width */
+  margin: 0 auto;             /* center wrapper itself */
   overflow: hidden;
-  container-type: inline-size;    /* enables 100cqw inside this box */
+  container-type: inline-size; /* enable 100cqw */
 }
 
 .timeline-frame iframe {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 1200px;                  /* fixed internal stage size */
+  width: 1200px;    /* internal stage size from GWD */
   height: 500px;
   border: 0;
   display: block;
-
-  /* center first, then scale around the center */
-  transform-origin: center center;
+  transform-origin: top left;
   transform:
     translate(-50%, -50%)
-    scale( clamp(0.2, calc(100cqw / 1200px), 1) );
+    scale( clamp(0.2, calc(100cqw / 1200px), 1) ); /* downscale only */
 }
 
-.timeline-frame__loader {
+/* ===== Timeline spinner overlay (covers only the timeline area) ===== */
+.timeline-loader {
   position: absolute;
   inset: 0;
-  display: flex;
+  display: none;                 /* shown only while loading */
   align-items: center;
   justify-content: center;
-  background: #fff;
-  z-index: 3;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity .3s ease, visibility .3s ease;
-}
-
-.timeline-frame__spinner {
-  width: 100px;
-  height: 100px;
-  animation: spin 2s linear infinite;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-/* visible state */
-.timeline-frame__loader.is-visible {
+  background: #fff;              /* white card behind spinner */
+  z-index: 2;
   opacity: 1;
-  visibility: visible;
+  transition: opacity 0.3s ease;
 }
+
+/* Show overlay only when .is-loading is on the frame */
+.timeline-frame.is-loading .timeline-loader { display: flex; }
+
+/* Spinner (use your plasmid.svg) */
+.timeline-spinner {
+  width: 120px;
+  height: 120px;
+  animation: timelineSpin 2s linear infinite;
+}
+
+@keyframes timelineSpin { to { transform: rotate(360deg); } }
