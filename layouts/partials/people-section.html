@@ -1,19 +1,26 @@
-{{/* ========= PEOPLE SECTION (PI first, fixed order groups) ========= */}}
+{{/* ========= PEOPLE SECTION (robust resolver, PI first, fixed groups) ========= */}}
 
-{{- $all := where .Site.RegularPages "Section" "people" -}}
-{{- if gt (len $all) 0 -}}
+{{/* 1) Find the "people" pages robustly */}}
+{{ $root := site.GetPage "section" "people" | default (site.GetPage "people") }}
+{{ $bySection := where site.Pages "Section" "people" }}
+{{/* Prefer section pages if we have them; else fall back to site.Pages filter */}}
+{{ $all := cond (and $root (gt (len $root.Pages) 0)) $root.Pages $bySection }}
 
+{{/* DEBUG (comment in HTML source): */}}
+<!-- people-section: found {{ len $all }} pages in 'people' -->
+
+{{ if gt (len $all) 0 }}
 <section id="people" class="people-section">
 
-  {{/* Desired order after PI */}}
-  {{- $order := slice "Staff" "PhD Students" "Postdocs" "Other" "Undergrads" -}}
+  {{/* Order after PI */}}
+  {{ $order := slice "Staff" "PhD Students" "Postdocs" "Other" "Undergrads" }}
 
-  {{/* ---------------------------- PI (first, highlighted) ---------------------------- */}}
-  {{- $piPages := where $all ".Params.category" "eq" "PI" | default (slice) -}}
-  {{- if gt (len $piPages) 0 -}}
-    {{- $pi := index ($piPages.ByWeight) 0 -}}
+  {{/* ---------------- PI (first, highlighted) ---------------- */}}
+  {{ $piPages := where $all ".Params.category" "eq" "PI" | default (slice) }}
+  {{ if gt (len $piPages) 0 }}
+    {{ $pi := index ($piPages.ByWeight) 0 }}
+
     <h3 class="people-group-title">PI</h3>
-
     <div class="people-grid">
       <article class="person-card person-highlight">
         <a href="{{ $pi.RelPermalink }}" class="image avatar" aria-label="{{ $pi.Title }}">
@@ -42,21 +49,21 @@
         </div>
       </article>
     </div>
-  {{- end -}}
+  {{ end }}
 
-  {{/* ---------------------------- The rest, in fixed order ---------------------------- */}}
-  {{- $nonPI := where $all ".Params.category" "ne" "PI" -}}
-  {{- range $order -}}
-    {{- $cat := . -}}
-    {{/* Slightly tolerant match: exact case plus lowercase fallback */}}
-    {{- $pages := union
-          (where $nonPI "Params.category" "eq" $cat)
-          (where $nonPI "Params.category" "eq" (lower $cat))
-      | default (slice) -}}
-    {{- if gt (len $pages) 0 -}}
+  {{/* --------------- The rest, in fixed order groups --------------- */}}
+  {{ $nonPI := where $all ".Params.category" "ne" "PI" }}
+  {{ range $order }}
+    {{ $cat := . }}
+    {{/* Tolerate lowercase etc. */}}
+    {{ $pages := union
+        (where $nonPI "Params.category" "eq" $cat)
+        (where $nonPI "Params.category" "eq" (lower $cat))
+      | default (slice) }}
+    {{ if gt (len $pages) 0 }}
       <h3 class="people-group-title">{{ $cat }}</h3>
       <div class="people-grid">
-        {{- range $pages.ByWeight -}}
+        {{ range $pages.ByWeight }}
           <article class="person-card">
             <a href="{{ .RelPermalink }}" class="image avatar" aria-label="{{ .Title }}">
               {{ with .Params.image }}
@@ -81,11 +88,12 @@
               {{ with .Params.github  }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="GitHub"><i class="icon brands fa-github"></i></a>{{ end }}
             </div>
           </article>
-        {{- end -}}
+        {{ end }}
       </div>
-    {{- end -}}
-  {{- end -}}
+    {{ end }}
+  {{ end }}
 
 </section>
-
-{{- end -}}
+{{ else }}
+<!-- people-section: NO pages found in Section 'people'. Check content/people/* -->
+{{ end }}
