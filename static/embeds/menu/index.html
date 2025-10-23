@@ -375,7 +375,7 @@ h.prototype.getPseudoIds=h.prototype.D;h.prototype.getGroupName=h.prototype.B;})
       <div class="gwd-div-141b gwd-grp-3z9j" data-gwd-grp-id="R1"></div>
       <p class="gwd-p-jxb9 gwd-grp-3z9j">Publications</p>
     </div>
-              <div class="gwd-div-fi9v" data-gwd-group="Group2" id="peopl" data-nav="#research-timeline">
+              <div class="gwd-div-fi9v" data-gwd-group="Group2" id="peopl" data-nav="#research-top>
       <div class="gwd-div-1h07 gwd-grp-16r6" data-gwd-grp-id="R2"></div>
       <p class="gwd-p-az1p gwd-grp-16r6">Research</p>
     </div>
@@ -595,6 +595,26 @@ h.prototype.getPseudoIds=h.prototype.D;h.prototype.getGroupName=h.prototype.B;})
   }
 })();
 </script>
+
+<style>
+  /* Make each clickable group behave like a button */
+  #Pub, #peopl, #Resources, #Res, #Contact {
+    cursor: pointer !important;
+    pointer-events: auto !important;
+    transition: filter 0.15s ease, transform 0.15s ease;
+  }
+
+  /* Subtle feedback on hover/tap */
+  #Pub:hover, #peopl:hover, #Resources:hover, #Res:hover, #Contact:hover {
+    filter: brightness(1.2);
+    transform: scale(1.02);
+  }
+
+  /* Optional: prevent text selection flicker */
+  #Pub *, #peopl *, #Resources *, #Res *, #Contact * {
+    user-select: none !important;
+  }
+</style>
 
 <script>
 (function () {

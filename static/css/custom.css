@@ -409,10 +409,3 @@ section[id]:not(#banner) {
 }
 
 
-<style>
-  /* Make groups look clickable */
-  #Pub, #peopl, #Resources, #Res, #Contact {
-    cursor: pointer !important;
-    pointer-events: auto !important;
-  }
-</style>
