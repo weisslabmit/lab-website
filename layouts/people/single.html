@@ -1,46 +1,44 @@
 {{ define "main" }}
-<section class="wrapper person-page">
-  <div class="inner person-detail">
-    <div class="photo">
-      <img src="{{ .Params.image | relURL }}" alt="{{ .Title }}">
-    </div>
-    <div class="info">
-      <h1 class="name">{{ .Title }}</h1>
-      {{ with .Params.role }}<div class="roleline">{{ . }}</div>{{ end }}
+<section class="wrapper person-profile">
+  <div class="inner">
+    <div class="content">
+      <a href="{{ site.BaseURL }}#people" class="button small">← Back to People</a>
 
-      {{ with .Params.email }}
-        {{ $masked := . | replace "@" " (at) " | replace "." " (dot) " }}
-        <div class="email">{{ $masked }}</div>
-      {{ end }}
+      <header class="major">
+        <h2>{{ .Title }}</h2>
+        {{ with .Params.role }}<p class="role">{{ . }}</p>{{ end }}
+      </header>
 
-      <div class="links">
-        {{ with .Params.website }}
-          <a class="btn" href="{{ . }}" target="_blank" rel="noopener">
-            <span class="icon fa-globe"></span> Website
-          </a>
-        {{ end }}
-        {{ with .Params.scholar }}
-          <a class="btn" href="{{ . }}" target="_blank" rel="noopener">
-            <span class="icon fa-graduation-cap"></span> Scholar
-          </a>
-        {{ end }}
-        {{ with .Params.github }}
-          <a class="btn" href="{{ . }}" target="_blank" rel="noopener">
-            <span class="icon brands fa-github"></span> GitHub
-          </a>
-        {{ end }}
-        {{ with .Params.cv }}
-          <a class="btn" href="{{ . | relURL }}" target="_blank" rel="noopener">
-            <span class="icon fa-file"></span> CV
-          </a>
-        {{ end }}
-      </div>
+      <div class="grid" style="display:grid;grid-template-columns: 260px 1fr;gap:2rem;align-items:start;">
+        <div class="image avatar">
+          {{ with .Params.image }}
+            <img src="{{ . | relURL }}" alt="{{ $.Title }}">
+          {{ else }}
+            <img src="{{ "images/avatar.jpg" | relURL }}" alt="{{ $.Title }}">
+          {{ end }}
 
-      {{ with .Params.bio }}
-        <div class="long-bio">
-          {{ . | markdownify }}
+          {{ with .Params.email }}
+            {{ $safe := replace (replace . "@" " (at) ") "." " (dot) " }}
+            <div class="person-email" style="margin-top:0.75rem">{{ $safe }}</div>
+          {{ end }}
+
+          <div class="person-links" style="margin-top:0.75rem">
+            {{ with .Params.website }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="Website"><i class="icon solid fa-globe"></i></a>{{ end }}
+            {{ with .Params.scholar }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="Google Scholar"><i class="icon solid fa-graduation-cap"></i></a>{{ end }}
+            {{ with .Params.github  }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="GitHub"><i class="icon brands fa-github"></i></a>{{ end }}
+          </div>
         </div>
-      {{ end }}
+
+        <div>
+          {{ with .Params.summary }}<p class="bio">{{ . }}</p>{{ end }}
+          <div class="content">
+            {{ .Content }}   {{/* full bio area from CMS */}}
+          </div>
+          {{ with .Resources.GetMatch "cv.*" }}
+            <p style="margin-top:1rem"><a class="button" href="{{ .RelPermalink }}" target="_blank" rel="noopener">Download CV</a></p>
+          {{ end }}
+        </div>
+      </div>
     </div>
   </div>
 </section>
