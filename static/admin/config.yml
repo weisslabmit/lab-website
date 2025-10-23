@@ -16,31 +16,17 @@ collections:
     slug: "{{slug}}"
     fields:
       - { label: "Name", name: "title", widget: "string" }
-      - label: "Role"
-        name: "role"
-        widget: "select"
-        options:
-          - PI
-          - Staff
-          - PhD student
-          - Postdoc
-          - Other
-          - Undergrad
-          - Lab Manager
-          - Lab Administration
-          - Emeritus Colleage
-          - Visiting Scientist
-          - Lab Pet
-
+      - { label: "Role", name: "role", widget: "string", required: false }
+      - { label: "Category", name: "category", widget: "select", required: false,
+          options: ["PI", "Staff", "PhD Students", "Postdocs", "Other", "Undergrads"] }
+      - { label: "Summary", name: "summary", widget: "text", required: false }
       - { label: "Email", name: "email", widget: "string", required: false }
       - { label: "Website", name: "website", widget: "string", required: false }
       - { label: "Google Scholar", name: "scholar", widget: "string", required: false }
       - { label: "GitHub", name: "github", widget: "string", required: false }
-      - { label: "Photo", name: "image", widget: "image", required: false }
-      - { label: "Short Bio", name: "short_bio", widget: "text", required: false }
-      - { label: "Long Bio", name: "bio", widget: "markdown", required: false }
-      - { label: "CV (PDF)", name: "cv", widget: "file", required: false }
-      - { label: "Weight (within role)", name: "weight", widget: "number", required: false, default: 1 }
+      - { label: "Image", name: "image", widget: "image", required: false }
+      - { label: "Weight (ordering)", name: "weight", widget: "number", required: false }
+
 
   - name: "research"
     label: "Research Topics"
