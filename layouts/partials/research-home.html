@@ -1,11 +1,10 @@
-<!-- ===== Timeline header + iframe ===== -->
-<section id="research-timeline" class="wrapper style1 align-center">
-  <header class="major">
+<!-- Fixed, non-CMS timeline block at the top of Research -->
+  <header class="major align-center">
     <h2>The Weiss Lab Timeline</h2>
   </header>
 
-  <div class="timeline-frame">
-    <iframe
+<div id="research-timeline" class="timeline-frame">
+  <iframe
     id="lab-timeline"
     src="about:blank"  
     data-src='{{ "embeds/timeline-lab/index.html" | relURL }}?v={{ now.Unix }}'
@@ -21,10 +20,9 @@
     <img class="timeline-spinner" src='{{ "plasmid.svg" | relURL }}' alt="" />
   </div>
 </div>
-</section>
 
 <section id="research" class="wrapper">
-   <header class="major align-center">
+  <header class="major align-center">
     <h2>Current Projects</h2>
   </header>
   {{ with site.GetPage "section" "research" }}
