@@ -530,3 +530,15 @@ section.wrapper {
   margin-inline: auto;
   padding-inline: clamp(1rem, 4vw, 3rem);
 }
+
+
+/* Research spotlights: never upscale image, shrink if needed */
+#research .spotlights .image img,
+.research-section .spotlights .image img {
+  width: auto;           /* do NOT force 100% (prevents upscaling) */
+  max-width: 100%;       /* but allow shrinking within container width */
+  height: auto;          /* keep aspect ratio */
+  max-height: 100%;      /* if the container has a height, respect it */
+  display: block;
+  margin-inline: auto;   /* center horizontally */
+}
