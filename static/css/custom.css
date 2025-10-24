@@ -382,8 +382,11 @@ section[id]:not(#banner) {
 /* Unified responsive grid for all people (PI included) */
 .people-section .people-grid {
   display: grid;
-  grid-template-columns: repeat(1, minmax(0, 1fr));
   gap: 2rem;
+  justify-content: center;            /* centers whole grid content */
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); 
+  max-width: 1600px;                  /* optional: keeps lines readable */
+  margin-inline: auto;                /* center the grid itself */
 }
 @media (min-width: 600px)  { .people-section .people-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (min-width: 980px)  { .people-section .people-grid { grid-template-columns: repeat(3, 1fr); } }
