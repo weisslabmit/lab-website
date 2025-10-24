@@ -632,7 +632,7 @@ section.wrapper {
   font-size: 0.9rem;
   font-weight: 500;
   text-decoration: none;
-  padding: 0.35rem 0.8rem;              /* compact pill shape */
+  padding: 0.15rem 0.6rem;              /* compact pill shape */
   border-radius: 9999px;                /* rounded pill corners */
   letter-spacing: 0.02em;
   opacity: 0.8;
