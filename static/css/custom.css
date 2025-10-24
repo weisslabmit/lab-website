@@ -379,27 +379,37 @@ section[id]:not(#banner) {
   padding-inline: clamp(1rem, 4vw, 3rem);
 }
 
-/* Unified responsive grid for all people (PI included) */
+/* ============================
+   PEOPLE GRID — FLEX-CENTERED
+============================ */
 .people-section .people-grid {
-  display: grid;
+  display: flex;
+  flex-wrap: wrap;
   gap: 2rem;
-  justify-content: center;            /* centers whole grid content */
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); 
-  max-width: 1600px;                  /* optional: keeps lines readable */
-  margin-inline: auto;                /* center the grid itself */
+  justify-content: center;   /* centers every row, including the last */
+  align-items: stretch;
+  width: 100%;
 }
-@media (min-width: 600px)  { .people-section .people-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 980px)  { .people-section .people-grid { grid-template-columns: repeat(3, 1fr); } }
-@media (min-width: 1280px) { .people-section .people-grid { grid-template-columns: repeat(4, 1fr); } }
-@media (min-width: 1680px) { .people-section .people-grid { grid-template-columns: repeat(5, 1fr); } }
-@media (min-width: 1920px) { .people-section .people-grid { grid-template-columns: repeat(6, 1fr); } }
+
+/* Space between different role groups */
+.people-section .people-grid + .people-grid {
+  margin-top: 2rem;
+}
+
+/* Optional: first (PI) grid uses a single centered card */
+.people-section .people-grid:first-of-type .person-card {
+  width: 260px;   /* slightly larger PI card; change to 240px for uniform size */
+  max-width: 260px;
+}
 
 /* ============================
    PERSON CARD (shared styles)
 ============================ */
 .person-card {
   text-align: center;
-  padding: 0; /* stay minimal; theme may add wrappers */
+  padding: 0;
+  width: 240px;            /* fixed width for consistent wrapping */
+  max-width: 240px;
 }
 
 .person-card .image.avatar {
@@ -440,6 +450,10 @@ section[id]:not(#banner) {
   margin-top: 0.35rem;
 }
 
+/* ============================
+   EMAIL & LINKS
+============================ */
+
 /* Obfuscated email */
 .person-card .person-email,
 .person-profile .person-email {
@@ -474,6 +488,7 @@ section[id]:not(#banner) {
   opacity: 0.95;
   transition: transform .15s ease, opacity .15s ease;
 }
+
 .person-card .person-links a:hover,
 .person-profile .person-links a:hover {
   opacity: 1;
@@ -492,35 +507,4 @@ section[id]:not(#banner) {
 ============================ */
 .person-profile {
   padding-inline: clamp(1.5rem, 5vw, 4rem);
-}
-
-/* space between role groups */
-.people-section .people-grid + .people-grid { margin-top: 2rem; }
-
-/* Make the first role grid (PI) always one column */
-.people-section .people-grid:first-of-type {
-  grid-template-columns: 1fr !important;
-}
-
-/* Center all people grids horizontally */
-.people-section .people-grid {
-  justify-content: center;         /* center grid items in their container */
-  justify-items: center;           /* center contents within each grid cell */
-}
-
-/* Prevent the grid from stretching unevenly on large screens */
-.people-section .people-grid {
-  grid-auto-flow: row;
-  width: 100%;
-}
-
-/* Optional: make each card fixed-width so centering is stable */
-.person-card {
-  max-width: 260px;                /* consistent card width */
-  width: 100%;
-}
-
-.people-section .people-grid {
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  justify-content: center;
 }
