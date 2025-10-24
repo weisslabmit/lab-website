@@ -1,6 +1,7 @@
 ---
 title: Majo Duran Gonzalez
 role: PhD
+co_supervised_by: Birmbaum Lab
 email: majo@mit.ed
 scholar: https://scholar.google.com/citations?user=9V_QcTEAAAAJ&hl=en
 image: /uploads/nueva_foto_majo.jpg

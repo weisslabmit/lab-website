@@ -31,6 +31,7 @@ collections:
           - { label: "Undergrad", value: "Undergrad" }
         default: "Other"
       - { label: "Short description", name: "short", widget: "text", required: false }
+      - { label: "Co-supervised by", name: "co_supervised_by", widget: "string", required: false }
       - { label: "Email", name: "email", widget: "string", required: false }
       - { label: "Website URL", name: "website", widget: "string", required: false }
       - { label: "Google Scholar URL", name: "scholar", widget: "string", required: false }
