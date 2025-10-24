@@ -401,180 +401,110 @@ section[id]:not(#banner) {
 @media (min-width: 1920px)  { .people-section .people-grid { grid-template-columns: repeat(6, 1fr); } }
 
 /* ============================
+   PEOPLE — CLEAN BASE
+============================ */
+
+/* Center the section content like your banner */
+.people-section > .content {
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 4vw, 3rem);
+}
+
+/* Responsive grid for non-PI groups */
+.people-section .people-grid {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 2rem;
+}
+@media (min-width: 600px)  { .people-section .people-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 980px)  { .people-section .people-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 1280px) { .people-section .people-grid { grid-template-columns: repeat(4, 1fr); } }
+@media (min-width: 1680px) { .people-section .people-grid { grid-template-columns: repeat(5, 1fr); } }
+@media (min-width: 1920px) { .people-section .people-grid { grid-template-columns: repeat(6, 1fr); } }
+
+/* ============================
    PERSON CARD (shared styles)
 ============================ */
 .person-card {
   text-align: center;
-  padding: 0;         /* keep clean; theme often adds inner wrappers */
+  padding: 0; /* keep clean; theme sometimes injects inner wrappers */
 }
 
-.person-card .image.avatar {
-  display: inline-block;
-  margin-bottom: 0.75rem;
-}
-
+.person-card .image.avatar { display: inline-block; margin-bottom: 0.75rem; }
 .person-card .image.avatar img {
   display: block;
-  width: 160px;
-  height: 160px;
-  object-fit: cover;
-  border-radius: 9999px;
+  width: 160px; height: 160px;
+  object-fit: cover; border-radius: 9999px;
 }
-
 @media (min-width: 900px) {
-  .person-card .image.avatar img {
-    width: 200px;
-    height: 200px;
-  }
+  .person-card .image.avatar img { width: 200px; height: 200px; }
 }
 
-.person-card h3 {
-  margin: 0.25rem 0 0.25rem;
-  line-height: 1.2;
-  word-break: break-word;
-}
+.person-card h3 { margin: 0.25rem 0 0.25rem; line-height: 1.2; word-break: break-word; }
+.person-card .role { font-weight: 600; opacity: 0.85; margin-top: -0.15rem; }
+.person-card .bio  { font-size: 0.9rem; line-height: 1.45; opacity: 0.9; margin-top: 0.35rem; }
 
-.person-card .role {
-  font-weight: 600;
-  opacity: 0.85;
-  margin-top: -0.15rem;
-}
-
-.person-card .bio {
-  font-size: 0.9rem;       /* ~14–15px depending on root */
-  line-height: 1.45;
-  opacity: 0.9;
-  margin-top: 0.35rem;
-}
-
-/* Obfuscated email (rendered by template as "name (at) domain (dot) com") */
-.person-card .person-email {
+/* Obfuscated email */
+.person-card .person-email,
+.person-profile .person-email {
   display: block;
-  margin-top: 0.5rem;
+  margin-top: 0.35rem;
   font-family: "Roboto Mono", monospace;
-  font-size: 0.9rem;
-  opacity: 0.95;
-}
-
-/* Links row (website, scholar, github) */
-.person-card .person-links {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.6rem;
-  margin-top: 0.5rem;
-}
-
-.person-card .person-links a {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 34px;
-  height: 34px;
-  padding: 0 0.6rem;
-  border-radius: 999px;
-  text-decoration: none;
-  border: 1px solid rgba(0,0,0,0.2);
-  transition: transform .15s ease, opacity .15s ease, border-color .15s ease;
+  font-size: 0.9rem; /* smaller, like role */
   opacity: 0.9;
 }
 
-.person-card .person-links a:hover {
-  opacity: 1;
-  transform: translateY(-1px);
-  border-color: rgba(0,0,0,0.35);
+/* Icon row — icon only, no pill buttons */
+.person-card .person-links,
+.person-profile .person-links {
+  display: flex; align-items: center; justify-content: center; gap: 0.6rem; margin-top: 0.5rem;
 }
-
-/* If using Font Awesome icons inside links */
-.person-card .person-links i,
-.person-card .person-links .icon {
-  font-size: 0.95rem;
-  line-height: 1;
+.person-card .person-links a,
+.person-profile .person-links a {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 0; min-width: 0; height: auto; border: none; background: transparent; box-shadow: none;
+  opacity: 0.95; transition: transform .15s ease, opacity .15s ease;
 }
+.person-card .person-links a:hover,
+.person-profile .person-links a:hover { opacity: 1; transform: translateY(-1px); }
+.person-card .person-links svg,
+.person-profile .person-links svg { width: 18px; height: 18px; display: block; }
 
-/* ---- PI row fixes ---- */
-
-/* Make the PI block a clean two-column card that isn't constrained by .people-grid */
+/* ============================
+   FEATURED PI ROW
+============================ */
+/* Full-width, two-column, left avatar + right text */
 .person-card.person-highlight {
-  /* full width of the section */
   width: 100%;
   margin: clamp(1rem, 2vw, 1.5rem) 0;
-  padding: 0; /* keep your card minimal; add if you like */
-
-  display: grid;
-  grid-template-columns: clamp(180px, 22vw, 260px) 1fr;
+  display: flex;
+  align-items: flex-start;
   gap: 2rem;
-  align-items: start;
+  text-align: left;
 }
 
-/* Remove the default avatar margins that center it like a grid tile */
+/* Left column (avatar) fixed width; keep circular */
 .person-card.person-highlight .image.avatar {
-  margin: 0;
-  display: block;
+  margin: 0; display: block; /* cancel grid-tile centering */
+  flex: 0 0 clamp(180px, 22vw, 260px);
 }
-
-/* Make the PI avatar fill its column and stay circular */
 .person-card.person-highlight .image.avatar img {
-  width: 100%;
-  max-width: 260px;
-  aspect-ratio: 1 / 1;
-  height: auto;
-  object-fit: cover;
-  border-radius: 9999px;
+  width: 100%; height: auto; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 9999px;
 }
 
-/* Tighter text rhythm inside the PI block */
+/* Right column (text) */
+.person-card.person-highlight .content { flex: 1 1 auto; min-width: 0; }
 .person-card.person-highlight h3 { margin: 0.25rem 0 0.2rem; }
 .person-card.person-highlight .role { margin-top: 0; }
 
-/* Responsive: collapse to one column on small screens */
+/* Stack on small screens */
 @media (max-width: 900px) {
-  .person-card.person-highlight {
-    grid-template-columns: 1fr;
-    gap: 1.25rem;
-  }
-  .person-card.person-highlight .image.avatar {
-    justify-self: center; /* keep avatar centered in narrow view */
-  }
+  .person-card.person-highlight { flex-direction: column; gap: 1.25rem; }
+  .person-card.person-highlight .image.avatar { align-self: center; }
 }
 
-/* ---- Icon-only links (no pill/outline), per your earlier request ---- */
-.person-card .person-links a,
-.person-profile .person-links a {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  min-width: 0;
-  height: auto;
-  border: none;
-  background: transparent;
-  box-shadow: none;
-  opacity: 0.95;
-  transition: transform .15s ease, opacity .15s ease;
-}
-.person-card .person-links a:hover,
-.person-profile .person-links a:hover {
-  opacity: 1;
-  transform: translateY(-1px);
-}
-.person-card .person-links svg,
-.person-profile .person-links svg {
-  width: 18px;
-  height: 18px;
-  display: block;
-}
-
-/* ---- Email sizing to match your compact role/title scale ---- */
-.person-card .person-email,
-.person-profile .person-email {
-  font-size: 0.9rem;
-  opacity: 0.9;
-  font-family: "Roboto Mono", monospace;
-  margin-top: 0.35rem;
-}
-
-/* Optional: a bit more breathing room on the personal page */
-.person-profile {
-  padding-inline: clamp(1.5rem, 5vw, 4rem);
-}
+/* ============================
+   PERSON PAGE
+============================ */
+.person-profile { padding-inline: clamp(1.5rem, 5vw, 4rem); }
