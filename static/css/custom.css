@@ -542,3 +542,20 @@ section.wrapper {
   display: block;
   margin-inline: auto;   /* center horizontally */
 }
+
+/* Optional: give the image box a stable height/aspect */
+#research .spotlights .image,
+.research-section .spotlights .image {
+  /* pick one: */
+  /* height: 260px; */
+  aspect-ratio: 16 / 9;       /* nicer on wide layouts */
+  overflow: hidden;           /* keeps layout tidy */
+}
+
+/* Make the image fit inside without expanding the box */
+#research .spotlights .image img,
+.research-section .spotlights .image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;        /* no crop; no upscale beyond box */
+}
