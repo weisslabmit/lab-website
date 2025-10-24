@@ -537,45 +537,39 @@ section.wrapper {
    Research Spotlights — center image column vertically
 ============================ */
 
-/* Desktop/tablet: make each spotlight row align its two columns vertically */
-@media (min-width: 980px) {
-  #research .spotlights > section,
-  #research .spotlight {
-    display: flex !important;          /* keep Story's two-column row */
-    align-items: center !important;    /* <-- vertically center both columns */
-  }
+/* ============================
+   Research Spotlights — tighten spacing around images
+============================ */
 
-  /* Ensure both columns participate in vertical centering */
-  #research .spotlights > section .content,
-  #research .spotlights > section .image,
-  #research .spotlight .content,
-  #research .spotlight .image {
-    align-self: center !important;     /* guard against theme overrides */
-  }
-}
-
-/* Keep your image pane styling: white background + inner centering */
+/* Remove Story’s default padding/margin around the spotlight image */
 #research .spotlight .image.r-spotlight__media {
-  background-color: #fff !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  overflow: hidden !important;
-  height: clamp(180px, 24vw, 300px) !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
 }
 
-/* Image: contain, no stretch */
-#research .spotlight .image.r-spotlight__media img {
-  position: static !important;
-  width: auto !important;
-  height: auto !important;
-  max-width: 100% !important;
-  max-height: 100% !important;
-  object-fit: contain !important;
-  display: block !important;
+/* Remove internal padding from the spotlight section itself */
+#research .spotlight {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
 }
+
+/* Optional: make the two columns sit a bit closer horizontally */
+@media (min-width: 980px) {
+  #research .spotlight .content {
+    padding-right: 1.5rem !important;   /* reduce gap between text and image */
+  }
+  #research .spotlight.orient-right .content {
+    padding-left: 1.5rem !important;    /* mirror for reversed orientation */
+    padding-right: 0 !important;
+  }
+}
+
+/* Remove any stray max-width or extra margins on images themselves */
+#research .spotlight .image.r-spotlight__media img {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
 
 @media (min-width: 980px) {
   #research .spotlight .content,
