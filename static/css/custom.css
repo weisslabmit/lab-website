@@ -493,3 +493,8 @@ section[id]:not(#banner) {
 
 /* space between role groups */
 .people-section .people-grid + .people-grid { margin-top: 2rem; }
+
+/* Make the first role grid (PI) always one column */
+.people-section .people-grid:first-of-type {
+  grid-template-columns: 1fr !important;
+}
