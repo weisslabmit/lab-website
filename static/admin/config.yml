@@ -15,6 +15,10 @@ collections:
     extension: "md"
     create: true
     slug: "{{slug}}"
+    defaults:
+      - scope: {}
+        values:
+          draft: false
     format: "frontmatter"
     sortable_fields: ["title", "role", "weight"]
     fields:
