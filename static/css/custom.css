@@ -498,3 +498,26 @@ section[id]:not(#banner) {
 .people-section .people-grid:first-of-type {
   grid-template-columns: 1fr !important;
 }
+
+/* Center all people grids horizontally */
+.people-section .people-grid {
+  justify-content: center;         /* center grid items in their container */
+  justify-items: center;           /* center contents within each grid cell */
+}
+
+/* Prevent the grid from stretching unevenly on large screens */
+.people-section .people-grid {
+  grid-auto-flow: row;
+  width: 100%;
+}
+
+/* Optional: make each card fixed-width so centering is stable */
+.person-card {
+  max-width: 260px;                /* consistent card width */
+  width: 100%;
+}
+
+.people-section .people-grid {
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  justify-content: center;
+}
