@@ -490,3 +490,6 @@ section[id]:not(#banner) {
 .person-profile {
   padding-inline: clamp(1.5rem, 5vw, 4rem);
 }
+
+/* space between role groups */
+.people-section .people-grid + .people-grid { margin-top: 2rem; }

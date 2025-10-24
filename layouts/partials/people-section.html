@@ -6,7 +6,7 @@
 
 {{ $allPeople := where site.RegularPages "Section" "people" }}
 
-{{/* role order + labels */}}
+{{/* Role order + singular labels (labels unused, kept for future) */}}
 {{ $roles := slice "PI" "Staff" "PhD" "Postdoc" "Other" "Undergrad" }}
 {{ $labels := dict
   "PI" "PI"
@@ -20,12 +20,13 @@
 <section id="people" class="people-section">
   <div class="content">
 
-    <div class="people-grid">
-      {{ range $roles }}
-        {{ $group := where $allPeople ".Params.role" . }}
-        {{ if $group }}
-          {{ $group = $group.ByWeight }}
-          {{ $group = $group.ByTitle }}
+    {{/* One grid per role -> each role starts on a new line */}}
+    {{ range $roles }}
+      {{ $group := where $allPeople ".Params.role" . }}
+      {{ if $group }}
+        {{ $group = $group.ByWeight }}
+        {{ $group = $group.ByTitle }}
+        <div class="people-grid">
           {{ range $group }}
             {{ $page := . }}
             <article class="person-card">
@@ -48,9 +49,9 @@
               </div>
             </article>
           {{ end }}
-        {{ end }}
+        </div>
       {{ end }}
-    </div>
+    {{ end }}
 
   </div>
 </section>
