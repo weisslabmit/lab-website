@@ -148,73 +148,40 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  // Returns true if the event target (or any ancestor) can scroll further in the given direction
-  function canScrollInside(el, dy) {
-    let node = el;
-    while (node && node !== document.documentElement) {
-      const cs = getComputedStyle(node);
-      const oy = cs.overflowY;
-      const scrollable = (oy === 'auto' || oy === 'scroll' || oy === 'overlay');
-      if (scrollable && node.scrollHeight > node.clientHeight) {
-        if (dy > 0) { // scrolling down
-          if (node.scrollTop + node.clientHeight < node.scrollHeight - 1) return true;
-        } else if (dy < 0) { // scrolling up
-          if (node.scrollTop > 0) return true;
-        } else {
-          return true; // not sure direction (keyboard), but inside a scrollable
-        }
-      }
-      node = node.parentElement;
-    }
-    return false;
+  // Normalize any href to a "#id" hash (supports "#id", "/#id", or same-origin full URLs)
+  function getHashFromHref(href) {
+    if (!href) return '';
+    if (href.startsWith('#')) return href; // "#id"
+    try {
+      const url = new URL(href, window.location.origin);
+      if (url.origin === window.location.origin) return url.hash || '';
+    } catch (e) {}
+    return '';
   }
 
-  // Prevent page-level scroll (between sections), but allow inner scroll
-  function onWheel(e) {
-    const dy = e.deltaY || 0;
-    if (canScrollInside(e.target, dy)) return; // let inner containers scroll
-    e.preventDefault(); // block page scroll
+  // Smooth-scroll to a given hash if the element exists
+  function scrollToHash(hash) {
+    if (!hash || hash.length < 2) return;
+    const el = document.getElementById(hash.slice(1));
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
-  window.addEventListener('wheel', onWheel, { passive: false });
 
-  // Touch (mobile): same logic
-  let touchStartY = null;
-  window.addEventListener('touchstart', (e) => {
-    const t = e.changedTouches && e.changedTouches[0];
-    touchStartY = t ? t.clientY : null;
-  }, { passive: true });
-
-  window.addEventListener('touchmove', (e) => {
-    const t = e.changedTouches && e.changedTouches[0];
-    if (!t || touchStartY == null) return;
-    const dy = touchStartY - t.clientY;
-    if (canScrollInside(e.target, dy)) return; // allow inner scroll
-    e.preventDefault(); // block page scroll
-  }, { passive: false });
-
-  // Keyboard: block page navigation keys unless focused inside a scrollable area that can still scroll
-  window.addEventListener('keydown', (e) => {
-    const blocked = ['ArrowDown','ArrowUp','PageDown','PageUp','Home','End',' '];
-    if (!blocked.includes(e.key)) return;
-
-    const dir = (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') ? 1
-              : (e.key === 'ArrowUp'   || e.key === 'PageUp') ? -1 : 0;
-
-    const active = document.activeElement || document.body;
-    if (canScrollInside(active, dir)) return; // let inner container handle it
-    e.preventDefault(); // block page-level scroll
-  });
-
-  // Keep floating-nav clicks smooth (optional)
+  // Hook up floating-nav links only
   document.querySelectorAll('#floating-nav a[data-scroll]').forEach(a => {
     a.addEventListener('click', (e) => {
-      const href = a.getAttribute('href') || '';
-      if (!href.startsWith('#')) return;
-      e.preventDefault();
-      const id = href.slice(1);
-      const sec = document.getElementById(id);
-      if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const hash = getHashFromHref(a.getAttribute('href'));
+      if (!hash) return;                 // external link → let it behave normally
+      e.preventDefault();                 // in-page anchor → handle smoothly
+      scrollToHash(hash);
+      // Optionally update the URL hash so back/forward work:
+      history.replaceState(null, '', hash);
     });
   });
+
+  // If the page loads with a hash, ensure it scrolls nicely once content is ready
+  if (location.hash) {
+    // Small delay helps when images/iframes shift layout
+    setTimeout(() => scrollToHash(location.hash), 50);
+  }
 });
 </script>
