@@ -533,39 +533,48 @@ section.wrapper {
 
 
 
+/* ============================
+   Research Spotlights — stop theme fill, center, no upscaling
+============================ */
 
-/* Research spotlights — never upscale, only scale down if needed */
-
-/* 1) Make the image box a centering container so the img won't stretch */
+/* Give the image pane a predictable slot ("the space they got") */
 #research .spotlights .image {
+  position: relative;              /* neutralize absolute-fit variants */
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;         /* keeps layout tidy if something is taller */
+  overflow: hidden;
+  /* Pick a slot height you like; adjust numbers to taste */
+  height: clamp(180px, 24vw, 280px);
 }
 
-/* 2) Kill theme's width:100% on spotlight images (which upscales small imgs) */
-#research .spotlights .image > img,
-#research .spotlights .image > a > img {
-  width: auto !important;   /* do NOT stretch to container width */
-  height: auto !important;  /* keep aspect ratio */
-  max-width: 100% !important;  /* but do shrink to fit container width */
-  max-height: 100% !important; /* and shrink to fit container height if any */
+/* If the theme wraps img in an <a>, make that wrapper a flex box too */
+#research .spotlights .image > a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%; height: 100%;
+}
+
+/* The actual image: no absolute positioning, no cover/fill, shrink-to-fit */
+#research .spotlights .image img {
+  position: static !important;     /* kill absolute-fit rules */
+  inset: auto !important;
+  transform: none !important;
+
+  /* Key part: fill the slot but never upscale quality */
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;  /* letterbox inside the slot, no crop */
+
+  /* Guard against theme "fit" helpers */
+  max-width: 100% !important;
+  max-height: 100% !important;
   display: block;
 }
 
-/* 3) If your spotlight "image" box has an intended height/shape, keep it */
-#research .spotlights .image {
-  /* pick ONE of these rows (or leave both commented if you want natural height) */
-
-  /* Fixed minimum height for a nice card rhythm: */
-  /* min-height: 260px; */
-
-  /* OR a consistent aspect ratio for the image pane: */
-  /* aspect-ratio: 16 / 9; */
-}
-
-/* Optional: if Safari/Story still sneaks in width:100% via very specific rules */
-#research .spotlights .image img[src] {
-  width: auto !important;
+/* If Story sets special variants like .image.fit or .image.main, neutralize them here */
+#research .spotlights .image.fit img,
+#research .spotlights .image.main img {
+  object-fit: contain !important;
 }
