@@ -147,52 +147,35 @@
 
 
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-  // Helper: can this event scroll inside a scrollable area?
-  function canScrollInside(el, dy) {
-    let node = el;
-    while (node && node !== document.documentElement) {
-      const style = getComputedStyle(node);
-      const overflowY = style.overflowY;
-      const scrollable = (overflowY === "auto" || overflowY === "scroll" || overflowY === "overlay");
-      if (scrollable && node.scrollHeight > node.clientHeight) {
-        if (dy > 0 && node.scrollTop + node.clientHeight < node.scrollHeight - 1) return true; // scroll down
-        if (dy < 0 && node.scrollTop > 0) return true; // scroll up
-      }
-      node = node.parentElement;
-    }
-    return false;
+document.addEventListener('DOMContentLoaded', () => {
+  function getHashFromHref(href) {
+    if (!href) return '';
+    if (href.startsWith('#')) return href;
+    try {
+      const url = new URL(href, window.location.origin);
+      if (url.origin === window.location.origin) return url.hash || '';
+    } catch {}
+    return '';
   }
 
-  // --- Disable scroll between sections ---
-  window.addEventListener("wheel", (e) => {
-    if (!canScrollInside(e.target, e.deltaY || 0)) e.preventDefault();
-  }, { passive: false });
+  function scrollToHash(hash) {
+    if (!hash || hash.length < 2) return;
+    const el = document.getElementById(hash.slice(1));
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
 
-  window.addEventListener("touchmove", (e) => {
-    const t = e.changedTouches && e.changedTouches[0];
-    const start = e.targetTouches && e.targetTouches[0];
-    const dy = start ? start.clientY - t.clientY : 0;
-    if (!canScrollInside(e.target, dy)) e.preventDefault();
-  }, { passive: false });
-
-  window.addEventListener("keydown", (e) => {
-    const keys = ["ArrowUp", "ArrowDown", "PageUp", "PageDown", "Home", "End", " "];
-    if (!keys.includes(e.key)) return;
-    const dir = (["ArrowDown","PageDown"," "].includes(e.key)) ? 1 : -1;
-    const active = document.activeElement || document.body;
-    if (!canScrollInside(active, dir)) e.preventDefault();
-  });
-
-  // --- Smooth scrolling for floating-nav clicks ---
-  document.querySelectorAll("#floating-nav a[data-scroll]").forEach(a => {
-    a.addEventListener("click", e => {
-      const href = a.getAttribute("href") || "";
-      if (!href.startsWith("#")) return;
-      e.preventDefault();
-      const target = document.getElementById(href.slice(1));
-      if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+  document.querySelectorAll('#floating-nav a[data-scroll]').forEach(a => {
+    a.addEventListener('click', (e) => {
+      const hash = getHashFromHref(a.getAttribute('href'));
+      if (!hash) return;      // external link → let default happen
+      e.preventDefault();     // in-page navigation
+      scrollToHash(hash);
+      history.replaceState(null, '', hash);
     });
   });
+
+  // On load with a hash, nudge to the right spot after layout settles
+  if (location.hash) setTimeout(() => scrollToHash(location.hash), 50);
 });
 </script>
+
