@@ -472,36 +472,59 @@ section[id]:not(#banner) {
 .person-profile .person-links svg { width: 18px; height: 18px; display: block; }
 
 /* ============================
-   FEATURED PI ROW
+   FEATURED PI ROW — aligned with grid below
 ============================ */
-/* Full-width, two-column, left avatar + right text */
+
+/* Wrap in same container width as grids */
 .person-card.person-highlight {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(0, 1fr)); /* default safeguard */
+  grid-column: 1 / -1; /* span full width */
+  text-align: left;
   width: 100%;
   margin: clamp(1rem, 2vw, 1.5rem) 0;
-  display: flex;
-  align-items: flex-start;
-  gap: 2rem;
-  text-align: left;
+  padding: 0;
 }
 
-/* Left column (avatar) fixed width; keep circular */
+/* Two-column inner layout aligned with grid below */
+@media (min-width: 980px) {
+  .person-card.person-highlight {
+    display: grid;
+    grid-template-columns: 1fr 2fr;  /* left photo ~1 column, right text ~2 columns */
+    align-items: start;
+    gap: 2rem;
+  }
+}
+
+/* Avatar alignment (flush with first column start) */
 .person-card.person-highlight .image.avatar {
-  margin: 0; display: block; /* cancel grid-tile centering */
-  flex: 0 0 clamp(180px, 22vw, 260px);
+  margin: 0;
+  justify-self: start;
+  display: block;
 }
 .person-card.person-highlight .image.avatar img {
-  width: 100%; height: auto; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 9999px;
+  width: 100%;
+  max-width: 220px;
+  aspect-ratio: 1 / 1;
+  height: auto;
+  object-fit: cover;
+  border-radius: 9999px;
 }
 
-/* Right column (text) */
-.person-card.person-highlight .content { flex: 1 1 auto; min-width: 0; }
-.person-card.person-highlight h3 { margin: 0.25rem 0 0.2rem; }
-.person-card.person-highlight .role { margin-top: 0; }
+/* Text content aligned with second grid column */
+.person-card.person-highlight .content {
+  align-self: center;
+}
 
-/* Stack on small screens */
-@media (max-width: 900px) {
-  .person-card.person-highlight { flex-direction: column; gap: 1.25rem; }
-  .person-card.person-highlight .image.avatar { align-self: center; }
+/* Stack on mobile screens */
+@media (max-width: 979px) {
+  .person-card.person-highlight {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  .person-card.person-highlight .image.avatar {
+    justify-self: center;
+  }
 }
 
 /* ============================
