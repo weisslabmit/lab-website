@@ -531,3 +531,74 @@ section[id]:not(#banner) {
    PERSON PAGE
 ============================ */
 .person-profile { padding-inline: clamp(1.5rem, 5vw, 4rem); }
+
+/* Use same centered container as banner */
+.people-section > .content {
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 4vw, 3rem);
+}
+
+/* Keep the standard responsive grid (you already have this) */
+.people-section .people-grid {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 2rem;
+}
+@media (min-width: 600px)  { .people-section .people-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 980px)  { .people-section .people-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 1280px) { .people-section .people-grid { grid-template-columns: repeat(4, 1fr); } }
+@media (min-width: 1680px) { .people-section .people-grid { grid-template-columns: repeat(5, 1fr); } }
+@media (min-width: 1920px) { .people-section .people-grid { grid-template-columns: repeat(6, 1fr); } }
+
+/* PI grid wrapper: no special layout—just reuse the same rails */
+.people-grid--pi { margin-bottom: 0.5rem; }
+
+/* PI card: its own inner two-column layout, but the outer left edge now snaps to the grid */
+.person-card.person-highlight {
+  display: grid;
+  grid-template-columns: minmax(180px, 220px) 1fr;  /* photo column | text column */
+  gap: 2rem;
+  align-items: start;
+  text-align: left;
+  margin: clamp(1rem, 2vw, 1.5rem) 0;
+}
+
+.person-card.person-highlight .image.avatar { margin: 0; display: block; }
+.person-card.person-highlight .image.avatar img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 9999px;
+}
+
+/* Stack neatly on small screens */
+@media (max-width: 900px) {
+  .person-card.person-highlight {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+  .person-card.person-highlight .image.avatar { justify-self: center; }
+}
+
+/* Icon-only links (no pills) */
+.person-card .person-links a,
+.person-profile .person-links a {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 0; min-width: 0; height: auto; border: none; background: transparent; box-shadow: none;
+  opacity: .95; transition: transform .15s ease, opacity .15s ease;
+}
+.person-card .person-links a:hover,
+.person-profile .person-links a:hover { opacity: 1; transform: translateY(-1px); }
+.person-card .person-links svg,
+.person-profile .person-links svg { width: 18px; height: 18px; display: block; }
+
+/* Smaller email text (matches role/title scale) */
+.person-card .person-email,
+.person-profile .person-email {
+  font-size: 0.9rem;
+  opacity: 0.9;
+  font-family: "Roboto Mono", monospace;
+  margin-top: 0.35rem;
+}
