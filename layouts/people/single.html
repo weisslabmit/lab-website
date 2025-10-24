@@ -10,17 +10,12 @@
     </a>
     <div class="content">
       <h1>{{ .Title }}</h1>
-      {{ with .Params.role }}<div class="role">{{ . }}</div>{{ end }}
+        {{ with .Params.role }}<div class="role">{{ . }}</div>{{ end }}
 
-      {{/* NEW: Co-supervised line (only if provided) */}}
-      {{ with .Params.co_supervised_by }}
-        <div class="co-supervised">(Co-supervised by {{ . }})</div>
-      {{ end }}
+        {{ with .Params.co_supervised_by }}
+          <div class="co-supervised">(Co-supervised by {{ . }})</div>
+        {{ end }}
 
-      {{ with .Params.short }}<p class="bio">{{ . }}</p>{{ end }}
-      {{ with .Params.email }}
-        <div class="person-email">{{ replace (replace . "@" " (at) ") "." " (dot) " }}</div>
-      {{ end }}
 
       <div class="person-links">
         {{ with .Params.website }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="Website">{{ partial "icons/link.svg" . }}</a>{{ end }}

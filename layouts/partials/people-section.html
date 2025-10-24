@@ -40,12 +40,9 @@
 
               <div class="role">{{ index $labels $page.Params.role | default $page.Params.role }}</div>
 
-              {{/* NEW: Co-supervised line (only if provided) */}}
               {{ with $page.Params.co_supervised_by }}
                 <div class="co-supervised">(Co-supervised by {{ . }})</div>
               {{ end }}
-
-              {{ with $page.Params.short }}<p class="bio">{{ . }}</p>{{ end }}
 
               <div class="person-links">
                 {{ with $page.Params.website }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="Website">{{ partial "icons/link.svg" . }}</a>{{ end }}
