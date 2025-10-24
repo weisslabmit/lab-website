@@ -642,7 +642,6 @@ section.wrapper {
 .banner-admin-btn:hover {
   opacity: 1;
   background: rgba(30, 30, 30, 0.95);   /* darker on hover */
-  transform: translateY(-2px);
 }
 
 .banner-admin-btn:active {
