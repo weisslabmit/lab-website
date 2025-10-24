@@ -39,8 +39,7 @@
               </a>
               <h3><a href="{{ $page.RelPermalink }}">{{ $page.Title }}</a></h3>
               <div class="role">{{ index $labels $page.Params.role | default $page.Params.role }}</div>
-              {{ with $page.Params.short }}<p class="bio">{{ . }}</p>{{ end }}
-              {{ with $page.Params.email }}<span class="person-email">{{ template "obf" . }}</span>{{ end }}
+              {{ end }}
               <div class="person-links">
                 {{ with $page.Params.website }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="Website">{{ partial "icons/link.svg" . }}</a>{{ end }}
                 {{ with $page.Params.scholar }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="Google Scholar">{{ partial "icons/scholar.svg" . }}</a>{{ end }}
