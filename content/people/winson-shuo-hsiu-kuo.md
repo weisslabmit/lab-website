@@ -1,7 +1,18 @@
 ---
 title: Winson (Shuo-Hsiu) Kuo
-role: Phd student
+role: PhD
+email: shkuo@mit.edu
+scholar: https://scholar.google.com/citations?user=sAkK4H4AAAAJ&hl=en
+orcid: https://orcid.org/0009-0004-2071-7356
 image: /uploads/kuoshuohsiu.jpg
+phd_university: ""
+bs_university: National Taiwan University, Taiwan
+bs_date: "2020"
+bio: You see the world in colors, I see it in sgRNAs. Substituting traditional
+  fluorescent proteins with CRISPRa readouts. Also programming cell fate
+  decisions in iPSC-derived organoids. I hate cilantro, Gibson assembly and
+  Benchling, in that order. Love Mahjong.
 weight: 1
+draft: false
 summary: ""
 ---
