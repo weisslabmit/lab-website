@@ -6,7 +6,7 @@
 
 {{ $allPeople := where site.RegularPages "Section" "people" }}
 
-{{/* Role order + singular labels */}}
+{{/* role order + labels */}}
 {{ $roles := slice "PI" "Staff" "PhD" "Postdoc" "Other" "Undergrad" }}
 {{ $labels := dict
   "PI" "PI"
@@ -18,76 +18,39 @@
 }}
 
 <section id="people" class="people-section">
-  <!-- Match banner structure so content is centered and not flush-left -->
   <div class="content">
 
-    {{/* ===== Featured PI (inside a .people-grid so it shares the same rails) ===== */}}
-{{ $pi := where $allPeople ".Params.role" "PI" }}
-{{ if $pi }}
-  {{ $pi = $pi.ByWeight }} {{ $pi = $pi.ByTitle }}
-  {{ $p := index $pi 0 }}
-
-  <div class="people-grid people-grid--pi">
-    <article class="person-card person-highlight">
-      <a class="image avatar" href="{{ $p.RelPermalink }}">
-        {{ with $p.Params.image }}
-          <img src="{{ . | relURL }}" alt="{{ $p.Title }}" loading="lazy">
-        {{ else }}
-          <img src="/uploads/placeholder.png" alt="{{ $p.Title }}" loading="lazy">
-        {{ end }}
-      </a>
-      <div class="content">
-        <h3><a href="{{ $p.RelPermalink }}">{{ $p.Title }}</a></h3>
-        <div class="role">PI</div>
-        {{ with $p.Params.short }}<p class="bio">{{ . }}</p>{{ end }}
-        {{ with $p.Params.email }}<span class="person-email">{{ template "obf" . }}</span>{{ end }}
-
-        <div class="person-links">
-          {{ with $p.Params.website }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="Website">{{ partial "icons/link.svg" . }}</a>{{ end }}
-          {{ with $p.Params.scholar }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="Google Scholar">{{ partial "icons/scholar.svg" . }}</a>{{ end }}
-          {{ with $p.Params.github  }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="GitHub">{{ partial "icons/github.svg" . }}</a>{{ end }}
-          {{ with $p.Params.orcid   }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="ORCID">{{ partial "icons/orcid.svg" . }}</a>{{ end }}
-        </div>
-      </div>
-    </article>
-  </div>
-{{ end }}
-
-
-    {{/* ===== Other roles (no titles; just grids) ===== */}}
-    {{ range $roles }}
-      {{ if ne . "PI" }}
+    <div class="people-grid">
+      {{ range $roles }}
         {{ $group := where $allPeople ".Params.role" . }}
         {{ if $group }}
           {{ $group = $group.ByWeight }}
           {{ $group = $group.ByTitle }}
-          <div class="people-grid">
-            {{ range $group }}
-              {{- $page := . -}}
-              <article class="person-card">
-                <a class="image avatar" href="{{ $page.RelPermalink }}">
-                  {{- with $page.Params.image -}}
-                    <img src="{{ . | relURL }}" alt="{{ $page.Title }}" loading="lazy">
-                  {{- else -}}
-                    <img src="/uploads/placeholder.png" alt="{{ $page.Title }}" loading="lazy">
-                  {{- end -}}
-                </a>
-                <h3><a href="{{ $page.RelPermalink }}">{{ $page.Title }}</a></h3>
-                <div class="role">{{ index $labels $page.Params.role | default $page.Params.role }}</div>
-                {{ with $page.Params.short }}<p class="bio">{{ . }}</p>{{ end }}
-                {{ with $page.Params.email }}<span class="person-email">{{ template "obf" . }}</span>{{ end }}
-                <div class="person-links">
-                  {{ with $page.Params.website }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="Website">{{ partial "icons/link.svg" . }}</a>{{ end }}
-                  {{ with $page.Params.scholar }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="Google Scholar">{{ partial "icons/scholar.svg" . }}</a>{{ end }}
-                  {{ with $page.Params.github  }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="GitHub">{{ partial "icons/github.svg" . }}</a>{{ end }}
-                  {{ with $page.Params.orcid   }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="ORCID">{{ partial "icons/orcid.svg" . }}</a>{{ end }}
-                </div>
-              </article>
-            {{ end }}
-          </div>
+          {{ range $group }}
+            {{ $page := . }}
+            <article class="person-card">
+              <a class="image avatar" href="{{ $page.RelPermalink }}">
+                {{ with $page.Params.image }}
+                  <img src="{{ . | relURL }}" alt="{{ $page.Title }}" loading="lazy">
+                {{ else }}
+                  <img src="/uploads/placeholder.png" alt="{{ $page.Title }}" loading="lazy">
+                {{ end }}
+              </a>
+              <h3><a href="{{ $page.RelPermalink }}">{{ $page.Title }}</a></h3>
+              <div class="role">{{ index $labels $page.Params.role | default $page.Params.role }}</div>
+              {{ with $page.Params.short }}<p class="bio">{{ . }}</p>{{ end }}
+              {{ with $page.Params.email }}<span class="person-email">{{ template "obf" . }}</span>{{ end }}
+              <div class="person-links">
+                {{ with $page.Params.website }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="Website">{{ partial "icons/link.svg" . }}</a>{{ end }}
+                {{ with $page.Params.scholar }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="Google Scholar">{{ partial "icons/scholar.svg" . }}</a>{{ end }}
+                {{ with $page.Params.github  }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="GitHub">{{ partial "icons/github.svg" . }}</a>{{ end }}
+                {{ with $page.Params.orcid   }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="ORCID">{{ partial "icons/orcid.svg" . }}</a>{{ end }}
+              </div>
+            </article>
+          {{ end }}
         {{ end }}
       {{ end }}
-    {{ end }}
+    </div>
 
   </div>
 </section>

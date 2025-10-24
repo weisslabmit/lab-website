@@ -369,49 +369,17 @@ section[id]:not(#banner) {
 
 
 /* ============================
-   PEOPLE SECTION — UNIFIED CSS
-============================ */
-
-/* Section wrapper + side breathing room */
-.people-section {
-  padding-inline: clamp(1rem, 4vw, 3rem);
-}
-
-/* Group headers inside People (e.g., PI, Staff, PhD Students...) */
-.people-section .people-group-title {
-  font-family: var(--mit-font-family, "neue-haas-grotesk-display", sans-serif);
-  font-weight: 700;
-  line-height: 1.15;
-  margin: clamp(1rem, 2.2vw, 2rem) 0 clamp(0.5rem, 1.4vw, 1rem);
-  text-align: left;
-}
-
-/* Responsive grid (unified):
-   1 → 2 → 3 → 4 → 5 → 6 columns as width grows */
-.people-section .people-grid {
-  display: grid;
-  grid-template-columns: repeat(1, minmax(0, 1fr));
-  gap: 2rem;
-}
-
-@media (min-width: 600px)   { .people-section .people-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 980px)   { .people-section .people-grid { grid-template-columns: repeat(3, 1fr); } }
-@media (min-width: 1280px)  { .people-section .people-grid { grid-template-columns: repeat(4, 1fr); } }
-@media (min-width: 1680px)  { .people-section .people-grid { grid-template-columns: repeat(5, 1fr); } }
-@media (min-width: 1920px)  { .people-section .people-grid { grid-template-columns: repeat(6, 1fr); } }
-
-/* ============================
    PEOPLE — CLEAN BASE
 ============================ */
 
-/* Center the section content like your banner */
+/* Center like the banner and control side padding here only */
 .people-section > .content {
   max-width: 1200px;
   margin-inline: auto;
   padding-inline: clamp(1rem, 4vw, 3rem);
 }
 
-/* Responsive grid for non-PI groups */
+/* Unified responsive grid for all people (PI included) */
 .people-section .people-grid {
   display: grid;
   grid-template-columns: repeat(1, minmax(0, 1fr));
@@ -428,22 +396,46 @@ section[id]:not(#banner) {
 ============================ */
 .person-card {
   text-align: center;
-  padding: 0; /* keep clean; theme sometimes injects inner wrappers */
+  padding: 0; /* stay minimal; theme may add wrappers */
 }
 
-.person-card .image.avatar { display: inline-block; margin-bottom: 0.75rem; }
+.person-card .image.avatar {
+  display: inline-block;
+  margin-bottom: 0.75rem;
+}
+
 .person-card .image.avatar img {
   display: block;
-  width: 160px; height: 160px;
-  object-fit: cover; border-radius: 9999px;
+  width: 160px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 9999px;
 }
 @media (min-width: 900px) {
-  .person-card .image.avatar img { width: 200px; height: 200px; }
+  .person-card .image.avatar img {
+    width: 200px;
+    height: 200px;
+  }
 }
 
-.person-card h3 { margin: 0.25rem 0 0.25rem; line-height: 1.2; word-break: break-word; }
-.person-card .role { font-weight: 600; opacity: 0.85; margin-top: -0.15rem; }
-.person-card .bio  { font-size: 0.9rem; line-height: 1.45; opacity: 0.9; margin-top: 0.35rem; }
+.person-card h3 {
+  margin: 0.25rem 0 0.25rem;
+  line-height: 1.2;
+  word-break: break-word;
+}
+
+.person-card .role {
+  font-weight: 600;
+  opacity: 0.85;
+  margin-top: -0.15rem;
+}
+
+.person-card .bio {
+  font-size: 0.9rem;  /* ~14–15px */
+  line-height: 1.45;
+  opacity: 0.9;
+  margin-top: 0.35rem;
+}
 
 /* Obfuscated email */
 .person-card .person-email,
@@ -451,154 +443,50 @@ section[id]:not(#banner) {
   display: block;
   margin-top: 0.35rem;
   font-family: "Roboto Mono", monospace;
-  font-size: 0.9rem; /* smaller, like role */
+  font-size: 0.9rem;   /* smaller, similar to .role */
   opacity: 0.9;
 }
 
-/* Icon row — icon only, no pill buttons */
+/* Icon row — icon-only (no pills/borders) */
 .person-card .person-links,
 .person-profile .person-links {
-  display: flex; align-items: center; justify-content: center; gap: 0.6rem; margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-top: 0.5rem;
 }
+
 .person-card .person-links a,
 .person-profile .person-links a {
-  display: inline-flex; align-items: center; justify-content: center;
-  padding: 0; min-width: 0; height: auto; border: none; background: transparent; box-shadow: none;
-  opacity: 0.95; transition: transform .15s ease, opacity .15s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  min-width: 0;
+  height: auto;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  opacity: 0.95;
+  transition: transform .15s ease, opacity .15s ease;
 }
 .person-card .person-links a:hover,
-.person-profile .person-links a:hover { opacity: 1; transform: translateY(-1px); }
+.person-profile .person-links a:hover {
+  opacity: 1;
+  transform: translateY(-1px);
+}
+
 .person-card .person-links svg,
-.person-profile .person-links svg { width: 18px; height: 18px; display: block; }
-
-/* ============================
-   FEATURED PI ROW — aligned with grid below
-============================ */
-
-/* Wrap in same container width as grids */
-.person-card.person-highlight {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(0, 1fr)); /* default safeguard */
-  grid-column: 1 / -1; /* span full width */
-  text-align: left;
-  width: 100%;
-  margin: clamp(1rem, 2vw, 1.5rem) 0;
-  padding: 0;
-}
-
-/* Two-column inner layout aligned with grid below */
-@media (min-width: 980px) {
-  .person-card.person-highlight {
-    display: grid;
-    grid-template-columns: 1fr 2fr;  /* left photo ~1 column, right text ~2 columns */
-    align-items: start;
-    gap: 2rem;
-  }
-}
-
-/* Avatar alignment (flush with first column start) */
-.person-card.person-highlight .image.avatar {
-  margin: 0;
-  justify-self: start;
+.person-profile .person-links svg {
+  width: 18px;
+  height: 18px;
   display: block;
 }
-.person-card.person-highlight .image.avatar img {
-  width: 100%;
-  max-width: 220px;
-  aspect-ratio: 1 / 1;
-  height: auto;
-  object-fit: cover;
-  border-radius: 9999px;
-}
-
-/* Text content aligned with second grid column */
-.person-card.person-highlight .content {
-  align-self: center;
-}
-
-/* Stack on mobile screens */
-@media (max-width: 979px) {
-  .person-card.person-highlight {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
-  .person-card.person-highlight .image.avatar {
-    justify-self: center;
-  }
-}
 
 /* ============================
-   PERSON PAGE
+   PERSON PAGE (details view)
 ============================ */
-.person-profile { padding-inline: clamp(1.5rem, 5vw, 4rem); }
-
-/* Use same centered container as banner */
-.people-section > .content {
-  max-width: 1200px;
-  margin-inline: auto;
-  padding-inline: clamp(1rem, 4vw, 3rem);
-}
-
-/* Keep the standard responsive grid (you already have this) */
-.people-section .people-grid {
-  display: grid;
-  grid-template-columns: repeat(1, minmax(0, 1fr));
-  gap: 2rem;
-}
-@media (min-width: 600px)  { .people-section .people-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 980px)  { .people-section .people-grid { grid-template-columns: repeat(3, 1fr); } }
-@media (min-width: 1280px) { .people-section .people-grid { grid-template-columns: repeat(4, 1fr); } }
-@media (min-width: 1680px) { .people-section .people-grid { grid-template-columns: repeat(5, 1fr); } }
-@media (min-width: 1920px) { .people-section .people-grid { grid-template-columns: repeat(6, 1fr); } }
-
-/* PI grid wrapper: no special layout—just reuse the same rails */
-.people-grid--pi { margin-bottom: 0.5rem; }
-
-/* PI card: its own inner two-column layout, but the outer left edge now snaps to the grid */
-.person-card.person-highlight {
-  display: grid;
-  grid-template-columns: minmax(180px, 220px) 1fr;  /* photo column | text column */
-  gap: 2rem;
-  align-items: start;
-  text-align: left;
-  margin: clamp(1rem, 2vw, 1.5rem) 0;
-}
-
-.person-card.person-highlight .image.avatar { margin: 0; display: block; }
-.person-card.person-highlight .image.avatar img {
-  width: 100%;
-  height: auto;
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
-  border-radius: 9999px;
-}
-
-/* Stack neatly on small screens */
-@media (max-width: 900px) {
-  .person-card.person-highlight {
-    grid-template-columns: 1fr;
-    gap: 1.25rem;
-  }
-  .person-card.person-highlight .image.avatar { justify-self: center; }
-}
-
-/* Icon-only links (no pills) */
-.person-card .person-links a,
-.person-profile .person-links a {
-  display: inline-flex; align-items: center; justify-content: center;
-  padding: 0; min-width: 0; height: auto; border: none; background: transparent; box-shadow: none;
-  opacity: .95; transition: transform .15s ease, opacity .15s ease;
-}
-.person-card .person-links a:hover,
-.person-profile .person-links a:hover { opacity: 1; transform: translateY(-1px); }
-.person-card .person-links svg,
-.person-profile .person-links svg { width: 18px; height: 18px; display: block; }
-
-/* Smaller email text (matches role/title scale) */
-.person-card .person-email,
-.person-profile .person-email {
-  font-size: 0.9rem;
-  opacity: 0.9;
-  font-family: "Roboto Mono", monospace;
-  margin-top: 0.35rem;
+.person-profile {
+  padding-inline: clamp(1.5rem, 5vw, 4rem);
 }
