@@ -508,3 +508,12 @@ section[id]:not(#banner) {
 .person-profile {
   padding-inline: clamp(1.5rem, 5vw, 4rem);
 }
+
+/* Co-supervised line — subtle, below role */
+.person-card .co-supervised,
+.person-profile .co-supervised {
+  margin-top: 0.1rem;
+  font-size: 0.7rem;
+  opacity: 0.85;
+  font-style: italic;
+}
