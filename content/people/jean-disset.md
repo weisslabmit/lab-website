@@ -2,7 +2,7 @@
 title: Jean Disset
 role: Postdoc
 email: jdisset@mit.edu
-website: jdisset.com
+website: https://jdisset.com
 scholar: https://scholar.google.com/citations?user=d3xtOq8AAAAJ&hl=en
 image: /uploads/jeandisset_2025.jpg
 phd_university: University of Toulouse + EPFL
