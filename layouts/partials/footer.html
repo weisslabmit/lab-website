@@ -19,19 +19,28 @@
   const nav = document.getElementById('floating-nav');
   if (!nav) return;
 
-  const inner  = nav.querySelector('.floating-nav__inner');
+  const inner  = nav.querySelector('.floating-nav__inner') || nav;
   const links  = Array.from(nav.querySelectorAll('a[data-scroll]'));
-  const ids    = links
-    .map(a => a.getAttribute('href'))
-    .filter(h => h && h.startsWith('#'))
-    .map(h => h.slice(1));
-  const sections = ids
-    .map(id => document.getElementById(id))
-    .filter(Boolean);
+
+  // Normalize any href to a plain "#id" (works for "#id", "/#id", "https://.../#id")
+  function getHash(a) {
+    try {
+      const raw = a.getAttribute('href') || '';
+      if (!raw) return '';
+      if (raw.startsWith('#')) return raw;                        // "#id"
+      const url = new URL(raw, window.location.origin);           // "/#id" or absolute
+      return url.hash || '';
+    } catch { return ''; }
+  }
+
+  // Build list of target IDs and sections
+  const hashes = links.map(getHash).filter(h => h && h.length > 1);
+  const ids    = hashes.map(h => h.slice(1));
+  const sections = ids.map(id => document.getElementById(id)).filter(Boolean);
 
   const banner = document.getElementById('banner');
 
-  /* --- Show/hide nav only based on banner visibility --- */
+  /* --- Show/hide nav based on banner visibility --- */
   function showNav() { nav.classList.add('is-visible'); }
   function hideNav() { nav.classList.remove('is-visible'); }
 
@@ -45,28 +54,35 @@
     showNav();
   }
 
-  /* --- Active link on scroll (no custom scrolling, no offsets) --- */
-  function setActive(id) {
+  /* --- Active link helpers --- */
+  function setActiveByHash(hash) {
     let any = false;
     links.forEach(a => {
-      const active = (a.getAttribute('href') === '#' + id);
+      const active = (getHash(a) === hash);
       a.classList.toggle('is-active', active);
       any = any || active;
     });
     inner.classList.toggle('has-active', any);
   }
 
+  function setActive(id) {
+    setActiveByHash('#' + id);
+  }
+
+  /* --- Scroll spy (mid-viewport = active) --- */
   const spy = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) setActive(entry.target.id);
     });
   }, {
-    // “middle of viewport” counts as active
     rootMargin: '-45% 0px -45% 0px',
     threshold: 0
   });
-
   sections.forEach(sec => spy.observe(sec));
+
+  /* --- Initialize from current URL and keep in sync on hash changes --- */
+  setActiveByHash(window.location.hash || '');
+  window.addEventListener('hashchange', () => setActiveByHash(window.location.hash || ''));
 })();
 </script>
 
