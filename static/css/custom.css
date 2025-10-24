@@ -534,22 +534,39 @@ section.wrapper {
 
 
 /* ============================
-   Research Spotlights — white background, fully centered
+   Research Spotlights — center image column vertically
 ============================ */
 
-/* Container: keep Story layout but force white background and centering */
-#research .spotlight .image.r-spotlight__media {
-  background-color: #fff !important;      /* white background instead of gray */
-  display: flex !important;               /* center child img */
-  align-items: center !important;         /* vertical centering */
-  justify-content: center !important;     /* horizontal centering */
-  overflow: hidden !important;
-  height: clamp(180px, 24vw, 300px) !important;  /* fixed visual slot */
-  border-radius: 0 !important;            /* remove Story’s rounded gray box */
-  box-shadow: none !important;            /* remove subtle theme shadow */
+/* Desktop/tablet: make each spotlight row align its two columns vertically */
+@media (min-width: 980px) {
+  #research .spotlights > section,
+  #research .spotlight {
+    display: flex !important;          /* keep Story's two-column row */
+    align-items: center !important;    /* <-- vertically center both columns */
+  }
+
+  /* Ensure both columns participate in vertical centering */
+  #research .spotlights > section .content,
+  #research .spotlights > section .image,
+  #research .spotlight .content,
+  #research .spotlight .image {
+    align-self: center !important;     /* guard against theme overrides */
+  }
 }
 
-/* The image: centered, no stretch, no gray overlay */
+/* Keep your image pane styling: white background + inner centering */
+#research .spotlight .image.r-spotlight__media {
+  background-color: #fff !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: hidden !important;
+  height: clamp(180px, 24vw, 300px) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+/* Image: contain, no stretch */
 #research .spotlight .image.r-spotlight__media img {
   position: static !important;
   width: auto !important;
@@ -557,7 +574,5 @@ section.wrapper {
   max-width: 100% !important;
   max-height: 100% !important;
   object-fit: contain !important;
-  background-color: #fff !important;      /* fill behind transparent PNGs */
   display: block !important;
-  margin: 0 auto !important;
 }
