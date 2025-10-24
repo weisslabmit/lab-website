@@ -1,6 +1,6 @@
 ---
 title: Jonathan Babb
-role: Research Associate
+role: Staff
 image: /uploads/jonathan-babb.jpg
 phd_university: Massachusetts Instittute of Technolgy
 phd_date: "2001"
