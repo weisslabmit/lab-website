@@ -2,6 +2,8 @@
 title: Evan Holbrook
 role: PhD
 email: evanholb@mit.edu
+scholar: https://scholar.google.com/citations?view_op=list_works&hl=en&user=28aIuUEAAAAJ
+orcid: https://orcid.org/0009-0001-4411-5454
 image: /uploads/holbrook_evan.jpg
 bs_university: CU Boulder, USA
 bs_date: "2022"
