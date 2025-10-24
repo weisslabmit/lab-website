@@ -576,3 +576,8 @@ section.wrapper {
   object-fit: contain !important;
   display: block !important;
 }
+
+@media (min-width: 980px) {
+  #research .spotlight .content,
+  #research .spotlight .image { height: auto !important; }
+}
