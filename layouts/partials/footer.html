@@ -146,31 +146,3 @@
 </script>
 
 
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  function getHash(href){
-    if (!href) return '';
-    if (href.startsWith('#')) return href;
-    try{
-      const u = new URL(href, location.origin);
-      if (u.origin === location.origin) return u.hash || '';
-    }catch{}
-    return '';
-  }
-  function go(hash){
-    if (!hash || hash.length < 2) return;
-    const el = document.getElementById(hash.slice(1));
-    if (el) el.scrollIntoView({ behavior:'smooth', block:'start' });
-  }
-  document.querySelectorAll('#floating-nav a[data-scroll]').forEach(a=>{
-    a.addEventListener('click', e=>{
-      const hash = getHash(a.getAttribute('href'));
-      if (!hash) return;        // external link
-      e.preventDefault();
-      go(hash);
-      history.replaceState(null,'',hash);
-    });
-  });
-  if (location.hash) setTimeout(()=>go(location.hash), 50);
-});
-</script>
