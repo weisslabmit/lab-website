@@ -618,34 +618,34 @@ section.wrapper {
   }
 }
 
-
 /* ============================
-   Admin Button on Banner
+   Admin Button on Banner — subtle + round
 ============================ */
 .banner-admin-btn {
   position: absolute;
-  bottom: 1.5rem;          /* distance from bottom */
-  right: 1.5rem;           /* distance from right edge */
-  z-index: 50;             /* stay above the banner elements */
-  background: #000;        /* black button */
+  bottom: 1.2rem;
+  right: 1.2rem;
+  z-index: 50;
+  background: rgba(60, 60, 60, 0.85);   /* subtle dark grey */
   color: #fff;
   font-family: "Roboto", sans-serif;
   font-size: 0.9rem;
   font-weight: 500;
   text-decoration: none;
+  padding: 0.35rem 0.8rem;              /* small but comfy */
+  border-radius: 9999px;                /* fully round pill shape */
+  opacity: 0.8;
   letter-spacing: 0.02em;
-  padding: 0.55rem 1rem;
-  border-radius: 4px;
-  opacity: 0.85;
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  transition: opacity 0.2s ease, transform 0.2s ease, background 0.2s ease;
 }
 
 .banner-admin-btn:hover {
   opacity: 1;
+  background: rgba(30, 30, 30, 0.95);
   transform: translateY(-2px);
 }
 
 .banner-admin-btn:active {
   transform: translateY(0);
-  opacity: 0.8;
+  opacity: 0.9;
 }
