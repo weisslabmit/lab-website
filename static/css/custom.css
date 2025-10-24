@@ -454,16 +454,6 @@ section[id]:not(#banner) {
    EMAIL & LINKS
 ============================ */
 
-/* Obfuscated email */
-.person-card .person-email,
-.person-profile .person-email {
-  display: block;
-  margin-top: 0.35rem;
-  font-family: "Roboto Mono", monospace;
-  font-size: 0.7rem;   /* smaller, similar to .role */
-  opacity: 0.9;
-}
-
 /* Icon row — icon-only (no pills/borders) */
 .person-card .person-links,
 .person-profile .person-links {
