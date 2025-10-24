@@ -1,18 +1,19 @@
 {{/* ========= PEOPLE SECTION (flat files in content/people) ========= */}}
-{{ $people := site.GetPage "section" "people" }}
-{{ if not $people }}{{ errorf "people-section.html: 'content/people' not found" }}{{ end }}
 
 {{/* Email obfuscation helper */}}
 {{- define "obf" -}}
   {{- replace (replace . "@" " (at) ") "." " (dot) " -}}
 {{- end -}}
 
-{{ $roles := slice "PI" "Staff" "PhD" "Postdoc" "Other" "Undergrad" }}
+{{/* Collect all people pages reliably, even if the section object isn't iterable */}}
+{{ $allPeople := where site.RegularPages "Section" "people" }}
+
+{{ $roles  := slice "PI" "Staff" "PhD" "Postdoc" "Other" "Undergrad" }}
 {{ $labels := dict "PI" "PI" "Staff" "Staff" "PhD" "PhD Students" "Postdoc" "Postdocs" "Other" "Other" "Undergrad" "Undergrads" }}
 
 <section id="people" class="people-section">
   {{/* Featured PI (first by Params.weight, then Title) */}}
-  {{ $pi := ( $people.RegularPages | where ".Params.role" "PI" ) | sort "Params.weight" "asc" | sort "Title" "asc" }}
+  {{ $pi := ( where $allPeople ".Params.role" "PI" ) | sort "Params.weight" "asc" | sort "Title" "asc" }}
   {{ if gt (len $pi) 0 }}
     {{ $p := index $pi 0 }}
     <div class="people-grid">
@@ -42,7 +43,7 @@
   {{/* Other roles as grids */}}
   {{ range $roles }}
     {{ if ne . "PI" }}
-      {{ $group := ( $people.RegularPages | where ".Params.role" . ) | sort "Params.weight" "asc" | sort "Title" "asc" }}
+      {{ $group := ( where $allPeople ".Params.role" . ) | sort "Params.weight" "asc" | sort "Title" "asc" }}
       {{ if gt (len $group) 0 }}
         <h3 class="people-group-title">{{ index $labels . }}</h3>
         <div class="people-grid">
