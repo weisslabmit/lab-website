@@ -147,43 +147,119 @@
 
 
 <script>
+/* Snap between sections on wheel/swipe, but allow scrolling inside scrollable areas */
 document.addEventListener("DOMContentLoaded", () => {
-  /* Identify all scrollable sections */
-  const sections = Array.from(document.querySelectorAll("section[id]"));
-  const navLinks = document.querySelectorAll('#floating-nav a[data-scroll]');
+  // Sections that can be navigated to (IDs must match your floating-nav hrefs)
+  const sections = Array.from(document.querySelectorAll('section[id]'));
+  if (!sections.length) return;
 
-  /* 1. Prevent page-level scrolling (wheel, touch, keys) */
-  window.addEventListener("wheel", e => {
-    // Allow if user is actively scrolling inside a scrollable element
-    const scrollableAncestor = e.target.closest('.scrollable, section');
-    if (scrollableAncestor && scrollableAncestor.scrollHeight > scrollableAncestor.clientHeight) {
-      return; // allow scroll inside scrollable section
+  // Helper: in-view "current" section (by viewport center)
+  const currentSection = () => {
+    const mid = window.innerHeight / 2;
+    for (const s of sections) {
+      const r = s.getBoundingClientRect();
+      if (r.top <= mid && r.bottom >= mid) return s;
     }
-    e.preventDefault(); // block "between sections" scroll
-  }, { passive: false });
+    // fallback: nearest
+    return sections.slice().sort((a,b) => Math.abs(a.getBoundingClientRect().top) - Math.abs(b.getBoundingClientRect().top))[0];
+  };
 
-  window.addEventListener("touchmove", e => {
-    const scrollableAncestor = e.target.closest('.scrollable, section');
-    if (scrollableAncestor && scrollableAncestor.scrollHeight > scrollableAncestor.clientHeight) {
-      return;
+  // Helper: is the event target inside an element that can scroll further?
+  function canScrollWithin(target, deltaY) {
+    let el = target;
+    // You can also add a class like ".allow-scroll" if you want to whitelist explicitly
+    while (el && el !== document.body) {
+      const s = getComputedStyle(el);
+      const overflowY = s.overflowY;
+      const scrollable = (overflowY === 'auto' || overflowY === 'scroll');
+      if (scrollable && el.scrollHeight > el.clientHeight) {
+        if (deltaY > 0) { // scrolling down
+          if (el.scrollTop + el.clientHeight < el.scrollHeight - 1) return true; // can scroll down inside
+        } else if (deltaY < 0) { // scrolling up
+          if (el.scrollTop > 0) return true; // can scroll up inside
+        }
+      }
+      el = el.parentElement;
     }
+    return false;
+  }
+
+  // Smoothly scroll to a specific section
+  function goToSection(sec) {
+    if (!sec) return;
+    // Prevent rapid-fire repeats
+    if (goToSection.locked) return;
+    goToSection.locked = true;
+    sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    setTimeout(() => { goToSection.locked = false; }, 600); // unlock after animation
+  }
+
+  // Find next/prev sections relative to the current one
+  function neighborSection(direction) {
+    const cur = currentSection();
+    const i = sections.indexOf(cur);
+    if (i === -1) return null;
+    return direction > 0 ? sections[Math.min(i + 1, sections.length - 1)]
+                         : sections[Math.max(i - 1, 0)];
+  }
+
+  // Wheel handler: if not scrolling inside a scrollable element, snap
+  function onWheel(e) {
+    const dy = e.deltaY;
+    if (canScrollWithin(e.target, dy)) return;  // let inner scrolling happen
+    // At edges inside the section? then snap
     e.preventDefault();
+    const target = neighborSection(dy > 0 ? 1 : -1);
+    if (target) goToSection(target);
+  }
+  window.addEventListener('wheel', onWheel, { passive: false });
+
+  // Touch swipe (mobile): detect vertical swipe and snap if not inside scrollable
+  let touchStartY = null, touchStartX = null;
+  window.addEventListener('touchstart', (e) => {
+    const t = e.changedTouches[0]; touchStartY = t.clientY; touchStartX = t.clientX;
+  }, { passive: true });
+  window.addEventListener('touchmove', (e) => {
+    const t = e.changedTouches[0];
+    if (touchStartY == null) return;
+    const dy = touchStartY - t.clientY;
+    const dx = Math.abs(touchStartX - t.clientX);
+    // Ignore mostly horizontal gestures
+    if (dx > Math.abs(dy)) return;
+    if (canScrollWithin(e.target, dy)) return;  // let inner scrolling happen
+    // Threshold so minor moves don't trigger
+    if (Math.abs(dy) < 24) return;
+    e.preventDefault();
+    const target = neighborSection(dy > 0 ? 1 : -1);
+    if (target) goToSection(target);
   }, { passive: false });
 
-  window.addEventListener("keydown", e => {
-    const keys = ["ArrowUp", "ArrowDown", "PageUp", "PageDown", "Home", "End", " "];
-    if (keys.includes(e.key)) e.preventDefault();
+  // Keyboard: Space/PageUp/PageDown/Arrows snap between sections, but allow inner scroll when possible
+  window.addEventListener('keydown', (e) => {
+    const keys = ['ArrowDown','PageDown',' ' ,'ArrowUp','PageUp','Home','End'];
+    if (!keys.includes(e.key)) return;
+    // If focus is inside a scrollable area that can still scroll, allow default
+    const dir = (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') ? 1
+               : (e.key === 'ArrowUp' || e.key === 'PageUp') ? -1 : 0;
+    if (dir !== 0 && canScrollWithin(document.activeElement || document.body, dir)) return;
+    e.preventDefault();
+    if (e.key === 'Home') return goToSection(sections[0]);
+    if (e.key === 'End')  return goToSection(sections[sections.length-1]);
+    const target = neighborSection(dir);
+    if (target) goToSection(target);
   });
 
-  /* 2. Allow smooth scroll via floating nav links */
-  navLinks.forEach(link => {
-    link.addEventListener("click", e => {
+  // Make your floating-nav links use the same smooth snapping
+  document.querySelectorAll('#floating-nav a[data-scroll]').forEach(a => {
+    a.addEventListener('click', (e) => {
+      const href = a.getAttribute('href') || '';
+      if (!href.startsWith('#')) return;
       e.preventDefault();
-      const targetId = link.getAttribute("href").replace("#", "");
-      const target = document.getElementById(targetId);
-      if (!target) return;
-      target.scrollIntoView({ behavior: "smooth" });
+      const id = href.slice(1);
+      const sec = document.getElementById(id);
+      if (sec) goToSection(sec);
     });
   });
 });
 </script>
+
