@@ -657,40 +657,36 @@ section.wrapper {
 }
 
 
-/* Desktop-only: lock page scroll; allow scrolling inside sections */
 @media (min-width: 980px) {
   html, body {
     height: 100%;
-    overflow: hidden;                 /* block document-level (between-sections) scroll */
-    overscroll-behavior: contain;     /* tame momentum/bounce */
+    overflow: hidden;
+    overscroll-behavior: contain;
   }
 
-  /* If your main element exists; harmless if it doesn't */
-  main {
+  main, #page-wrapper {
     height: 100%;
     overflow: hidden;
   }
 
-  /* Make top-level sections scrollable on their own */
-  /* If your sections use class="wrapper" (as you said for research), target that */
-  section.wrapper {
-    height: 100vh;            /* each section fills the viewport */
-    overflow-y: auto;         /* scroll happens inside the section */
+  #research,
+  #people,
+  #publications,
+  #resources,
+  #news,
+  #contact {
+    min-height: 100vh;
+    max-height: 100vh;
+    overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     overscroll-behavior: contain;
     scroll-behavior: smooth;
   }
 
-  /* Exclude the banner (let it size naturally and not be 100vh) */
-  #banner.wrapper,
   #banner {
     height: auto !important;
     overflow: visible !important;
   }
 
-  /* Optional: if any section should NOT be locked, give it an id here to exclude */
-  /* #contact.wrapper { height: auto !important; overflow: visible !important; } */
-
-  /* If your floating nav overlaps headings, keep offsets sane */
   section[id] { scroll-margin-top: 72px; }
 }
