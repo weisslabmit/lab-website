@@ -460,7 +460,7 @@ section[id]:not(#banner) {
   display: block;
   margin-top: 0.35rem;
   font-family: "Roboto Mono", monospace;
-  font-size: 0.9rem;   /* smaller, similar to .role */
+  font-size: 0.7rem;   /* smaller, similar to .role */
   opacity: 0.9;
 }
 
