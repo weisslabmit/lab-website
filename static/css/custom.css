@@ -537,22 +537,27 @@ section.wrapper {
    Research Spotlights — stop theme fill, center, no upscaling
 ============================ */
 
-/* Research spotlights: neutral media box, no theme “fill” */
-.r-spotlight__media {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  /* pick a slot size you like */
-  height: clamp(180px, 24vw, 300px);
+/* Research spotlights — keep Story's layout via .image, but override its "fill" */
+#research .spotlight .image.r-spotlight__media {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: hidden !important;
+
+  /* Set a stable media slot height (tweak to taste) */
+  height: clamp(180px, 24vw, 300px) !important;
 }
 
-/* The image never upscales, but can scale down to fit */
-.r-spotlight__media > img {
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: auto;
-  object-fit: contain;
-  display: block;
+/* Never upscale; only shrink to fit, and keep centered */
+#research .spotlight .image.r-spotlight__media img {
+  position: static !important;    /* cancel absolute/fit variants */
+  inset: auto !important;
+  transform: none !important;
+
+  width: auto !important;
+  height: auto !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  object-fit: contain !important;
+  display: block !important;
 }
