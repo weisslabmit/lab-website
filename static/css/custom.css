@@ -583,3 +583,69 @@ section.wrapper {
   #research .spotlight .content,
   #research .spotlight .image { height: auto !important; }
 }
+
+/* ============================
+   Research Spotlights — MOBILE vertical centering fix
+   (applies when the spotlight stacks)
+============================ */
+@media (max-width: 979px) {
+  /* Make the image pane a proper centering box with a sensible minimum height */
+  #research .spotlight .image.r-spotlight__media {
+    display: flex !important;
+    align-items: center !important;      /* vertical centering */
+    justify-content: center !important;  /* horizontal centering */
+    min-height: 220px;                    /* tweak: 180–280px as you like */
+    height: auto !important;              /* don’t inherit desktop slot height */
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Image should shrink to fit, never stretch; centered inside the box */
+  #research .spotlight .image.r-spotlight__media img {
+    width: auto !important;
+    height: auto !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    object-fit: contain !important;
+    display: block !important;
+    margin: 0 auto !important;
+  }
+
+  /* Ensure both stacked columns participate in centering (theme guard) */
+  #research .spotlight .image,
+  #research .spotlight .content {
+    align-self: center !important;
+  }
+}
+
+
+/* ============================
+   Admin Button on Banner
+============================ */
+.banner-admin-btn {
+  position: absolute;
+  bottom: 1.5rem;          /* distance from bottom */
+  right: 1.5rem;           /* distance from right edge */
+  z-index: 50;             /* stay above the banner elements */
+  background: #000;        /* black button */
+  color: #fff;
+  font-family: "Roboto", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  padding: 0.55rem 1rem;
+  border-radius: 4px;
+  opacity: 0.85;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.banner-admin-btn:hover {
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
+.banner-admin-btn:active {
+  transform: translateY(0);
+  opacity: 0.8;
+}
