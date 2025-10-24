@@ -532,30 +532,40 @@ section.wrapper {
 }
 
 
-/* Research spotlights: never upscale image, shrink if needed */
-#research .spotlights .image img,
-.research-section .spotlights .image img {
-  width: auto;           /* do NOT force 100% (prevents upscaling) */
-  max-width: 100%;       /* but allow shrinking within container width */
-  height: auto;          /* keep aspect ratio */
-  max-height: 100%;      /* if the container has a height, respect it */
+
+
+/* Research spotlights — never upscale, only scale down if needed */
+
+/* 1) Make the image box a centering container so the img won't stretch */
+#research .spotlights .image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;         /* keeps layout tidy if something is taller */
+}
+
+/* 2) Kill theme's width:100% on spotlight images (which upscales small imgs) */
+#research .spotlights .image > img,
+#research .spotlights .image > a > img {
+  width: auto !important;   /* do NOT stretch to container width */
+  height: auto !important;  /* keep aspect ratio */
+  max-width: 100% !important;  /* but do shrink to fit container width */
+  max-height: 100% !important; /* and shrink to fit container height if any */
   display: block;
-  margin-inline: auto;   /* center horizontally */
 }
 
-/* Optional: give the image box a stable height/aspect */
-#research .spotlights .image,
-.research-section .spotlights .image {
-  /* pick one: */
-  /* height: 260px; */
-  aspect-ratio: 16 / 9;       /* nicer on wide layouts */
-  overflow: hidden;           /* keeps layout tidy */
+/* 3) If your spotlight "image" box has an intended height/shape, keep it */
+#research .spotlights .image {
+  /* pick ONE of these rows (or leave both commented if you want natural height) */
+
+  /* Fixed minimum height for a nice card rhythm: */
+  /* min-height: 260px; */
+
+  /* OR a consistent aspect ratio for the image pane: */
+  /* aspect-ratio: 16 / 9; */
 }
 
-/* Make the image fit inside without expanding the box */
-#research .spotlights .image img,
-.research-section .spotlights .image img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;        /* no crop; no upscale beyond box */
+/* Optional: if Safari/Story still sneaks in width:100% via very specific rules */
+#research .spotlights .image img[src] {
+  width: auto !important;
 }
