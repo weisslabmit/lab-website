@@ -147,41 +147,52 @@
 
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-  // Normalize any href to a "#id" hash (supports "#id", "/#id", or same-origin full URLs)
-  function getHashFromHref(href) {
-    if (!href) return '';
-    if (href.startsWith('#')) return href; // "#id"
-    try {
-      const url = new URL(href, window.location.origin);
-      if (url.origin === window.location.origin) return url.hash || '';
-    } catch (e) {}
-    return '';
+document.addEventListener("DOMContentLoaded", () => {
+  // Helper: can this event scroll inside a scrollable area?
+  function canScrollInside(el, dy) {
+    let node = el;
+    while (node && node !== document.documentElement) {
+      const style = getComputedStyle(node);
+      const overflowY = style.overflowY;
+      const scrollable = (overflowY === "auto" || overflowY === "scroll" || overflowY === "overlay");
+      if (scrollable && node.scrollHeight > node.clientHeight) {
+        if (dy > 0 && node.scrollTop + node.clientHeight < node.scrollHeight - 1) return true; // scroll down
+        if (dy < 0 && node.scrollTop > 0) return true; // scroll up
+      }
+      node = node.parentElement;
+    }
+    return false;
   }
 
-  // Smooth-scroll to a given hash if the element exists
-  function scrollToHash(hash) {
-    if (!hash || hash.length < 2) return;
-    const el = document.getElementById(hash.slice(1));
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
+  // --- Disable scroll between sections ---
+  window.addEventListener("wheel", (e) => {
+    if (!canScrollInside(e.target, e.deltaY || 0)) e.preventDefault();
+  }, { passive: false });
 
-  // Hook up floating-nav links only
-  document.querySelectorAll('#floating-nav a[data-scroll]').forEach(a => {
-    a.addEventListener('click', (e) => {
-      const hash = getHashFromHref(a.getAttribute('href'));
-      if (!hash) return;                 // external link → let it behave normally
-      e.preventDefault();                 // in-page anchor → handle smoothly
-      scrollToHash(hash);
-      // Optionally update the URL hash so back/forward work:
-      history.replaceState(null, '', hash);
-    });
+  window.addEventListener("touchmove", (e) => {
+    const t = e.changedTouches && e.changedTouches[0];
+    const start = e.targetTouches && e.targetTouches[0];
+    const dy = start ? start.clientY - t.clientY : 0;
+    if (!canScrollInside(e.target, dy)) e.preventDefault();
+  }, { passive: false });
+
+  window.addEventListener("keydown", (e) => {
+    const keys = ["ArrowUp", "ArrowDown", "PageUp", "PageDown", "Home", "End", " "];
+    if (!keys.includes(e.key)) return;
+    const dir = (["ArrowDown","PageDown"," "].includes(e.key)) ? 1 : -1;
+    const active = document.activeElement || document.body;
+    if (!canScrollInside(active, dir)) e.preventDefault();
   });
 
-  // If the page loads with a hash, ensure it scrolls nicely once content is ready
-  if (location.hash) {
-    // Small delay helps when images/iframes shift layout
-    setTimeout(() => scrollToHash(location.hash), 50);
-  }
+  // --- Smooth scrolling for floating-nav clicks ---
+  document.querySelectorAll("#floating-nav a[data-scroll]").forEach(a => {
+    a.addEventListener("click", e => {
+      const href = a.getAttribute("href") || "";
+      if (!href.startsWith("#")) return;
+      e.preventDefault();
+      const target = document.getElementById(href.slice(1));
+      if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  });
 });
 </script>
