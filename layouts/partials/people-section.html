@@ -1,10 +1,11 @@
 {{/* ========= PEOPLE SECTION (flat files in content/people) ========= */}}
 
+{{/* Email obfuscation helper */}}
 {{- define "obf" -}}
   {{- replace (replace . "@" " (at) ") "." " (dot) " -}}
 {{- end -}}
 
-{{/* Get all people pages regardless of section object quirks */}}
+{{/* Collect people pages from the whole site to avoid section quirks */}}
 {{ $allPeople := where site.RegularPages "Section" "people" }}
 
 {{ $roles  := slice "PI" "Staff" "PhD" "Postdoc" "Other" "Undergrad" }}
@@ -12,9 +13,11 @@
 
 <section id="people" class="people-section">
 
-  {{/* Featured PI: sort by .Weight then Title */}}
-  {{ $pi := ( where $allPeople ".Params.role" "PI" ) | sort "Weight" "asc" | sort "Title" "asc" }}
-  {{ if gt (len $pi) 0 }}
+  {{/* Featured PI (first by weight, then title) */}}
+  {{ $pi := where $allPeople ".Params.role" "PI" }}
+  {{ if $pi }}
+    {{ $pi = $pi.ByWeight }}
+    {{ $pi = $pi.ByTitle }}
     {{ $p := index $pi 0 }}
     <div class="people-grid">
       <article class="person-card person-highlight">
@@ -40,11 +43,13 @@
     </div>
   {{ end }}
 
-  {{/* Other roles */}}
+  {{/* Other roles as grids */}}
   {{ range $roles }}
     {{ if ne . "PI" }}
-      {{ $group := ( where $allPeople ".Params.role" . ) | sort "Weight" "asc" | sort "Title" "asc" }}
-      {{ if gt (len $group) 0 }}
+      {{ $group := where $allPeople ".Params.role" . }}
+      {{ if $group }}
+        {{ $group = $group.ByWeight }}
+        {{ $group = $group.ByTitle }}
         <h3 class="people-group-title">{{ index $labels . }}</h3>
         <div class="people-grid">
           {{ range $group }}
