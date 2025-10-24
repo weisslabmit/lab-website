@@ -655,3 +655,14 @@ section.wrapper {
     display: none !important;
   }
 }
+
+
+html, body {
+  scroll-behavior: smooth;
+  overflow: hidden;             /* prevent page-level scroll */
+  height: 100%;
+}
+section {
+  overflow-y: auto;             /* scrollable content within section */
+  height: 100vh;                /* full viewport height per section */
+}
