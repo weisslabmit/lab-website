@@ -557,3 +557,45 @@ section[id]:not(#banner) {
 }
 
 
+/* Beef up side padding on personal profile pages */
+.person-profile {
+  padding-inline: clamp(1.5rem, 5vw, 4rem);
+}
+/* Make email size match the compact "role" look */
+.person-card .person-email,
+.person-profile .person-email {
+  font-size: 0.9rem;        /* smaller */
+  opacity: 0.9;             /* keep legible */
+  font-family: "Roboto Mono", monospace; /* keep the obfuscated look */
+  margin-top: 0.35rem;
+}
+
+/* Kill button styling on link icons */
+.person-card .person-links a,
+.person-profile .person-links a {
+  display: inline-flex;   /* keep layout tidy */
+  align-items: center;
+  justify-content: center;
+  padding: 0;            /* no pill padding */
+  min-width: 0;          /* remove width lock */
+  height: auto;
+  border: none;          /* no border/outline */
+  background: transparent;
+  box-shadow: none;
+  opacity: 0.95;         /* gentle hover effect retained below */
+  transition: transform .15s ease, opacity .15s ease;
+}
+
+.person-card .person-links a:hover,
+.person-profile .person-links a:hover {
+  opacity: 1;
+  transform: translateY(-1px);
+}
+
+/* Make sure inline SVGs look crisp and sized like 18px */
+.person-card .person-links svg,
+.person-profile .person-links svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+}

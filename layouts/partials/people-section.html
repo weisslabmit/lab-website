@@ -57,7 +57,6 @@
       {{ if $group }}
         {{ $group = $group.ByWeight }}
         {{ $group = $group.ByTitle }}
-        <h3 class="people-group-title">{{ index $labels . }}</h3>
         <div class="people-grid">
           {{ range $group }}
             {{ $page := . }}
