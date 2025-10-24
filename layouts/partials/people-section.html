@@ -1,19 +1,25 @@
 {{/* ========= PEOPLE SECTION (flat files in content/people) ========= */}}
 
-{{/* Email obfuscation helper */}}
 {{- define "obf" -}}
   {{- replace (replace . "@" " (at) ") "." " (dot) " -}}
 {{- end -}}
 
-{{/* Collect people pages reliably */}}
 {{ $allPeople := where site.RegularPages "Section" "people" }}
 
+{{/* singular labels */}}
 {{ $roles  := slice "PI" "Staff" "PhD" "Postdoc" "Other" "Undergrad" }}
-{{ $labels := dict "PI" "PI" "Staff" "Staff" "PhD" "PhD Students" "Postdoc" "Postdocs" "Other" "Other" "Undergrad" "Undergrads" }}
+{{ $labels := dict
+  "PI" "PI"
+  "Staff" "Staff"
+  "PhD" "PhD student"
+  "Postdoc" "Postdoc"
+  "Other" "Other"
+  "Undergrad" "Undergrad"
+}}
 
 <section id="people" class="people-section">
 
-  {{/* Featured PI (first by weight, then title) */}}
+  {{/* Featured PI (by .Weight then .Title) */}}
   {{ $pi := where $allPeople ".Params.role" "PI" }}
   {{ if $pi }}
     {{ $pi = $pi.ByWeight }}
@@ -22,11 +28,11 @@
     <div class="people-grid">
       <article class="person-card person-highlight">
         <a class="image avatar" href="{{ $p.RelPermalink }}">
-          {{- with $p.Params.image -}}
+          {{ with $p.Params.image }}
             <img src="{{ . | relURL }}" alt="{{ $p.Title }}" loading="lazy">
-          {{- else -}}
+          {{ else }}
             <img src="/uploads/placeholder.png" alt="{{ $p.Title }}" loading="lazy">
-          {{- end -}}
+          {{ end }}
         </a>
         <div class="content">
           <h3><a href="{{ $p.RelPermalink }}">{{ $p.Title }}</a></h3>
@@ -34,16 +40,17 @@
           {{ with $p.Params.short }}<p class="bio">{{ . }}</p>{{ end }}
           {{ with $p.Params.email }}<span class="person-email">{{ template "obf" . }}</span>{{ end }}
           <div class="person-links">
-            {{ with $p.Params.website }}<a href="{{ . }}" target="_blank" rel="noopener"><span class="icon">🔗</span></a>{{ end }}
-            {{ with $p.Params.scholar }}<a href="{{ . }}" target="_blank" rel="noopener"><span class="icon">🎓</span></a>{{ end }}
-            {{ with $p.Params.github  }}<a href="{{ . }}" target="_blank" rel="noopener"><span class="icon">🐙</span></a>{{ end }}
+            {{ with $p.Params.website }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="Website">{{ partial "icons/link.svg" . }}</a>{{ end }}
+            {{ with $p.Params.scholar }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="Google Scholar">{{ partial "icons/scholar.svg" . }}</a>{{ end }}
+            {{ with $p.Params.github  }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="GitHub">{{ partial "icons/github.svg" . }}</a>{{ end }}
+            {{ with $p.Params.orcid  }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="ORCID">{{ partial "icons/orcid.svg" . }}</a>{{ end }}
           </div>
         </div>
       </article>
     </div>
   {{ end }}
 
-  {{/* Other roles as grids */}}
+  {{/* Other roles as grids (singular labels) */}}
   {{ range $roles }}
     {{ if ne . "PI" }}
       {{ $group := where $allPeople ".Params.role" . }}
@@ -53,23 +60,24 @@
         <h3 class="people-group-title">{{ index $labels . }}</h3>
         <div class="people-grid">
           {{ range $group }}
-            {{- $page := . -}}
+            {{ $page := . }}
             <article class="person-card">
               <a class="image avatar" href="{{ $page.RelPermalink }}">
-                {{- with $page.Params.image -}}
+                {{ with $page.Params.image }}
                   <img src="{{ . | relURL }}" alt="{{ $page.Title }}" loading="lazy">
-                {{- else -}}
+                {{ else }}
                   <img src="/uploads/placeholder.png" alt="{{ $page.Title }}" loading="lazy">
-                {{- end -}}
+                {{ end }}
               </a>
               <h3><a href="{{ $page.RelPermalink }}">{{ $page.Title }}</a></h3>
               <div class="role">{{ index $labels $page.Params.role | default $page.Params.role }}</div>
               {{ with $page.Params.short }}<p class="bio">{{ . }}</p>{{ end }}
               {{ with $page.Params.email }}<span class="person-email">{{ template "obf" . }}</span>{{ end }}
               <div class="person-links">
-                {{ with $page.Params.website }}<a href="{{ . }}" target="_blank" rel="noopener"><span class="icon">🔗</span></a>{{ end }}
-                {{ with $page.Params.scholar }}<a href="{{ . }}" target="_blank" rel="noopener"><span class="icon">🎓</span></a>{{ end }}
-                {{ with $page.Params.github  }}<a href="{{ . }}" target="_blank" rel="noopener"><span class="icon">🐙</span></a>{{ end }}
+                {{ with $page.Params.website }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="Website">{{ partial "icons/link.svg" . }}</a>{{ end }}
+                {{ with $page.Params.scholar }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="Google Scholar">{{ partial "icons/scholar.svg" . }}</a>{{ end }}
+                {{ with $page.Params.github  }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="GitHub">{{ partial "icons/github.svg" . }}</a>{{ end }}
+                {{ with $page.Params.orcid  }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="ORCID">{{ partial "icons/orcid.svg" . }}</a>{{ end }}
               </div>
             </article>
           {{ end }}

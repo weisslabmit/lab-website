@@ -5,33 +5,59 @@
       {{ with .Params.image }}
         <img src="{{ . | relURL }}" alt="{{ $.Title }}">
       {{ else }}
-        <img src="/uploads/placeholder.png" alt="">
+        <img src="/uploads/placeholder.png" alt="{{ $.Title }}">
       {{ end }}
     </a>
     <div class="content">
       <h1>{{ .Title }}</h1>
       {{ with .Params.role }}<div class="role">{{ . }}</div>{{ end }}
       {{ with .Params.short }}<p class="bio">{{ . }}</p>{{ end }}
+
       {{ with .Params.email }}
         <div class="person-email">{{ replace (replace . "@" " (at) ") "." " (dot) " }}</div>
       {{ end }}
+
       <div class="person-links">
-        {{ with .Params.website }}<a href="{{ . }}" target="_blank" rel="noopener"><span class="icon">🔗</span></a>{{ end }}
-        {{ with .Params.scholar }}<a href="{{ . }}" target="_blank" rel="noopener"><span class="icon">🎓</span></a>{{ end }}
-        {{ with .Params.github  }}<a href="{{ . }}" target="_blank" rel="noopener"><span class="icon">🐙</span></a>{{ end }}
-        {{ with .Params.cv      }}<a href="{{ . | relURL }}" target="_blank" rel="noopener">CV</a>{{ end }}
+        {{ with .Params.website }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="Website">{{ partial "icons/link.svg" . }}</a>{{ end }}
+        {{ with .Params.scholar }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="Google Scholar">{{ partial "icons/scholar.svg" . }}</a>{{ end }}
+        {{ with .Params.github  }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="GitHub">{{ partial "icons/github.svg" . }}</a>{{ end }}
+        {{ with .Params.orcid   }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="ORCID">{{ partial "icons/orcid.svg" . }}</a>{{ end }}
       </div>
+
+      {{/* Education lines under their own simple labels */}}
+      {{ if or .Params.phd_university .Params.phd_date }}
+        <p class="pp-degree"><strong>PhD:</strong>
+          {{- with .Params.phd_university }} {{ . }}{{ end -}}
+          {{- if and .Params.phd_university .Params.phd_date }},{{ end -}}
+          {{- with .Params.phd_date }} {{ . }}{{ end -}}
+        </p>
+      {{ end }}
+      {{ if or .Params.bs_university .Params.bs_date }}
+        <p class="pp-degree"><strong>BS:</strong>
+          {{- with .Params.bs_university }} {{ . }}{{ end -}}
+          {{- if and .Params.bs_university .Params.bs_date }},{{ end -}}
+          {{- with .Params.bs_date }} {{ . }}{{ end -}}
+        </p>
+      {{ end }}
     </div>
   </header>
 
+  {{ with .Params.experience }}
+    <section class="pp-experience">
+      <h2>Other experience</h2>
+      {{ . | markdownify }}
+    </section>
+  {{ end }}
+
   {{ with .Params.bio }}
-    <section class="bio">
+    <section class="pp-bio">
+      <h2>Bio</h2>
       {{ . | markdownify }}
     </section>
   {{ end }}
 
   {{ if .Content }}
-    <section class="content">
+    <section class="pp-content">
       {{ .Content }}
     </section>
   {{ end }}
