@@ -43,12 +43,9 @@
           {{ with $p.Params.summary }}<p>{{ . }}</p>{{ end }}
           <a href="{{ $p.RelPermalink }}" class="special">Learn more</a>
         </div>
-        <div class="image">
-          {{ with $p.Params.image }}
-            <img src="{{ . | relURL }}" alt="{{ $p.Title }}">
-          {{ else }}
-            <img src="{{ "images/pic01.jpg" | relURL }}" alt="{{ $p.Title }}">
-          {{ end }}
+       <div class="r-spotlight__media">
+          <img src="/uploads/example.jpg" alt="..." loading="lazy">
+      </div>
         </div>
       </section>
     {{ end }}
