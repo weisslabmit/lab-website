@@ -534,30 +534,30 @@ section.wrapper {
 
 
 /* ============================
-   Research Spotlights — stop theme fill, center, no upscaling
+   Research Spotlights — white background, fully centered
 ============================ */
 
-/* Research spotlights — keep Story's layout via .image, but override its "fill" */
+/* Container: keep Story layout but force white background and centering */
 #research .spotlight .image.r-spotlight__media {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
+  background-color: #fff !important;      /* white background instead of gray */
+  display: flex !important;               /* center child img */
+  align-items: center !important;         /* vertical centering */
+  justify-content: center !important;     /* horizontal centering */
   overflow: hidden !important;
-
-  /* Set a stable media slot height (tweak to taste) */
-  height: clamp(180px, 24vw, 300px) !important;
+  height: clamp(180px, 24vw, 300px) !important;  /* fixed visual slot */
+  border-radius: 0 !important;            /* remove Story’s rounded gray box */
+  box-shadow: none !important;            /* remove subtle theme shadow */
 }
 
-/* Never upscale; only shrink to fit, and keep centered */
+/* The image: centered, no stretch, no gray overlay */
 #research .spotlight .image.r-spotlight__media img {
-  position: static !important;    /* cancel absolute/fit variants */
-  inset: auto !important;
-  transform: none !important;
-
+  position: static !important;
   width: auto !important;
   height: auto !important;
   max-width: 100% !important;
   max-height: 100% !important;
   object-fit: contain !important;
+  background-color: #fff !important;      /* fill behind transparent PNGs */
   display: block !important;
+  margin: 0 auto !important;
 }
