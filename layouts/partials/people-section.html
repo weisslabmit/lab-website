@@ -1,117 +1,73 @@
-{{/* ================= PEOPLE SECTION (safe, PI first, fixed order) ================= */}}
+{{/* ========= PEOPLE SECTION (flat files in content/people) ========= */}}
+{{ $people := site.GetPage "section" "people" }}
+{{ if not $people }}{{ errorf "people-section.html: 'content/people' not found" }}{{ end }}
 
-{{/* Load people pages safely */}}
-{{ $people := slice }}
-{{ with .Site.GetPage "section" "people" }}
-  {{ $people = .Pages }}
-{{ end }}
+{{/* Email obfuscation helper */}}
+{{- define "obf" -}}
+  {{- replace (replace . "@" " (at) ") "." " (dot) " -}}
+{{- end -}}
 
-{{ if gt (len $people) 0 }}
+{{ $roles := slice "PI" "Staff" "PhD" "Postdoc" "Other" "Undergrad" }}
+{{ $labels := dict "PI" "PI" "Staff" "Staff" "PhD" "PhD Students" "Postdoc" "Postdocs" "Other" "Other" "Undergrad" "Undergrads" }}
+
 <section id="people" class="people-section">
-
-  {{/* Buckets we’ll fill */}}
-  {{ $s := newScratch }}
-  {{ $known := slice "PI" "Staff" "PhD Students" "Postdocs" "Other" "Undergrads" }}
-  {{ range $known }}{{ $s.Set . (slice) }}{{ end }}
-
-  {{/* Helper to infer category from role text (very simple substr checks) */}}
-  {{ range $people }}
-    {{ $cat := .Params.category }}
-    {{ if not (in $known $cat) }}
-      {{ $role := lower (default "" .Params.role) }}
-      {{ if or (in $role "pi") (in $role "principal investigator") (in $role "professor") }}
-        {{ $cat = "PI" }}
-      {{ else if in $role "postdoc" }}
-        {{ $cat = "Postdocs" }}
-      {{ else if or (in $role "phd") (in $role "doctoral") (in $role "doctorand") (in $role "graduate") }}
-        {{ $cat = "PhD Students" }}
-      {{ else if or (in $role "undergrad") (in $role "bsc") (in $role "ba") (in $role "intern") (in $role "ug") }}
-        {{ $cat = "Undergrads" }}
-      {{ else if or (in $role "staff") (in $role "engineer") (in $role "technician") (in $role "manager") (in $role "coordinator") (in $role "admin") }}
-        {{ $cat = "Staff" }}
-      {{ else }}
-        {{ $cat = "Other" }}
-      {{ end }}
-    {{ end }}
-    {{ $s.Add $cat (slice .) }}
-  {{ end }}
-
-  {{/* ------------------- PI (first, highlighted) ------------------- */}}
-  {{ $piList := $s.Get "PI" | default (slice) }}
-  {{ if gt (len $piList) 0 }}
-    <h3 class="people-group-title">PI</h3>
+  {{/* 1) Featured PI spanning full width, using your .person-highlight layout */}}
+  {{ $pi := where $people.RegularPages ".Params.role" "PI" | sort "Weight" "asc" | sort "Title" "asc" }}
+  {{ if gt (len $pi) 0 }}
+    {{ $p := index $pi 0 }}
     <div class="people-grid">
-      {{ $pi := index (sort $piList "Weight") 0 }}
       <article class="person-card person-highlight">
-        <a href="{{ $pi.RelPermalink }}" class="image avatar" aria-label="{{ $pi.Title }}">
-          {{ with $pi.Params.image }}
-            <img src="{{ . | relURL }}" alt="{{ $pi.Title }}">
+        <a class="image avatar" href="{{ $p.RelPermalink }}">
+          {{ with $p.Params.image }}
+            <img src="{{ . | relURL }}" alt="{{ $p.Title }}" loading="lazy">
           {{ else }}
-            <img src="{{ "images/avatar.jpg" | relURL }}" alt="{{ $pi.Title }}">
+            <img src="/uploads/placeholder.png" alt="" loading="lazy">
           {{ end }}
         </a>
         <div class="content">
-          <h3>{{ $pi.Title }}</h3>
-          {{ with $pi.Params.role }}<div class="role">{{ . }}</div>{{ end }}
-          {{ with $pi.Params.summary }}<p class="bio">{{ . }}</p>{{ end }}
-
-          {{ with $pi.Params.email }}
-            {{ $e := . }}
-            {{ $e = replace $e "@" " (at) " }}
-            {{ $e = replace $e "." " (dot) " }}
-            <span class="person-email">{{ $e }}</span>
-          {{ end }}
-
+          <h3><a href="{{ $p.RelPermalink }}">{{ $p.Title }}</a></h3>
+          <div class="role">PI</div>
+          {{ with $p.Params.short }}<p class="bio">{{ . }}</p>{{ end }}
+          {{ with $p.Params.email }}<span class="person-email">{{ template "obf" . }}</span>{{ end }}
           <div class="person-links">
-            {{ with $pi.Params.website }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="Website"><i class="icon solid fa-globe"></i></a>{{ end }}
-            {{ with $pi.Params.scholar }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="Google Scholar"><i class="icon solid fa-graduation-cap"></i></a>{{ end }}
-            {{ with $pi.Params.github  }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="GitHub"><i class="icon brands fa-github"></i></a>{{ end }}
+            {{ with $p.Params.website }}<a href="{{ . }}" target="_blank" rel="noopener"><span class="icon">🔗</span></a>{{ end }}
+            {{ with $p.Params.scholar }}<a href="{{ . }}" target="_blank" rel="noopener"><span class="icon">🎓</span></a>{{ end }}
+            {{ with $p.Params.github  }}<a href="{{ . }}" target="_blank" rel="noopener"><span class="icon">🐙</span></a>{{ end }}
           </div>
         </div>
       </article>
     </div>
   {{ end }}
 
-  {{/* ------------- Remaining categories in fixed order ------------- */}}
-  {{ $order := slice "Staff" "PhD Students" "Postdocs" "Other" "Undergrads" }}
-  {{ range $order }}
-    {{ $items := $s.Get . | default (slice) }}
-    {{ if gt (len $items) 0 }}
-      <h3 class="people-group-title">{{ . }}</h3>
-      <div class="people-grid">
-        {{ range sort $items "Weight" }}
-          <article class="person-card">
-            <a href="{{ .RelPermalink }}" class="image avatar" aria-label="{{ .Title }}">
-              {{ with .Params.image }}
-                <img src="{{ . | relURL }}" alt="{{ .Title }}">
-              {{ else }}
-                <img src="{{ "images/avatar.jpg" | relURL }}" alt="{{ .Title }}">
-              {{ end }}
-            </a>
-
-            <h3>{{ .Title }}</h3>
-            {{ with .Params.role }}<div class="role">{{ . }}</div>{{ end }}
-            {{ with .Params.summary }}<p class="bio">{{ . }}</p>{{ end }}
-
-            {{ with .Params.email }}
-              {{ $e := . }}
-              {{ $e = replace $e "@" " (at) " }}
-              {{ $e = replace $e "." " (dot) " }}
-              <span class="person-email">{{ $e }}</span>
-            {{ end }}
-
-            <div class="person-links">
-              {{ with .Params.website }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="Website"><i class="icon solid fa-globe"></i></a>{{ end }}
-              {{ with .Params.scholar }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="Google Scholar"><i class="icon solid fa-graduation-cap"></i></a>{{ end }}
-              {{ with .Params.github  }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="GitHub"><i class="icon brands fa-github"></i></a>{{ end }}
-            </div>
-          </article>
-        {{ end }}
-      </div>
+  {{/* 2) Other roles as grids, using your .people-group-title + .people-grid + .person-card */}}
+  {{ range $roles }}
+    {{ if ne . "PI" }}
+      {{ $group := where $people.RegularPages ".Params.role" . | sort "Weight" "asc" | sort "Title" "asc" }}
+      {{ if gt (len $group) 0 }}
+        <h3 class="people-group-title">{{ index $labels . }}</h3>
+        <div class="people-grid">
+          {{ range $group }}
+            <article class="person-card">
+              <a class="image avatar" href="{{ .RelPermalink }}">
+                {{ with .Params.image }}
+                  <img src="{{ . | relURL }}" alt="{{ .Title }}" loading="lazy">
+                {{ else }}
+                  <img src="/uploads/placeholder.png" alt="" loading="lazy">
+                {{ end }}
+              </a>
+              <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+              <div class="role">{{ index $labels .Params.role | default .Params.role }}</div>
+              {{ with .Params.short }}<p class="bio">{{ . }}</p>{{ end }}
+              {{ with .Params.email }}<span class="person-email">{{ template "obf" . }}</span>{{ end }}
+              <div class="person-links">
+                {{ with .Params.website }}<a href="{{ . }}" target="_blank" rel="noopener"><span class="icon">🔗</span></a>{{ end }}
+                {{ with .Params.scholar }}<a href="{{ . }}" target="_blank" rel="noopener"><span class="icon">🎓</span></a>{{ end }}
+                {{ with .Params.github  }}<a href="{{ . }}" target="_blank" rel="noopener"><span class="icon">🐙</span></a>{{ end }}
+              </div>
+            </article>
+          {{ end }}
+        </div>
+      {{ end }}
     {{ end }}
   {{ end }}
-
 </section>
-{{ else }}
-<!-- people-section: no people found (content/people/*). -->
-{{ end }}

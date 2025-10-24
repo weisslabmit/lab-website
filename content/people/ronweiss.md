@@ -1,13 +1,16 @@
 ---
-scholar: https://scholar.google.com/citations?user=st2YzBwAAAAJ&hl=en&oi=ao
-summary: ""
-title: Ron Weiss
-role: PI
-email: rweiss@mit.edu
-website: https://be.mit.edu/faculty/ron-weiss/
-image: /uploads/ron.jpeg
-bio: >-
-  
+title: "Ron Weiss"
+role: "PI"              # PI | Staff | PhD | Postdoc | Other | Undergrad
+email: "rweiss@mit.edu"
+website: "https://be.mit.edu/faculty/ron-weiss/"
+scholar: "https://scholar.google.com/citations?user=st2YzBwAAAAJ&hl=en&oi=ao"
+github: "https://github.com/ronweiss"
+short: "Professor of Biological Engineering and EECS at MIT."
+image: "/uploads/ron.jpg"   # put images under /static/uploads or any URL
+cv: ""
+weight: 1
+draft: false
+bio: |
   Prof. Weiss is one of
 
   the pioneers of synthetic biology. He has been engaged in synthetic biology
@@ -63,5 +66,4 @@ bio: >-
   the Weiss lab has recently been translated to the clinic), vaccination, auto-immune
 
   diseases, and programmable organoids
-weight: 1
 ---
