@@ -148,34 +148,29 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  function getHashFromHref(href) {
+  function getHash(href){
     if (!href) return '';
     if (href.startsWith('#')) return href;
-    try {
-      const url = new URL(href, window.location.origin);
-      if (url.origin === window.location.origin) return url.hash || '';
-    } catch {}
+    try{
+      const u = new URL(href, location.origin);
+      if (u.origin === location.origin) return u.hash || '';
+    }catch{}
     return '';
   }
-
-  function scrollToHash(hash) {
+  function go(hash){
     if (!hash || hash.length < 2) return;
     const el = document.getElementById(hash.slice(1));
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (el) el.scrollIntoView({ behavior:'smooth', block:'start' });
   }
-
-  document.querySelectorAll('#floating-nav a[data-scroll]').forEach(a => {
-    a.addEventListener('click', (e) => {
-      const hash = getHashFromHref(a.getAttribute('href'));
-      if (!hash) return;      // external link → let default happen
-      e.preventDefault();     // in-page navigation
-      scrollToHash(hash);
-      history.replaceState(null, '', hash);
+  document.querySelectorAll('#floating-nav a[data-scroll]').forEach(a=>{
+    a.addEventListener('click', e=>{
+      const hash = getHash(a.getAttribute('href'));
+      if (!hash) return;        // external link
+      e.preventDefault();
+      go(hash);
+      history.replaceState(null,'',hash);
     });
   });
-
-  // On load with a hash, nudge to the right spot after layout settles
-  if (location.hash) setTimeout(() => scrollToHash(location.hash), 50);
+  if (location.hash) setTimeout(()=>go(location.hash), 50);
 });
 </script>
-
