@@ -6,10 +6,10 @@
 
 {{ $allPeople := where site.RegularPages "Section" "people" }}
 
-{{/* Role order + singular labels (labels unused, kept for future) */}}
+{{/* Role order + readable labels */}}
 {{ $roles := slice "PI" "Staff" "PhD" "Postdoc" "Other" "Undergrad" }}
 {{ $labels := dict
-  "PI" "PI"
+  "PI" "Principal Investigator"
   "Staff" "Staff"
   "PhD" "PhD student"
   "Postdoc" "Postdoc"
@@ -20,7 +20,6 @@
 <section id="people" class="people-section">
   <div class="content">
 
-    {{/* One grid per role -> each role starts on a new line */}}
     {{ range $roles }}
       {{ $group := where $allPeople ".Params.role" . }}
       {{ if $group }}
@@ -39,7 +38,7 @@
               </a>
               <h3><a href="{{ $page.RelPermalink }}">{{ $page.Title }}</a></h3>
               <div class="role">{{ index $labels $page.Params.role | default $page.Params.role }}</div>
-              {{ end }}
+              {{ with $page.Params.short }}<p class="bio">{{ . }}</p>{{ end }}
               <div class="person-links">
                 {{ with $page.Params.website }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="Website">{{ partial "icons/link.svg" . }}</a>{{ end }}
                 {{ with $page.Params.scholar }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="Google Scholar">{{ partial "icons/scholar.svg" . }}</a>{{ end }}
@@ -54,3 +53,4 @@
 
   </div>
 </section>
+
