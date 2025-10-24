@@ -619,33 +619,40 @@ section.wrapper {
 }
 
 /* ============================
-   Admin Button on Banner — subtle + round
+   Admin Button on Banner — desktop-only subtle grey pill
 ============================ */
 .banner-admin-btn {
   position: absolute;
   bottom: 1.2rem;
   right: 1.2rem;
   z-index: 50;
-  background: rgba(60, 60, 60, 0.85);   /* subtle dark grey */
+  background: rgba(60, 60, 60, 0.85);   /* subtle grey background */
   color: #fff;
   font-family: "Roboto", sans-serif;
   font-size: 0.9rem;
   font-weight: 500;
   text-decoration: none;
-  padding: 0.35rem 0.8rem;              /* small but comfy */
-  border-radius: 9999px;                /* fully round pill shape */
-  opacity: 0.8;
+  padding: 0.35rem 0.8rem;              /* compact pill shape */
+  border-radius: 9999px;                /* rounded pill corners */
   letter-spacing: 0.02em;
+  opacity: 0.8;
   transition: opacity 0.2s ease, transform 0.2s ease, background 0.2s ease;
 }
 
 .banner-admin-btn:hover {
   opacity: 1;
-  background: rgba(30, 30, 30, 0.95);
+  background: rgba(30, 30, 30, 0.95);   /* darker on hover */
   transform: translateY(-2px);
 }
 
 .banner-admin-btn:active {
   transform: translateY(0);
   opacity: 0.9;
+}
+
+/* Hide on smaller screens (show only on desktop) */
+@media (max-width: 980px) {
+  .banner-admin-btn {
+    display: none !important;
+  }
 }
