@@ -1,19 +1,10 @@
-{{/* ========= ALUMNI SECTION PARTIAL ========= */}}
-
+// layouts/partials/alumni-section.html
 {{- $pages := .Pages -}}
-{{- $cats := slice
-  "Graduate Alumni"
-  "Postdoctoral Alumni"
-  "Undergraduate Alumni"
-  "Other Alumni"
--}}
+{{- $cats := slice "Graduate Alumni" "Postdoctoral Alumni" "Undergraduate Alumni" "Other Alumni" -}}
 
 <section id="alumni" class="alumni-section">
   <div class="content">
-
-    <header class="major align-center">
-      <h2>Alumni</h2>
-    </header>
+    <header class="major align-center"><h2>Alumni</h2></header>
 
     {{ range $cats }}
       {{ $cat := . }}
@@ -36,6 +27,5 @@
         </div>
       {{ end }}
     {{ end }}
-
   </div>
 </section>
