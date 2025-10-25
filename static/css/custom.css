@@ -955,7 +955,7 @@ section.wrapper {
   background: #2a2a2a;
   color: #fff !important;
   text-decoration: none;
-  font-family: "Roboto Mono", monospace
+  font-family: "Roboto Mono", monospace;
   font-weight: 600;
   letter-spacing: .02em;
   box-shadow: 0 6px 16px rgba(0, 0, 0, .12);

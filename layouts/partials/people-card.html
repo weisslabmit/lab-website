@@ -26,5 +26,6 @@
     {{ with $page.Params.github  }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="GitHub">{{ partial "icons/github.svg" . }}</a>{{ end }}
     {{ with $page.Params.orcid   }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="ORCID">{{ partial "icons/orcid.svg" . }}</a>{{ end }}
     {{ with .Params.linkedin     }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="LinkedIn">{{ partial "icons/linkedin.svg" . }}</a>{{ end }}
+    {{ with .Params.email        }}<a href="mailto:{{ . }}" aria-label="Email">{{ partial "icons/email.svg" . }}</a>{{ end }}
   </div>
 </article>
