@@ -3,7 +3,7 @@ title = "The Weiss Lab @MIT"
 theme = "hugo-story"
 languageCode = "en-us"
 
-relativeURLs = true        # <-- remove the quotes
+relativeURLs = false        # <-- remove the quotes
 
 [outputs]
 section = ["HTML"]

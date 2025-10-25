@@ -10,8 +10,8 @@ theme = "hugo-story"
 ## Publish
 ## -----------------------------------------------
 
-relativeURLs = "true"
-#canonifyURLs = "true"
+relativeURLs = "false"
+
 
 # Local
 baseURL = "/"
