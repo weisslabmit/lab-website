@@ -5,7 +5,7 @@ email: cvandem@mit.edu
 website: ""
 scholar: ""
 github: ""
-image: /uploads/43018_2020_95_fig3_html-copy.jpg
+image: /uploads/charles.jpg
 phd_university: ""
 phd_date: ""
 bs_university: University of Colorado Boulder, USA
