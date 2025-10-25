@@ -22,12 +22,6 @@ publishDir = "public"
 #publishDir = "//centos/sites/hugodev/hugostory/"
 
 
-## -----------------------------------------------
-## Hugo Built-in Features
-## -----------------------------------------------
-
-disableKinds = ["taxonomy", "section"]
-# googleAnalytics = "your-google-analytics-id"
 
 ## -----------------------------------------------
 ## Site Parameters
