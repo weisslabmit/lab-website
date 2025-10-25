@@ -68,7 +68,7 @@ collections:
       - { label: "Image", name: "image", widget: "image", required: false }
       - { label: "Body", name: "body", widget: "markdown", required: false }
 
-  collections:
+
   - name: "alumni"
     label: "Alumni"
     folder: "content/alumni"
