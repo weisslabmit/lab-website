@@ -77,7 +77,7 @@
               </article>
 
             {{ else }}
-              <!-- Normal people cards -->
+              <!-- Regular people cards -->
               <article class="person-card">
                 <a class="image avatar" href="{{ $page.RelPermalink }}">
                   {{ with $page.Params.image }}
@@ -87,6 +87,7 @@
                   {{ end }}
                 </a>
                 <h3><a href="{{ $page.RelPermalink }}">{{ $page.Title }}</a></h3>
+
                 <div class="role">{{ index $labels $page.Params.role | default $page.Params.role }}</div>
 
                 {{ with $page.Params.co_supervised_by }}

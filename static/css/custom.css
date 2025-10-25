@@ -680,71 +680,90 @@ section.wrapper {
 
 
 /* ======================================
-   Special layout for PI (Ron) section
+   Special layout for PI section
+   (photo left, info right)
 ====================================== */
 
-.people-grid.pi-group {
+.pi-card {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
   align-items: flex-start;
+  justify-content: flex-start;
   gap: 2rem;
-  max-width: 900px;
-  margin-inline: auto;
-}
-
-.people-grid.pi-group .person-card {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
   text-align: left;
   width: 100%;
   max-width: 800px;
+  margin-inline: auto;
+  margin-bottom: 3rem;
 }
 
-/* Avatar on the left */
-.people-grid.pi-group .image.avatar {
+/* Left column (photo) */
+.pi-card .image.avatar {
   flex: 0 0 240px;
   margin: 0;
 }
-
-.people-grid.pi-group .image.avatar img {
+.pi-card .image.avatar img {
   width: 100%;
   height: auto;
   max-width: 240px;
   border-radius: 9999px;
   object-fit: cover;
+  display: block;
 }
 
-/* Bio + info block on the right */
-.people-grid.pi-group .person-info {
+/* Right column (name, role, links, bio) */
+.pi-card .person-info {
   flex: 1;
+  min-width: 260px;
   padding-left: 2rem;
 }
 
-/* Adjust text alignment for right column */
-.people-grid.pi-group h3,
-.people-grid.pi-group .role,
-.people-grid.pi-group .bio,
-.people-grid.pi-group .person-links {
+.pi-card h3,
+.pi-card .role,
+.pi-card .bio,
+.pi-card .person-links {
   text-align: left;
 }
 
-/* Responsive fallback: stack vertically on narrow screens */
+.pi-card h3 {
+  margin-top: 0;
+  margin-bottom: 0.3rem;
+}
+
+.pi-card .role {
+  font-weight: 600;
+  opacity: 0.85;
+  margin-bottom: 0.5rem;
+}
+
+.pi-card .bio {
+  margin-top: 1rem;
+  line-height: 1.5;
+  opacity: 0.9;
+}
+
+.pi-card .person-links {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.75rem;
+}
+
+/* Responsive stacking for small screens */
 @media (max-width: 700px) {
-  .people-grid.pi-group .person-card {
+  .pi-card {
     flex-direction: column;
+    align-items: center;
     text-align: center;
   }
-  .people-grid.pi-group .person-info {
+  .pi-card .person-info {
     padding-left: 0;
-    margin-top: 1.5rem;
+    margin-top: 1.25rem;
+    text-align: center;
   }
-  .people-grid.pi-group h3,
-  .people-grid.pi-group .role,
-  .people-grid.pi-group .bio,
-  .people-grid.pi-group .person-links {
+  .pi-card h3,
+  .pi-card .role,
+  .pi-card .bio,
+  .pi-card .person-links {
     text-align: center;
   }
 }
