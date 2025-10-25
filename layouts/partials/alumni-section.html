@@ -8,6 +8,12 @@
   "Other Alumni"
 -}}
 
+{{ with .Params.image }}
+  <img src="{{ . | absURL }}" alt="{{ .Title }}" loading="lazy">
+{{ else }}
+  <img src="{{ "/uploads/alumni/placeholder.png" | absURL }}" alt="{{ .Title }}" loading="lazy">
+{{ end }}
+
 <section id="alumni" class="alumni-section">
   <div class="content">
 
