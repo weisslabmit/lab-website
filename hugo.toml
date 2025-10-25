@@ -3,33 +3,10 @@ title = "The Weiss Lab @MIT"
 theme = "hugo-story"
 languageCode = "en-us"
 
-## -----------------------------------------------
-## Basic Configuration
-## -----------------------------------------------
-
-## -----------------------------------------------
-## Publish
-## -----------------------------------------------
-
-relativeURLs = "true"
-#canonifyURLs = "true"
-
-# Local
-publishDir = "public"
-
-# Remote
-#baseURL = "https://caressofsteel.github.io/demos/hugo/hugo-story/"
-#publishDir = "//centos/sites/hugodev/hugostory/"
-
+relativeURLs = true        # <-- remove the quotes
 
 [outputs]
 section = ["HTML"]
-## -----------------------------------------------
-## Site Parameters
-## -----------------------------------------------
 
 [Params]
   customCSS = ["css/custom.css"]
-
-
-[Params.social]
