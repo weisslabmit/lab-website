@@ -1,4 +1,6 @@
 ---
 title: "Alumni"
-layout: "alumni"
+_build:
+  list: always
+  render: always
 ---
