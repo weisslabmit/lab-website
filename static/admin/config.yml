@@ -74,7 +74,7 @@ collections:
     folder: "content/alumni"
     create: true
     slug: "{{slug}}"
-    media_folder: "static/uploads/alumni"
+    media_folder: "/static/uploads/alumni"
     public_folder: "/uploads/alumni"
     fields:
       - { label: "Name", name: "title", widget: "string" }
