@@ -1,6 +1,6 @@
 ---
 draft: false
-title: Ron Weiss
+title: Prof. Ron Weiss
 role: PI
 email: rweiss@mit.edu
 website: https://be.mit.edu/faculty/ron-weiss/
