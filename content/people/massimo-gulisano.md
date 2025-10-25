@@ -6,4 +6,5 @@ scholar: https://scholar.google.com/citations?user=14SrdbYAAAAJ&hl=it
 image: /uploads/massimo.jpg
 weight: 1
 draft: false
+linkedin: https://it.linkedin.com/in/maxgulisano
 ---
