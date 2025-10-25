@@ -745,7 +745,7 @@ section.wrapper {
 }
 
 .pi-card h3 {
-  font-size: clamp(1.rem, 1vw + 1.4rem, 2.6rem);  /* ✅ larger name */
+  font-size: clamp(1.3rem, 1vw + 1.4rem, 2.6rem);  /* ✅ larger name */
   margin: 0 0 .4rem 0;
   line-height: 1.15;
 }
