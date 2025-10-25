@@ -7,6 +7,7 @@ website: https://be.mit.edu/faculty/ron-weiss/
 scholar: https://scholar.google.com/citations?user=st2YzBwAAAAJ&hl=en&oi=ao
 github: ""
 orcid: https://orcid.org/0000-0003-0396-2443
+linkedin: https://www.linkedin.com/in/ronweiss001
 image: /uploads/ron.jpeg
 phd_university: Massachusetts Institute of Technology
 phd_date: "2001"
