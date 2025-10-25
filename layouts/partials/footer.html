@@ -125,3 +125,23 @@
 </script>
 
 
+<script>
+(function () {
+  function smoothScrollTo(selector) {
+    const el = document.querySelector(selector);
+    if (!el) return;
+    // Your CSS anchor-offset trick handles the fixed nav, so a simple scroll is fine:
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  window.addEventListener("message", (e) => {
+    // only accept messages from our own origin (same-origin iframe)
+    if (e.origin !== window.location.origin) return;
+    const data = e.data || {};
+    if (data.type === "lab-nav" && typeof data.target === "string") {
+      smoothScrollTo(data.target);
+    }
+  });
+})();
+</script>
+
