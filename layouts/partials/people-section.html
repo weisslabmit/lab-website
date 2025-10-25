@@ -46,11 +46,15 @@
 
           <div class="person-info">
             <h3><a href="{{ $pi.RelPermalink }}">{{ $pi.Title }}</a></h3>
-            <div class="role">{{ index $labels $pi.Params.role | default $pi.Params.role }}</div>
 
+            <div class="person-subtitle">
+              {{ with $pi.Params.position_detail }}
+                {{ . }}
+              {{ else }}
+                {{ index $labels $pi.Params.role | default $pi.Params.role }}
+              {{ end }}
+            </div>
 
-
-            
             {{ with $pi.Params.co_supervised_by }}
               <div class="co-supervised">(Co-supervised by {{ . }})</div>
             {{ end }}
@@ -59,8 +63,8 @@
               {{ with $pi.Params.website }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="Website">{{ partial "icons/link.svg" . }}</a>{{ end }}
               {{ with $pi.Params.scholar }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="Google Scholar">{{ partial "icons/scholar.svg" . }}</a>{{ end }}
               {{ with $pi.Params.github  }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="GitHub">{{ partial "icons/github.svg" . }}</a>{{ end }}
-              {{ with $pi.Params.orcid }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="ORCID">{{ (partial "icons/orcid.svg" .) | safeHTML  }}</a>{{ end }}
-              {{ with $pi.Params.linkedin   }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="Linkedin">{{ partial "icons/linkedin.svg" . }}</a>{{ end }}
+              {{ with $pi.Params.orcid }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="ORCID">{{ (partial "icons/orcid.svg" .) | safeHTML }}</a>{{ end }}
+              {{ with $pi.Params.linkedin }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="LinkedIn">{{ partial "icons/linkedin.svg" . }}</a>{{ end }}
               {{ with $pi.Params.email   }}<a href="mailto:{{ . }}" aria-label="Email">{{ partial "icons/email.svg" . }}</a>{{ end }}
             </div>
 
@@ -83,7 +87,7 @@
       {{ if gt (len $group) 0 }}
         <h2 class="people-heading" style="text-align:center;">{{ index $headings $role }}</h2>
         <div class="people-grid">
-          {{ range $page := ( ($group.ByWeight).ByTitle ) }}
+          {{ range $page := (($group.ByWeight).ByTitle) }}
             <article class="person-card">
               <a class="image avatar" href="{{ $page.RelPermalink }}">
                 {{ with $page.Params.image }}
@@ -95,29 +99,34 @@
 
               <h3><a href="{{ $page.RelPermalink }}">{{ $page.Title }}</a></h3>
 
-              <div class="person-subtitle">{{ index $labels $page.Params.position_detail | default $page.Params.position_detail }}</div>
-
-
+              <div class="person-subtitle">
+                {{ with $page.Params.position_detail }}
+                  {{ . }}
+                {{ else }}
+                  {{ index $labels $page.Params.role | default $page.Params.role }}
+                {{ end }}
+              </div>
 
               {{ with $page.Params.co_supervised_by }}
                 <div class="co-supervised">(Co-supervised by {{ . }})</div>
               {{ end }}
 
               <div class="person-links">
-                {{ with $page.Params.website }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="Website">{{ partial "icons/link.svg" . }}</a>{{ end }}
-                {{ with $page.Params.scholar }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="Google Scholar">{{ partial "icons/scholar.svg" . }}</a>{{ end }}
-                {{ with $page.Params.github  }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="GitHub">{{ partial "icons/github.svg" . }}</a>{{ end }}
-                {{ with .Params.orcid }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="ORCID">{{ partial "icons/orcid.svg" . }}</a>{{ end }}
+                {{ with $page.Params.website  }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="Website">{{ partial "icons/link.svg" . }}</a>{{ end }}
+                {{ with $page.Params.scholar  }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="Google Scholar">{{ partial "icons/scholar.svg" . }}</a>{{ end }}
+                {{ with $page.Params.github   }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="GitHub">{{ partial "icons/github.svg" . }}</a>{{ end }}
+                {{ with $page.Params.orcid    }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="ORCID">{{ partial "icons/orcid.svg" . }}</a>{{ end }}
                 {{ with $page.Params.linkedin }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="LinkedIn">{{ partial "icons/linkedin.svg" . }}</a>{{ end }}
-                {{ with $page.Params.email   }}<a href="mailto:{{ . }}" aria-label="Email">{{ partial "icons/email.svg" . }}</a>{{ end }}
+                {{ with $page.Params.email    }}<a href="mailto:{{ . }}" aria-label="Email">{{ partial "icons/email.svg" . }}</a>{{ end }}
               </div>
             </article>
           {{ end }}
         </div>
       {{ end }}
     {{ end }}
-<div class="people-alumni-cta">
-  <a class="alumni-btn" href="{{ "alumni/" | relURL }}">Alumni</a>
-</div>
+
+    <div class="people-alumni-cta">
+      <a class="alumni-btn" href="{{ "alumni/" | relURL }}">Alumni</a>
+    </div>
   </div>
 </section>

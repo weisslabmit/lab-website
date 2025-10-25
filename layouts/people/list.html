@@ -21,7 +21,15 @@
           </div>
           <div class="info">
             <h3 class="name">{{ .Title }}</h3>
-            <div class="roleline">PI</div>
+
+            <div class="person-subtitle">
+              {{ with .Params.position_detail }}
+                {{ . }}
+              {{ else }}
+                PI
+              {{ end }}
+            </div>
+
             {{ with .Params.short_bio }}<p class="bio">{{ . }}</p>{{ end }}
 
             <div class="links">
@@ -40,16 +48,14 @@
                   <span class="icon brands fa-github"></span> GitHub
                 </a>
               {{ end }}
-              <div class="links">
               {{ with .Params.orcid }}
                 <a class="btn tiny" href="{{ . }}" target="_blank" rel="noopener">
-                  <span class="icon fa-globe"></span> ORCID
+                  <span class="icon fa-id-badge"></span> ORCID
                 </a>
               {{ end }}
-            <div class="links">
-              {{ with .Params.Linkedin }}
+              {{ with .Params.linkedin }}
                 <a class="btn tiny" href="{{ . }}" target="_blank" rel="noopener">
-                  <span class="icon fa-globe"></span> Linkedin
+                  <span class="icon brands fa-linkedin"></span> LinkedIn
                 </a>
               {{ end }}
             </div>

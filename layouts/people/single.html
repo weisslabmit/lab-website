@@ -10,22 +10,26 @@
     </a>
     <div class="content">
       <h1>{{ .Title }}</h1>
-        {{ with .Params.position_detail }}<div class="person-subtitle">{{ . }}</div>{{ end }}
 
-
-
-        {{ with .Params.co_supervised_by }}
-          <div class="co-supervised">(Co-supervised by {{ . }})</div>
+      <div class="person-subtitle">
+        {{ with .Params.position_detail }}
+          {{ . }}
+        {{ else if .Params.role }}
+          {{ .Params.role }}
         {{ end }}
+      </div>
 
+      {{ with .Params.co_supervised_by }}
+        <div class="co-supervised">(Co-supervised by {{ . }})</div>
+      {{ end }}
 
       <div class="person-links">
-        {{ with .Params.website }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="Website">{{ partial "icons/link.svg" . }}</a>{{ end }}
-        {{ with .Params.scholar }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="Google Scholar">{{ partial "icons/scholar.svg" . }}</a>{{ end }}
-        {{ with .Params.github  }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="GitHub">{{ partial "icons/github.svg" . }}</a>{{ end }}
-        {{ with .Params.orcid }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="ORCID">{{ partial "icons/orcid.svg" . }}</a>{{ end }}
-        {{ with .Params.linkedin }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="Linkedin">{{ partial "icons/linkedin.svg" . }}</a>{{ end }}
-        {{ with .Params.email   }}<a href="mailto:{{ . }}" aria-label="Email">{{ partial "icons/email.svg" . }}</a>{{ end }}
+        {{ with .Params.website  }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="Website">{{ partial "icons/link.svg" . }}</a>{{ end }}
+        {{ with .Params.scholar  }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="Google Scholar">{{ partial "icons/scholar.svg" . }}</a>{{ end }}
+        {{ with .Params.github   }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="GitHub">{{ partial "icons/github.svg" . }}</a>{{ end }}
+        {{ with .Params.orcid    }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="ORCID">{{ partial "icons/orcid.svg" . }}</a>{{ end }}
+        {{ with .Params.linkedin }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="LinkedIn">{{ partial "icons/linkedin.svg" . }}</a>{{ end }}
+        {{ with .Params.email    }}<a href="mailto:{{ . }}" aria-label="Email">{{ partial "icons/email.svg" . }}</a>{{ end }}
       </div>
 
       {{ if or .Params.phd_university .Params.phd_date }}
