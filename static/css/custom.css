@@ -881,33 +881,41 @@ section.wrapper {
   color: #2a2a2a;
 }
 
-/* =======================
-   Alumni layout polish (v2)
-======================= */
+/* ===========================
+   Alumni tweaks (still Roboto Mono)
+=========================== */
 
-/* === Alumni typography fixes === */
-
-/* Make the big "Alumni" title larger (keep MIT heading font) */
+/* Big main title */
 .alumni-section header.major h2 {
-  font-size: clamp(2rem, 1.6vw + 1rem, 3rem) !important;
-  margin-bottom: 1.75rem !important;
+  font-family: "Roboto Mono", monospace !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.015em;
+  font-size: clamp(2.4rem, 2vw + 1rem, 3.6rem);
+  color: #111;
+  text-align: center;
+  margin-bottom: 2rem;
 }
 
-/* Category titles under the main title (keep MIT heading font) */
+/* Category headings */
 .alumni-section h3.alumni-heading {
-  font-size: clamp(1.3rem, 0.7vw + 1rem, 1.8rem) !important;
-  margin: 2.2rem 0 1.1rem !important;
+  font-family: "Roboto Mono", monospace !important;
+  font-weight: 700 !important;
+  font-size: clamp(1.3rem, 0.9vw + 1rem, 2rem);
+  color: #222;
+  text-align: center;
+  margin: 2.5rem 0 1.25rem;
 }
 
-/* Force alumni names to Roboto (beats the global h1–h6 rule) */
+/* Alumni names (keep mono, just tighten spacing + size) */
 .alumni-section h4.alumni-name {
-  font-family: "Roboto", mono !important;
-  font-weight: 500 !important;
-  font-size: 1rem !important;
-  line-height: 1.2 !important;
-  color: #2a2a2a !important;
-  margin: 0 !important;
+  font-family: "Roboto Mono", monospace !important;
+  font-weight: 400 !important;
+  font-size: 0.95rem;
+  letter-spacing: -0.01em;
+  color: #2a2a2a;
+  margin: 0;
 }
+
 
 /* Add a bit more breathing room between title and grids */
 .alumni-section .content > header.major {
@@ -949,7 +957,7 @@ section.wrapper {
   background: #2a2a2a;
   color: #fff !important;
   text-decoration: none;
-  font-family: "Roboto", mono;
+  font-family: "Roboto Mono", monospace
   font-weight: 600;
   letter-spacing: .02em;
   box-shadow: 0 6px 16px rgba(0, 0, 0, .12);
