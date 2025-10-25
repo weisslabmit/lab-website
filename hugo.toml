@@ -22,7 +22,8 @@ publishDir = "public"
 #publishDir = "//centos/sites/hugodev/hugostory/"
 
 
-
+[outputs]
+section = ["HTML"]
 ## -----------------------------------------------
 ## Site Parameters
 ## -----------------------------------------------
