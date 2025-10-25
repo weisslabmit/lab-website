@@ -22,15 +22,9 @@
           <div class="info">
             <h3 class="name">{{ .Title }}</h3>
 
-            <div class="person-subtitle">
-              {{ with .Params.position_detail }}
-                {{ . }}
-              {{ else }}
-                PI
-              {{ end }}
-            </div>
-
+         <div class="roleline">PI</div>
             {{ with .Params.short_bio }}<p class="bio">{{ . }}</p>{{ end }}
+
 
             <div class="links">
               {{ with .Params.website }}

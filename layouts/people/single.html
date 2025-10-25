@@ -11,17 +11,18 @@
     <div class="content">
       <h1>{{ .Title }}</h1>
 
-      <div class="person-subtitle">
-        {{ with .Params.position_detail }}
-          {{ . }}
-        {{ else if .Params.role }}
-          {{ .Params.role }}
+      {{ if .Params.position_detail }}
+        <div class="person-subtitle">{{ .Params.position_detail }}</div>
+      {{ else }}
+        {{ if .Params.role }}
+          <div class="person-subtitle">{{ .Params.role }}</div>
         {{ end }}
-      </div>
+      {{ end }}
 
       {{ with .Params.co_supervised_by }}
         <div class="co-supervised">(Co-supervised by {{ . }})</div>
       {{ end }}
+
 
       <div class="person-links">
         {{ with .Params.website  }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="Website">{{ partial "icons/link.svg" . }}</a>{{ end }}
