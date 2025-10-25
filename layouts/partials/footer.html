@@ -147,83 +147,142 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  // Configure which sections are allowed to scroll internally
-  const SCROLL_SECTIONS_SELECTOR = '#research, #people';
+  // Sections we lock between; include every top-level section that matters.
+  // (Add or remove ids as needed)
+  const sections = Array.from(document.querySelectorAll('section[id]'));
 
-  function findScrollableSection(startEl) {
-    let el = startEl;
-    while (el && el !== document.documentElement) {
-      if (el.matches && el.matches(SCROLL_SECTIONS_SELECTOR)) return el;
-      el = el.parentElement;
-    }
-    // If event didn't originate inside one, pick the section centered in viewport
-    const sections = Array.from(document.querySelectorAll(SCROLL_SECTIONS_SELECTOR));
-    const mid = window.innerHeight / 2;
-    for (const s of sections) {
+  if (!sections.length) return;
+
+  // Measure section positions; refresh on resize/content shifts
+  let metrics = [];
+  function measure() {
+    metrics = sections.map(s => {
       const r = s.getBoundingClientRect();
-      if (r.top <= mid && r.bottom >= mid) return s;
+      const top = window.scrollY + r.top;
+      const bottom = top + r.height;
+      return { el: s, top, bottom };
+    });
+  }
+  measure();
+  window.addEventListener('resize', () => { requestAnimationFrame(measure); });
+  // In case images/iframes shift layout after load:
+  setTimeout(measure, 200);
+  window.addEventListener('load', measure);
+
+  // Find the section that presently "owns" the viewport (by center line)
+  function currentSectionIndex() {
+    const mid = window.scrollY + window.innerHeight / 2;
+    let best = 0, bestDist = Infinity;
+    for (let i = 0; i < metrics.length; i++) {
+      const m = metrics[i];
+      if (mid >= m.top && mid <= m.bottom) return i;
+      const dist = Math.min(Math.abs(mid - m.top), Math.abs(mid - m.bottom));
+      if (dist < bestDist) { bestDist = dist; best = i; }
     }
-    return null;
+    return best;
   }
 
-  // WHEEL / TRACKPAD
+  // Clamp desired scrollTop to remain within current section bounds
+  function clampToSection(desiredDelta) {
+    const i = currentSectionIndex();
+    const m = metrics[i];
+    if (!m) return;
+
+    const y = window.scrollY;
+    const vh = window.innerHeight;
+
+    // Desired absolute target position:
+    let target = y + (desiredDelta || 0);
+
+    // If section is taller than viewport, allow movement inside its bounds.
+    // If shorter, lock the viewport to the section's top (no crossing).
+    const minY = m.top;
+    const maxY = Math.max(m.top, m.bottom - vh);
+
+    if (target < minY) target = minY;
+    if (target > maxY) target = maxY;
+
+    // Only scroll if there's a change
+    if (Math.abs(target - y) > 0.5) {
+      window.scrollTo({ top: target, behavior: 'auto' });
+    }
+  }
+
+  // ---- Intercept user scrolling ----
   function onWheel(e) {
-    const sec = findScrollableSection(e.target);
-    e.preventDefault(); // never let the page scroll
-    if (!sec) return;
-    sec.scrollTop += e.deltaY;
+    e.preventDefault();                // block natural page scroll
+    clampToSection(e.deltaY || 0);     // apply clamped movement
   }
   window.addEventListener('wheel', onWheel, { passive: false });
 
-  // TOUCH (basic vertical routing)
-  let touchSec = null, startY = 0;
+  // Touch handling
+  let touchY = null;
   window.addEventListener('touchstart', (e) => {
     const t = e.changedTouches && e.changedTouches[0];
-    touchSec = t ? findScrollableSection(e.target) : null;
-    startY = t ? t.clientY : 0;
+    touchY = t ? t.clientY : null;
   }, { passive: true });
 
   window.addEventListener('touchmove', (e) => {
     const t = e.changedTouches && e.changedTouches[0];
-    if (!t) return;
-    const dy = startY - t.clientY; // positive = scroll down
-    e.preventDefault(); // block page scroll always
-    if (touchSec) touchSec.scrollTop += dy;
-    startY = t.clientY;
+    if (!t || touchY == null) return;
+    const dy = touchY - t.clientY;     // positive when swiping up (scroll down)
+    e.preventDefault();                // block natural page scroll
+    clampToSection(dy);
+    touchY = t.clientY;
   }, { passive: false });
 
-  // KEYBOARD (arrows/PageUp/PageDown/Space/Home/End)
+  // Keyboard scroll keys
   window.addEventListener('keydown', (e) => {
-    const key = e.key;
-    if (!['ArrowDown','ArrowUp','PageDown','PageUp',' ','Home','End'].includes(key)) return;
+    const k = e.key;
+    const keys = ['ArrowDown','ArrowUp','PageDown','PageUp','Home','End',' '];
+    if (!keys.includes(k)) return;
+    e.preventDefault();  // block default
+    const i = currentSectionIndex();
+    const m = metrics[i];
+    if (!m) return;
 
-    const sec = findScrollableSection(document.activeElement || document.body);
-    e.preventDefault(); // block page scroll
+    const line = 60;
+    const page = window.innerHeight * 0.9;
 
-    if (!sec) return;
-    const line = 60;                              // approx line jump
-    const page = sec.clientHeight * 0.9;          // page jump
-    switch (key) {
-      case 'ArrowDown': sec.scrollTop += line; break;
-      case 'ArrowUp':   sec.scrollTop -= line; break;
-      case 'PageDown':  sec.scrollTop += page; break;
-      case 'PageUp':    sec.scrollTop -= page; break;
-      case ' ':         sec.scrollTop += page; break; // space = page down
-      case 'Home':      sec.scrollTop = 0; break;
-      case 'End':       sec.scrollTop = sec.scrollHeight; break;
-    }
+    if (k === 'Home') return window.scrollTo({ top: m.top, behavior: 'auto' });
+    if (k === 'End')  return window.scrollTo({ top: Math.max(m.top, m.bottom - window.innerHeight), behavior: 'auto' });
+
+    const delta =
+      (k === 'ArrowDown' || k === 'PageDown' || k === ' ') ?  page :
+      (k === 'ArrowUp'   || k === 'PageUp')                 ? -page : 0;
+
+    clampToSection(delta);
   });
 
-  // Optional: smooth-scroll when clicking floating nav to jump between sections
+  // ---- Floating-nav clicks still jump across sections smoothly ----
+  function getHashFromHref(href) {
+    if (!href) return '';
+    if (href.startsWith('#')) return href;
+    try {
+      const u = new URL(href, location.origin);
+      if (u.origin === location.origin) return u.hash || '';
+    } catch {}
+    return '';
+  }
+  function scrollToHash(hash) {
+    if (!hash || hash.length < 2) return;
+    const el = document.getElementById(hash.slice(1));
+    if (!el) return;
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // Re-measure after the smooth jump finishes
+    setTimeout(measure, 400);
+  }
   document.querySelectorAll('#floating-nav a[data-scroll]').forEach(a => {
     a.addEventListener('click', (e) => {
-      const href = a.getAttribute('href') || '';
-      if (!href.startsWith('#')) return;
+      const hash = getHashFromHref(a.getAttribute('href'));
+      if (!hash) return; // external link
       e.preventDefault();
-      const target = document.getElementById(href.slice(1));
-      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      history.replaceState(null, '', href);
+      scrollToHash(hash);
+      history.replaceState(null, '', hash);
     });
   });
+
+  // If the page loaded with a hash, respect it
+  if (location.hash) setTimeout(() => scrollToHash(location.hash), 60);
 });
 </script>
