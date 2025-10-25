@@ -898,7 +898,6 @@ section.wrapper {
 
 /* Category headings */
 .alumni-section h3.alumni-heading {
-  font-family: "Roboto Mono", monospace !important;
   font-weight: 700 !important;
   font-size: clamp(1.3rem, 0.9vw + 1rem, 2rem);
   color: #222;
@@ -910,7 +909,7 @@ section.wrapper {
 .alumni-section h4.alumni-name {
   font-family: "Roboto Mono", monospace !important;
   font-weight: 400 !important;
-  font-size: 0.95rem;
+  font-size: 0.75rem;
   letter-spacing: -0.01em;
   color: #2a2a2a;
   margin: 0;
