@@ -728,7 +728,7 @@ section.wrapper {
 .pi-card h3 { margin: 0 0 .25rem 0; line-height: 1.2; }
 .pi-card .role { font-weight: 600; opacity: .85; margin-bottom: .5rem; }
 .pi-card .bio { margin-top: .75rem; line-height: 1.5; opacity: .9; }
-.pi-card .person-links { display: flex; flex-wrap: wrap; gap: .5rem .75rem; margin-top: .6rem; }
+.pi-card .person-links { display: flex; flex-wrap: wrap; gap: .5rem .75rem; ; justify-content: flex-start; margin-top: .6rem; }
 
 /* Responsive stack for PI card */
 @media (max-width: 700px) {
