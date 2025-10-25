@@ -8,12 +8,14 @@
   "Other Alumni"
 -}}
 
-
-
 <section id="alumni" class="alumni-section">
-  <div class="content">
+  <!-- Floating button (upper-right) -->
+  <a class="back-to-people-btn" href="{{ "/" | relURL }}#people" aria-label="Back to People">Back to People</a>
 
-   
+  <div class="content">
+    <header class="major align-center">
+      <h2>Alumni</h2>
+    </header>
 
     {{ range $cats }}
       {{ $cat := . }}
@@ -27,7 +29,7 @@
                 {{ with $p.Params.image }}
                   <img src="{{ . | absURL }}" alt="{{ $p.Title }}" loading="lazy">
                 {{ else }}
-                  <img src="{{ "uploads/alumni/placeholder.png" | relURL }}" alt="{{ $p.Title }}" loading="lazy">
+                  <img src="{{ "/uploads/alumni/placeholder.png" | absURL }}" alt="{{ $p.Title }}" loading="lazy">
                 {{ end }}
               </div>
               <h4 class="alumni-name">{{ $p.Title }}</h4>
@@ -36,6 +38,5 @@
         </div>
       {{ end }}
     {{ end }}
-
   </div>
 </section>

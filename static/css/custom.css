@@ -880,3 +880,85 @@ section.wrapper {
   margin: 0;
   color: #2a2a2a;
 }
+
+/* =======================
+   Alumni layout polish
+======================= */
+
+/* (Optional) Load Roboto for alumni names */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+/* More space between the "Alumni" section title and the content */
+.alumni-section header.major { 
+  margin-bottom: 1.75rem; 
+}
+
+/* Category headings spacing (title above each grid) */
+.alumni-heading {
+  text-align: center;
+  font-family: var(--mit-font-family);
+  font-weight: var(--mit-font-weight);
+  font-size: clamp(1.1rem, 0.6vw + 0.9rem, 1.5rem);
+  color: #2a2a2a;
+  margin: 2.25rem 0 1rem;  /* top space from content above */
+}
+
+/* Alumni names in Roboto (not mono) */
+.alumni-name {
+  font-family: "Roboto", system-ui, -apple-system, Segoe UI, Arial, sans-serif;
+  font-weight: 500;
+  font-size: .95rem;
+  line-height: 1.2;
+  margin: 0;
+  color: #2a2a2a;
+}
+
+/* Grid spacing stays as you had it; include if missing for context */
+.alumni-grid {
+  --card-min: 110px;
+  --gap: 14px;
+  display: grid;
+  gap: var(--gap);
+  grid-template-columns: repeat(auto-fit, minmax(var(--card-min), 1fr)));
+  max-width: calc(7 * (var(--card-min) + var(--gap)));
+  margin: 0 auto 2.5rem;
+}
+.alumni-card { text-align: center; }
+.alumni-card .image.avatar {
+  width: 96px; height: 96px; border-radius: 9999px; overflow: hidden;
+  margin: 0 auto .45rem;
+}
+@media (min-width: 900px) {
+  .alumni-card .image.avatar { width: 110px; height: 110px; }
+}
+.alumni-card .image.avatar img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+
+/* Floating "Back to People" button (top-right) */
+.back-to-people-btn {
+  position: fixed;
+  top: 14px;
+  right: 14px;
+  z-index: 1200;
+  display: inline-block;
+  padding: .5rem .9rem;
+  border-radius: 9999px;
+  background: #2a2a2a;
+  color: #fff !important;
+  text-decoration: none;
+  font-family: "Roboto", system-ui, -apple-system, Segoe UI, Arial, sans-serif;
+  font-weight: 600;
+  letter-spacing: .02em;
+  box-shadow: 0 6px 16px rgba(0,0,0,.12);
+  transition: transform .15s ease, opacity .15s ease, background .2s ease;
+}
+.back-to-people-btn:hover { background: #111; transform: translateY(-1px); }
+.back-to-people-btn:active { transform: translateY(0); }
+
+/* Optional: hide on very small screens if it overlaps */
+@media (max-width: 420px) {
+  .back-to-people-btn { 
+    top: 10px; right: 10px; padding: .45rem .75rem; font-size: .9rem;
+  }
+}
