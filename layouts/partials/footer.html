@@ -126,96 +126,74 @@
 
 
 <script>
-(function () {
-  function smoothScrollTo(selector) {
-    const el = document.querySelector(selector);
-    if (!el) return;
-    // Your CSS anchor-offset trick handles the fixed nav, so a simple scroll is fine:
-    el.scrollIntoView({ behavior: "smooth", block: "start" });
-  }
-
-  window.addEventListener("message", (e) => {
-    // only accept messages from our own origin (same-origin iframe)
-    if (e.origin !== window.location.origin) return;
-    const data = e.data || {};
-    if (data.type === "lab-nav" && typeof data.target === "string") {
-      smoothScrollTo(data.target);
-    }
-  });
-})();
-</script>
-
-<script>
 document.addEventListener('DOMContentLoaded', () => {
-  // Sections we lock between; include every top-level section that matters.
-  // (Add or remove ids as needed)
-  const sections = Array.from(document.querySelectorAll('section[id]'));
+  /* EDIT THIS LIST to include only the top-level sections you want to lock between */
+  const SECTION_IDS = ['research','people']; // add more ids if needed, in page order
+
+  const sections = SECTION_IDS
+    .map(id => document.getElementById(id))
+    .filter(Boolean);
 
   if (!sections.length) return;
 
-  // Measure section positions; refresh on resize/content shifts
-  let metrics = [];
-  function measure() {
-    metrics = sections.map(s => {
-      const r = s.getBoundingClientRect();
-      const top = window.scrollY + r.top;
+  const root = document.scrollingElement || document.documentElement;
+
+  function measureBounds() {
+    // fresh bounds on every call; robust to dynamic content
+    return sections.map(el => {
+      const r = el.getBoundingClientRect();
+      const top = root.scrollTop + r.top;
       const bottom = top + r.height;
-      return { el: s, top, bottom };
+      return { el, top, bottom };
     });
   }
-  measure();
-  window.addEventListener('resize', () => { requestAnimationFrame(measure); });
-  // In case images/iframes shift layout after load:
-  setTimeout(measure, 200);
-  window.addEventListener('load', measure);
 
-  // Find the section that presently "owns" the viewport (by center line)
-  function currentSectionIndex() {
-    const mid = window.scrollY + window.innerHeight / 2;
+  function currentIndex(bounds) {
+    const mid = root.scrollTop + window.innerHeight / 2;
+    let idx = bounds.findIndex(b => mid >= b.top && mid <= b.bottom);
+    if (idx !== -1) return idx;
+    // fallback: nearest
     let best = 0, bestDist = Infinity;
-    for (let i = 0; i < metrics.length; i++) {
-      const m = metrics[i];
-      if (mid >= m.top && mid <= m.bottom) return i;
-      const dist = Math.min(Math.abs(mid - m.top), Math.abs(mid - m.bottom));
-      if (dist < bestDist) { bestDist = dist; best = i; }
-    }
+    bounds.forEach((b, i) => {
+      const d = Math.min(Math.abs(mid - b.top), Math.abs(mid - b.bottom));
+      if (d < bestDist) { best = i; bestDist = d; }
+    });
     return best;
   }
 
-  // Clamp desired scrollTop to remain within current section bounds
-  function clampToSection(desiredDelta) {
-    const i = currentSectionIndex();
-    const m = metrics[i];
-    if (!m) return;
-
-    const y = window.scrollY;
+  function clampToSection(desiredY, bounds) {
+    const i = currentIndex(bounds);
+    const b = bounds[i];
     const vh = window.innerHeight;
 
-    // Desired absolute target position:
-    let target = y + (desiredDelta || 0);
+    // If the section is taller than the viewport, allow scrolling inside it.
+    // If it is shorter or equal, lock the viewport at the section's top.
+    const minY = b.top;
+    const maxY = Math.max(b.top, b.bottom - vh);
 
-    // If section is taller than viewport, allow movement inside its bounds.
-    // If shorter, lock the viewport to the section's top (no crossing).
-    const minY = m.top;
-    const maxY = Math.max(m.top, m.bottom - vh);
+    // clamp
+    if (desiredY < minY) desiredY = minY;
+    if (desiredY > maxY) desiredY = maxY;
+    return desiredY;
+  }
 
-    if (target < minY) target = minY;
-    if (target > maxY) target = maxY;
-
-    // Only scroll if there's a change
-    if (Math.abs(target - y) > 0.5) {
-      window.scrollTo({ top: target, behavior: 'auto' });
+  function scrollDelta(delta) {
+    const bounds = measureBounds();
+    const target = clampToSection(root.scrollTop + delta, bounds);
+    if (Math.abs(target - root.scrollTop) > 0.1) {
+      root.scrollTo({ top: target, left: 0, behavior: 'auto' });
     }
   }
 
-  // ---- Intercept user scrolling ----
-  function onWheel(e) {
-    e.preventDefault();                // block natural page scroll
-    clampToSection(e.deltaY || 0);     // apply clamped movement
-  }
-  window.addEventListener('wheel', onWheel, { passive: false });
+  /* -------- Block crossing between sections -------- */
 
-  // Touch handling
+  // Wheel / trackpad
+  window.addEventListener('wheel', (e) => {
+    e.preventDefault();                     // block natural page scroll
+    scrollDelta(e.deltaY || 0);
+  }, { passive: false });
+
+  // Touch
   let touchY = null;
   window.addEventListener('touchstart', (e) => {
     const t = e.changedTouches && e.changedTouches[0];
@@ -225,36 +203,41 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('touchmove', (e) => {
     const t = e.changedTouches && e.changedTouches[0];
     if (!t || touchY == null) return;
-    const dy = touchY - t.clientY;     // positive when swiping up (scroll down)
-    e.preventDefault();                // block natural page scroll
-    clampToSection(dy);
+    const dy = touchY - t.clientY;          // positive means scroll down
+    e.preventDefault();                     // block natural page scroll
+    scrollDelta(dy);
     touchY = t.clientY;
   }, { passive: false });
 
-  // Keyboard scroll keys
+  // Keyboard
   window.addEventListener('keydown', (e) => {
     const k = e.key;
-    const keys = ['ArrowDown','ArrowUp','PageDown','PageUp','Home','End',' '];
-    if (!keys.includes(k)) return;
-    e.preventDefault();  // block default
-    const i = currentSectionIndex();
-    const m = metrics[i];
-    if (!m) return;
-
-    const line = 60;
+    if (!['ArrowDown','ArrowUp','PageDown','PageUp','Home','End',' '].includes(k)) return;
+    e.preventDefault();
     const page = window.innerHeight * 0.9;
+    const line = 60;
+    let delta = 0;
 
-    if (k === 'Home') return window.scrollTo({ top: m.top, behavior: 'auto' });
-    if (k === 'End')  return window.scrollTo({ top: Math.max(m.top, m.bottom - window.innerHeight), behavior: 'auto' });
+    if (k === 'ArrowDown') delta =  line;
+    if (k === 'ArrowUp')   delta = -line;
+    if (k === 'PageDown' || k === ' ') delta =  page;
+    if (k === 'PageUp')    delta = -page;
 
-    const delta =
-      (k === 'ArrowDown' || k === 'PageDown' || k === ' ') ?  page :
-      (k === 'ArrowUp'   || k === 'PageUp')                 ? -page : 0;
+    if (k === 'Home' || k === 'End') {
+      const bounds = measureBounds();
+      const i = currentIndex(bounds);
+      const b = bounds[i];
+      const vh = window.innerHeight;
+      const topPos = b.top;
+      const endPos = Math.max(b.top, b.bottom - vh);
+      root.scrollTo({ top: (k === 'Home' ? topPos : endPos), left: 0, behavior: 'auto' });
+      return;
+    }
 
-    clampToSection(delta);
+    scrollDelta(delta);
   });
 
-  // ---- Floating-nav clicks still jump across sections smoothly ----
+  /* -------- Floating-nav: still allowed to jump between sections -------- */
   function getHashFromHref(href) {
     if (!href) return '';
     if (href.startsWith('#')) return href;
@@ -264,25 +247,23 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch {}
     return '';
   }
-  function scrollToHash(hash) {
-    if (!hash || hash.length < 2) return;
+  function smoothJump(hash) {
     const el = document.getElementById(hash.slice(1));
     if (!el) return;
     el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    // Re-measure after the smooth jump finishes
-    setTimeout(measure, 400);
   }
+
   document.querySelectorAll('#floating-nav a[data-scroll]').forEach(a => {
     a.addEventListener('click', (e) => {
       const hash = getHashFromHref(a.getAttribute('href'));
-      if (!hash) return; // external link
+      if (!hash) return;  // external link → default
       e.preventDefault();
-      scrollToHash(hash);
+      smoothJump(hash);
       history.replaceState(null, '', hash);
     });
   });
 
-  // If the page loaded with a hash, respect it
-  if (location.hash) setTimeout(() => scrollToHash(location.hash), 60);
+  // Respect hash on load
+  if (location.hash) setTimeout(() => smoothJump(location.hash), 60);
 });
 </script>
