@@ -656,21 +656,19 @@ section.wrapper {
   }
 }
 
-/* Desktop only: prevent page scroll; allow scrolling inside chosen sections */
-@media (min-width: 980px) {
-  html, body, #page-wrapper, #wrapper, main {
-    height: 100%;
-    overflow: hidden;                 /* hard-stop page/wrapper scrolling */
-  }
+/* ======================================
+   People group spacing and heading style
+====================================== */
+.people-heading {
+  text-align: center;
+  font-family: var(--mit-font-family);
+  font-weight: var(--mit-font-weight);
+  font-size: clamp(1.4rem, 0.8vw + 1rem, 2rem);
+  color: #2a2a2a;
+  margin-top: 4rem;    /* space before each heading */
+  margin-bottom: 2rem; /* space below heading */
+}
 
-  /* List the sections that should be scrollable INSIDE */
-  #research,
-  #people {
-    height: 100vh;                    /* each fills the viewport */
-    overflow: auto;                   /* they can scroll internally */
-    -webkit-overflow-scrolling: touch;
-  }
-
-  /* Let the banner size naturally (not 100vh) */
-  #banner { height: auto !important; overflow: visible !important; }
+.people-grid {
+  margin-bottom: 3rem; /* space after each role group */
 }

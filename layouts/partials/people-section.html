@@ -6,7 +6,7 @@
 
 {{ $allPeople := where site.RegularPages "Section" "people" }}
 
-/* Role order + readable labels */
+
 {{ $roles := slice "PI" "Staff" "PhD" "Postdoc" "Other" "Undergrad" }}
 {{ $labels := dict
   "PI" "Principal Investigator"
@@ -17,7 +17,7 @@
   "Undergrad" "Undergrad"
 }}
 
-/* NEW: headings per role (exact keys from $roles) */
+
 {{ $headings := dict
   "PI" "Ron"
   "Staff" "Staff"
