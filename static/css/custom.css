@@ -901,7 +901,7 @@ section.wrapper {
 
 /* Force alumni names to Roboto (beats the global h1–h6 rule) */
 .alumni-section h4.alumni-name {
-  font-family: "Roboto", sans-serif !important;
+  font-family: "Roboto", mono !important;
   font-weight: 500 !important;
   font-size: 1rem !important;
   line-height: 1.2 !important;
@@ -949,7 +949,7 @@ section.wrapper {
   background: #2a2a2a;
   color: #fff !important;
   text-decoration: none;
-  font-family: "Roboto", sans-serif;
+  font-family: "Roboto", mono;
   font-weight: 600;
   letter-spacing: .02em;
   box-shadow: 0 6px 16px rgba(0, 0, 0, .12);
