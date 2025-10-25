@@ -171,7 +171,7 @@ p, li, blockquote, .content {
 
 /* People fine-tune */
 .people-section h3 { font-size: clamp(1rem, 0.45vw + 0.65rem, 1.4rem); }
-.people-section .position_detail,
+.people-section .role,
 .people-section .bio { font-size: clamp(0.85rem, 0.35vw + 0.45rem, 1rem); }
 
 
@@ -440,7 +440,7 @@ section[id]:not(#banner) {
   word-break: break-word;
 }
 
-.person-card ..position_detail {
+.person-card .role {
   font-weight: 600;
   opacity: 0.85;
   margin-top: -0.15rem;
@@ -975,4 +975,41 @@ section.wrapper {
     padding: .45rem .75rem;
     font-size: .9rem;
   }
+}
+
+
+/* === Make person-subtitle visually identical to the old "role" === */
+
+/* The clamp size you used for role/bio in People lists */
+.people-section .role,
+.people-section .person-subtitle {
+  font-size: clamp(0.85rem, 0.35vw + 0.45rem, 1rem);
+}
+
+/* Card subtitle = old .role on cards */
+.person-card .role,
+.person-card .person-subtitle {
+  font-weight: 600;
+  opacity: 0.85;
+  margin-top: -0.15rem;
+  line-height: 1.25;
+}
+
+/* PI layout subtitle = old .role on PI card */
+.pi-card .role,
+.pi-card .person-subtitle {
+  font-weight: 600;
+  opacity: 0.9;
+  margin-bottom: .75rem;
+  font-size: 0.85rem;
+}
+
+/* Single person page subtitle = match old role styling there too */
+.person-profile .role,
+.person-profile .person-subtitle {
+  font-weight: 600;
+  opacity: 0.85;
+  line-height: 1.25;
+  /* keep size consistent with your page scale; tweak only if needed */
+  font-size: 1rem;
 }
