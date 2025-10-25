@@ -665,10 +665,15 @@ section.wrapper {
   font-weight: var(--mit-font-weight);
   font-size: clamp(1.4rem, 0.8vw + 1rem, 2rem);
   color: #2a2a2a;
-  margin-top: 4rem;    /* space before each heading */
-  margin-bottom: 2rem; /* space below heading */
+  margin-top: 4rem;    /* default top spacing for later groups */
+  margin-bottom: 2rem; /* spacing below heading */
+}
+
+/* Remove top space before the first heading (Ron) */
+.people-heading:first-of-type {
+  margin-top: 0;
 }
 
 .people-grid {
-  margin-bottom: 3rem; /* space after each role group */
+  margin-bottom: 3rem; /* space after each group */
 }
