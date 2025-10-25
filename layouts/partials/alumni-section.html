@@ -8,11 +8,7 @@
   "Other Alumni"
 -}}
 
-{{ with .Params.image }}
-  <img src="{{ . | absURL }}" alt="{{ .Title }}" loading="lazy">
-{{ else }}
-  <img src="{{ "/uploads/alumni/placeholder.png" | absURL }}" alt="{{ .Title }}" loading="lazy">
-{{ end }}
+
 
 <section id="alumni" class="alumni-section">
   <div class="content">
@@ -31,7 +27,7 @@
             <article class="alumni-card">
               <div class="image avatar">
                 {{ with $p.Params.image }}
-                  <img src="{{ . | relURL }}" alt="{{ $p.Title }}" loading="lazy">
+                  <img src="{{ . | absURL }}" alt="{{ $p.Title }}" loading="lazy">
                 {{ else }}
                   <img src="{{ "uploads/alumni/placeholder.png" | relURL }}" alt="{{ $p.Title }}" loading="lazy">
                 {{ end }}
