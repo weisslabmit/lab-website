@@ -50,7 +50,8 @@ collections:
       - { label: "Other experience (Markdown)", name: "experience", widget: "markdown", required: false }
       - { label: "Bio (Markdown)", name: "bio", widget: "markdown", required: false }
       - { label: "Weight (order within role)", name: "weight", widget: "number", required: false, default: 10 }
-      - { label: "Draft", name: "draft", widget: "boolean", default: false }
+      - { label: "Short Bio", name: "short_bio", widget: "text", required: false, hint: "Appears next to photo in the People page" }
+
 
 
 
