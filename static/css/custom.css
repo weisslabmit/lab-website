@@ -1013,3 +1013,155 @@ section.wrapper {
   /* keep size consistent with your page scale; tweak only if needed */
   font-size: 1rem;
 }
+
+
+/* ========= Person profile (single) ========= */
+
+.profile-wrap {
+  --card-w: 320px;
+  --gap: clamp(1.25rem, 2.4vw, 2rem);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--gap);
+  align-items: start;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-inline: clamp(1rem, 4vw, 3rem);
+}
+
+/* Two columns on desktop */
+@media (min-width: 980px) {
+  .profile-wrap {
+    grid-template-columns: var(--card-w) minmax(0, 1fr);
+  }
+}
+
+/* Left card */
+.profile-card {
+  position: relative;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.06);
+  padding: 1.25rem 1.25rem 1rem;
+  text-align: center;
+  border: 1px solid rgba(0,0,0,.06);
+}
+
+@media (min-width: 980px) {
+  .profile-card { position: sticky; top: 1.25rem; }
+}
+
+.profile-photo {
+  display: grid;
+  place-items: center;
+  margin-bottom: 0.9rem;
+}
+.profile-photo img {
+  width: 180px;
+  height: 180px;
+  border-radius: 9999px;
+  object-fit: cover;
+  display: block;
+}
+@media (min-width: 1200px) {
+  .profile-photo img { width: 200px; height: 200px; }
+}
+
+.profile-name {
+  margin: 0.25rem 0 0.2rem;
+  line-height: 1.15;
+  word-break: break-word;
+  font-size: clamp(1.2rem, 0.8vw + 1rem, 2rem);
+}
+
+/* Make subtitle match the list cards look */
+.profile-card .person-subtitle {
+  font-weight: 600;
+  opacity: 0.9;
+  line-height: 1.25;
+  font-size: 1rem;
+  margin: 0.15rem 0 0.35rem;
+}
+
+/* Co-supervision line under subtitle */
+.profile-card .co-supervised {
+  margin-top: .1rem;
+  font-size: .8rem;
+  opacity: .8;
+  font-style: italic;
+}
+
+/* Icon row */
+.profile-card .person-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .55rem .75rem;
+  margin-top: .55rem;
+}
+.profile-card .person-links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  opacity: .95;
+  transition: transform .15s ease, opacity .15s ease;
+}
+.profile-card .person-links a:hover { opacity: 1; transform: translateY(-1px); }
+.profile-card .person-links svg { width: 20px; height: 20px; display: block; }
+
+/* Meta list (degrees etc.) */
+.profile-meta {
+  list-style: none;
+  margin: .9rem 0 0;
+  padding: 0;
+  text-align: left;
+  border-top: 1px solid rgba(0,0,0,.08);
+  padding-top: .85rem;
+}
+.profile-meta li {
+  display: grid;
+  grid-template-columns: 70px 1fr;
+  gap: .5rem;
+  align-items: baseline;
+  margin: .35rem 0;
+  font-size: .95rem;
+}
+.profile-meta .k { font-weight: 600; opacity: .9; }
+.profile-meta .v { opacity: .9; }
+
+/* Right content column */
+.profile-content {
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid rgba(0,0,0,.06);
+  box-shadow: 0 10px 30px rgba(0,0,0,.04);
+  padding: clamp(1rem, 2.5vw, 2rem);
+}
+.profile-content h2 {
+  margin: 0 0 .6rem 0;
+  font-size: clamp(1.1rem, 0.8vw + 0.7rem, 1.6rem);
+}
+.profile-content .pp-intro p { font-size: 1.05rem; line-height: 1.6; }
+.profile-content .pp-experience,
+.profile-content .pp-bio,
+.profile-content .pp-content {
+  margin-top: 1.25rem;
+}
+.profile-content p, 
+.profile-content li { line-height: 1.6; }
+
+/* Mobile spacing */
+@media (max-width: 979px) {
+  .profile-card { margin-top: .5rem; }
+  .profile-content { margin-bottom: .5rem; }
+}
+
+/* Optional: print-friendly */
+@media print {
+  .profile-wrap { display: block; }
+  .profile-card, .profile-content { box-shadow: none; border: 0; padding: 0; }
+  .profile-photo img { width: 120px; height: 120px; }
+}
