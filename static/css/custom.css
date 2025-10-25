@@ -656,45 +656,21 @@ section.wrapper {
   }
 }
 
-/* ===========================================
-   Desktop: lock page scroll; scroll INSIDE sections
-   (Targets your real IDs/classes; Story-safe)
-=========================================== */
+/* Desktop only: prevent page scroll; allow scrolling inside chosen sections */
 @media (min-width: 980px) {
-  /* 1) Stop document/wrappers from scrolling between sections */
-  html, body {
+  html, body, #page-wrapper, #wrapper, main {
     height: 100%;
-    overflow: hidden;                 /* no page-level scroll */
-    overscroll-behavior: contain;
+    overflow: hidden;                 /* hard-stop page/wrapper scrolling */
   }
 
-  /* Story often uses #page-wrapper or #wrapper as the scroller; disable both */
-  #page-wrapper,
-  #wrapper,
-  main {
-    height: 100%;
-    overflow: hidden;                 /* no wrapper scroll either */
-  }
-
-  /* 2) Make ONLY the sections you want their own scroll containers */
-  /*    (Use your actual IDs) */
+  /* List the sections that should be scrollable INSIDE */
   #research,
   #people {
-    height: 100vh;                    /* each section fills the viewport */
-    overflow-y: auto;                 /* scroll happens inside the section */
-    overscroll-behavior: contain;     /* wheel doesn't "fall through" */
+    height: 100vh;                    /* each fills the viewport */
+    overflow: auto;                   /* they can scroll internally */
     -webkit-overflow-scrolling: touch;
-    scroll-behavior: smooth;          /* nice feel when jumping */
-    margin: 0 !important;             /* avoid accidental extra height */
   }
 
-  /* 3) Do NOT lock the banner; let it size naturally */
-  #banner {
-    height: auto !important;
-    overflow: visible !important;
-    margin: 0;                        /* keep edges clean */
-  }
-
-  /* 4) Keep anchor jumps clear of the floating nav (tweak 72px as needed) */
-  section[id] { scroll-margin-top: 72px; }
+  /* Let the banner size naturally (not 100vh) */
+  #banner { height: auto !important; overflow: visible !important; }
 }

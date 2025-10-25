@@ -147,30 +147,83 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  function getHashFromHref(href) {
-    if (!href) return '';
-    if (href.startsWith('#')) return href;
-    try {
-      const u = new URL(href, location.origin);
-      if (u.origin === location.origin) return u.hash || '';
-    } catch {}
-    return '';
+  // Configure which sections are allowed to scroll internally
+  const SCROLL_SECTIONS_SELECTOR = '#research, #people';
+
+  function findScrollableSection(startEl) {
+    let el = startEl;
+    while (el && el !== document.documentElement) {
+      if (el.matches && el.matches(SCROLL_SECTIONS_SELECTOR)) return el;
+      el = el.parentElement;
+    }
+    // If event didn't originate inside one, pick the section centered in viewport
+    const sections = Array.from(document.querySelectorAll(SCROLL_SECTIONS_SELECTOR));
+    const mid = window.innerHeight / 2;
+    for (const s of sections) {
+      const r = s.getBoundingClientRect();
+      if (r.top <= mid && r.bottom >= mid) return s;
+    }
+    return null;
   }
-  function go(hash) {
-    if (!hash || hash.length < 2) return;
-    const el = document.getElementById(hash.slice(1));
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  // WHEEL / TRACKPAD
+  function onWheel(e) {
+    const sec = findScrollableSection(e.target);
+    e.preventDefault(); // never let the page scroll
+    if (!sec) return;
+    sec.scrollTop += e.deltaY;
   }
+  window.addEventListener('wheel', onWheel, { passive: false });
+
+  // TOUCH (basic vertical routing)
+  let touchSec = null, startY = 0;
+  window.addEventListener('touchstart', (e) => {
+    const t = e.changedTouches && e.changedTouches[0];
+    touchSec = t ? findScrollableSection(e.target) : null;
+    startY = t ? t.clientY : 0;
+  }, { passive: true });
+
+  window.addEventListener('touchmove', (e) => {
+    const t = e.changedTouches && e.changedTouches[0];
+    if (!t) return;
+    const dy = startY - t.clientY; // positive = scroll down
+    e.preventDefault(); // block page scroll always
+    if (touchSec) touchSec.scrollTop += dy;
+    startY = t.clientY;
+  }, { passive: false });
+
+  // KEYBOARD (arrows/PageUp/PageDown/Space/Home/End)
+  window.addEventListener('keydown', (e) => {
+    const key = e.key;
+    if (!['ArrowDown','ArrowUp','PageDown','PageUp',' ','Home','End'].includes(key)) return;
+
+    const sec = findScrollableSection(document.activeElement || document.body);
+    e.preventDefault(); // block page scroll
+
+    if (!sec) return;
+    const line = 60;                              // approx line jump
+    const page = sec.clientHeight * 0.9;          // page jump
+    switch (key) {
+      case 'ArrowDown': sec.scrollTop += line; break;
+      case 'ArrowUp':   sec.scrollTop -= line; break;
+      case 'PageDown':  sec.scrollTop += page; break;
+      case 'PageUp':    sec.scrollTop -= page; break;
+      case ' ':         sec.scrollTop += page; break; // space = page down
+      case 'Home':      sec.scrollTop = 0; break;
+      case 'End':       sec.scrollTop = sec.scrollHeight; break;
+    }
+  });
+
+  // Optional: smooth-scroll when clicking floating nav to jump between sections
   document.querySelectorAll('#floating-nav a[data-scroll]').forEach(a => {
-    a.addEventListener('click', e => {
-      const hash = getHashFromHref(a.getAttribute('href'));
-      if (!hash) return;   // external link
+    a.addEventListener('click', (e) => {
+      const href = a.getAttribute('href') || '';
+      if (!href.startsWith('#')) return;
       e.preventDefault();
-      go(hash);
-      history.replaceState(null, '', hash);
+      const target = document.getElementById(href.slice(1));
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      history.replaceState(null, '', href);
     });
   });
-  if (location.hash) setTimeout(() => go(location.hash), 50);
 });
 </script>
-
