@@ -46,17 +46,11 @@
 
           <div class="person-info">
             <h3><a href="{{ $pi.RelPermalink }}">{{ $pi.Title }}</a></h3>
-            <div class="person-subtitle">
-  {{ with $pi.Params.position_detail }}
-    {{ . }}
-  {{ else }}
-    {{ index $labels $pi.Params.role | default $pi.Params.role }}
-  {{ end }}
-</div>
-
- 
+            <div class="role">{{ index $labels $pi.Params.role | default $pi.Params.role }}</div>
 
 
+
+            
             {{ with $pi.Params.co_supervised_by }}
               <div class="co-supervised">(Co-supervised by {{ . }})</div>
             {{ end }}
@@ -101,7 +95,9 @@
 
               <h3><a href="{{ $page.RelPermalink }}">{{ $page.Title }}</a></h3>
 
-              <div class="role">{{ index $labels $page.Params.role | default $page.Params.role }}</div>
+              <div class="person-subtitle">{{ index $labels $page.Params.position_detail | default $page.Params.position_detail }}</div>
+
+
 
               {{ with $page.Params.co_supervised_by }}
                 <div class="co-supervised">(Co-supervised by {{ . }})</div>
