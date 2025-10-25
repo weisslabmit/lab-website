@@ -838,7 +838,7 @@ section.wrapper {
   font-weight: var(--mit-font-weight);
   font-size: clamp(1.1rem, 0.6vw + 0.9rem, 1.5rem);
   color: #2a2a2a;
-  margin: 2rem 0 1rem;
+  margin: 1rem 0 1rem;
 }
 
 /* Grid: auto-fit with min 2 cols, up to ~7 cols depending on width */
