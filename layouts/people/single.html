@@ -22,7 +22,7 @@
         {{ with .Params.scholar }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="Google Scholar">{{ partial "icons/scholar.svg" . }}</a>{{ end }}
         {{ with .Params.github  }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="GitHub">{{ partial "icons/github.svg" . }}</a>{{ end }}
         {{ with .Params.orcid   }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="ORCID">{{ partial "icons/orcid.svg" . }}</a>{{ end }}
-        {{ with .Params.linkedin   }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="Linkedin">{{ partial "icons/linkedin.svg" . }}</a>{{ end }}
+        {{ with .Params.linkedin }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="Linkedin">{{ partial "icons/linkedin.svg" . }}</a>{{ end }}
         {{ with .Params.email   }}<a href="mailto:{{ . }}" aria-label="Email">{{ partial "icons/email.svg" . }}</a>{{ end }}
       </div>
 

@@ -40,6 +40,18 @@
                   <span class="icon brands fa-github"></span> GitHub
                 </a>
               {{ end }}
+              <div class="links">
+              {{ with .Params.orcid }}
+                <a class="btn tiny" href="{{ . }}" target="_blank" rel="noopener">
+                  <span class="icon fa-globe"></span> OCID
+                </a>
+              {{ end }}
+            <div class="links">
+              {{ with .Params.Linkedin }}
+                <a class="btn tiny" href="{{ . }}" target="_blank" rel="noopener">
+                  <span class="icon fa-globe"></span> Linkedin
+                </a>
+              {{ end }}
             </div>
           </div>
         </section>
