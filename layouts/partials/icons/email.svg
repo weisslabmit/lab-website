@@ -1,10 +1,23 @@
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg fill="#000000" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
-	 width="800px" height="800px" viewBox="0 0 388.424 388.424"
-	 xml:space="preserve">
-<g>
-	<path d="M384.202,59.111H4.209C1.888,59.111,0,61,0,63.33v261.766c0,2.33,1.888,4.217,4.209,4.217h379.993
-		c2.317,0,4.222-1.887,4.222-4.217V63.33C388.424,61,386.52,59.111,384.202,59.111z M319.937,92.888L194.212,185.09L68.485,92.888
-		H319.937z M354.647,295.535H33.779V109.328l157.935,115.82c1.494,1.089,3.508,1.089,5.004,0l157.934-115.82v186.207H354.647z"/>
-</g>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Capa_1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 800 800">
+  <!-- Generator: Adobe Illustrator 29.8.2, SVG Export Plug-In . SVG Version: 2.1.1 Build 3)  -->
+  <defs>
+    <style>
+      .st0 {
+        stroke-width: 71px;
+      }
+
+      .st0, .st1 {
+        fill: none;
+        stroke: #515151;
+        stroke-miterlimit: 10;
+      }
+
+      .st1 {
+        stroke-width: 63px;
+      }
+    </style>
+  </defs>
+  <rect class="st1" x="29.36" y="171" width="741.28" height="515.66" rx="91.61" ry="91.61"/>
+  <path class="st0" d="M65.85,202.43l300.64,215.38c20.16,14.44,47.16,14.85,67.74,1.02l309.58-208"/>
 </svg>
