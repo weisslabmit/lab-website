@@ -6,7 +6,6 @@
 
 {{ $allPeople := where site.RegularPages "Section" "people" }}
 
-
 {{ $roles := slice "PI" "Staff" "PhD" "Postdoc" "Other" "Undergrad" }}
 {{ $labels := dict
   "PI" "Principal Investigator"
@@ -17,9 +16,8 @@
   "Undergrad" "Undergrad"
 }}
 
-
 {{ $headings := dict
-  "PI" "Ron"
+  "PI" "The Boss"
   "Staff" "Staff"
   "PhD" "PhD Students"
   "Postdoc" "Postdocs"
@@ -31,18 +29,20 @@
   <div class="content">
 
     {{ range $roles }}
-      {{ $group := where $allPeople ".Params.role" . }}
+      {{ $role := . }}
+      {{ $group := where $allPeople ".Params.role" $role }}
       {{ if $group }}
         {{ $group = $group.ByWeight }}
         {{ $group = $group.ByTitle }}
 
-        <!-- NEW: centered H2 heading for this role -->
-        <h2 class="people-heading" style="text-align:center;">{{ index $headings . }}</h2>
+        <h2 class="people-heading" style="text-align:center;">{{ index $headings $role }}</h2>
 
-        <div class="people-grid">
+        <div class="people-grid {{ if eq $role "PI" }}pi-group{{ end }}">
           {{ range $group }}
             {{ $page := . }}
             <article class="person-card">
+
+              <!-- Avatar -->
               <a class="image avatar" href="{{ $page.RelPermalink }}">
                 {{ with $page.Params.image }}
                   <img src="{{ . | relURL }}" alt="{{ $page.Title }}" loading="lazy">
@@ -50,20 +50,46 @@
                   <img src="/uploads/placeholder.png" alt="{{ $page.Title }}" loading="lazy">
                 {{ end }}
               </a>
+
+              {{/* OPEN right-column wrapper ONLY for PI cards */}}
+              {{ if eq $page.Params.role "PI" }}
+                <div class="person-info">
+              {{ end }}
+
+              <!-- Name -->
               <h3><a href="{{ $page.RelPermalink }}">{{ $page.Title }}</a></h3>
 
+              <!-- Role (label mapping kept) -->
               <div class="role">{{ index $labels $page.Params.role | default $page.Params.role }}</div>
 
               {{ with $page.Params.co_supervised_by }}
                 <div class="co-supervised">(Co-supervised by {{ . }})</div>
               {{ end }}
 
+              <!-- Links -->
               <div class="person-links">
                 {{ with $page.Params.website }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="Website">{{ partial "icons/link.svg" . }}</a>{{ end }}
                 {{ with $page.Params.scholar }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="Google Scholar">{{ partial "icons/scholar.svg" . }}</a>{{ end }}
                 {{ with $page.Params.github  }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="GitHub">{{ partial "icons/github.svg" . }}</a>{{ end }}
                 {{ with $page.Params.orcid   }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="ORCID">{{ partial "icons/orcid.svg" . }}</a>{{ end }}
               </div>
+
+              {{/* Show a short bio on the right for PI (falls back to full bio) */}}
+              {{ if eq $page.Params.role "PI" }}
+                {{ with $page.Params.short_bio }}
+                  <p class="bio">{{ . }}</p>
+                {{ else }}
+                  {{ with $page.Params.bio }}
+                    <p class="bio">{{ . }}</p>
+                  {{ end }}
+                {{ end }}
+              {{ end }}
+
+              {{/* CLOSE the right-column wrapper ONLY for PI cards */}}
+              {{ if eq $page.Params.role "PI" }}
+                </div>
+              {{ end }}
+
             </article>
           {{ end }}
         </div>
