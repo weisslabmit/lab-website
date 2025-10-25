@@ -1,6 +1,7 @@
 ---
 title: "Alumni"
-_build:
+draft: false
+build:
   list: always
   render: always
 ---
