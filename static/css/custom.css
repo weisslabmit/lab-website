@@ -745,7 +745,7 @@ section.wrapper {
 }
 
 .pi-card h3 {
-  font-size: clamp(1.5rem, 0.8vw + 1rem, 2rem);
+  font-size: clamp(1.5rem, 0.4vw + 0.8rem, 2rem);
   margin: 0 0 .4rem 0;
   line-height: 1.15;
 }
@@ -783,7 +783,7 @@ section.wrapper {
 
   .pi-card .image.avatar {
     flex: none;
-    margin-bottom: 1.25rem;
+    margin-bottom: 0.5rem;
   }
 
   .pi-card .person-info {
