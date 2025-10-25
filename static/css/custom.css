@@ -1138,12 +1138,11 @@ section.wrapper {
   border-radius: 16px;
   border: 1px solid rgba(0,0,0,.06);
   box-shadow: 0 10px 30px rgba(0,0,0,.04);
-  font-size: clamp(0.9rem, 0.7vw + 0.4rem, 0.98rem);  /* smaller max */
   padding: clamp(1rem, 2.5vw, 2rem);
 }
 .profile-content h2 {
   margin: 0 0 .6rem 0;
- font-size: clamp(0.9rem, 0.7vw + 0.4rem, 0.98rem);  /* smaller max */
+ font-size: clamp(0.95rem, 0.7vw + 0.6rem, 1.25rem); /* was ~1.6rem max */
 }
 .profile-content .pp-intro p { font-size: 1.05rem; line-height: 1.6; }
 .profile-content .pp-experience,
