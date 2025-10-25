@@ -15,6 +15,16 @@
   {{ with $page.Params.role }}
     <div class="role">{{ . }}</div>
   {{ end }}
+  
+    <p class="person-subtitle">
+      {{ with .Params.position_detail }}
+        {{ . }}
+      {{ else if .Params.role }}
+        {{ .Params.role }}
+      {{ else }}
+        <!-- nothing -->
+      {{ end }}
+    </p>
 
   {{ with $page.Params.co_supervised_by }}
     <div class="co-supervised">(Co-supervised by {{ . }})</div>
