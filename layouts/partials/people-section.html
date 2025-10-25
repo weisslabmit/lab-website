@@ -44,13 +44,18 @@
             {{ end }}
           </div>
 
-          <div class="person-subtitle">
+          <div class="person-info">
+            <h3><a href="{{ $pi.RelPermalink }}">{{ $pi.Title }}</a></h3>
+            <div class="person-subtitle">
   {{ with $pi.Params.position_detail }}
     {{ . }}
   {{ else }}
     {{ index $labels $pi.Params.role | default $pi.Params.role }}
   {{ end }}
 </div>
+
+ 
+
 
             {{ with $pi.Params.co_supervised_by }}
               <div class="co-supervised">(Co-supervised by {{ . }})</div>
