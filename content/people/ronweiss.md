@@ -1,4 +1,5 @@
 ---
+draft: false
 title: Ron Weiss
 role: PI
 email: rweiss@mit.edu
@@ -11,19 +12,19 @@ phd_university: Massachusetts Institute of Technology
 phd_date: "2001"
 bs_university: Brandeis University
 bs_date: "1992"
-experience: S.M. EECS, Massachusetts Institute of Technology, 1994Prof. Ron
-  Weiss is a pioneer in synthetic biology whose career began at MIT in 1996,
-  when he helped establish a wet lab in the Electrical Engineering and Computer
-  Science Department as a graduate student. After earning his PhD, he joined the
-  faculty at Princeton University before returning to MIT in 2009, where he now
-  serves in both Biological Engineering and Electrical Engineering and Computer
-  Science and directs the MIT Synthetic Biology Center. His influential work on
-  engineering gene networks and programming cells to communicate has helped
-  shape the field, evolving from studies in bacteria to mammalian systems with
-  applications in cancer immunotherapy, vaccines, and programmable organoids.
+experience: S.M. EECS, Massachusetts Institute of Technology, 1994
 bio: ""
-weight: 1
-draft: false
+short_bio: Prof. Ron Weiss is a pioneer in synthetic biology whose career began
+  at MIT in 1996, when he helped establish a wet lab in the Electrical
+  Engineering and Computer Science Department as a graduate student. After
+  earning his PhD, he joined the faculty at Princeton University before
+  returning to MIT in 2009, where he now serves in both Biological Engineering
+  and Electrical Engineering and Computer Science and directs the MIT Synthetic
+  Biology Center. His influential work on engineering gene networks and
+  programming cells to communicate has helped shape the field, evolving from
+  studies in bacteria to mammalian systems with applications in cancer
+  immunotherapy, vaccines, and programmable organoids.
 cv: ""
+weight: 1
 short: ""
 ---
