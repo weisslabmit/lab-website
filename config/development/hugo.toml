@@ -24,6 +24,8 @@ publishDir = "public"
 ## -----------------------------------------------
 ## Hugo Built-in Features
 ## -----------------------------------------------
+[outputs]
+section = ["HTML"]
 
 # googleAnalytics = "G-XXXXXXXXXX"
 
