@@ -1,59 +1,150 @@
-{{/* ========= PEOPLE SECTION (flat files in content/people) ========= */}}
+{{/* ========= PEOPLE SECTION (robust grouping + H2 headings) ========= */}}
 
 {{- define "obf" -}}
   {{- replace (replace . "@" " (at) ") "." " (dot) " -}}
 {{- end -}}
 
-{{ $allPeople := where site.RegularPages "Section" "people" }}
-
-{{/* Role order + readable labels */}}
-{{ $roles := slice "PI" "Staff" "PhD" "Postdoc" "Other" "Undergrad" }}
-{{ $labels := dict
-  "PI" "Principal Investigator"
-  "Staff" "Staff"
-  "PhD" "PhD student"
-  "Postdoc" "Postdoc"
-  "Other" "Other"
-  "Undergrad" "Undergrad"
-}}
+{{/* Try common ways to collect people pages */}}
+{{ $people := where site.RegularPages "Section" "people" }}
+{{ if eq (len $people) 0 }}
+  {{ with site.GetPage "section" "people" }}
+    {{ $people = .Pages }}
+  {{ end }}
+{{ end }}
 
 <section id="people" class="people-section">
   <div class="content">
 
-    {{ range $roles }}
-      {{ $group := where $allPeople ".Params.role" . }}
-      {{ if $group }}
-        {{ $group = $group.ByWeight }}
-        {{ $group = $group.ByTitle }}
-        <div class="people-grid">
-          {{ range $group }}
-            {{ $page := . }}
-            <article class="person-card">
-              <a class="image avatar" href="{{ $page.RelPermalink }}">
-                {{ with $page.Params.image }}
-                  <img src="{{ . | relURL }}" alt="{{ $page.Title }}" loading="lazy">
-                {{ else }}
-                  <img src="/uploads/placeholder.png" alt="{{ $page.Title }}" loading="lazy">
+    {{/* --- Define buckets (case/variant tolerant) --- */}}
+    {{ $ron := where $people "Params.role" "in" (slice
+      "PI" "Principal Investigator" "Professor" "pi" "Pi"
+    ) }}
+
+    {{ $staff := where $people "Params.role" "in" (slice
+      "Lab manager" "Lab Manager" "Manager"
+      "Lab admin" "Lab Admin" "Administrator" "Admin"
+      "Research Associate" "research associate" "RA"
+      "Operations" "Operations Manager"
+      "Staff" "staff"
+    ) }}
+
+    {{ $phd := where $people "Params.role" "in" (slice
+      "PhD" "PhD Student" "Phd Student" "Ph.D. Student"
+      "Doctoral Student" "Doctorate" "PhD student"
+    ) }}
+
+    {{ $postdoc := where $people "Params.role" "in" (slice
+      "Postdoc" "Post-doctoral Fellow" "Postdoctoral Fellow"
+      "Postdoctoral Researcher" "Post-doc"
+    ) }}
+
+    {{ $undergrad := where $people "Params.role" "in" (slice
+      "Undergrad" "Undergraduate" "UG" "Student Assistant"
+    ) }}
+
+    {{ $other := where $people "Params.role" "in" (slice
+      "Other" "Visitor" "Affiliate" "Extended Family" "Collaborator"
+    ) }}
+
+    {{/* Ordered groups for rendering */}}
+    {{ $groups := slice
+      (dict "title" "Ron"                    "items" $ron)
+      (dict "title" "Staff"                  "items" $staff)
+      (dict "title" "PhD Students"           "items" $phd)
+      (dict "title" "Postdocs"               "items" $postdoc)
+      (dict "title" "Undergrads"             "items" $undergrad)
+      (dict "title" "Extended Family Members""items" $other)
+    }}
+
+    {{/* Optional: labels for the small role line under the name */}}
+    {{ $labels := dict
+      "PI" "Principal Investigator"
+      "Principal Investigator" "Principal Investigator"
+      "Professor" "Principal Investigator"
+      "Lab manager" "Staff"
+      "Lab Manager" "Staff"
+      "Lab admin" "Staff"
+      "Lab Admin" "Staff"
+      "Research Associate" "Staff"
+      "Administrator" "Staff"
+      "Admin" "Staff"
+      "Operations" "Staff"
+      "Staff" "Staff"
+      "PhD" "PhD student"
+      "PhD Student" "PhD student"
+      "Phd Student" "PhD student"
+      "Ph.D. Student" "PhD student"
+      "Doctoral Student" "PhD student"
+      "Postdoc" "Postdoc"
+      "Post-doctoral Fellow" "Postdoc"
+      "Postdoctoral Fellow" "Postdoc"
+      "Postdoctoral Researcher" "Postdoc"
+      "Undergrad" "Undergrad"
+      "Undergraduate" "Undergrad"
+      "UG" "Undergrad"
+      "Other" "Other"
+      "Visitor" "Other"
+      "Affiliate" "Other"
+      "Extended Family" "Other"
+      "Collaborator" "Other"
+    }}
+
+    {{/* Render groups with H2 heading + your existing person-card markup */}}
+    {{ range $groups }}
+      {{ $title := .title }}
+      {{ $items := .items }}
+
+      {{ if gt (len $items) 0 }}
+        <div class="people-group">
+          <h2 class="people-heading">{{ $title }}</h2>
+
+          <div class="people-grid">
+            {{/* Sort: by weight, then by title */}}
+            {{ $items = $items.ByWeight }}
+            {{ $items = $items.ByTitle }}
+
+            {{ range $items }}
+              {{ $page := . }}
+              <article class="person-card">
+                <a class="image avatar" href="{{ $page.RelPermalink }}">
+                  {{ with $page.Params.image }}
+                    <img src="{{ . | relURL }}" alt="{{ $page.Title }}" loading="lazy">
+                  {{ else }}
+                    <img src="/uploads/placeholder.png" alt="{{ $page.Title }}" loading="lazy">
+                  {{ end }}
+                </a>
+
+                <h3><a href="{{ $page.RelPermalink }}">{{ $page.Title }}</a></h3>
+
+                <div class="role">
+                  {{ with $page.Params.role }}
+                    {{ index $labels . | default . }}
+                  {{ end }}
+                </div>
+
+                {{ with $page.Params.co_supervised_by }}
+                  <div class="co-supervised">(Co-supervised by {{ . }})</div>
                 {{ end }}
-              </a>
-              <h3><a href="{{ $page.RelPermalink }}">{{ $page.Title }}</a></h3>
 
-              <div class="role">{{ index $labels $page.Params.role | default $page.Params.role }}</div>
-
-              {{ with $page.Params.co_supervised_by }}
-                <div class="co-supervised">(Co-supervised by {{ . }})</div>
-              {{ end }}
-
-              <div class="person-links">
-                {{ with $page.Params.website }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="Website">{{ partial "icons/link.svg" . }}</a>{{ end }}
-                {{ with $page.Params.scholar }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="Google Scholar">{{ partial "icons/scholar.svg" . }}</a>{{ end }}
-                {{ with $page.Params.github  }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="GitHub">{{ partial "icons/github.svg" . }}</a>{{ end }}
-                {{ with $page.Params.orcid   }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="ORCID">{{ partial "icons/orcid.svg" . }}</a>{{ end }}
-              </div>
-            </article>
-          {{ end }}
+                <div class="person-links">
+                  {{ with $page.Params.website }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="Website">{{ partial "icons/link.svg" . }}</a>{{ end }}
+                  {{ with $page.Params.scholar }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="Google Scholar">{{ partial "icons/scholar.svg" . }}</a>{{ end }}
+                  {{ with $page.Params.github  }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="GitHub">{{ partial "icons/github.svg" . }}</a>{{ end }}
+                  {{ with $page.Params.orcid   }}<a href="{{ . }}" target="_blank" rel="noopener" aria-label="ORCID">{{ partial "icons/orcid.svg" . }}</a>{{ end }}
+                </div>
+              </article>
+            {{ end }}
+          </div>
         </div>
       {{ end }}
+    {{ end }}
+
+    {{/* Safety net: if still nothing rendered, show a tiny debug of roles found */}}
+    {{ if eq (len (where .Site.RegularPages "Section" "people")) 0 }}
+      {{/* Try to help diagnose when collection is empty */}}
+      <p style="text-align:center; opacity:.7;">
+        No people pages found. Ensure your files are under <code>content/people/</code>.
+      </p>
     {{ end }}
 
   </div>

@@ -656,3 +656,12 @@ section.wrapper {
   }
 }
 
+
+.people-heading {
+  text-align: center;
+  font-family: var(--mit-font-family);
+  font-weight: var(--mit-font-weight);
+  font-size: clamp(1.4rem, 0.8vw + 1rem, 2rem);
+  color: #2a2a2a;
+  margin: 3rem 0 1.5rem;
+}
