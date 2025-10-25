@@ -171,7 +171,7 @@ p, li, blockquote, .content {
 
 /* People fine-tune */
 .people-section h3 { font-size: clamp(1rem, 0.45vw + 0.65rem, 1.4rem); }
-.people-section .role,
+.people-section .position_detail,
 .people-section .bio { font-size: clamp(0.85rem, 0.35vw + 0.45rem, 1rem); }
 
 
@@ -440,7 +440,7 @@ section[id]:not(#banner) {
   word-break: break-word;
 }
 
-.person-card .role {
+.person-card ..position_detail {
   font-weight: 600;
   opacity: 0.85;
   margin-top: -0.15rem;
