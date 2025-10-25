@@ -745,7 +745,7 @@ section.wrapper {
 }
 
 .pi-card h3 {
-  font-size: clamp(1.8rem, 1vw + 1.4rem, 2.6rem);  /* ✅ larger name */
+  font-size: clamp(1.rem, 1vw + 1.4rem, 2.6rem);  /* ✅ larger name */
   margin: 0 0 .4rem 0;
   line-height: 1.15;
 }
@@ -754,14 +754,14 @@ section.wrapper {
   font-weight: 600;
   opacity: .9;
   margin-bottom: .75rem;
-  font-size: 1.05rem;
+  font-size: 0.85rem;
 }
 
 .pi-card .bio {
   margin-top: 1rem;
   line-height: 1.55;
   opacity: .9;
-  font-size: 1.05rem;
+  font-size: 0.7rem;
   max-width: 640px;
 }
 
