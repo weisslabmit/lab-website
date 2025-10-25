@@ -15,8 +15,10 @@
   <div class="person-subtitle">
     {{ with $page.Params.position_detail }}
       {{ . }}
-    {{ else if $page.Params.role }}
-      {{ $page.Params.role }}
+    {{ else }}
+      {{ if $page.Params.role }}
+        {{ $page.Params.role }}
+      {{ end }}
     {{ end }}
   </div>
 
