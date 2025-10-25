@@ -1,7 +1,4 @@
-{{/* ========= ALUMNI SECTION PARTIAL =========
-     Displays alumni grouped by category in a small, dense grid.
-     Each entry: image + name only.
-============================================= */}}
+{{/* ========= ALUMNI SECTION PARTIAL ========= */}}
 
 {{- $pages := .Pages -}}
 {{- $cats := slice
@@ -30,7 +27,7 @@
                 {{ with .Params.image }}
                   <img src="{{ . | relURL }}" alt="{{ .Title }}" loading="lazy">
                 {{ else }}
-                  <img src="/uploads/alumni/placeholder.png" alt="{{ .Title }}" loading="lazy">
+                  <img src="{{ "uploads/alumni/placeholder.png" | relURL }}" alt="{{ .Title }}" loading="lazy">
                 {{ end }}
               </div>
               <h4 class="alumni-name">{{ .Title }}</h4>

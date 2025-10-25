@@ -68,13 +68,14 @@ collections:
       - { label: "Image", name: "image", widget: "image", required: false }
       - { label: "Body", name: "body", widget: "markdown", required: false }
 
+  collections:
   - name: "alumni"
     label: "Alumni"
     folder: "content/alumni"
     create: true
     slug: "{{slug}}"
-    media_folder: "static/uploads/alumni"   # store images here
-    public_folder: "/uploads/alumni"        # served from this path
+    media_folder: "static/uploads/alumni"
+    public_folder: "/uploads/alumni"
     fields:
       - { label: "Name", name: "title", widget: "string" }
       - { label: "Alumni Category", name: "alumni_category", widget: "select",
