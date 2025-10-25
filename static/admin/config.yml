@@ -40,6 +40,7 @@ collections:
       - { label: "Google Scholar URL", name: "scholar", widget: "string", required: false }
       - { label: "GitHub URL", name: "github", widget: "string", required: false }
       - { label: "ORCID URL", name: "orcid", widget: "string", required: false }
+      - { label: "LinkedIn", name: "linkedin", widget: "string", required: false }
       - { label: "Photo", name: "image", widget: "image", required: false }
       # Education
       - { label: "PhD University", name: "phd_university", widget: "string", required: false }
