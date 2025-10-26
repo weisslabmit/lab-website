@@ -214,7 +214,7 @@ p, li, blockquote, .content {
   color: #fff;
   transform: translateY(-100%); /* hidden by default */
   opacity: 0;
-  font-family: "Roboto Mono", monospace; 
+  font-family: "Roboto Mono", monospace  !important;
   pointer-events: none;
   transition: transform .25s ease, opacity .25s ease;
 }
@@ -230,7 +230,7 @@ p, li, blockquote, .content {
   padding: .6rem 1rem;
   display: flex;
   gap: 1.25rem;
-  font-family: "Roboto Mono", monospace; 
+  font-family: "Roboto Mono", monospace  !important;
   align-items: center;
   justify-content: center;
 }
@@ -240,7 +240,7 @@ p, li, blockquote, .content {
   color: #fff;
   text-decoration: none;
   letter-spacing: .02em;
-  font-family: "Roboto Mono", monospace; 
+  font-family: "Roboto Mono", monospace !important;
   opacity: .9;
   transition: opacity .2s ease, filter .2s ease;
 }
@@ -273,13 +273,13 @@ section[id]:not(#banner) {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    font-family: "Roboto Mono", monospace; 
+    font-family: "Roboto Mono", monospace !important;
     row-gap: .3rem;
   }
   #floating-nav a {
     flex: 0 1 auto;       /* don't force a width */
     white-space: nowrap;  /* keep words on one line */
-    font-family: "Roboto Mono", monospace; 
+    font-family: "Roboto Mono", monospace  !important;
     padding: 0 .5rem;
   }
 }
@@ -632,7 +632,7 @@ section.wrapper {
   z-index: 50;
   background: rgba(60, 60, 60, 0.85);   /* subtle grey background */
   color: #fff;
-  font-family: "Roboto", sans-serif;
+  font-family: "Roboto", sans-serif  !important;
   font-size: 0.9rem;
   font-weight: 500;
   text-decoration: none;
@@ -958,7 +958,7 @@ section.wrapper {
   background: #2a2a2a;
   color: #fff !important;
   text-decoration: none;
-  font-family: "Roboto Mono", monospace;
+  font-family: "Roboto Mono", monospace  !important;
   font-weight: 600;
   letter-spacing: .02em;
   box-shadow: 0 6px 16px rgba(0, 0, 0, .12);
@@ -1341,7 +1341,7 @@ section.wrapper {
   background: #2a2a2a;
   color: #fff !important;
   text-decoration: none;
-  font-family: "Roboto Mono", monospace;
+  font-family: "Roboto Mono", monospace  !important;
   font-weight: 600;
   letter-spacing: .02em;
   box-shadow: 0 6px 16px rgba(0, 0, 0, .12);
@@ -1524,6 +1524,7 @@ section.wrapper {
   border-radius: 9999px;
   background: #6b46c1;           /* purple */
   color: #fff !important;
+  font-family: "Roboto Mono", monospace  !important;
   font-weight: 700;
   text-decoration: none;
   letter-spacing: .02em;
