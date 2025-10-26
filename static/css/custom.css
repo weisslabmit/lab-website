@@ -1752,119 +1752,110 @@ strong, b { font-weight: 700 !important; }
   text-decoration: underline;
 }
 
-/* ======================================
-   Sleek Unified Publications Buttons (fixed)
-   - Tabs = switchable (light/dark)
-   - Footer buttons = always dark
-====================================== */
+/* =========================================
+   Publications UI — final, safe + specific
+   - ONLY affects Publications areas
+   - Tabs (top): inactive = white, active = dark
+   - Footer buttons (bottom): medium dark by default
+   - Uses Neue Haas only on these buttons
+========================================= */
 
 :root {
-  --btn-dark: #1a1a1a;     /* darkest tone (active) */
-  --btn-mid: #333333;      /* medium gray for footer buttons */
-  --btn-border: rgba(0,0,0,.2);
-  --btn-hover: #111;
+  --btn-dark: #1a1a1a;   /* active tab */
+  --btn-mid:  #4a4a4a;   /* footer buttons (lighter than active) */
+  --btn-brd:  rgba(0,0,0,.2);
+  --btn-hov:  #111;
 }
 
-/* Containers */
-.pubs-tabs,
-.pubs-footer,
+/* Ensure we only style Publications blocks (home + page) */
 .pubs-section .pubs-tabs,
 .pubs-section .actions,
-.pubs-page .pubs-tabs,
-.pubs-page .actions {
+.pubs-page   .pubs-tabs,
+.pubs-page   .actions {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
   justify-content: center;
 }
 
-/* === TAB BUTTONS (Publications / Patents / Other) === */
-.pubs-tabs .button,
+/* === TAB BUTTONS (top row) — inactive = WHITE === */
 .pubs-section .pubs-tabs .button,
-.pubs-page .pubs-tabs .button {
+.pubs-page   .pubs-tabs .button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.3rem;
+  gap: .3rem;
 
+  /* sleek sizing */
   min-height: 28px;
-  padding: 0.25rem 0.9rem;
-  font-size: 0.85rem;
+  padding: .25rem .85rem;
+  font-size: .85rem;
   line-height: 1.1;
   border-radius: 9999px;
 
-  font-family: "neue-haas-grotesk-display", sans-serif !important;
-  font-weight: 500 !important;
+  /* font ONLY on these buttons (won't touch site-wide fonts) */
+  font-family: var(--mit-font-family), sans-serif !important; /* = Neue Haas from your :root */
+  font-weight: 600 !important;
   text-transform: none !important;
-  letter-spacing: 0.01em;
+  letter-spacing: .01em;
 
+  /* INACTIVE look (white) */
   background: #fff;
   color: var(--btn-dark);
-  border: 1px solid var(--btn-border);
+  border: 1px solid var(--btn-brd);
   box-shadow: none;
   text-decoration: none;
-
   transition: background .18s ease, color .18s ease, border-color .18s ease, transform .12s ease;
 }
 
-/* Hover for inactive tabs */
-.pubs-tabs .button:hover,
 .pubs-section .pubs-tabs .button:hover,
-.pubs-page .pubs-tabs .button:hover {
+.pubs-page   .pubs-tabs .button:hover {
   background: rgba(0,0,0,.05);
 }
 
-/* Active tab */
-.pubs-tabs .button.active,
+/* Active tab = darkest pill */
 .pubs-section .pubs-tabs .button.active,
-.pubs-page .pubs-tabs .button.active {
+.pubs-page   .pubs-tabs .button.active {
   background: var(--btn-dark) !important;
   color: #fff !important;
   border-color: transparent !important;
 }
-
-.pubs-tabs .button.active:hover,
 .pubs-section .pubs-tabs .button.active:hover,
-.pubs-page .pubs-tabs .button.active:hover {
-  background: var(--btn-hover) !important;
+.pubs-page   .pubs-tabs .button.active:hover {
+  background: var(--btn-hov) !important;
 }
 
-/* === FOOTER BUTTONS (Show 10 more / All publications / Google Scholar) === */
-.pubs-footer .button,
+/* === FOOTER BUTTONS (bottom row) — medium dark by default === */
+/* Be SPECIFIC so we don't touch other .actions buttons sitewide */
 .pubs-section .actions .button,
-.pubs-page .actions .button {
+.pubs-page   .actions .button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.3rem;
+  gap: .3rem;
 
   min-height: 28px;
-  padding: 0.25rem 0.9rem;
-  font-size: 0.85rem;
+  padding: .25rem .9rem;
+  font-size: .85rem;
   line-height: 1.1;
   border-radius: 9999px;
 
-  font-family: "neue-haas-grotesk-display", sans-serif !important;
-  font-weight: 500 !important;
+  font-family: var(--mit-font-family), sans-serif !important; /* Neue Haas on these only */
+  font-weight: 600 !important;
   text-transform: none !important;
 
   background: var(--btn-mid);
   color: #fff !important;
   border: none;
   text-decoration: none;
-
   transition: background .18s ease, transform .12s ease;
 }
-
-.pubs-footer .button:hover,
 .pubs-section .actions .button:hover,
-.pubs-page .actions .button:hover {
+.pubs-page   .actions .button:hover {
   background: var(--btn-dark);
   transform: translateY(-1px);
 }
-
-.pubs-footer .button:active,
 .pubs-section .actions .button:active,
-.pubs-page .actions .button:active {
+.pubs-page   .actions .button:active {
   transform: translateY(0);
 }
