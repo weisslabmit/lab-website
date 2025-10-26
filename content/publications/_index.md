@@ -1,5 +1,5 @@
 ---
 title: Publications
+type: publications
+layout: list
 ---
-
-{{< pubs-zotero >}}
