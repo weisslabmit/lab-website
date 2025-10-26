@@ -110,3 +110,15 @@ collections:
           - "^(https?:)?//[\\w.-].+"
           - "Enter a valid URL starting with http(s)://"
       - { label: "Weight (order)", name: "weight", widget: "number", required: false, hint: "Lower = earlier" }
+
+  - name: "opportunities"
+    label: "Active Opportunities"
+    folder: "content/opportunities"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Description", name: "body", widget: "markdown" }
+      - { label: "Link URL (optional)", name: "link", widget: "string", required: false }
+      - { label: "Draft", name: "draft", widget: "boolean", default: false }
