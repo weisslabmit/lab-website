@@ -1879,34 +1879,41 @@ strong, b { font-weight: 700 !important; }
   background: #000 !important;
 }
 /* ============================================
-   RESEARCH — wider text column, tighter gutter
-   (paste at END of custom.css)
+   RESEARCH — balanced spacing: wider gap + more vertical rhythm
+   (final tuned layout)
 ============================================ */
 
 :root{
-  /* Image vs text share on desktop: smaller image, wider text */
-  --rs-split-img: clamp(28%, 34vw, 40%);       /* image column width */
-  --rs-gap:      clamp(1rem, 1.6vw, 2rem);     /* gutter between columns */
+  /* Column balance + spacing variables */
+  --rs-split-img: clamp(30%, 35vw, 42%);        /* image column width */
+  --rs-gap:       clamp(2rem, 3vw, 3.5rem);     /* horizontal gap between columns */
+  --rs-section-space: clamp(3.5rem, 6vw, 6rem); /* vertical space between sections */
 }
 
-/* Medium & large screens: shift boundary toward image */
+/* Apply clean margin rhythm between spotlight rows */
+#research .spotlights > section,
+#research .spotlight{
+  margin-bottom: var(--rs-section-space);
+  border: none !important;
+}
+
+/* Medium & large screens: two-column layout with wider gap */
 @media (min-width: 980px){
   #research .spotlights > section,
   #research .spotlight{
     display: flex !important;
     align-items: center !important;
-    gap: var(--rs-gap) !important; /* tighter gap */
+    justify-content: space-between;
+    gap: var(--rs-gap) !important;
   }
 
-  /* Image column gets smaller share */
   #research .spotlight .image.r-spotlight__media{
-    flex: 0 1 var(--rs-split-img) !important;   /* narrower image column */
-    height: var(--rs-desktop-h) !important;     /* from previous block */
+    flex: 0 1 var(--rs-split-img) !important;
+    height: var(--rs-desktop-h) !important;
     max-height: 70vh !important;
     margin: 0 !important;
   }
 
-  /* Text column gets the rest (wider), no internal padding/margins */
   #research .spotlight .content{
     flex: 1 1 calc(100% - var(--rs-split-img)) !important;
     max-width: none !important;
@@ -1915,11 +1922,33 @@ strong, b { font-weight: 700 !important; }
   }
 }
 
-/* Ensure the image itself fits its pane cleanly */
+/* Mobile / small screens: stacked layout, keep good breathing room */
+@media (max-width: 979px){
+  #research .spotlights > section,
+  #research .spotlight{
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1.75rem;
+    margin-bottom: var(--rs-section-space);
+  }
+
+  #research .spotlight .image.r-spotlight__media{
+    width: 100%;
+    height: var(--rs-mobile-h) !important;
+    margin-bottom: 1.5rem;
+  }
+}
+
+/* Image styling */
 #research .spotlight .image.r-spotlight__media img{
+  display: block !important;
   width: auto !important;
   height: 100% !important;
   max-height: 100% !important;
   max-width: 100% !important;
   object-fit: contain !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
