@@ -1879,54 +1879,75 @@ strong, b { font-weight: 700 !important; }
   background: #000 !important;
 }
 /* ======================================================
-   RESEARCH spotlights — remove extra margins & padding
-   (put this at the END of custom.css)
+   RESEARCH spotlights — responsive spacing that doesn't break
+   (paste at the END of custom.css; replaces earlier research spacing tweaks)
 ====================================================== */
 
-/* Kill outer spacing on the image column */
-#research .spotlights > section .image,
-#research .spotlight .image {
-  margin: 0 !important;
-  padding: 0 !important;
-  border: 0 !important;
+:root {
+  /* Tiny, responsive values so it breathes but never feels bulky */
+  --r-spotlight-gap: clamp(12px, 1.5vw, 24px);
+  --r-spotlight-pad: clamp(10px, 2.2vw, 18px); /* used only on small screens */
 }
 
-/* Our media wrapper already had margin/padding zero, keep it strict */
-#research .spotlight .image.r-spotlight__media {
-  margin: 0 !important;
-  padding: 0 !important;
-  border: 0 !important;
-  box-shadow: none !important;
-}
-
-/* Remove any default margins that themes put on imgs/figures */
-#research .spotlight .image img,
-#research .spotlights > section .image img,
-#research .spotlight figure,
-#research .spotlights > section figure {
-  display: block !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  border: 0 !important;
-}
-
-/* Tighten the gap between the two columns a bit (optional) */
+/* Desktop / tablet: strip theme padding entirely */
 @media (min-width: 980px) {
   #research .spotlights > section,
   #research .spotlight {
-    column-gap: 1.25rem !important;  /* reduce inter-column gap */
-    gap: 1.25rem !important;
+    gap: var(--r-spotlight-gap) !important;
+  }
+
+  #research .spotlights > section .image,
+  #research .spotlight .image,
+  #research .spotlights > section .content,
+  #research .spotlight .content {
+    margin: 0 !important;
+    padding: 0 !important;   /* kill leftover inner padding */
+    border: 0 !important;
+  }
+
+  /* Keep our clean media wrapper */
+  #research .spotlight .image.r-spotlight__media {
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
   }
 }
 
-/* On small screens, keep the stacked layout snug */
+/* Mobile: reintroduce a tiny horizontal gutter so content doesn't hit edges */
 @media (max-width: 979px) {
-  #research .spotlight .image.r-spotlight__media {
-    min-height: 0 !important;   /* remove enforced tall box if any */
+  #research .spotlights > section,
+  #research .spotlight {
+    gap: var(--r-spotlight-gap) !important;
   }
+
+  #research .spotlights > section .image,
   #research .spotlight .image,
+  #research .spotlights > section .content,
   #research .spotlight .content {
     margin: 0 !important;
-    padding: 0 !important;
+    padding-inline: var(--r-spotlight-pad) !important;  /* micro gutter */
+    padding-block: 0 !important;
+    border: 0 !important;
   }
+
+  /* Keep the media area comfortable so layouts don't collapse */
+  #research .spotlight .image.r-spotlight__media {
+    min-height: 200px !important;  /* safe floor */
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+}
+
+/* Normalize images/figures: no stray margins; scale nicely */
+#research .spotlight figure,
+#research .spotlights > section figure,
+#research .spotlight .image img,
+#research .spotlights > section .image img {
+  display: block !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: auto !important;
+  max-width: 100% !important;
+  height: auto !important;
+  border: 0 !important;
 }
