@@ -1753,67 +1753,62 @@ strong, b { font-weight: 700 !important; }
 }
 
 /* =========================================
-   Publications UI — final, safe + specific
-   - ONLY affects Publications areas
-   - Tabs (top): inactive = white, active = dark
-   - Footer buttons (bottom): medium dark by default
-   - Uses Neue Haas only on these buttons
+   Publications Buttons — polished unified look
+   - No font override
+   - Inactive top buttons fainter
+   - Active tabs dark
+   - Footer buttons medium dark
 ========================================= */
 
 :root {
-  --btn-dark: #1a1a1a;   /* active tab */
-  --btn-mid:  #4a4a4a;   /* footer buttons (lighter than active) */
-  --btn-brd:  rgba(0,0,0,.2);
-  --btn-hov:  #111;
+  --btn-dark: #1a1a1a;  /* active tab */
+  --btn-mid:  #3b3b3b;  /* footer buttons (medium dark) */
+  --btn-faint: #777;    /* fainter inactive tab text */
+  --btn-border: rgba(0,0,0,.15);
+  --btn-hover: #000;
 }
 
-/* Ensure we only style Publications blocks (home + page) */
+/* Containers */
 .pubs-section .pubs-tabs,
 .pubs-section .actions,
 .pubs-page   .pubs-tabs,
 .pubs-page   .actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 8px;
   justify-content: center;
 }
 
-/* === TAB BUTTONS (top row) — inactive = WHITE === */
+/* === TOP TAB BUTTONS === */
 .pubs-section .pubs-tabs .button,
 .pubs-page   .pubs-tabs .button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: .3rem;
+  gap: .35rem;
 
-  /* sleek sizing */
-  min-height: 28px;
-  padding: .25rem .85rem;
-  font-size: .85rem;
+  min-height: 32px;
+  padding: .4rem 1.1rem;
+  font-size: .9rem;
   line-height: 1.1;
   border-radius: 9999px;
 
-  /* font ONLY on these buttons (won't touch site-wide fonts) */
-  font-family: var(--mit-font-family), sans-serif !important; /* = Neue Haas from your :root */
-  font-weight: 600 !important;
-  text-transform: none !important;
-  letter-spacing: .01em;
-
-  /* INACTIVE look (white) */
   background: #fff;
-  color: var(--btn-dark);
-  border: 1px solid var(--btn-brd);
+  color: var(--btn-faint);
+  border: 1px solid var(--btn-border);
   box-shadow: none;
   text-decoration: none;
   transition: background .18s ease, color .18s ease, border-color .18s ease, transform .12s ease;
 }
 
+/* Hover = slightly darker text */
 .pubs-section .pubs-tabs .button:hover,
 .pubs-page   .pubs-tabs .button:hover {
-  background: rgba(0,0,0,.05);
+  color: var(--btn-dark);
+  background: rgba(0,0,0,.04);
 }
 
-/* Active tab = darkest pill */
+/* Active = dark background */
 .pubs-section .pubs-tabs .button.active,
 .pubs-page   .pubs-tabs .button.active {
   background: var(--btn-dark) !important;
@@ -1822,27 +1817,22 @@ strong, b { font-weight: 700 !important; }
 }
 .pubs-section .pubs-tabs .button.active:hover,
 .pubs-page   .pubs-tabs .button.active:hover {
-  background: var(--btn-hov) !important;
+  background: var(--btn-hover) !important;
 }
 
-/* === FOOTER BUTTONS (bottom row) — medium dark by default === */
-/* Be SPECIFIC so we don't touch other .actions buttons sitewide */
+/* === FOOTER BUTTONS (Show 10 more, etc.) === */
 .pubs-section .actions .button,
 .pubs-page   .actions .button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: .3rem;
+  gap: .35rem;
 
-  min-height: 28px;
-  padding: .25rem .9rem;
-  font-size: .85rem;
+  min-height: 32px;
+  padding: .4rem 1.1rem;
+  font-size: .9rem;
   line-height: 1.1;
   border-radius: 9999px;
-
-  font-family: var(--mit-font-family), sans-serif !important; /* Neue Haas on these only */
-  font-weight: 600 !important;
-  text-transform: none !important;
 
   background: var(--btn-mid);
   color: #fff !important;
