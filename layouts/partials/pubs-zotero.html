@@ -1,107 +1,35 @@
-{{/* Reads from data/publications.json (preferred) or data/publications.zotero.json (fallback).
-     Accepts either:
-       - raw array: [ {...}, {...} ]
-       - or map: { "items": [ {...}, ... ] }  (not expected here, but tolerated)
-*/}}
-
+{{ $raw := site.Data.publications_zotero }}
 {{ $items := slice }}
-
-{{ with site.Data.publications }}
-  {{ if (index . "items") }}
-    {{ $items = (index . "items") }}
-  {{ else }}
-    {{ $items = . }}
-  {{ end }}
-{{ else }}
-  {{ with site.Data.publications_zotero }}
-    {{ if (index . "items") }}
-      {{ $items = (index . "items") }}
-    {{ else }}
-      {{ $items = . }}
-    {{ end }}
-  {{ end }}
+{{ if $raw }}
+  {{ $maybe := index $raw "items" }}
+  {{ if $maybe }}{{ $items = $maybe }}{{ else }}{{ $items = $raw }}{{ end }}
 {{ end }}
 
 {{ if lt (len $items) 1 }}
   <p>No publications yet.</p>
 {{ else }}
-
-  {{/* Group items by year */}}
-  {{ $byYear := dict }}
-  {{ range $it := $items }}
-    {{ $year := "" }}
-    {{ $issued := index $it "issued" }}
-    {{ if $issued }}
-      {{ $dp := index $issued "date-parts" }}
-      {{ if and $dp (ge (len $dp) 1) (ge (len (index $dp 0)) 1) }}
-        {{ $year = printf "%v" (index (index $dp 0) 0) }}
-      {{ else }}
-        {{ $rawy := index $issued "raw" }}
-        {{ if $rawy }}{{ $year = printf "%v" $rawy }}{{ end }}
-      {{ end }}
-    {{ end }}
-    {{ if not $year }}{{ $year = "No year" }}{{ end }}
-
-    {{ $bucket := index $byYear $year }}
-    {{ if not $bucket }}
-      {{ $byYear = merge $byYear (dict $year (slice $it)) }}
-    {{ else }}
-      {{ $byYear = merge $byYear (dict $year (append $bucket $it)) }}
-    {{ end }}
-  {{ end }}
-
-  {{/* Sort years desc */}}
-  {{ $years := slice }}
-  {{ range $k, $_ := $byYear }}{{ $years = $years | append $k }}{{ end }}
-  {{ $years = sort $years "value" "desc" }}
-
-  {{ range $y := $years }}
-    <h2 class="pubs-year">{{ $y }}</h2>
-    <ol class="pubs-list">
-      {{ range $pub := (index $byYear $y) }}
-        <li class="pub">
-          <span class="pub-title">{{ $pub.title }}</span>
-
-          {{ with (index $pub "author") }}
-            <span class="pub-authors">
-              —
-              {{ range $i, $a := . }}
+  <section id="publications">
+    <h2>Publications</h2>
+    <ul>
+      {{ range first 20 $items }}  {{/* show first 20 items only */}}
+        <li>
+          {{ .title }}
+          {{ with (index . "author") }}
+            — {{ range $i, $a := . }}
                 {{ if gt $i 0 }}, {{ end }}
-                {{ $a.family }}{{ with $a.given }} {{ . }}{{ end }}
+                {{ $a.family }}
               {{ end }}
-            </span>
           {{ end }}
-
-          {{ with (index $pub "container-title") }}
-            <span class="pub-venue">, {{ . }}</span>
-          {{ end }}
-
-          {{ $yInline := "" }}
-          {{ with (index $pub "issued") }}
+          {{ with (index . "container-title") }}, <em>{{ . }}</em>{{ end }}
+          {{ with (index . "issued") }}
             {{ $dp := index . "date-parts" }}
             {{ if and $dp (ge (len $dp) 1) (ge (len (index $dp 0)) 1) }}
-              {{ $yInline = printf "%v" (index (index $dp 0) 0) }}
-            {{ else }}
-              {{ $rawy := index . "raw" }}
-              {{ if $rawy }}{{ $yInline = printf "%v" $rawy }}{{ end }}
+              ({{ index (index $dp 0) 0 }})
             {{ end }}
-          {{ end }}
-          {{ if $yInline }}<span class="pub-year"> ({{ $yInline }})</span>{{ end }}
-
-          {{ with (index $pub "DOI") }}
-            <a class="pub-link" href="https://doi.org/{{ . }}" target="_blank" rel="noopener">DOI</a>
-          {{ end }}
-
-          {{ with (index $pub "URL") }}
-            <a class="pub-link" href="{{ . }}" target="_blank" rel="noopener">Link</a>
-          {{ end }}
-
-          {{ with (index $pub "type") }}
-            <span class="pub-type"> · {{ . }}</span>
           {{ end }}
         </li>
       {{ end }}
-    </ol>
-  {{ end }}
-
+    </ul>
+    <p><a href="/publications/">See all publications →</a></p>
+  </section>
 {{ end }}

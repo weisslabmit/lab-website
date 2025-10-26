@@ -1,4 +1,5 @@
 ---
 title: Publications
-layout: pubs-zotero
+type: publications
+layout: list
 ---
