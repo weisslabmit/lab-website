@@ -1751,3 +1751,50 @@ strong, b { font-weight: 700 !important; }
 .opps-note a:hover {
   text-decoration: underline;
 }
+
+
+/* === Unified tab button styling (home + full page) === */
+
+/* Slightly larger text and pill shape */
+.pubs-tabs .button {
+  font-size: 1rem;                 /* larger text */
+  padding: 0.6rem 1.3rem;
+  border-radius: 9999px;
+  transition: background 0.2s ease, color 0.2s ease, border 0.2s ease;
+  font-weight: 600;
+}
+
+/* Active state — black pill with white text */
+.pubs-tabs .button.active {
+  background: #000 !important;
+  color: #fff !important;
+  border: none !important;
+}
+
+/* Inactive state — outlined neutral style */
+.pubs-tabs .button:not(.active) {
+  background: transparent;
+  color: #222;
+  border: 1px solid rgba(0,0,0,0.2);
+}
+
+/* Hover effect for inactive buttons */
+.pubs-tabs .button:not(.active):hover {
+  background: rgba(0,0,0,0.05);
+}
+
+/* Apply same behavior to homepage section as well */
+.pubs-section .pubs-tabs .button.active {
+  background: #000 !important;
+  color: #fff !important;
+  border: none !important;
+}
+
+.pubs-section .pubs-tabs .button:not(.active) {
+  background: transparent;
+  color: #222;
+  border: 1px solid rgba(0,0,0,0.2);
+}
+.pubs-section .pubs-tabs .button:not(.active):hover {
+  background: rgba(0,0,0,0.05);
+}
