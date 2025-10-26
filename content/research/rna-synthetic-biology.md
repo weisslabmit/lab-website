@@ -8,5 +8,5 @@ summary: We pioneered transcription-independent genetic control in mammalian
   and CRISPR- or small-molecule-regulated RNA circuits to clinically validated
   saRNA therapies—culminated in programmable RNA medicines such as STX-001,
   which has shown favorable safety and antitumor activity in Phase I trials.
-image: /uploads/43018_2020_95_fig3_html-copy.jpg
+image: /uploads/rna.png
 ---
