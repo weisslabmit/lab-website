@@ -1317,3 +1317,58 @@ section.wrapper {
   bottom: 1rem;
   z-index: 1000;
 }
+
+/* ==== Publications page layout spacing ==== */
+.pubs-page .inner {
+  max-width: 1100px;
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 4vw, 3rem);
+  padding-top: 2rem;
+  padding-bottom: 3rem;
+}
+
+/* ==== Floating "Back" buttons (People + Home share styling) ==== */
+/* Replace your existing ".back-to-people-btn { ... }" with this combined block */
+.back-to-people-btn,
+.back-to-home-btn {
+  position: fixed;                  /* specific positions set per-button below */
+  z-index: 1200;
+  display: inline-block;
+  padding: 0.55rem 1rem;
+  border-radius: 9999px;
+  background: #2a2a2a;
+  color: #fff !important;
+  text-decoration: none;
+  font-family: "Roboto Mono", monospace;
+  font-weight: 600;
+  letter-spacing: .02em;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, .12);
+  transition: transform .15s ease, opacity .15s ease, background .2s ease;
+}
+.back-to-people-btn:hover,
+.back-to-home-btn:hover {
+  background: #000;
+  transform: translateY(-1px);
+}
+.back-to-people-btn:active,
+.back-to-home-btn:active {
+  transform: translateY(0);
+}
+
+/* Alumni "Back to People" keeps its original position if you have one elsewhere.
+   For Publications "Back to Home", pin it top-right: */
+.back-to-home-btn {
+  top: 16px;
+  right: 16px;
+}
+
+@media (max-width: 420px) {
+  .back-to-home-btn {
+    top: 10px;
+    right: 10px;
+    padding: .45rem .75rem;
+    font-size: .9rem;
+  }
+}
+
+/* (Optional) You can now remove any old .float-back rules */
