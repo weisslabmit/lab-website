@@ -1,99 +1,191 @@
 {{ define "main" }}
-  <main id="publications" class="container">
-    <h1>Publications</h1>
+<main id="publications-page" class="container pubs-page">
+  <a href="/" class="button float-back">← Back to home</a>
 
-    {{/* Read JSON file directly to avoid any site.Data/mount issues */}}
-    {{ $raw := "" }}
-    {{ with readFile "data/publications.zotero.json" }}{{ $raw = . }}{{ end }}
+  <h1>Publications</h1>
 
-    {{ if not $raw }}
+  {{ $raw := "" }}
+  {{ with readFile "data/publications.zotero.json" }}{{ $raw = . }}{{ end }}
+  {{ if not $raw }}
+    <p>No publications yet.</p>
+  {{ else }}
+    {{ $items := $raw | transform.Unmarshal }}
+    {{ if lt (len $items) 1 }}
       <p>No publications yet.</p>
     {{ else }}
-      {{ $items := $raw | transform.Unmarshal }}
-      {{ if lt (len $items) 1 }}
-        <p>No publications yet.</p>
-      {{ else }}
 
-        {{/* -------- Group by year (robust: always coerce bucket to a slice) -------- */}}
-        {{ $byYear := dict }}
-        {{ range $it := $items }}
-          {{/* extract year from issued.date-parts or issued.raw */}}
-          {{ $year := "" }}
+      {{/* categorize */}}
+      {{ $pubTypes := slice "article-journal" "journal-article" "article" "preprint" }}
+      {{ $pubs := slice }} {{ $patents := slice }} {{ $others := slice }}
+      {{ range $it := $items }}
+        {{ $typ := index $it "type" | default "" | lower }}
+        {{ if eq $typ "patent" }}
+          {{ $patents = $patents | append $it }}
+        {{ else if in $pubTypes $typ }}
+          {{ $pubs = $pubs | append $it }}
+        {{ else }}
+          {{ $others = $others | append $it }}
+        {{ end }}
+      {{ end }}
+
+      {{/* group */}}
+      {{ $group := func (in) }}
+        {{ $by := dict }}
+        {{ range $it := in }}
+          {{ $y := "" }}
           {{ with (index $it "issued") }}
             {{ $dp := index . "date-parts" }}
             {{ if and $dp (gt (len $dp) 0) (gt (len (index $dp 0)) 0) }}
-              {{ $year = printf "%v" (index (index $dp 0) 0) }}
-            {{ else }}
-              {{ with (index . "raw") }}{{ $year = printf "%v" . }}{{ end }}
-            {{ end }}
+              {{ $y = printf "%v" (index (index $dp 0) 0) }}
+            {{ else }}{{ with (index . "raw") }}{{ $y = printf "%v" . }}{{ end }}{{ end }}
           {{ end }}
-          {{ if not $year }}{{ $year = "No year" }}{{ end }}
-
-          {{/* get existing bucket; if not a slice, wrap it into a slice */}}
-          {{ $existing := index $byYear $year }}
-          {{ $bucket := slice }}
-          {{ if $existing }}
-            {{ if (reflect.IsSlice $existing) }}
-              {{ $bucket = $existing }}
-            {{ else }}
-              {{ $bucket = slice $existing }}
-            {{ end }}
-          {{ end }}
+          {{ if not $y }}{{ $y = "No year" }}{{ end }}
+          {{ $ex := index $by $y }} {{ $bucket := slice }}
+          {{ if $ex }}{{ if (reflect.IsSlice $ex) }}{{ $bucket = $ex }}{{ else }}{{ $bucket = slice $ex }}{{ end }}{{ end }}
           {{ $bucket = $bucket | append $it }}
-          {{ $byYear = merge $byYear (dict $year $bucket) }}
+          {{ $by = merge $by (dict $y $bucket) }}
         {{ end }}
-
-        {{/* -------- Sort years desc and render -------- */}}
-        {{ $years := slice }}
-        {{ range $k, $_ := $byYear }}{{ $years = $years | append $k }}{{ end }}
-        {{ $years = sort $years "value" "desc" }}
-
-        {{ range $y := $years }}
-          <h2 class="pubs-year">{{ $y }}</h2>
-          <ol class="pubs-list">
-            {{ range $pub := (index $byYear $y) }}
-              {{ $t := index $pub "title" }}
-              {{ $au := index $pub "author" }}
-              {{ $ct := index $pub "container-title" }}
-              {{ $iss := index $pub "issued" }}
-              {{ $doi := index $pub "DOI" }}
-              {{ $url := index $pub "URL" }}
-              {{ $typ := index $pub "type" }}
-
-              <li class="pub">
-                <span class="pub-title">{{ $t }}</span>
-
-                {{ with $au }}
-                  <span class="pub-authors">
-                    —
-                    {{ range $i, $a := . }}
-                      {{ if gt $i 0 }}, {{ end }}
-                      {{ index $a "family" }}{{ with (index $a "given") }} {{ . }}{{ end }}
-                    {{ end }}
-                  </span>
-                {{ end }}
-
-                {{ with $ct }}<span class="pub-venue">, {{ . }}</span>{{ end }}
-
-                {{ $yInline := "" }}
-                {{ with $iss }}
-                  {{ $dp := index . "date-parts" }}
-                  {{ if and $dp (gt (len $dp) 0) (gt (len (index $dp 0)) 0) }}
-                    {{ $yInline = printf "%v" (index (index $dp 0) 0) }}
-                  {{ else }}
-                    {{ with (index . "raw") }}{{ $yInline = printf "%v" . }}{{ end }}
-                  {{ end }}
-                {{ end }}
-                {{ if $yInline }}<span class="pub-year"> ({{ $yInline }})</span>{{ end }}
-
-                {{ with $doi }}<a class="pub-link" href="https://doi.org/{{ . }}" target="_blank" rel="noopener">DOI</a>{{ end }}
-                {{ with $url }}<a class="pub-link" href="{{ . }}" target="_blank" rel="noopener">Link</a>{{ end }}
-                {{ with $typ }}<span class="pub-type"> · {{ . }}</span>{{ end }}
-              </li>
-            {{ end }}
-          </ol>
-        {{ end }}
+        {{ return $by }}
       {{ end }}
+
+      {{ $byPub := $group $pubs }}
+      {{ $byPat := $group $patents }}
+      {{ $byOth := $group $others }}
+
+      {{ $years := func (m) }}
+        {{ $ys := slice }}{{ range $k, $_ := m }}{{ $ys = $ys | append $k }}{{ end }}
+        {{ return (sort $ys "value" "desc") }}
+      {{ end }}
+      {{ $yPub := $years $byPub }}
+      {{ $yPat := $years $byPat }}
+      {{ $yOth := $years $byOth }}
+
+      <ul class="actions pubs-tabs">
+        <li><a href="#" class="button active" data-tab="pubs">Publications</a></li>
+        <li><a href="#" class="button" data-tab="patents">Patents</a></li>
+        <li><a href="#" class="button" data-tab="others">Other</a></li>
+      </ul>
+
+      {{/* renderer (all items visible; no pagination) */}}
+      {{ $renderPane := func (years map) (by map) (paneID string) }}
+        <div class="pubs-pane{{ if ne paneID "pubs-pane" }} hidden{{ end }}" id="{{ paneID }}">
+          {{ range $y := years }}
+            {{ $rows := slice }}
+            {{ range $it := (index by $y) }}
+              {{ $yy := 0 }}{{ $mm := 0 }}{{ $dd := 0 }}
+              {{ with (index $it "issued") }}
+                {{ $dp := index . "date-parts" }}
+                {{ if and $dp (gt (len $dp) 0) }}
+                  {{ $yy = index (index $dp 0) 0 | default 0 }}
+                  {{ if gt (len (index $dp 0)) 1 }}{{ $mm = index (index $dp 0) 1 | default 0 }}{{ end }}
+                  {{ if gt (len (index $dp 0)) 2 }}{{ $dd = index (index $dp 0) 2 | default 0 }}{{ end }}
+                {{ end }}
+              {{ end }}
+              {{ $rows = $rows | append (dict "k" (printf "%04d-%02d-%02d" $yy $mm $dd) "m" $it) }}
+            {{ end }}
+            {{ $rows = sort $rows "k" "desc" }}
+
+            <div class="year-group" data-year-group>
+              <h2 class="pubs-year">{{ $y }}</h2>
+              <ul class="pubs-list">
+                {{ range $row := $rows }}
+                  {{ $it := index $row "m" }}
+                  {{ $t := index $it "title" }}
+                  {{ $au := index $it "author" }}
+                  {{ $ct := index $it "container-title" | default "" }}
+                  {{ $iss := index $it "issued" }}
+                  {{ $typ := index $it "type" | default "" | lower }}
+                  {{ $doi := index $it "DOI" }}
+                  {{ $url := index $it "URL" | default "" }}
+                  {{ $href := "" }}
+                  {{ if $doi }}{{ $href = printf "https://doi.org/%s" $doi }}{{ else if $url }}{{ $href = $url }}{{ end }}
+
+                  {{ $ctLow := lower $ct }}
+                  {{ $urlLow := lower $url }}
+                  {{ $isPre := or (eq $typ "preprint") (or (in $ctLow "arxiv") (or (in $ctLow "biorxiv") (or (in $ctLow "medrxiv") (or (in $ctLow "chemrxiv") (in $ctLow "research square"))))) }}
+                  {{ $isPre = or $isPre (or (in $urlLow "arxiv.org") (or (in $urlLow "biorxiv.org") (or (in $urlLow "medrxiv.org") (in $urlLow "chemrxiv.org")))) }}
+
+                  <li class="pub">
+                    <span class="pub-title">
+                      {{ if $href }}<strong><a href="{{ $href }}" target="_blank" rel="noopener">{{ $t }}</a></strong>{{ else }}<strong>{{ $t }}</strong>{{ end }}
+                    </span>
+
+                    {{ with $au }}
+                      <span class="pub-authors"> —
+                        {{ $names := slice }}
+                        {{ range $a := $au }}
+                          {{ $fam := index $a "family" | default "" }}
+                          {{ $giv := index $a "given"  | default "" }}
+                          {{ $init := "" }}
+                          {{ if $giv }}
+                            {{ range (split $giv " ") }}
+                              {{ if gt (len .) 0 }}{{ $init = printf "%s%s." $init (upper (substr . 0 1)) }}{{ end }}
+                            {{ end }}
+                          {{ end }}
+                          {{ $name := cond (and $init $fam) (printf "%s %s" $init $fam) (cond (ne $fam "") $fam $giv) }}
+                          {{ $names = $names | append $name }}
+                        {{ end }}
+                        {{ delimit $names ", " }}
+                      </span>
+                    {{ end }}
+
+                    {{ if $isPre }}
+                      <span class="pub-venue">, Preprint</span>
+                    {{ else }}
+                      {{ with $ct }}<span class="pub-venue">, {{ . }}</span>{{ end }}
+                    {{ end }}
+
+                    {{ with $iss }}
+                      {{ $dp := index . "date-parts" }}
+                      {{ if and $dp (gt (len $dp) 0) }}
+                        <span class="pub-year"> ({{ index (index $dp 0) 0 }})</span>
+                      {{ end }}
+                    {{ end }}
+                  </li>
+                {{ end }}
+              </ul>
+            </div>
+          {{ end }}
+        </div>
+      {{ end }}
+
+      {{ $renderPane $yPub $byPub "pubs-pane" }}
+      {{ $renderPane $yPat $byPat "patents-pane" }}
+      {{ $renderPane $yOth $byOth "others-pane" }}
+
+      <ul class="actions pubs-footer">
+        <li><a class="button" href="https://scholar.google.com/citations?user=st2YzBwAAAAJ&hl=en&oi=ao" target="_blank" rel="noopener">Google Scholar</a></li>
+      </ul>
+
+      <script>
+        (function(){
+          const root = document.getElementById('publications-page');
+          const tabs = root.querySelectorAll('.pubs-tabs .button');
+          const panes = {
+            pubs: document.getElementById('pubs-pane'),
+            patents: document.getElementById('patents-pane'),
+            others: document.getElementById('others-pane')
+          };
+          let active = 'pubs';
+          function switchTo(tab){
+            Object.keys(panes).forEach(k=>{
+              panes[k].classList.toggle('hidden', k!==tab);
+            });
+          }
+          tabs.forEach(btn=>{
+            btn.addEventListener('click', (e)=>{
+              e.preventDefault();
+              tabs.forEach(b=>b.classList.remove('active'));
+              btn.classList.add('active');
+              active = btn.getAttribute('data-tab');
+              switchTo(active);
+            });
+          });
+          switchTo(active);
+        })();
+      </script>
+
     {{ end }}
-  </main>
+  {{ end }}
+</main>
 {{ end }}

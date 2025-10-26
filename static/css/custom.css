@@ -1270,3 +1270,50 @@ section.wrapper {
   color: #333;                       /* slightly darker gray for legibility */
   opacity: 0.9;                      /* keep it subtle but readable */
 }
+
+
+/* Publications block structure */
+.pubs-section .pubs-year,
+.pubs-page .pubs-year {
+  margin: 0.25rem 0 0.75rem;
+  font-weight: 800;
+}
+
+.pubs-section .pubs-list,
+.pubs-page .pubs-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.pubs-section .pub,
+.pubs-page .pub {
+  margin: 1rem 0 1.1rem;
+  line-height: 1.6;
+}
+
+.pubs-section .pub-title strong a,
+.pubs-page .pub-title strong a {
+  text-decoration: none;
+  border-bottom: 1px solid rgba(0,0,0,.12);
+}
+
+.pubs-section .pub-title strong a:hover,
+.pubs-page .pub-title strong a:hover {
+  border-bottom-color: rgba(0,0,0,.35);
+}
+
+/* Tabs and footer rows use your theme's .actions + .button already */
+.pubs-tabs { justify-content: center; }
+.pubs-footer { justify-content: center; }
+
+/* Hide helpers */
+.hidden { display: none; }
+
+/* Floating back button on the publications page */
+.float-back {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 1000;
+}
