@@ -1,7 +1,7 @@
-{{- $sec := site.GetPage "section" "opportunities" -}}
-{{- if $sec -}}
-  {{- $active := where $sec.RegularPages "Params.draft" "ne" true -}}
-  {{- if gt (len $active) 0 -}}
-    <a href="{{ $sec.RelPermalink }}" class="recruiting-fab" aria-label="Now recruiting">Now recruiting!</a>
-  {{- end -}}
-{{- end -}}
+{{/* Show the FAB only on the homepage and only if there are active opportunities */}}
+{{ with site.GetPage "section" "opportunities" }}
+  {{ $active := where .RegularPages "Params.draft" "ne" true }}
+  {{ if and $.IsHome (gt (len $active) 0) }}
+    <a href="{{ .RelPermalink }}" class="recruiting-fab"><span>Now recruiting!</span></a>
+  {{ end }}
+{{ end }}
