@@ -157,33 +157,30 @@
 
                 {{ with $au }}
                 <span class="pub-authors"> —
-                    {{ $n := len $au }}
-                    {{ range $j, $a := $au }}
+                    {{/* Build ["I. I. Lastname", ...] then join with ", " */}}
+                    {{ $names := slice }}
+                    {{ range $a := $au }}
                     {{ $fam := index $a "family" | default "" }}
                     {{ $giv := index $a "given"  | default "" }}
 
-                    {{/* Build initials from given name: "I. I." */}}
+                    {{/* initials from given: "I. I." */}}
                     {{ $init := "" }}
                     {{ if $giv }}
-                        {{ $parts := split $giv " " }}
-                        {{ range $p := $parts }}
-                        {{ if gt (len $p) 0 }}
-                            {{ $init = printf "%s%s." $init (upper (substr $p 0 1)) }}
+                        {{ range (split $giv " ") }}
+                        {{ if gt (len .) 0 }}
+                            {{ $init = printf "%s%s." $init (upper (substr . 0 1)) }}
                         {{ end }}
                         {{ end }}
                     {{ end }}
 
-                    {{/* Print as "I. Lastname" (or fallbacks) */}}
-                    {{ if and $init $fam }}{{ $init }} {{ $fam }}
-                    {{ else if $fam }}{{ $fam }}
-                    {{ else }}{{ $giv }}
+                    {{/* "I. Lastname" → fallback to family or given */}}
+                    {{ $name := cond (and $init $fam) (printf "%s %s" $init $fam) (cond (ne $fam "") $fam $giv) }}
+                    {{ $names = $names | append $name }}
                     {{ end }}
-
-                    {{/* Comma immediately after the name, no preceding space */}}
-                    {{ if lt $j (sub $n 1) }}, {{ end }}
-                    {{ end }}
+                    {{ delimit $names ", " }}
                 </span>
                 {{ end }}
+
 
                 {{ if $isPre }}
                   <span class="pub-venue">, Preprint</span>
