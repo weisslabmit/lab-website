@@ -1752,20 +1752,20 @@ strong, b { font-weight: 700 !important; }
   text-decoration: underline;
 }
 
-
 /* ======================================
-   Unified Publications Buttons (Neue Haas)
-   Compact, centered, with mixed-case text
+   Sleek Unified Publications Buttons (fixed)
+   - Tabs = switchable (light/dark)
+   - Footer buttons = always dark
 ====================================== */
 
 :root {
-  --btn-dark: #1a1a1a;        /* full dark for active */
-  --btn-mid: #333333;         /* medium gray for default filled buttons */
+  --btn-dark: #1a1a1a;     /* darkest tone (active) */
+  --btn-mid: #333333;      /* medium gray for footer buttons */
   --btn-border: rgba(0,0,0,.2);
-  --btn-hover: #141414;
+  --btn-hover: #111;
 }
 
-/* Container layouts */
+/* Containers */
 .pubs-tabs,
 .pubs-footer,
 .pubs-section .pubs-tabs,
@@ -1774,31 +1774,28 @@ strong, b { font-weight: 700 !important; }
 .pubs-page .actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 6px;
   justify-content: center;
 }
 
-/* Base button look */
+/* === TAB BUTTONS (Publications / Patents / Other) === */
 .pubs-tabs .button,
-.pubs-footer .button,
 .pubs-section .pubs-tabs .button,
-.pubs-section .actions .button,
-.pubs-page .pubs-tabs .button,
-.pubs-page .actions .button {
+.pubs-page .pubs-tabs .button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: .35rem;
+  gap: 0.3rem;
 
-  min-height: 32px;
-  padding: 0 14px;
-  font-size: 0.9rem;
-  line-height: 1;
+  min-height: 28px;
+  padding: 0.25rem 0.9rem;
+  font-size: 0.85rem;
+  line-height: 1.1;
   border-radius: 9999px;
 
   font-family: "neue-haas-grotesk-display", sans-serif !important;
-  font-weight: 600 !important;
-  text-transform: none !important;   /* ✅ no capitalization */
+  font-weight: 500 !important;
+  text-transform: none !important;
   letter-spacing: 0.01em;
 
   background: #fff;
@@ -1810,17 +1807,14 @@ strong, b { font-weight: 700 !important; }
   transition: background .18s ease, color .18s ease, border-color .18s ease, transform .12s ease;
 }
 
-/* Hover (unselected) */
+/* Hover for inactive tabs */
 .pubs-tabs .button:hover,
-.pubs-footer .button:hover,
 .pubs-section .pubs-tabs .button:hover,
-.pubs-section .actions .button:hover,
-.pubs-page .pubs-tabs .button:hover,
-.pubs-page .actions .button:hover {
+.pubs-page .pubs-tabs .button:hover {
   background: rgba(0,0,0,.05);
 }
 
-/* Active tabs — darkest */
+/* Active tab */
 .pubs-tabs .button.active,
 .pubs-section .pubs-tabs .button.active,
 .pubs-page .pubs-tabs .button.active {
@@ -1829,20 +1823,37 @@ strong, b { font-weight: 700 !important; }
   border-color: transparent !important;
 }
 
-/* Hover for active */
 .pubs-tabs .button.active:hover,
 .pubs-section .pubs-tabs .button.active:hover,
 .pubs-page .pubs-tabs .button.active:hover {
   background: var(--btn-hover) !important;
 }
 
-/* === Footer action buttons: dark by default but lighter than active === */
+/* === FOOTER BUTTONS (Show 10 more / All publications / Google Scholar) === */
 .pubs-footer .button,
 .pubs-section .actions .button,
 .pubs-page .actions .button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+
+  min-height: 28px;
+  padding: 0.25rem 0.9rem;
+  font-size: 0.85rem;
+  line-height: 1.1;
+  border-radius: 9999px;
+
+  font-family: "neue-haas-grotesk-display", sans-serif !important;
+  font-weight: 500 !important;
+  text-transform: none !important;
+
   background: var(--btn-mid);
   color: #fff !important;
   border: none;
+  text-decoration: none;
+
+  transition: background .18s ease, transform .12s ease;
 }
 
 .pubs-footer .button:hover,
