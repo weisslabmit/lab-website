@@ -1849,3 +1849,34 @@ strong, b { font-weight: 700 !important; }
 .pubs-page   .actions .button:active {
   transform: translateY(0);
 }
+
+/* === Publications top tabs — force styles with higher specificity === */
+/* Inactive tabs (lighter) */
+.pubs-page   .actions.pubs-tabs li > a.button:not(.active),
+.pubs-section .actions.pubs-tabs li > a.button:not(.active) {
+  background: #eaeaea !important;      /* lighter gray */
+  color: #333 !important;
+  border: 1px solid rgba(0,0,0,.08) !important;
+  box-shadow: none !important;
+}
+
+/* Hover on inactive */
+.pubs-page   .actions.pubs-tabs li > a.button:not(.active):hover,
+.pubs-section .actions.pubs-tabs li > a.button:not(.active):hover {
+  background: #dedede !important;
+  color: #000 !important;
+}
+
+/* Active tab (dark) */
+.pubs-page   .actions.pubs-tabs li > a.button.active,
+.pubs-section .actions.pubs-tabs li > a.button.active {
+  background: #1a1a1a !important;
+  color: #fff !important;
+  border-color: transparent !important;
+}
+
+/* Hover on active */
+.pubs-page   .actions.pubs-tabs li > a.button.active:hover,
+.pubs-section .actions.pubs-tabs li > a.button.active:hover {
+  background: #000 !important;
+}
