@@ -6,10 +6,10 @@
   <div class="inner">
     <header class="major">
       <h1>Opportunities</h1>
-      <p>Open calls and targeted project announcements from the Weiss Lab.</p>
+      <p class="opps-subtitle">Open calls and targeted project announcements from the Weiss Lab.</p>
     </header>
 
-    {{/* Get all non-draft items in this section */}}
+    {{/* Get all non-draft items, newest first */}}
     {{ $all := where .RegularPages "Params.draft" "ne" true }}
     {{ $pages := $all.ByDate.Reverse }}
 
@@ -18,14 +18,14 @@
     {{ else }}
       <div class="opps-list">
         {{ range $p := $pages }}
-          <article class="opportunity-card">
+          <article class="opportunity-row">
             <h2 class="opp-title">{{ $p.Title }}</h2>
 
             <div class="opp-body">
               {{ $p.Content }}
             </div>
 
-            {{/* Use optional external link if provided, else link to this page */}}
+            {{/* Link preference: external link if provided, else this page link */}}
             {{ $href := cond (and (isset $p.Params "link") $p.Params.link) $p.Params.link $p.RelPermalink }}
             <div class="opp-actions">
               <a class="button opp-link" href="{{ $href }}" {{ if $p.Params.link }}target="_blank" rel="noopener"{{ end }}>
@@ -36,6 +36,12 @@
         {{ end }}
       </div>
     {{ end }}
+
+    <!-- Bottom note (always shown) -->
+    <p class="opps-note">
+      Even when there are no open calls, if you’re interested in applying at any level,
+      please email <a href="mailto:rweiss@mit.edu">Ron</a> to explore possibilities and discuss cool science.
+    </p>
   </div>
 </section>
 {{ end }}
