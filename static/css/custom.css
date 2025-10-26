@@ -1510,3 +1510,11 @@ section.wrapper {
   height: 100%;
   border: 0;
 }
+
+.logos-row a {
+  transition: transform .15s ease, opacity .15s ease;
+}
+.logos-row a:hover {
+  transform: translateY(-1px);
+  opacity: 1;
+}
