@@ -1,0 +1,2765 @@
+[
+  {
+    "id": "22143410/PWESUAFE",
+    "type": "article",
+    "title": "Catalog Page",
+    "URL": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6214934/",
+    "accessed": {
+      "date-parts": [
+        [
+          2025,
+          10,
+          26
+        ]
+      ]
+    }
+  },
+  {
+    "id": "22143410/BEFZXWTD",
+    "type": "article-journal",
+    "title": "Cas9 gRNA engineering for genome editing, activation and repression",
+    "container-title": "Nature Methods",
+    "page": "1051-1054",
+    "volume": "12",
+    "issue": "11",
+    "URL": "https://www.nature.com/articles/nmeth.3580",
+    "DOI": "10.1038/nmeth.3580",
+    "journalAbbreviation": "Nat Methods",
+    "language": "en",
+    "author": [
+      {
+        "family": "Kiani",
+        "given": "Samira"
+      },
+      {
+        "family": "Chavez",
+        "given": "Alejandro"
+      },
+      {
+        "family": "Tuttle",
+        "given": "Marcelle"
+      },
+      {
+        "family": "Hall",
+        "given": "Richard N"
+      },
+      {
+        "family": "Chari",
+        "given": "Raj"
+      },
+      {
+        "family": "Ter-Ovanesyan",
+        "given": "Dmitry"
+      },
+      {
+        "family": "Qian",
+        "given": "Jason"
+      },
+      {
+        "family": "Pruitt",
+        "given": "Benjamin W"
+      },
+      {
+        "family": "Beal",
+        "given": "Jacob"
+      },
+      {
+        "family": "Vora",
+        "given": "Suhani"
+      },
+      {
+        "family": "Buchthal",
+        "given": "Joanna"
+      },
+      {
+        "family": "Kowal",
+        "given": "Emma J K"
+      },
+      {
+        "family": "Ebrahimkhani",
+        "given": "Mohammad R"
+      },
+      {
+        "family": "Collins",
+        "given": "James J"
+      },
+      {
+        "family": "Weiss",
+        "given": "Ron"
+      },
+      {
+        "family": "Church",
+        "given": "George"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          "2015"
+        ]
+      ]
+    },
+    "accessed": {
+      "date-parts": [
+        [
+          2025,
+          10,
+          26
+        ]
+      ]
+    }
+  },
+  {
+    "id": "22143410/Q4I9N397",
+    "type": "article-journal",
+    "title": "Automatic Compilation from High-Level Biologically-Oriented Programming Language to Genetic Regulatory Networks",
+    "container-title": "PLOS ONE",
+    "page": "e22490",
+    "volume": "6",
+    "issue": "8",
+    "abstract": "Background The field of synthetic biology promises to revolutionize our ability to engineer biological systems, providing important benefits for a variety of applications. Recent advances in DNA synthesis and automated DNA assembly technologies suggest that it is now possible to construct synthetic systems of significant complexity. However, while a variety of novel genetic devices and small engineered gene networks have been successfully demonstrated, the regulatory complexity of synthetic systems that have been reported recently has somewhat plateaued due to a variety of factors, including the complexity of biology itself and the lag in our ability to design and optimize sophisticated biological circuitry. Methodology/Principal Findings To address the gap between DNA synthesis and circuit design capabilities, we present a platform that enables synthetic biologists to express desired behavior using a convenient high-level biologically-oriented programming language, Proto. The high level specification is compiled, using a regulatory motif based mechanism, to a gene network, optimized, and then converted to a computational simulation for numerical verification. Through several example programs we illustrate the automated process of biological system design with our platform, and show that our compiler optimizations can yield significant reductions in the number of genes () and latency of the optimized engineered gene networks. Conclusions/Significance Our platform provides a convenient and accessible tool for the automated design of sophisticated synthetic biological systems, bridging an important gap between DNA synthesis and circuit design capabilities. Our platform is user-friendly and features biologically relevant compiler optimizations, providing an important foundation for the development of sophisticated biological systems.",
+    "URL": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0022490",
+    "DOI": "10.1371/journal.pone.0022490",
+    "note": "Publisher: Public Library of Science",
+    "journalAbbreviation": "PLOS ONE",
+    "language": "en",
+    "author": [
+      {
+        "family": "Beal",
+        "given": "Jacob"
+      },
+      {
+        "family": "Lu",
+        "given": "Ting"
+      },
+      {
+        "family": "Weiss",
+        "given": "Ron"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          "2011"
+        ]
+      ],
+      "season": "ago"
+    },
+    "accessed": {
+      "date-parts": [
+        [
+          2025,
+          10,
+          26
+        ]
+      ]
+    }
+  },
+  {
+    "id": "22143410/4AQB3XS4",
+    "type": "article-journal",
+    "title": "CAREER: Artificial Pattern Formation with Synthetic Gene Networks",
+    "container-title": "NSF Award",
+    "page": "48244",
+    "volume": "04",
+    "abstract": "Biological pattern formation is an elaborate process that requires spatiotemporal coordination of cellular activities. To-date, research has focused on studying naturally occurring patterns either by devising abstract models that explain the formation of these patterns or by characterizing relevant genetic circuits and biochemical interactions. The knowledge gained from understanding how cells form patterns has practical applications in tissue engineering, biosensing, and biomaterial fabrication. However, to fully realize the potential of these applications one must be able to form arbitrary patterns, e.g. tissues with new arrangements of cells. Existing efforts to coerce cells to form particular patterns have largely focused on setting up scaffolds and appropriate environmental conditions, but such efforts are limited because they rely on the cells' existing genetic circuitry. The approach in this project is fundamentally different: the focus is to engineer de novo patterns by building synthetic gene networks and in the process gain a greater understanding of pattern formation. The project strives to create a new engineering discipline for generating user-specified artificial differentiation patterns. The main component of this discipline is the tight integration of modeling tools with experimental work. Based on these models, novel genetic circuits will be built and validated experimentally. These circuits will direct cells to form stable and dynamic spatiotemporal gene expression patterns - lines, standing waves, Turing Patterns, Conway's Game of Life, and branched structures. Results from the project will serve as the basis for a pattern formation toolkit that will be used to engineer more complex patterns, enable future applications, and elucidate the underlying principles governing natural pattern formation. The research outlined here will have a broad impact both in academia and industry. This project will advance knowledge in a number of important areas in systems biology including the understanding of robust gene networks, noise in gene expression, gene regulation, cell-cell communications, in addition to providing mathematical models for intracellular and intercellular systems. Research in multicellular pattern formation is not only fundamental to understanding organism development and coordinated cell behavior, but also has practical applications. For example, micro-pattern formation will benefit nanotechnology where such patterns could be used for bacterial nano-fabrication. Also, the ability to construct synthetic patterns will contribute to the field of tissue engineering, where such patterns could be utilized to differentiate stem cells into tissues and organs. In the long term, knowledge gained from this research into the coordination of cell behaviors will be applicable to areas outside of biology, including the design of robust multi-agent systems such as computer networks. Perhaps the most important contribution will be through the multidisciplinary education of students and future leaders in the field. This will be accomplished through various activities including the Burroughs Wellcome Fund and the Synthetic Biology Summer Program, where the focus is on recruiting and providing specific funding for underrepresented minorities and women.",
+    "URL": "https://ui.adsabs.harvard.edu/abs/2005nsf....0448244W",
+    "note": "ADS Bibcode: 2005nsf....0448244W",
+    "shortTitle": "CAREER",
+    "author": [
+      {
+        "family": "Weiss",
+        "given": "Ron"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2005,
+          5,
+          1
+        ]
+      ]
+    },
+    "accessed": {
+      "date-parts": [
+        [
+          2025,
+          10,
+          26
+        ]
+      ]
+    }
+  },
+  {
+    "id": "22143410/F6IJQNVU",
+    "type": "article-journal",
+    "title": "CAREER: Artificial Pattern Formation with Synthetic Gene Networks",
+    "container-title": "NSF Award",
+    "page": "68682",
+    "volume": "09",
+    "abstract": "Biological pattern formation is an elaborate process that requires spatiotemporal coordination of cellular activities. To-date, research has focused on studying naturally occurring patterns either by devising abstract models that explain the formation of these patterns or by characterizing relevant genetic circuits and biochemical interactions. The knowledge gained from understanding how cells form patterns has practical applications in tissue engineering, biosensing, and biomaterial fabrication. However, to fully realize the potential of these applications one must be able to form arbitrary patterns, e.g. tissues with new arrangements of cells. Existing efforts to coerce cells to form particular patterns have largely focused on setting up scaffolds and appropriate environmental conditions, but such efforts are limited because they rely on the cells' existing genetic circuitry. The approach in this project is fundamentally different: the focus is to engineer de novo patterns by building synthetic gene networks and in the process gain a greater understanding of pattern formation. The project strives to create a new engineering discipline for generating user-specified artificial differentiation patterns. The main component of this discipline is the tight integration of modeling tools with experimental work. Based on these models, novel genetic circuits will be built and validated experimentally. These circuits will direct cells to form stable and dynamic spatiotemporal gene expression patterns - lines, standing waves, Turing Patterns, Conway's Game of Life, and branched structures. Results from the project will serve as the basis for a pattern formation toolkit that will be used to engineer more complex patterns, enable future applications, and elucidate the underlying principles governing natural pattern formation. The research outlined here will have a broad impact both in academia and industry. This project will advance knowledge in a number of important areas in systems biology including the understanding of robust gene networks, noise in gene expression, gene regulation, cell-cell communications, in addition to providing mathematical models for intracellular and intercellular systems. Research in multicellular pattern formation is not only fundamental to understanding organism development and coordinated cell behavior, but also has practical applications. For example, micro-pattern formation will benefit nanotechnology where such patterns could be used for bacterial nano-fabrication. Also, the ability to construct synthetic patterns will contribute to the field of tissue engineering, where such patterns could be utilized to differentiate stem cells into tissues and organs. In the long term, knowledge gained from this research into the coordination of cell behaviors will be applicable to areas outside of biology, including the design of robust multi-agent systems such as computer networks. Perhaps the most important contribution will be through the multidisciplinary education of students and future leaders in the field. This will be accomplished through various activities including the Burroughs Wellcome Fund and the Synthetic Biology Summer Program, where the focus is on recruiting and providing specific funding for underrepresented minorities and women.",
+    "URL": "https://ui.adsabs.harvard.edu/abs/2009nsf....0968682W",
+    "note": "ADS Bibcode: 2009nsf....0968682W",
+    "shortTitle": "CAREER",
+    "author": [
+      {
+        "family": "Weiss",
+        "given": "Ron"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2009,
+          7,
+          1
+        ]
+      ]
+    },
+    "accessed": {
+      "date-parts": [
+        [
+          2025,
+          10,
+          26
+        ]
+      ]
+    }
+  },
+  {
+    "id": "22143410/X4TISTEG",
+    "type": "article-journal",
+    "title": "Biological underpinnings for lifelong learning machines",
+    "container-title": "Nature Machine Intelligence",
+    "page": "196-210",
+    "volume": "4",
+    "issue": "3",
+    "abstract": "Biological organisms learn from interactions with their environment throughout their lifetime. For artificial systems to successfully act and adapt in the real world, it is desirable to similarly be able to learn on a continual basis. This challenge is known as lifelong learning, and remains to a large extent unsolved. In this Perspective article, we identify a set of key capabilities that artificial systems will need to achieve lifelong learning. We describe a number of biological mechanisms, both neuronal and non-neuronal, that help explain how organisms solve these challenges, and present examples of biologically inspired models and biologically plausible mechanisms that have been applied to artificial systems in the quest towards development of lifelong learning machines. We discuss opportunities to further our understanding and advance the state of the art in lifelong learning, aiming to bridge the gap between natural and artificial intelligence.",
+    "URL": "https://www.nature.com/articles/s42256-022-00452-0",
+    "DOI": "10.1038/s42256-022-00452-0",
+    "note": "Publisher: Nature Publishing Group",
+    "journalAbbreviation": "Nat Mach Intell",
+    "language": "en",
+    "author": [
+      {
+        "family": "Kudithipudi",
+        "given": "Dhireesha"
+      },
+      {
+        "family": "Aguilar-Simon",
+        "given": "Mario"
+      },
+      {
+        "family": "Babb",
+        "given": "Jonathan"
+      },
+      {
+        "family": "Bazhenov",
+        "given": "Maxim"
+      },
+      {
+        "family": "Blackiston",
+        "given": "Douglas"
+      },
+      {
+        "family": "Bongard",
+        "given": "Josh"
+      },
+      {
+        "family": "Brna",
+        "given": "Andrew P."
+      },
+      {
+        "family": "Chakravarthi Raja",
+        "given": "Suraj"
+      },
+      {
+        "family": "Cheney",
+        "given": "Nick"
+      },
+      {
+        "family": "Clune",
+        "given": "Jeff"
+      },
+      {
+        "family": "Daram",
+        "given": "Anurag"
+      },
+      {
+        "family": "Fusi",
+        "given": "Stefano"
+      },
+      {
+        "family": "Helfer",
+        "given": "Peter"
+      },
+      {
+        "family": "Kay",
+        "given": "Leslie"
+      },
+      {
+        "family": "Ketz",
+        "given": "Nicholas"
+      },
+      {
+        "family": "Kira",
+        "given": "Zsolt"
+      },
+      {
+        "family": "Kolouri",
+        "given": "Soheil"
+      },
+      {
+        "family": "Krichmar",
+        "given": "Jeffrey L."
+      },
+      {
+        "family": "Kriegman",
+        "given": "Sam"
+      },
+      {
+        "family": "Levin",
+        "given": "Michael"
+      },
+      {
+        "family": "Madireddy",
+        "given": "Sandeep"
+      },
+      {
+        "family": "Manicka",
+        "given": "Santosh"
+      },
+      {
+        "family": "Marjaninejad",
+        "given": "Ali"
+      },
+      {
+        "family": "McNaughton",
+        "given": "Bruce"
+      },
+      {
+        "family": "Miikkulainen",
+        "given": "Risto"
+      },
+      {
+        "family": "Navratilova",
+        "given": "Zaneta"
+      },
+      {
+        "family": "Pandit",
+        "given": "Tej"
+      },
+      {
+        "family": "Parker",
+        "given": "Alice"
+      },
+      {
+        "family": "Pilly",
+        "given": "Praveen K."
+      },
+      {
+        "family": "Risi",
+        "given": "Sebastian"
+      },
+      {
+        "family": "Sejnowski",
+        "given": "Terrence J."
+      },
+      {
+        "family": "Soltoggio",
+        "given": "Andrea"
+      },
+      {
+        "family": "Soures",
+        "given": "Nicholas"
+      },
+      {
+        "family": "Tolias",
+        "given": "Andreas S."
+      },
+      {
+        "family": "Urbina-Meléndez",
+        "given": "Darío"
+      },
+      {
+        "family": "Valero-Cuevas",
+        "given": "Francisco J."
+      },
+      {
+        "family": "van de Ven",
+        "given": "Gido M."
+      },
+      {
+        "family": "Vogelstein",
+        "given": "Joshua T."
+      },
+      {
+        "family": "Wang",
+        "given": "Felix"
+      },
+      {
+        "family": "Weiss",
+        "given": "Ron"
+      },
+      {
+        "family": "Yanguas-Gil",
+        "given": "Angel"
+      },
+      {
+        "family": "Zou",
+        "given": "Xinyun"
+      },
+      {
+        "family": "Siegelmann",
+        "given": "Hava"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2022,
+          3
+        ]
+      ]
+    },
+    "accessed": {
+      "date-parts": [
+        [
+          2025,
+          10,
+          26
+        ]
+      ]
+    }
+  },
+  {
+    "id": "22143410/8Q5XRHUT",
+    "type": "patent",
+    "title": "Bio-field programmable gate array and bio-programmable logic array: reconfigurable chassis construction",
+    "URL": "https://patents.google.com/patent/US10100318B2/en",
+    "number": "US10100318B2",
+    "shortTitle": "Bio-field programmable gate array and bio-programmable logic array",
+    "language": "en",
+    "author": [
+      {
+        "family": "Babb",
+        "given": "Jonathan William"
+      },
+      {
+        "family": "Weiss",
+        "given": "Ron"
+      },
+      {
+        "family": "Knight",
+        "given": "Thomas"
+      },
+      {
+        "family": "Rubin",
+        "given": "Adam"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2018,
+          10,
+          16
+        ]
+      ]
+    },
+    "accessed": {
+      "date-parts": [
+        [
+          2025,
+          10,
+          26
+        ]
+      ]
+    }
+  },
+  {
+    "id": "22143410/MHIRDGGR",
+    "type": "article-journal",
+    "title": "BIC: Collaborative Research: Rational Design of Synthetic Gene Networks using Formal Analysis of Hybrid Systems",
+    "container-title": "NSF Award",
+    "page": "32094",
+    "volume": "04",
+    "abstract": "The nascent field of synthetic biology is focused on creating small synthetic genetic networks inserting them into living cells in order to \"program\" cellular behavior. Recent prototypes include a toggle switch, an oscillator, logic gates, concentration band detectors, and even a pulse generator. Synthetic gene networks are foreseen to have tremendous applications in biotechnology, medicine, and defense related areas. Such engineered biological devices will engage in simple computations and cell-cell communications to diagnose diseases, repair tissues, detect and clean up environmental pollutants, and manufacture biomaterials. The main challenge in synthetic biology is creating and tuning gene networks to desired specifications. There is currently no formal mechanism to guarantee the behavior of these systems and to tune their parameters a-priori to satisfy desired performances. The existing tools for formal analysis cannot handle genetic networks successfully due to nonlinearities, uncertainties, scarce knowledge of kinetic and regulatory parameters, and measurements corrupted by noise. However, the adoption of synthetic gene networks in critical applications such as tissue engineering requires that these systems meet strict safety guarantees. In this project, we propose a hybrid systems approach to forward engineer and analyze synthetic genetic networks. In this framework, interval-based specifications translate to reachability analysis and safety verification, which are the central problems of formal analysis. By exploiting the particular nonlinearities induced by chemical reactions and cooperative regulations, we first reduce these infinite dimensional problems to finite searches on graphs by constructing discrete abstractions, and then map them to parameter value intervals. This procedure will allow for analysis under parameter uncertainty and will provide a provably correct methodology to tune the parameters to achieve desired interval-based properties. We will validate our approach with two experimental systems. We will improve the steady state digital response of a transcriptional cascade and use the optimized cascades to build more robust toggle switches. We will also use formal analysis to fine-tune the dynamic behavior of a pulse generator that incorporates cell-cell communication and a feed-forward motif.",
+    "URL": "https://ui.adsabs.harvard.edu/abs/2004nsf....0432094W",
+    "note": "ADS Bibcode: 2004nsf....0432094W",
+    "shortTitle": "BIC",
+    "author": [
+      {
+        "family": "Weiss",
+        "given": "Ron"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2004,
+          9,
+          1
+        ]
+      ]
+    },
+    "accessed": {
+      "date-parts": [
+        [
+          2025,
+          10,
+          26
+        ]
+      ]
+    }
+  },
+  {
+    "id": "22143410/S8PBMD53",
+    "type": "article-journal",
+    "title": "BIC: Collaborative Research: Evolutionary Optimization of Biological Circuits: Towards Cellular Programming",
+    "container-title": "NSF Award",
+    "page": "23195",
+    "volume": "05",
+    "abstract": "The ability to redesign and even build completely new biological entities offers revolutionary opportunities for using biology to solve human problems. The dream, however, far outstrips the reality: engineering new biological machines, programming cells behaviors, and building new forms of life pose huge technical and conceptual challenges. Our research is designed to make some important first steps, by developing generally-applicable engineering methods for building synthetic gene networks. Implementation of even the most simple circuits in a biological system requires tedious optimization of a large number of poorly-understood parameters, many of which can neither be measured nor easily manipulated. Simulations can sometimes guide optimization, but we believe that biological systems are best optimized using nature's editing strategy, evolution. We believe that a combined approach of rational design based on computational predictions coupled with directed evolution-making mutations in the laboratory and selecting those organisms exhibiting the desired behaviors--will be fundamental to the progress of synthetic biology. We will in effect learn how to 'breed' useful synthetic gene networks, just as we have learned how to breed useful plants and animals. This approach mimics natural evolution in exploring the vast and complex landscape of functions available to a set of molecules making up an engineered regulatory pathway. Importantly, it circumvents our near-complete ignorance of how a DNA sequence encodes a specific set of biological functions, a detailed understanding that is required for any 'rational' design approach. By introducing random mutations into the DNA and screening for different functions that might be expressed by the mutant circuits, we can identify which functions are possible as well as the ranges of function available to the specific search process (e.g. random point mutation targeted to a specific gene). With further analysis, e.g. sequencing to identify the mutations and biochemical analysis of circuit components, we gain insights into the molecular mechanisms by which the overall function is achieved or modified. In this project we have three specific aims. The first is to validate a 'selection module' by which we can efficiently evolve components and circuits in the laboratory. This module connects proper circuit function to the ability of cells that express it to survive and grow. Cells with functioning circuits survive and grow; those that have not solved the problem do not. To program complex behaviors, we will also need components that respond to predefined ranges of input parameters with predictable output parameters. Thus our second aim is to use directed evolution to create a range of transcriptional activators based on the well-characterized framework protein, LuxR. Laboratory-evolved LuxR variants will activate gene transcription at different, nonnatural promoter sites on the DNA. Finally, we propose to investigate the range of circuit functions available to a predefined set of components via evolutionary exploration. Specifically, we will evolve a series of 'band detect' circuits that respond to a prespecified range of acyl-HSL concentrations. These circuits will be used to construct synthetic systems that form patterns of gene expression in the solid phase. Our ultimate goal is to develop a fundamental enabling technology for synthetic biology as well as for developing bio-inspired modes and architectures for computing. We envision that evolved circuits and the synthetic multicellular systems that can be constructed from them will be useful to researchers developing quantitative models of gene regulation, quorum sensing, and other aspects of cellular computing.",
+    "URL": "https://ui.adsabs.harvard.edu/abs/2005nsf....0523195W",
+    "note": "ADS Bibcode: 2005nsf....0523195W",
+    "shortTitle": "BIC",
+    "author": [
+      {
+        "family": "Weiss",
+        "given": "Ron"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2005,
+          8,
+          1
+        ]
+      ]
+    },
+    "accessed": {
+      "date-parts": [
+        [
+          2025,
+          10,
+          26
+        ]
+      ]
+    }
+  },
+  {
+    "id": "22143410/7MCARRAK",
+    "type": "article",
+    "title": "Autonomous Vision-Based Magnetic Microrobotic Pushing of Micro-Objects and Cells",
+    "publisher": "arXiv",
+    "abstract": "Accurate and autonomous transportation of micro-objects and biological cells can enable significant advances in a wide variety of research disciplines. Here, we present a novel, vision-based, model-free microrobotic pushing algorithm for the autonomous manipulation of micro objects and biological cells. The algorithm adjusts the axis of a rotating magnetic field that in turn controls the heading angle and spin axis of a spherical Janus rolling microrobot. We introduce the concept of a microrobotic guiding corridor to constrain the object and to avoid pushing failures. We then show that employing only two simple conditions, the microrobot is able to successfully and autonomously push microscale objects along predefined trajectories. We evaluate the performance of the algorithm by measuring the mean absolute error and completion time relative to a desired path at different actuation frequencies and guiding corridor widths. Finally, we demonstrate biomedical applicability by autonomously transporting a single biological cell, highlighting the methods potential for applications in tissue engineering, drug delivery and synthetic biology.",
+    "URL": "http://arxiv.org/abs/2505.06450",
+    "DOI": "10.48550/arXiv.2505.06450",
+    "note": "arXiv:2505.06450 [cs]",
+    "number": "arXiv:2505.06450",
+    "author": [
+      {
+        "family": "Sokolich",
+        "given": "Max"
+      },
+      {
+        "family": "Kirmizitas",
+        "given": "Ceren"
+      },
+      {
+        "family": "Das",
+        "given": "Sambeeta"
+      },
+      {
+        "family": "Weiss",
+        "given": "Ron"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2025,
+          5,
+          9
+        ]
+      ]
+    },
+    "accessed": {
+      "date-parts": [
+        [
+          2025,
+          10,
+          26
+        ]
+      ]
+    }
+  },
+  {
+    "id": "22143410/NCMBHW2M",
+    "type": "article-journal",
+    "title": "Automatic Compilation from High-Level Languages to Genetic Regulatory Networks",
+    "language": "en",
+    "author": [
+      {
+        "family": "Beal",
+        "given": "Jacob"
+      },
+      {
+        "family": "Lu",
+        "given": "Ting"
+      },
+      {
+        "family": "Weiss",
+        "given": "Ron"
+      }
+    ]
+  },
+  {
+    "id": "22143410/TA7AUZAU",
+    "type": "article-journal",
+    "title": "Automated Design and Programming of a Microfluidic DNA Computer",
+    "container-title": "Natural Computing",
+    "page": "1-13",
+    "volume": "5",
+    "issue": "1",
+    "abstract": "Previously, we described ways to implement the functions AND and OR in a DNA computer consisting of microreactors with attached heating elements that control annealing of DNA. Based on these findings, we have devised a similar device that can solve a satisfiability problem in any form. The device occupies linear space and operates in quadratic time, while a previously described competing device is built in quadratic space and operates in quadratic time or greater. Reducing the number of reactors in a DNA computer reduces the loss of DNA through binding to the surfaces of the system.",
+    "URL": "https://doi.org/10.1007/s11047-005-3803-3",
+    "DOI": "10.1007/s11047-005-3803-3",
+    "journalAbbreviation": "Nat Comput",
+    "language": "en",
+    "author": [
+      {
+        "family": "Livstone",
+        "given": "Michael S."
+      },
+      {
+        "family": "Weiss",
+        "given": "Ron"
+      },
+      {
+        "family": "Landweber",
+        "given": "Laura F."
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2006,
+          3,
+          1
+        ]
+      ]
+    },
+    "accessed": {
+      "date-parts": [
+        [
+          2025,
+          10,
+          26
+        ]
+      ]
+    }
+  },
+  {
+    "id": "22143410/V27X2RN8",
+    "type": "article-journal",
+    "title": "Author Correction: Robust and tunable signal processing in mammalian cells via engineered covalent modification cycles",
+    "container-title": "Nature Communications",
+    "page": "4775",
+    "volume": "14",
+    "issue": "1",
+    "URL": "https://www.nature.com/articles/s41467-023-40559-5",
+    "DOI": "10.1038/s41467-023-40559-5",
+    "note": "Publisher: Nature Publishing Group",
+    "shortTitle": "Author Correction",
+    "journalAbbreviation": "Nat Commun",
+    "language": "en",
+    "author": [
+      {
+        "family": "Jones",
+        "given": "Ross D."
+      },
+      {
+        "family": "Qian",
+        "given": "Yili"
+      },
+      {
+        "family": "Ilia",
+        "given": "Katherine"
+      },
+      {
+        "family": "Wang",
+        "given": "Benjamin"
+      },
+      {
+        "family": "Laub",
+        "given": "Michael T."
+      },
+      {
+        "family": "Del Vecchio",
+        "given": "Domitilla"
+      },
+      {
+        "family": "Weiss",
+        "given": "Ron"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2023,
+          8,
+          8
+        ]
+      ]
+    },
+    "accessed": {
+      "date-parts": [
+        [
+          2025,
+          10,
+          26
+        ]
+      ]
+    }
+  },
+  {
+    "id": "22143410/3BKB8EQW",
+    "type": "paper-conference",
+    "title": "APS -APS March Meeting 2015 - Event - Noise-stabilized Turing Patterns in a Synthetic Biofilm",
+    "container-title": "Bulletin of the American Physical Society",
+    "publisher": "American Physical Society",
+    "volume": "Volume 60, Number 1",
+    "event": "APS March Meeting 2015",
+    "URL": "https://meetings.aps.org/Meeting/MAR15/Session/W48.6",
+    "accessed": {
+      "date-parts": [
+        [
+          2025,
+          10,
+          26
+        ]
+      ]
+    }
+  },
+  {
+    "id": "22143410/DG4RIQEX",
+    "type": "article-journal",
+    "title": "An RNAi-Enhanced Logic Circuit for Cancer Specific Detection and Destruction",
+    "abstract": "Modern breast cancer therapies utilize non-specific approaches to kill or remove cancerous cells, inflicting significant collateral damage to healthy cells. In response to the need for highly targeted detection and destruction of cancerous cells, we propose to implement multi-input genetic circuits that act as cell state classifiers based on mRNA or microRNA expression profiling. The mRNA sensing project is focused on the MCF-7 breast adenocarcinoma cell line. MCF-7 cells overexpress Gata3, NPY1R and TFF1 mRNA relative to healthy cells. Based on our bioinformatics analysis, taking into account the three biomarkers allows for dramatically improved specificity in comparison to targeting single genes. We therefore design a three-input AND gate that triggers a response only when all three biomarkers are expressed above a defined threshold. In second approach we implement transcriptionalpost-transcriptional regulatory circuit that senses expression levels of a customizable set of endogenous microRNAs and computes whether to trigger a response if the expression levels match a pre-determined profile of interest. We have created a circuit that computes a complex abstract logic miR1 AND miR23 AND NOT miR4 AND NOTmiR5 AND NOT miR6 and selectively triggers output response in HeLa but not in other cells.",
+    "URL": "https://apps.dtic.mil/sti/html/tr/ADA582947/",
+    "language": "en",
+    "author": [
+      {
+        "family": "Weiss",
+        "given": "Ron"
+      },
+      {
+        "family": "Wroblewska",
+        "given": "Liliana"
+      },
+      {
+        "family": "Xie",
+        "given": "Zhen"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2013,
+          2,
+          1
+        ]
+      ]
+    },
+    "accessed": {
+      "date-parts": [
+        [
+          2025,
+          10,
+          26
+        ]
+      ]
+    }
+  },
+  {
+    "id": "22143410/XNPEZWQN",
+    "type": "webpage",
+    "title": "An in Vivo General Purpose Molecular Logic Evaluator",
+    "URL": "https://aiche.confex.com/aiche/2007/techprogram/P94892.HTM",
+    "accessed": {
+      "date-parts": [
+        [
+          2025,
+          10,
+          26
+        ]
+      ]
+    }
+  },
+  {
+    "id": "22143410/MBS6Z83P",
+    "type": "webpage",
+    "title": "An engineered protein-phosphorylation toggle network with implications for endogenous network discovery | Science",
+    "URL": "https://www.science.org/doi/full/10.1126/science.aav0780",
+    "accessed": {
+      "date-parts": [
+        [
+          2025,
+          10,
+          26
+        ]
+      ]
+    }
+  },
+  {
+    "id": "22143410/Q4XSR4CD",
+    "type": "article-journal",
+    "title": "An endoribonuclease-based feedforward controller for decoupling resource-limited genetic modules in mammalian cells",
+    "container-title": "Nature Communications",
+    "page": "5690",
+    "volume": "11",
+    "issue": "1",
+    "abstract": "Synthetic biology has the potential to bring forth advanced genetic devices for applications in healthcare and biotechnology. However, accurately predicting the behavior of engineered genetic devices remains difficult due to lack of modularity, wherein a device’s output does not depend only on its intended inputs but also on its context. One contributor to lack of modularity is loading of transcriptional and translational resources, which can induce coupling among otherwise independently-regulated genes. Here, we quantify the effects of resource loading in engineered mammalian genetic systems and develop an endoribonuclease-based feedforward controller that can adapt the expression level of a gene of interest to significant resource loading in mammalian cells. Near-perfect adaptation to resource loads is facilitated by high production and catalytic rates of the endoribonuclease. Our design is portable across cell lines and enables predictable tuning of controller function. Ultimately, our controller is a general-purpose device for predictable, robust, and context-independent control of gene expression.",
+    "URL": "https://www.nature.com/articles/s41467-020-19126-9",
+    "DOI": "10.1038/s41467-020-19126-9",
+    "note": "Publisher: Nature Publishing Group",
+    "journalAbbreviation": "Nat Commun",
+    "language": "en",
+    "author": [
+      {
+        "family": "Jones",
+        "given": "Ross D."
+      },
+      {
+        "family": "Qian",
+        "given": "Yili"
+      },
+      {
+        "family": "Siciliano",
+        "given": "Velia"
+      },
+      {
+        "family": "DiAndreth",
+        "given": "Breanna"
+      },
+      {
+        "family": "Huh",
+        "given": "Jin"
+      },
+      {
+        "family": "Weiss",
+        "given": "Ron"
+      },
+      {
+        "family": "Del Vecchio",
+        "given": "Domitilla"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2020,
+          11,
+          10
+        ]
+      ]
+    },
+    "accessed": {
+      "date-parts": [
+        [
+          2025,
+          10,
+          26
+        ]
+      ]
+    }
+  },
+  {
+    "id": "22143410/4B5EMM7N",
+    "type": "article-journal",
+    "title": "An End-to-End Workflow for Engineering of Biological Networks from High-Level Specifications",
+    "container-title": "ACS Synthetic Biology",
+    "page": "317-331",
+    "volume": "1",
+    "issue": "8",
+    "URL": "https://pubs.acs.org/doi/10.1021/sb300030d",
+    "DOI": "10.1021/sb300030d",
+    "journalAbbreviation": "ACS Synth. Biol.",
+    "language": "en",
+    "author": [
+      {
+        "family": "Beal",
+        "given": "Jacob"
+      },
+      {
+        "family": "Weiss",
+        "given": "Ron"
+      },
+      {
+        "family": "Densmore",
+        "given": "Douglas"
+      },
+      {
+        "family": "Adler",
+        "given": "Aaron"
+      },
+      {
+        "family": "Appleton",
+        "given": "Evan"
+      },
+      {
+        "family": "Babb",
+        "given": "Jonathan"
+      },
+      {
+        "family": "Bhatia",
+        "given": "Swapnil"
+      },
+      {
+        "family": "Davidsohn",
+        "given": "Noah"
+      },
+      {
+        "family": "Haddock",
+        "given": "Traci"
+      },
+      {
+        "family": "Loyall",
+        "given": "Joseph"
+      },
+      {
+        "family": "Schantz",
+        "given": "Richard"
+      },
+      {
+        "family": "Vasilev",
+        "given": "Viktor"
+      },
+      {
+        "family": "Yaman",
+        "given": "Fusun"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2012,
+          8,
+          17
+        ]
+      ]
+    },
+    "accessed": {
+      "date-parts": [
+        [
+          2025,
+          10,
+          26
+        ]
+      ]
+    }
+  },
+  {
+    "id": "22143410/8TP4X22T",
+    "type": "article-journal",
+    "title": "Author Correction: A mixed antagonistic/synergistic miRNA repression model enables accurate predictions of multi-input miRNA sensor activity",
+    "container-title": "Nature Communications",
+    "page": "4640",
+    "volume": "9",
+    "URL": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6214934/",
+    "DOI": "10.1038/s41467-018-07158-1",
+    "note": "PMID: 30389927\nPMCID: PMC6214934",
+    "shortTitle": "Author Correction",
+    "journalAbbreviation": "Nat Commun",
+    "author": [
+      {
+        "family": "Gam",
+        "given": "Jeremy J."
+      },
+      {
+        "family": "Babb",
+        "given": "Jonathan"
+      },
+      {
+        "family": "Weiss",
+        "given": "Ron"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2018,
+          11,
+          2
+        ]
+      ]
+    },
+    "accessed": {
+      "date-parts": [
+        [
+          2025,
+          10,
+          26
+        ]
+      ]
+    }
+  },
+  {
+    "id": "22143410/RVM3QHE9",
+    "type": "article-journal",
+    "title": "Artificial cell-cell communication in yeast Saccharomyces cerevisiae using signaling elements from Arabidopsis thaliana",
+    "container-title": "Nature Biotechnology",
+    "page": "1551-1555",
+    "volume": "23",
+    "issue": "12",
+    "URL": "https://www.nature.com/articles/nbt1162",
+    "DOI": "10.1038/nbt1162",
+    "journalAbbreviation": "Nat Biotechnol",
+    "language": "en",
+    "author": [
+      {
+        "family": "Chen",
+        "given": "Ming-Tang"
+      },
+      {
+        "family": "Weiss",
+        "given": "Ron"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          "2005"
+        ]
+      ]
+    },
+    "accessed": {
+      "date-parts": [
+        [
+          2025,
+          10,
+          26
+        ]
+      ]
+    }
+  },
+  {
+    "id": "22143410/QUI9XGIZ",
+    "type": "article-journal",
+    "title": "Analog epigenetic memory revealed by targeted chromatin editing",
+    "container-title": "Cell Genomics",
+    "page": "100985",
+    "abstract": "Cells store information by means of chromatin modifications that persist through cell divisions and can hold gene expression silenced over generations. However, how these modifications may maintain other gene expression states has remained unclear. This study shows that chromatin modifications can maintain a wide range of gene expression levels over time, thus uncovering analog epigenetic memory. By engineering a genomic reporter and epigenetic effectors, we tracked the gene expression dynamics following targeted perturbations to the chromatin state. We found that distinct grades of DNA methylation led to corresponding, persistent gene expression levels. Altering the DNA methylation grade, in turn, resulted in permanent loss of gene expression memory. Consistent with experiments, our chromatin modification model indicates that analog memory arises when the positive feedback between DNA methylation and repressive histone modifications is lacking. This discovery will lead to a deeper understanding of epigenetic memory and to new tools for synthetic biology.",
+    "URL": "https://www.sciencedirect.com/science/article/pii/S2666979X25002411",
+    "DOI": "10.1016/j.xgen.2025.100985",
+    "journalAbbreviation": "Cell Genomics",
+    "author": [
+      {
+        "family": "Palacios",
+        "given": "Sebastian"
+      },
+      {
+        "family": "Bruno",
+        "given": "Simone"
+      },
+      {
+        "family": "Weiss",
+        "given": "Ron"
+      },
+      {
+        "family": "Salibi",
+        "given": "Elia"
+      },
+      {
+        "family": "Goodchild-Michelman",
+        "given": "Isabella"
+      },
+      {
+        "family": "Kane",
+        "given": "Andrew"
+      },
+      {
+        "family": "Ilia",
+        "given": "Katherine"
+      },
+      {
+        "family": "Del Vecchio",
+        "given": "Domitilla"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2025,
+          9,
+          9
+        ]
+      ]
+    },
+    "accessed": {
+      "date-parts": [
+        [
+          2025,
+          10,
+          26
+        ]
+      ]
+    }
+  },
+  {
+    "id": "22143410/ADUX4ASI",
+    "type": "article-journal",
+    "title": "An engineered protein-phosphorylation toggle network with implications for endogenous network discovery",
+    "container-title": "Science",
+    "page": "eaav0780",
+    "volume": "373",
+    "issue": "6550",
+    "abstract": "Synthetic biological networks comprising fast, reversible reactions could enable engineering of new cellular behaviors that are not possible with slower regulation. Here, we created a bistable toggle switch in Saccharomyces cerevisiae using a cross-repression topology comprising 11 protein-protein phosphorylation elements. The toggle is ultrasensitive, can be induced to switch states in seconds, and exhibits long-term bistability. Motivated by our toggle’s architecture and size, we developed a computational framework to search endogenous protein pathways for other large and similar bistable networks. Our framework helped us to identify and experimentally verify five formerly unreported endogenous networks that exhibit bistability. Building synthetic protein-protein networks will enable bioengineers to design fast sensing and processing systems, allow sophisticated regulation of cellular processes, and aid discovery of endogenous networks with particular functions.",
+    "URL": "https://www.science.org/doi/full/10.1126/science.aav0780",
+    "DOI": "10.1126/science.aav0780",
+    "note": "Publisher: American Association for the Advancement of Science",
+    "author": [
+      {
+        "family": "Mishra",
+        "given": "Deepak"
+      },
+      {
+        "family": "Bepler",
+        "given": "Tristan"
+      },
+      {
+        "family": "Teague",
+        "given": "Brian"
+      },
+      {
+        "family": "Berger",
+        "given": "Bonnie"
+      },
+      {
+        "family": "Broach",
+        "given": "Jim"
+      },
+      {
+        "family": "Weiss",
+        "given": "Ron"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2021,
+          7,
+          2
+        ]
+      ]
+    },
+    "accessed": {
+      "date-parts": [
+        [
+          2025,
+          10,
+          26
+        ]
+      ]
+    }
+  },
+  {
+    "id": "22143410/5UFQ93NI",
+    "type": "article-journal",
+    "title": "Amorphous computing",
+    "container-title": "Communications of the ACM",
+    "page": "74-82",
+    "volume": "43",
+    "issue": "5",
+    "URL": "https://dl.acm.org/doi/10.1145/332833.332842",
+    "DOI": "10.1145/332833.332842",
+    "journalAbbreviation": "Commun. ACM",
+    "language": "en",
+    "author": [
+      {
+        "family": "Abelson",
+        "given": "Harold"
+      },
+      {
+        "family": "Allen",
+        "given": "Don"
+      },
+      {
+        "family": "Coore",
+        "given": "Daniel"
+      },
+      {
+        "family": "Hanson",
+        "given": "Chris"
+      },
+      {
+        "family": "Homsy",
+        "given": "George"
+      },
+      {
+        "family": "Knight",
+        "given": "Thomas F."
+      },
+      {
+        "family": "Nagpal",
+        "given": "Radhika"
+      },
+      {
+        "family": "Rauch",
+        "given": "Erik"
+      },
+      {
+        "family": "Sussman",
+        "given": "Gerald Jay"
+      },
+      {
+        "family": "Weiss",
+        "given": "Ron"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          "2000"
+        ]
+      ]
+    },
+    "accessed": {
+      "date-parts": [
+        [
+          2025,
+          10,
+          26
+        ]
+      ]
+    }
+  },
+  {
+    "id": "22143410/JSWQ6TPF",
+    "type": "paper-conference",
+    "title": "Aggregation of cells dispersed in packed microgels",
+    "page": "K65.002",
+    "volume": "2019",
+    "event": "APS March Meeting Abstracts",
+    "abstract": "Mixtures of different types of living cells within cultured spheroids segregate in space, sometimes forming core-shell distributions. One long-standing potential mechanism behind this process is described by the differential adhesion hypotheses, which states that cells having differing levels of adhesivity will separate into groups. While this hypothesis has been tested in many ways, alternative driving forces have been proposed. To investigate an extreme limit of cell clustering and segregation, we perform studies using only one cell-type at a time, replacing all other cells with passive, non-adhesive microgel particles. Multiple cell types with tunable cadherin densities are dispersed in polyacrylamide microgels at different volume fractions and monitored over time. In this talk, we will present data on the kinetics of aggregation, the physical characteristics of clusters including fractal dimension, and the role of adhesion energy density on aggregates. By treating microgels as passive, non-adhesive ``surrogate'' cells, we envision testing theoretical models of active matter designed to study cell-cell phase separation, but in this case setting the appropriate parameters to zero.",
+    "URL": "https://ui.adsabs.harvard.edu/abs/2019APS..MARK65002M",
+    "note": "ADS Bibcode: 2019APS..MARK65002M",
+    "author": [
+      {
+        "family": "Morley",
+        "given": "Cameron"
+      },
+      {
+        "family": "Kiwimagi",
+        "given": "Katherine"
+      },
+      {
+        "family": "Tordoff",
+        "given": "Jesse"
+      },
+      {
+        "family": "Weiss",
+        "given": "Ron"
+      },
+      {
+        "family": "Angelini",
+        "given": "Thomas"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2019,
+          1,
+          1
+        ]
+      ]
+    },
+    "accessed": {
+      "date-parts": [
+        [
+          2025,
+          10,
+          26
+        ]
+      ]
+    }
+  },
+  {
+    "id": "22143410/QA66G2AA",
+    "type": "article-journal",
+    "title": "Advances in synthetic biology: on the path from prototypes to applications",
+    "container-title": "Current Opinion in Biotechnology",
+    "collection-title": "Protein technologies and commercial enzymes",
+    "page": "476-483",
+    "volume": "16",
+    "issue": "4",
+    "abstract": "Synthetic biology combines knowledge from various disciplines including molecular biology, engineering, mathematics and physics to design and build novel proteins, genetic circuits and metabolic networks. Early efforts aimed at altering the behavior of individual elements have now evolved to focus on the construction of complex networks in single-cell and multicellular systems. Recent achievements include the development of sophisticated non-native behaviors such as bi-stability, oscillations, proteins customized for biosensing, optimized drug synthesis and programmed spatial pattern formation. The de novo construction of such systems offers valuable quantitative insight into naturally occurring information processing activities. Furthermore, as the techniques for system design, synthesis and optimization mature, we will witness a rapid growth in the capabilities of synthetic systems with a wide-range of applications.",
+    "URL": "https://www.sciencedirect.com/science/article/pii/S0958166905001023",
+    "DOI": "10.1016/j.copbio.2005.07.002",
+    "shortTitle": "Advances in synthetic biology",
+    "journalAbbreviation": "Current Opinion in Biotechnology",
+    "author": [
+      {
+        "family": "McDaniel",
+        "given": "Ryan"
+      },
+      {
+        "family": "Weiss",
+        "given": "Ron"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2005,
+          8,
+          1
+        ]
+      ]
+    },
+    "accessed": {
+      "date-parts": [
+        [
+          2025,
+          10,
+          26
+        ]
+      ]
+    }
+  },
+  {
+    "id": "22143410/Q7MGXIA3",
+    "type": "article-journal",
+    "title": "Addition of histone deacetylase inhibitor in transgenic human cell culture inhibits the secretion of lysosomal enzyme",
+    "container-title": "Resumos",
+    "URL": "https://repositorio.usp.br/item/003074994",
+    "language": "pt-br",
+    "author": [
+      {
+        "family": "Figueiredo",
+        "given": "Lílian Louise Souza"
+      },
+      {
+        "family": "Coelho",
+        "given": "Ana Carolina"
+      },
+      {
+        "family": "Wiezel",
+        "given": "Cláudia Emília Vieira"
+      },
+      {
+        "family": "Tirapelli",
+        "given": "Daniela Pretti da Cunha"
+      },
+      {
+        "family": "D'almeida",
+        "given": "Vânia"
+      },
+      {
+        "family": "Abraham",
+        "given": "Kuruvilla Joseph"
+      },
+      {
+        "family": "Siciliano",
+        "given": "Velia"
+      },
+      {
+        "family": "Weiss",
+        "given": "Ron"
+      },
+      {
+        "family": "Gerson",
+        "given": "Stanton"
+      },
+      {
+        "family": "Fontes",
+        "given": "Aparecida Maria"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2021
+        ]
+      ]
+    },
+    "accessed": {
+      "date-parts": [
+        [
+          2025,
+          10,
+          26
+        ]
+      ]
+    }
+  },
+  {
+    "id": "22143410/HBUQ28VQ",
+    "type": "article-journal",
+    "title": "A universal RNAi-based logic evaluator that operates in mammalian cells",
+    "container-title": "Nature Biotechnology",
+    "page": "795-801",
+    "volume": "25",
+    "issue": "7",
+    "abstract": "Molecular automata1,2,3 that combine sensing4,5,6, computation7,8,9,10,11,12 and actuation13,14 enable programmable manipulation of biological systems. We use RNA interference (RNAi)15 in human kidney cells to construct a molecular computing core that implements general Boolean logic1,3,8,9,10,11,12,16 to make decisions based on endogenous molecular inputs. The state of an endogenous input is encoded by the presence or absence of 'mediator' small interfering RNAs (siRNAs). The encoding rules, combined with a specific arrangement of the siRNA targets in a synthetic gene network17, allow direct evaluation of any Boolean expression in standard forms using siRNAs and indirect evaluation using endogenous inputs. We demonstrate direct evaluation of expressions with up to five logic variables. Implementation of the encoding rules through sensory up- and down-regulatory links between the inputs and siRNA mediators will allow arbitrary Boolean decision-making using these inputs.",
+    "URL": "https://www.nature.com/articles/nbt1307",
+    "DOI": "10.1038/nbt1307",
+    "note": "Publisher: Nature Publishing Group",
+    "journalAbbreviation": "Nat Biotechnol",
+    "language": "en",
+    "author": [
+      {
+        "family": "Rinaudo",
+        "given": "Keller"
+      },
+      {
+        "family": "Bleris",
+        "given": "Leonidas"
+      },
+      {
+        "family": "Maddamsetti",
+        "given": "Rohan"
+      },
+      {
+        "family": "Subramanian",
+        "given": "Sairam"
+      },
+      {
+        "family": "Weiss",
+        "given": "Ron"
+      },
+      {
+        "family": "Benenson",
+        "given": "Yaakov"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2007,
+          7
+        ]
+      ]
+    },
+    "accessed": {
+      "date-parts": [
+        [
+          2025,
+          10,
+          26
+        ]
+      ]
+    }
+  },
+  {
+    "id": "22143410/FZERA62K",
+    "type": "patent",
+    "title": "A tunable phosphorylation-based feedback controller of mammalian gene expression",
+    "URL": "https://patents.google.com/patent/US20240018528A1/en",
+    "number": "US20240018528A1",
+    "author": [
+      {
+        "family": "Jones",
+        "given": "Ross D."
+      },
+      {
+        "family": "Qian",
+        "given": "Yili"
+      },
+      {
+        "family": "Vecchio",
+        "given": "Domitilla Del"
+      },
+      {
+        "family": "Weiss",
+        "given": "Ron"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2024,
+          1,
+          18
+        ]
+      ]
+    },
+    "accessed": {
+      "date-parts": [
+        [
+          2025,
+          10,
+          26
+        ]
+      ]
+    }
+  },
+  {
+    "id": "22143410/MVXKKNWV",
+    "type": "article-journal",
+    "title": "A Tunable Long Duration Pulse Generation Circuit in Mammalian Cells",
+    "container-title": "ACS Synthetic Biology",
+    "page": "3576-3586",
+    "volume": "13",
+    "issue": "11",
+    "abstract": "Pulse generator circuits based on incoherent feed-forward logic have been developed in bacterial, yeast, and mammalian systems but are typically limited to production of short pulses lasting less than 1 day. To generate longer-lasting pulses, we introduce a feedback-based topology that induces multiday pulsatile gene expression with tunable duration and amplitude in mammalian cells. We constructed the circuit using the PERSIST platform, which consists of entirely post-transcriptional logic, because our experience suggests that this approach may attenuate long-term epigenetic silencing. To enable external regulation of PERSIST regulatory elements, we engineered inducer-stabilized CRISPR endoRNases that respond to FDA-approved drugs, generating small molecule responses with greater than 20-fold change. These inducer-responsive proteins were connected to a two-state cross-repression positive feedback topology to generate the pulse generator circuit architecture. We then optimized circuit design through chromosomal integration of circuit components at varying stoichiometries, resulting in a small library of circuits displaying tunable pulses lasting between two and 6 days in response to a single 24 h input of inducer. We expect that the small molecule-stabilized PERSIST proteins developed will serve as valuable components in the toolbox for post-transcriptional gene circuit development and that tunable post-transcriptional pulse generator circuits in mammalian cells will enable study of endogenous hysteretic gene networks and support advances in cell therapies and organoid engineering.",
+    "URL": "https://doi.org/10.1021/acssynbio.4c00368",
+    "DOI": "10.1021/acssynbio.4c00368",
+    "note": "Publisher: American Chemical Society",
+    "journalAbbreviation": "ACS Synth. Biol.",
+    "author": [
+      {
+        "family": "Wauford",
+        "given": "Noreen"
+      },
+      {
+        "family": "Wachter",
+        "given": "Georg"
+      },
+      {
+        "family": "Kiwimagi",
+        "given": "Katherine"
+      },
+      {
+        "family": "Weiss",
+        "given": "Ron"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2024,
+          11,
+          15
+        ]
+      ]
+    },
+    "accessed": {
+      "date-parts": [
+        [
+          2025,
+          10,
+          26
+        ]
+      ]
+    }
+  },
+  {
+    "id": "22143410/8VWWTUNX",
+    "type": "article-journal",
+    "title": "A synthetic transcription platform for programmable gene expression in mammalian cells",
+    "container-title": "Nature Communications",
+    "page": "6167",
+    "volume": "13",
+    "issue": "1",
+    "abstract": "Precise, scalable, and sustainable control of genetic and cellular activities in mammalian cells is key to developing precision therapeutics and smart biomanufacturing. Here we create a highly tunable, modular, versatile CRISPR-based synthetic transcription system for the programmable control of gene expression and cellular phenotypes in mammalian cells. Genetic circuits consisting of well-characterized libraries of guide RNAs, binding motifs of synthetic operators, transcriptional activators, and additional genetic regulatory elements express mammalian genes in a highly predictable and tunable manner. We demonstrate the programmable control of reporter genes episomally and chromosomally, with up to 25-fold more activity than seen with the EF1α promoter, in multiple cell types. We use these circuits to program the secretion of human monoclonal antibodies and to control T-cell effector function marked by interferon-γ production. Antibody titers and interferon-γ concentrations significantly correlate with synthetic promoter strengths, providing a platform for programming gene expression and cellular function in diverse applications.",
+    "URL": "https://www.nature.com/articles/s41467-022-33287-9",
+    "DOI": "10.1038/s41467-022-33287-9",
+    "note": "Publisher: Nature Publishing Group",
+    "journalAbbreviation": "Nat Commun",
+    "language": "en",
+    "author": [
+      {
+        "family": "Chen",
+        "given": "William C. W."
+      },
+      {
+        "family": "Gaidukov",
+        "given": "Leonid"
+      },
+      {
+        "family": "Lai",
+        "given": "Yong"
+      },
+      {
+        "family": "Wu",
+        "given": "Ming-Ru"
+      },
+      {
+        "family": "Cao",
+        "given": "Jicong"
+      },
+      {
+        "family": "Gutbrod",
+        "given": "Michael J."
+      },
+      {
+        "family": "Choi",
+        "given": "Gigi C. G."
+      },
+      {
+        "family": "Utomo",
+        "given": "Rachel P."
+      },
+      {
+        "family": "Chen",
+        "given": "Ying-Chou"
+      },
+      {
+        "family": "Wroblewska",
+        "given": "Liliana"
+      },
+      {
+        "family": "Kellis",
+        "given": "Manolis"
+      },
+      {
+        "family": "Zhang",
+        "given": "Lin"
+      },
+      {
+        "family": "Weiss",
+        "given": "Ron"
+      },
+      {
+        "family": "Lu",
+        "given": "Timothy K."
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2022,
+          10,
+          18
+        ]
+      ]
+    },
+    "accessed": {
+      "date-parts": [
+        [
+          2025,
+          10,
+          26
+        ]
+      ]
+    }
+  },
+  {
+    "id": "22143410/NZBMHKTB",
+    "type": "article-journal",
+    "title": "An Artificial Tissue Homeostasis Circuit Designed via Analog Circuit Techniques",
+    "container-title": "IEEE Transactions on Biomedical Circuits and Systems",
+    "page": "540-553",
+    "volume": "13",
+    "issue": "3",
+    "URL": "https://ieeexplore.ieee.org/document/8673580/",
+    "DOI": "10.1109/TBCAS.2019.2907074",
+    "journalAbbreviation": "IEEE Trans. Biomed. Circuits Syst.",
+    "author": [
+      {
+        "family": "Teo",
+        "given": "Jonathan J. Y."
+      },
+      {
+        "family": "Weiss",
+        "given": "Ron"
+      },
+      {
+        "family": "Sarpeshkar",
+        "given": "Rahul"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          "2019"
+        ]
+      ]
+    },
+    "accessed": {
+      "date-parts": [
+        [
+          2025,
+          10,
+          26
+        ]
+      ]
+    }
+  },
+  {
+    "id": "22143410/ZHCV6E58",
+    "type": "paper-conference",
+    "title": "Advancing Microphysiological Systems: Strategies for Perfusable Vascularized Tissues in Disease Modeling and Therapeutic Research",
+    "publisher": "AIChE",
+    "event": "2024 AIChE Annual Meeting",
+    "abstract": "Microphysiological systems (MPS) have become indispensable tools for simulating...",
+    "URL": "https://aiche.confex.com/aiche/2024/meetingapp.cgi/Paper/692922",
+    "shortTitle": "Advancing Microphysiological Systems",
+    "author": [
+      {
+        "family": "Wan",
+        "given": "Zhengpeng"
+      },
+      {
+        "family": "Barbie",
+        "given": "David"
+      },
+      {
+        "family": "Weiss",
+        "given": "Ron"
+      },
+      {
+        "family": "Kamm",
+        "given": "Roger"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2024,
+          10,
+          28
+        ]
+      ]
+    },
+    "accessed": {
+      "date-parts": [
+        [
+          2025,
+          10,
+          26
+        ]
+      ]
+    }
+  },
+  {
+    "id": "22143410/DTUC3BUZ",
+    "type": "article-journal",
+    "title": "Accurate Predictions of Genetic Circuit Behavior from Part Characterization and Modular Composition",
+    "container-title": "ACS Synthetic Biology",
+    "page": "673-681",
+    "volume": "4",
+    "issue": "6",
+    "URL": "https://pubs.acs.org/doi/10.1021/sb500263b",
+    "DOI": "10.1021/sb500263b",
+    "journalAbbreviation": "ACS Synth. Biol.",
+    "language": "en",
+    "author": [
+      {
+        "family": "Davidsohn",
+        "given": "Noah"
+      },
+      {
+        "family": "Beal",
+        "given": "Jacob"
+      },
+      {
+        "family": "Kiani",
+        "given": "Samira"
+      },
+      {
+        "family": "Adler",
+        "given": "Aaron"
+      },
+      {
+        "family": "Yaman",
+        "given": "Fusun"
+      },
+      {
+        "family": "Li",
+        "given": "Yinqing"
+      },
+      {
+        "family": "Xie",
+        "given": "Zhen"
+      },
+      {
+        "family": "Weiss",
+        "given": "Ron"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2015,
+          6,
+          19
+        ]
+      ]
+    },
+    "accessed": {
+      "date-parts": [
+        [
+          2025,
+          10,
+          26
+        ]
+      ]
+    }
+  },
+  {
+    "id": "22143410/IKPM2P8Z",
+    "type": "article-journal",
+    "title": "A Software Stack for Speciﬁcation and Robotic Execution of Protocols for Synthetic Biological Engineering",
+    "language": "en",
+    "author": [
+      {
+        "family": "Vasilev",
+        "given": "Viktor"
+      },
+      {
+        "family": "Liu",
+        "given": "Chenkai"
+      },
+      {
+        "family": "Haddock",
+        "given": "Traci"
+      },
+      {
+        "family": "Bhatia",
+        "given": "Swapnil"
+      },
+      {
+        "family": "Adler",
+        "given": "Aaron"
+      },
+      {
+        "family": "Yaman",
+        "given": "Fusun"
+      },
+      {
+        "family": "Beal",
+        "given": "Jacob"
+      },
+      {
+        "family": "Babb",
+        "given": "Jonathan"
+      },
+      {
+        "family": "Weiss",
+        "given": "Ron"
+      },
+      {
+        "family": "Densmore",
+        "given": "Douglas"
+      }
+    ]
+  },
+  {
+    "id": "22143410/PWSMHAH7",
+    "type": "article-journal",
+    "title": "A platform for rapid prototyping of synthetic gene networks in mammalian cells",
+    "container-title": "Nucleic Acids Research",
+    "page": "13440-13451",
+    "volume": "42",
+    "issue": "21",
+    "URL": "http://academic.oup.com/nar/article/42/21/13440/2902835/A-platform-for-rapid-prototyping-of-synthetic-gene",
+    "DOI": "10.1093/nar/gku1082",
+    "language": "en",
+    "author": [
+      {
+        "family": "Duportet",
+        "given": "Xavier"
+      },
+      {
+        "family": "Wroblewska",
+        "given": "Liliana"
+      },
+      {
+        "family": "Guye",
+        "given": "Patrick"
+      },
+      {
+        "family": "Li",
+        "given": "Yinqing"
+      },
+      {
+        "family": "Eyquem",
+        "given": "Justin"
+      },
+      {
+        "family": "Rieders",
+        "given": "Julianne"
+      },
+      {
+        "family": "Rimchala",
+        "given": "Tharathorn"
+      },
+      {
+        "family": "Batt",
+        "given": "Gregory"
+      },
+      {
+        "family": "Weiss",
+        "given": "Ron"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2014,
+          12,
+          1
+        ]
+      ]
+    },
+    "accessed": {
+      "date-parts": [
+        [
+          2025,
+          10,
+          26
+        ]
+      ]
+    }
+  },
+  {
+    "id": "22143410/Z4PTWJJI",
+    "type": "article-journal",
+    "title": "A NOVEL SYNTHETIC AND RECOMBINANT GLUCOCEREBROSIDASE FOR GAUCHER DISEASE: <i>IN SILICO</i> MOLECULAR EVOLUTION AND GENE THERAPY APPROACHES TO ENHANCE ENZYME ACTIVITY",
+    "container-title": "Hematology, Transfusion and Cell Therapy",
+    "collection-title": "HEMO 2023",
+    "page": "S839",
+    "volume": "45",
+    "abstract": "Background\nGaucher disease (GD) is a rare lysosomal storage disease caused by pathogenic variants in the glucocerebrosidase gene (GBA1) resulting in a markedly decreased activity of the lysosomal enzyme b-glucocerebrosidase (GCase). Enzyme replacement therapy is the gold standard for treating GD patients.\nAim\nHere, we investigate whether in silico molecular evolution can be combined with synthetic biology and gene therapy for the development of a new recombinant enzyme with higher activity.\nMaterials and methods\nWe developed novel GBA variants by introducing nonsynonymous mutations into the GBA gene obtained using in silico molecular evolution. These GBA variants are denoted as GBA-7, GBA-8, GBA-9 and GBA-12 and were cloned into lentiviral plasmids using synthetic biology approaches. Additionally, we obtained the wild-type GBA sequence from Homo sapiens, which is labeled GBA-Opt. In addition, we also aim to explore the differences in the transcriptional regulation using two different promoters: the CMV and the human elongation factor 1A (hEF1A). As a control, we generated a construct that expresses the green fluorescent protein (GFP) gene under control of the same promoters. The characterization of these DNA constructs was performed using 293FT human cell line. We generated a total of 166 293FT cell lines with transient production of GBA (n = 100), GBA + GFP (n = 40), GFP (n = 8), and included virgin cells (n = 18). Out of the 100 GBA cell lines, 50 were utilized for real-time PCR analysis to investigate the transcription levels, while the remaining 50 were used to assess the enzyme-specific activity of GCase variants by fluorimetric assay. Furthermore, we determine mRNA secondary structures of GBA variants using the ViennaRNA and three-dimensional structures of the GCase-Opt and GCase-7 enzymes were elucidated using the AlphaFold2.\nResults and discussion\nQuantitative real time PCR revealed that for 4 GBA transcripts (GBA-opt, GBA-7, GBA-9 and GBA-12) under control of hEF1A promoter showed higher expression in 293FT cells compared with CMV promoter (p < 0.05). Among the GBA variants, we observed that 293FT_GBA-7 cells express 5.2-fold higher transcript levels compared with 293FT_GBA-opt cells (p < 0.05). In cells lines co-transfected with GFP and GBA, we observed that comparing normalized activity values while considering transfection efficiencies can provide a more accurate assessment of the enzyme catalytic properties. We also screened the cell lysates for GCase specific activity. We observed that 293FT_GBA-7 cells and 293FT_GBA-Opt cells produced 507.6 ± 38.16 and 426.6 ± 25.25 nmol substrate hydrolyzed/mg protein/h, respectively. For the other transgenic 293FT cell lines these values were lower. Also, for 293FT transfected with mock plasmid this value was 82.92 ± 5.83 nmol/mg/h, respectively (p = 0.014). The 3D structures of GCase-Opt and GCase-7 revealed a high degree of alignment with the Homo sapiens enzyme (UniProt P04062).\nConclusions\nThese findings demonstrate the promise of using in silico molecular evolution and synthetic biology approaches for developing enhanced enzyme variants for Gaucher disease, and suggest that GBA-7 could be a viable candidate for further investigation for replacement therapy in GD. Additional studies are warranted to investigate the biodistribution and long-term effects of GBA-7 in animal models.",
+    "URL": "https://www.sciencedirect.com/science/article/pii/S2531137923016887",
+    "DOI": "10.1016/j.htct.2023.09.1512",
+    "shortTitle": "A NOVEL SYNTHETIC AND RECOMBINANT GLUCOCEREBROSIDASE FOR GAUCHER DISEASE",
+    "journalAbbreviation": "Hematology, Transfusion and Cell Therapy",
+    "author": [
+      {
+        "family": "Figueiredo",
+        "given": "LLS"
+      },
+      {
+        "family": "Souza",
+        "given": "LEB"
+      },
+      {
+        "family": "Orellana",
+        "given": "MD"
+      },
+      {
+        "family": "Covas",
+        "given": "DT"
+      },
+      {
+        "family": "Lichtenstein",
+        "given": "F"
+      },
+      {
+        "family": "Siciliano",
+        "given": "V"
+      },
+      {
+        "family": "Abraham",
+        "given": "KJ"
+      },
+      {
+        "family": "Weiss",
+        "given": "R"
+      },
+      {
+        "family": "Gerson",
+        "given": "SL"
+      },
+      {
+        "family": "Fontes",
+        "given": "AM"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2023,
+          10,
+          1
+        ]
+      ]
+    },
+    "accessed": {
+      "date-parts": [
+        [
+          2025,
+          10,
+          26
+        ]
+      ]
+    }
+  },
+  {
+    "id": "22143410/K3UD94A3",
+    "type": "article-journal",
+    "title": "A novel Bxb1 integrase RMCE system for high fidelity site‐specific integration of mAb expression cassette in CHO Cells",
+    "container-title": "Biotechnology and Bioengineering",
+    "page": "1837-1846",
+    "volume": "114",
+    "issue": "8",
+    "abstract": "ABSTRACT\n            \n              \n              As CHO cell line development for biotherapeutic production becomes more sophisticated through the availability of the CHO genome sequence, the ability to accurately and reproducibly engineer the host cell genome has become increasingly important. Multiple well characterized systems for site‐specific integration will enable more complex cell line engineering to generate cell lines with desirable attributes. We built and characterized a novel recombinase mediated cassette exchange (RMCE) system using Bxb1 integrase and compared it to the commonly used Flp/FRT RMCE system. We first integrated a DNA construct flanked by either Bxb1 attachment sites or FRT sequences (referred to as a landing pad) into the Fer1L4 genomic locus of CHO‐S cells using CRISPR/Cas9 mediated homologous recombination. We characterized the resulting clones harboring either the Bxb1 or Flp/FRT landing pad using whole genome resequencing to compare their genomes with the parental host cell line. We determined that each landing pad was specifically integrated into the Fer1L4 locus in the selected clones and observed no major structural changes in the genome or variations in copy number as a result of CRISPR/Cas9 modification. We subsequently tested the ability of the Bxb1 and Flp/FRT landing pad clones to perform proper RMCE with donor vectors containing identical mAb expression cassettes flanked by either Bxb1 attachment sites or FRT sites. We demonstrated that both RMCE systems were able to generate stable pools in a similar time frame with comparable mAb expression. Through genetic characterization of up to 24 clones derived from either system, we determined that the BxB1 RMCE system yielded higher fidelity RMCE events than the Flp/FRT system as evidenced by a higher percentage of clones with expected integration of the mAb cassette into the landing pad in the respective cell lines. We conclude that Bxb1 RMCE is an excellent alternative to Flp/FRT RMCE and valuable addition to our toolbox enabling the engineering of more sophisticated cell lines for biotherapeutic production. Biotechnol. Bioeng. 2017;114: 1837–1846. © 2017 Wiley Periodicals, Inc.",
+    "URL": "https://analyticalsciencejournals.onlinelibrary.wiley.com/doi/10.1002/bit.26268",
+    "DOI": "10.1002/bit.26268",
+    "journalAbbreviation": "Biotech & Bioengineering",
+    "language": "en",
+    "author": [
+      {
+        "family": "Inniss",
+        "given": "Mara C."
+      },
+      {
+        "family": "Bandara",
+        "given": "Kalpanie"
+      },
+      {
+        "family": "Jusiak",
+        "given": "Barbara"
+      },
+      {
+        "family": "Lu",
+        "given": "Timothy K."
+      },
+      {
+        "family": "Weiss",
+        "given": "Ron"
+      },
+      {
+        "family": "Wroblewska",
+        "given": "Liliana"
+      },
+      {
+        "family": "Zhang",
+        "given": "Lin"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          "2017"
+        ]
+      ]
+    },
+    "accessed": {
+      "date-parts": [
+        [
+          2025,
+          10,
+          26
+        ]
+      ]
+    }
+  },
+  {
+    "id": "22143410/MP4GNDJE",
+    "type": "article-journal",
+    "title": "A molecular noise generator",
+    "container-title": "Physical Biology",
+    "page": "036006",
+    "volume": "5",
+    "issue": "3",
+    "abstract": "Recent studies have demonstrated that intracellular variations in the rate of gene expression are of fundamental importance to cellular function and development. While such ‘noise’ is often considered detrimental in the context of perturbing genetic systems, it can be beneficial in processes such as species diversification and facilitation of evolution. A major difficulty in exploring such effects is that the magnitude and spectral properties of the induced variations arise from some intrinsic cellular process that is difficult to manipulate. Here, we present two designs of a molecular noise generator that allow for the flexible modulation of the noise profile of a target gene. The first design uses a dual-signal mechanism that enables independent tuning of the mean and variability of an output protein. This is achieved through the combinatorial control of two signals that regulate transcription and translation separately. We then extend the design to allow for DNA copy-number regulation, which leads to a wider tuning spectrum for the output molecule. To gain a deeper understanding of the circuit's functionality in a realistic environment, we introduce variability in the input signals in order to ascertain the degree of noise induced by the control process itself. We conclude by illustrating potential applications of the noise generator, demonstrating how it could be used to ascertain the robust or fragile properties of a genetic circuit.",
+    "URL": "https://doi.org/10.1088/1478-3975/5/3/036006",
+    "DOI": "10.1088/1478-3975/5/3/036006",
+    "journalAbbreviation": "Phys. Biol.",
+    "language": "en",
+    "author": [
+      {
+        "family": "Lu",
+        "given": "Ting"
+      },
+      {
+        "family": "Ferry",
+        "given": "Michael"
+      },
+      {
+        "family": "Weiss",
+        "given": "Ron"
+      },
+      {
+        "family": "Hasty",
+        "given": "Jeff"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2008,
+          8
+        ]
+      ]
+    },
+    "accessed": {
+      "date-parts": [
+        [
+          2025,
+          10,
+          26
+        ]
+      ]
+    }
+  },
+  {
+    "id": "22143410/DKFPEIMB",
+    "type": "chapter",
+    "title": "A Modular Approach to Building Complex Synthetic Circuits",
+    "container-title": "Mammalian Synthetic Promoters",
+    "publisher": "Springer",
+    "publisher-place": "New York, NY",
+    "page": "231-248",
+    "event-place": "New York, NY",
+    "abstract": "Efficient assembly of genetic circuitsgenetic circuits is a critical element in synthetic biology for implementing complex gene expression systems. Here we present an assembly framework that integrates recent developments in DNA recombination technologies and unique nucleotide sequences for modular and reliable construction of complex genetic circuits. All relevant protocols are described in detail. Implementing these protocols relies on readily available reagents and basic molecular biology techniques without the need for specialized equipment.",
+    "URL": "https://doi.org/10.1007/978-1-4939-7223-4_17",
+    "ISBN": "978-1-4939-7223-4",
+    "note": "DOI: 10.1007/978-1-4939-7223-4_17",
+    "language": "en",
+    "author": [
+      {
+        "family": "Li",
+        "given": "Yinqing"
+      },
+      {
+        "family": "Weiss",
+        "given": "Ron"
+      }
+    ],
+    "editor": [
+      {
+        "family": "Gould",
+        "given": "David"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2017
+        ]
+      ]
+    },
+    "accessed": {
+      "date-parts": [
+        [
+          2025,
+          10,
+          26
+        ]
+      ]
+    }
+  },
+  {
+    "id": "22143410/VNAI3MQW",
+    "type": "article-journal",
+    "title": "A synthetic multicellular system for programmed pattern formation",
+    "container-title": "Nature",
+    "page": "1130-1134",
+    "volume": "434",
+    "issue": "7037",
+    "URL": "https://www.nature.com/articles/nature03461",
+    "DOI": "10.1038/nature03461",
+    "journalAbbreviation": "Nature",
+    "language": "en",
+    "author": [
+      {
+        "family": "Basu",
+        "given": "Subhayu"
+      },
+      {
+        "family": "Gerchman",
+        "given": "Yoram"
+      },
+      {
+        "family": "Collins",
+        "given": "Cynthia H."
+      },
+      {
+        "family": "Arnold",
+        "given": "Frances H."
+      },
+      {
+        "family": "Weiss",
+        "given": "Ron"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          "2005"
+        ]
+      ]
+    },
+    "accessed": {
+      "date-parts": [
+        [
+          2025,
+          10,
+          26
+        ]
+      ]
+    }
+  },
+  {
+    "id": "22143410/FVHGSCMM",
+    "type": "article-journal",
+    "title": "A multi-landing pad DNA integration platform for mammalian cell engineering",
+    "container-title": "Nucleic Acids Research",
+    "page": "4072-4086",
+    "volume": "46",
+    "issue": "8",
+    "URL": "https://academic.oup.com/nar/article/46/8/4072/4958205",
+    "DOI": "10.1093/nar/gky216",
+    "language": "en",
+    "author": [
+      {
+        "family": "Gaidukov",
+        "given": "Leonid"
+      },
+      {
+        "family": "Wroblewska",
+        "given": "Liliana"
+      },
+      {
+        "family": "Teague",
+        "given": "Brian"
+      },
+      {
+        "family": "Nelson",
+        "given": "Tom"
+      },
+      {
+        "family": "Zhang",
+        "given": "Xin"
+      },
+      {
+        "family": "Liu",
+        "given": "Yan"
+      },
+      {
+        "family": "Jagtap",
+        "given": "Kalpana"
+      },
+      {
+        "family": "Mamo",
+        "given": "Selamawit"
+      },
+      {
+        "family": "Tseng",
+        "given": "Wen Allen"
+      },
+      {
+        "family": "Lowe",
+        "given": "Alexis"
+      },
+      {
+        "family": "Das",
+        "given": "Jishnu"
+      },
+      {
+        "family": "Bandara",
+        "given": "Kalpanie"
+      },
+      {
+        "family": "Baijuraj",
+        "given": "Swetha"
+      },
+      {
+        "family": "Summers",
+        "given": "Nevin M"
+      },
+      {
+        "family": "Lu",
+        "given": "Timothy K"
+      },
+      {
+        "family": "Zhang",
+        "given": "Lin"
+      },
+      {
+        "family": "Weiss",
+        "given": "Ron"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2018,
+          5,
+          4
+        ]
+      ]
+    },
+    "accessed": {
+      "date-parts": [
+        [
+          2025,
+          10,
+          26
+        ]
+      ]
+    }
+  },
+  {
+    "id": "22143410/FXKE3RGT",
+    "type": "article-journal",
+    "title": "A mixed antagonistic/synergistic miRNA repression model enables accurate predictions of multi-input miRNA sensor activity",
+    "container-title": "Nature Communications",
+    "page": "2430",
+    "volume": "9",
+    "issue": "1",
+    "abstract": "Abstract\n            MicroRNAs (miRNAs) regulate a majority of protein-coding genes, affecting nearly all biological pathways. However, the quantitative dimensions of miRNA-based regulation are not fully understood. In particular, the implications of miRNA target site location, composition rules for multiple target sites, and cooperativity limits for genes regulated by many miRNAs have not been quantitatively characterized. We explore these aspects of miRNA biology at a quantitative single-cell level using a library of 620 miRNA sensors and reporters that are regulated by many miRNA target sites at different positions. Interestingly, we find that miRNA target site sets within the same untranslated region exhibit combined miRNA activity described by an antagonistic relationship while those in separate untranslated regions show synergy. The resulting antagonistic/synergistic computational model enables the high-fidelity prediction of miRNA sensor activity for sensors containing many miRNA targets. These findings may help to accelerate the development of sophisticated sensors for clinical and research applications.",
+    "URL": "https://www.nature.com/articles/s41467-018-04575-0",
+    "DOI": "10.1038/s41467-018-04575-0",
+    "journalAbbreviation": "Nat Commun",
+    "language": "en",
+    "author": [
+      {
+        "family": "Gam",
+        "given": "Jeremy J."
+      },
+      {
+        "family": "Babb",
+        "given": "Jonathan"
+      },
+      {
+        "family": "Weiss",
+        "given": "Ron"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2018,
+          6,
+          22
+        ]
+      ]
+    },
+    "accessed": {
+      "date-parts": [
+        [
+          2025,
+          10,
+          26
+        ]
+      ]
+    }
+  },
+  {
+    "id": "22143410/EUQ5M875",
+    "type": "article-journal",
+    "title": "A Method for Fast, High-Precision Characterization of Synthetic Biology Devices",
+    "abstract": "Engineering biological systems with predictable behavior is a foundational goal of synthetic biology. To accomplish this, it is important to accurately characterize the behavior of biological devices. Prior characterization efforts, however, have generally not yielded enough high-quality information to enable compositional design. In the TASBE (A Tool-Chain to Accelerate Synthetic Biological Engineering) project we have developed a new characterization technique capable of producing such data. This document describes the techniques we have developed, along with examples of their application, so that the techniques can be accurately used by others.",
+    "URL": "https://dspace.mit.edu/handle/1721.1/69973",
+    "note": "Accepted: 2012-04-09T17:15:07Z",
+    "language": "en-US",
+    "author": [
+      {
+        "family": "Beal",
+        "given": "Jacob"
+      },
+      {
+        "family": "Weiss",
+        "given": "Ron"
+      },
+      {
+        "family": "Yaman",
+        "given": "Fusun"
+      },
+      {
+        "family": "Davidsohn",
+        "given": "Noah"
+      },
+      {
+        "family": "Adler",
+        "given": "Aaron"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2012,
+          4,
+          7
+        ]
+      ]
+    },
+    "accessed": {
+      "date-parts": [
+        [
+          2025,
+          10,
+          26
+        ]
+      ]
+    }
+  },
+  {
+    "id": "22143410/N4346WCH",
+    "type": "article-journal",
+    "title": "A load driver device for engineering modularity in biological networks",
+    "container-title": "Nature Biotechnology",
+    "page": "1268-1275",
+    "volume": "32",
+    "issue": "12",
+    "URL": "https://www.nature.com/articles/nbt.3044",
+    "DOI": "10.1038/nbt.3044",
+    "journalAbbreviation": "Nat Biotechnol",
+    "language": "en",
+    "author": [
+      {
+        "family": "Mishra",
+        "given": "Deepak"
+      },
+      {
+        "family": "Rivera",
+        "given": "Phillip M"
+      },
+      {
+        "family": "Lin",
+        "given": "Allen"
+      },
+      {
+        "family": "Del Vecchio",
+        "given": "Domitilla"
+      },
+      {
+        "family": "Weiss",
+        "given": "Ron"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          "2014"
+        ]
+      ]
+    },
+    "accessed": {
+      "date-parts": [
+        [
+          2025,
+          10,
+          26
+        ]
+      ]
+    }
+  },
+  {
+    "id": "22143410/TV9P4KR9",
+    "type": "paper-conference",
+    "title": "A Dynamical Biomolecular Neural Network",
+    "container-title": "2019 IEEE 58th Conference on Decision and Control (CDC)",
+    "page": "1797-1802",
+    "event": "2019 IEEE 58th Conference on Decision and Control (CDC)",
+    "abstract": "While much of synthetic biology was founded on the creation of reusable, standardized parts, there is now a growing interest in synthetic networks which can compute unique, specially-designed functions in order to recognize patterns or classify cells in-vivo. While artificial neural networks (ANNs) have long provided a mature mathematical framework to address this problem in-silico, their implementation becomes much more challenging in living systems. In this work, we propose a Biomolecular Neural Network (BNN), a dynamical chemical reaction network which faithfully implements ANN computations and which is unconditionally stable with respect to its parameters when composed into deeper networks. Our implementation emphasizes the usefulness of molecular sequestration for achieving negative weight values and a nonlinear \"activation function\" in its elemental unit, a biomolecular perceptron. We then discuss the application of BNNs to linear and nonlinear classification tasks, and draw analogies to other major concepts in modern machine learning research.",
+    "URL": "https://ieeexplore.ieee.org/abstract/document/9030122",
+    "DOI": "10.1109/CDC40024.2019.9030122",
+    "note": "ISSN: 2576-2370",
+    "author": [
+      {
+        "family": "Moorman",
+        "given": "Andrew"
+      },
+      {
+        "family": "Samaniego",
+        "given": "Christian Cuba"
+      },
+      {
+        "family": "Maley",
+        "given": "Carlo"
+      },
+      {
+        "family": "Weiss",
+        "given": "Ron"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2019,
+          12
+        ]
+      ]
+    },
+    "accessed": {
+      "date-parts": [
+        [
+          2025,
+          10,
+          26
+        ]
+      ]
+    }
+  },
+  {
+    "id": "22143410/CRDJFMCU",
+    "type": "article-journal",
+    "title": "3D aggregation of cells in packed microgel media",
+    "container-title": "Soft Matter",
+    "page": "6572-6581",
+    "volume": "16",
+    "issue": "28",
+    "abstract": "In both natural and applied contexts, investigating cell self-assembly and aggregation within controlled 3D environments leads to improved understanding of how structured cell assemblies emerge, what determines their shapes and sizes, and whether their structural features are stable. However, the inherent limits of using solid scaffolding or liquid spheroid culture for this purpose restrict experimental freedom in studies of cell self-assembly. Here we investigate multi-cellular self-assembly using a 3D culture medium made from packed microgels as a bridge between the extremes of solid scaffolds and liquid culture. We find that cells dispersed at different volume fractions in this microgel-based 3D culture media aggregate into clusters of different sizes and shapes, forming large system-spanning networks at the highest cell densities. We find that the transitions between different states of assembly can be controlled by the level of cell–cell cohesion and by the yield stress of the packed microgel environment. Measurements of aggregate fractal dimension show that those with increased cell–cell cohesion are less sphere-like and more irregularly shaped, indicating that cell stickiness inhibits rearrangements in aggregates, in analogy to the assembly of colloids with strong cohesive bonds. Thus, the effective surface tension often expected to emerge from increased cell cohesion is suppressed in this type of cell self-assembly.",
+    "URL": "https://pubs.rsc.org/en/content/articlelanding/2020/sm/d0sm00517g",
+    "DOI": "10.1039/D0SM00517G",
+    "note": "Publisher: The Royal Society of Chemistry",
+    "journalAbbreviation": "Soft Matter",
+    "language": "en",
+    "author": [
+      {
+        "family": "Morley",
+        "given": "Cameron D."
+      },
+      {
+        "family": "Tordoff",
+        "given": "Jesse"
+      },
+      {
+        "family": "O’Bryan",
+        "given": "Christopher S."
+      },
+      {
+        "family": "Weiss",
+        "given": "Ron"
+      },
+      {
+        "family": "Angelini",
+        "given": "Thomas E."
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2020,
+          7,
+          22
+        ]
+      ]
+    },
+    "accessed": {
+      "date-parts": [
+        [
+          2025,
+          10,
+          26
+        ]
+      ]
+    }
+  },
+  {
+    "id": "22143410/54NEISK4",
+    "type": "article-journal",
+    "title": "A high-throughput screening and computation platform for identifying synthetic promoters with enhanced cell-state specificity (SPECS)",
+    "container-title": "Nature Communications",
+    "page": "2880",
+    "volume": "10",
+    "issue": "1",
+    "abstract": "Cell state-specific promoters constitute essential tools for basic research and biotechnology because they activate gene expression only under certain biological conditions. Synthetic Promoters with Enhanced Cell-State Specificity (SPECS) can be superior to native ones, but the design of such promoters is challenging and frequently requires gene regulation or transcriptome knowledge that is not readily available. Here, to overcome this challenge, we use a next-generation sequencing approach combined with machine learning to screen a synthetic promoter library with 6107 designs for high-performance SPECS for potentially any cell state. We demonstrate the identification of multiple SPECS that exhibit distinct spatiotemporal activity during the programmed differentiation of induced pluripotent stem cells (iPSCs), as well as SPECS for breast cancer and glioblastoma stem-like cells. We anticipate that this approach could be used to create SPECS for gene therapies that are activated in specific cell states, as well as to study natural transcriptional regulatory networks.",
+    "URL": "https://www.nature.com/articles/s41467-019-10912-8",
+    "DOI": "10.1038/s41467-019-10912-8",
+    "note": "Publisher: Nature Publishing Group",
+    "journalAbbreviation": "Nat Commun",
+    "language": "en",
+    "author": [
+      {
+        "family": "Wu",
+        "given": "Ming-Ru"
+      },
+      {
+        "family": "Nissim",
+        "given": "Lior"
+      },
+      {
+        "family": "Stupp",
+        "given": "Doron"
+      },
+      {
+        "family": "Pery",
+        "given": "Erez"
+      },
+      {
+        "family": "Binder-Nissim",
+        "given": "Adina"
+      },
+      {
+        "family": "Weisinger",
+        "given": "Karen"
+      },
+      {
+        "family": "Enghuus",
+        "given": "Casper"
+      },
+      {
+        "family": "Palacios",
+        "given": "Sebastian R."
+      },
+      {
+        "family": "Humphrey",
+        "given": "Melissa"
+      },
+      {
+        "family": "Zhang",
+        "given": "Zhizhuo"
+      },
+      {
+        "family": "Maria Novoa",
+        "given": "Eva"
+      },
+      {
+        "family": "Kellis",
+        "given": "Manolis"
+      },
+      {
+        "family": "Weiss",
+        "given": "Ron"
+      },
+      {
+        "family": "Rabkin",
+        "given": "Samuel D."
+      },
+      {
+        "family": "Tabach",
+        "given": "Yuval"
+      },
+      {
+        "family": "Lu",
+        "given": "Timothy K."
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2019,
+          6,
+          28
+        ]
+      ]
+    },
+    "accessed": {
+      "date-parts": [
+        [
+          2025,
+          10,
+          26
+        ]
+      ]
+    }
+  },
+  {
+    "id": "22143410/4VUVNEQR",
+    "type": "article-journal",
+    "title": "A Content Routing System for Distributed Information Systems",
+    "abstract": "We describe the first system that provides query based associative access to the contents of distributed information servers. Queries describe desired object attributes, and are automatically forwarded to servers that contain relevant information.",
+    "URL": "https://dspace.mit.edu/handle/1721.1/149745",
+    "note": "Accepted: 2023-03-29T15:20:23Z",
+    "language": "en",
+    "author": [
+      {
+        "family": "Sheldon",
+        "given": "Mark A."
+      },
+      {
+        "family": "Duda",
+        "given": "Andrzej"
+      },
+      {
+        "family": "Weiss",
+        "given": "Ron"
+      },
+      {
+        "family": "O'Toole",
+        "given": "James"
+      },
+      {
+        "family": "Gifford",
+        "given": "David K."
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          1993,
+          6
+        ]
+      ]
+    },
+    "accessed": {
+      "date-parts": [
+        [
+          2025,
+          10,
+          26
+        ]
+      ]
+    }
+  },
+  {
+    "id": "22143410/86WICH3D",
+    "type": "article-journal",
+    "title": "A Content Routing System for Distributed Information Servers",
+    "language": "en",
+    "author": [
+      {
+        "family": "Sheldon",
+        "given": "Mark A"
+      },
+      {
+        "family": "Duday",
+        "given": "Andrzej"
+      },
+      {
+        "family": "Weiss",
+        "given": "Ron"
+      },
+      {
+        "family": "O'Toole",
+        "given": "James W"
+      }
+    ]
+  },
+  {
+    "id": "22143410/MRPCVEJI",
+    "type": "article-journal",
+    "title": "A ‘poly-transfection’ method for rapid, one-pot characterization and optimization of genetic systems",
+    "container-title": "Nucleic Acids Research",
+    "page": "e106-e106",
+    "volume": "47",
+    "issue": "18",
+    "abstract": "Abstract\n            Biological research is relying on increasingly complex genetic systems and circuits to perform sophisticated operations in living cells. Performing these operations often requires simultaneous delivery of many genes, and optimizing the stoichiometry of these genes can yield drastic improvements in performance. However, sufficiently sampling the large design space of gene expression stoichiometries in mammalian cells using current methods is cumbersome, complex, or expensive. We present a ‘poly-transfection’ method as a simple yet high-throughput alternative that enables comprehensive evaluation of genetic systems in a single, readily-prepared transfection sample. Each cell in a poly-transfection represents an independent measurement at a distinct gene expression stoichiometry, fully leveraging the single-cell nature of transfection experiments. We first benchmark poly-transfection against co-transfection, showing that titration curves for commonly-used regulators agree between the two methods. We then use poly-transfections to efficiently generate new insights, for example in CRISPRa and synthetic miRNA systems. Finally, we use poly-transfection to rapidly engineer a difficult-to-optimize miRNA-based cell classifier for discriminating cancerous cells. One-pot evaluation enabled by poly-transfection accelerates and simplifies the design of genetic systems, providing a new high-information strategy for interrogating biology.",
+    "URL": "https://academic.oup.com/nar/article/47/18/e106/5542871",
+    "DOI": "10.1093/nar/gkz623",
+    "language": "en",
+    "author": [
+      {
+        "family": "Gam",
+        "given": "Jeremy J"
+      },
+      {
+        "family": "DiAndreth",
+        "given": "Breanna"
+      },
+      {
+        "family": "Jones",
+        "given": "Ross D"
+      },
+      {
+        "family": "Huh",
+        "given": "Jin"
+      },
+      {
+        "family": "Weiss",
+        "given": "Ron"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2019,
+          10,
+          10
+        ]
+      ]
+    },
+    "accessed": {
+      "date-parts": [
+        [
+          2025,
+          10,
+          26
+        ]
+      ]
+    }
+  }
+]
