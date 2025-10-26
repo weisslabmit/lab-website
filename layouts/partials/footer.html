@@ -137,3 +137,19 @@
 })();
 </script>
 
+<script>
+(function() {
+  const fab = document.querySelector('.recruiting-fab');
+  if (!fab) return;
+
+  function toggleFab() {
+    const scrollY = window.scrollY || document.documentElement.scrollTop;
+    const threshold = window.innerHeight * 0.9; // near the end of banner
+    fab.classList.toggle('is-active', scrollY < threshold);
+  }
+
+  window.addEventListener('scroll', toggleFab);
+  window.addEventListener('resize', toggleFab);
+  toggleFab(); // initial check
+})();
+</script>

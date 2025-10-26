@@ -1511,7 +1511,7 @@ section.wrapper {
   display: inline-block;
 }
 
-/* --- Gentle pulse only on button background --- */
+/* Floating purple "Now recruiting!" button */
 .recruiting-fab {
   position: fixed;
   left: 16px;
@@ -1520,47 +1520,20 @@ section.wrapper {
   display: inline-block;
   padding: .6rem 1rem;
   border-radius: 9999px;
-  background: #6b46c1;
+  background: #6b46c1;           /* purple */
   color: #fff !important;
   font-weight: 700;
   text-decoration: none;
   letter-spacing: .02em;
   box-shadow: 0 10px 24px rgba(107, 70, 193, .35);
-  overflow: hidden; /* allows internal pseudo-element to animate */
+  transition: transform .15s ease, opacity .15s ease, box-shadow .2s ease;
 }
-
-/* the animated layer */
-.recruiting-fab::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: inherit;
-  border-radius: inherit;
-  z-index: -1;
-  transform-origin: center;
-  animation: fabPulse 5s ease-in-out infinite;
+.recruiting-fab:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 30px rgba(107, 70, 193, .45);
 }
-
-/* text remains steady */
-.recruiting-fab span {
-  position: relative;
-  z-index: 1;
-}
-
-@keyframes fabPulse {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  50% {
-    transform: scale(1.14); /* grows by 14% */
-    opacity: 0.95;
-  }
-}
-
-/* keep hover behavior clean */
-.recruiting-fab:hover::before {
-  transform: scale(1.18);
+.recruiting-fab:active {
+  transform: translateY(0);
 }
 
 @media (max-width: 480px) {
@@ -1570,4 +1543,23 @@ section.wrapper {
     padding: .5rem .8rem;
     font-size: .95rem;
   }
+}
+
+/* --- Gentle pulse animation for recruiting button --- */
+@keyframes fabPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.recruiting-fab {
+  animation: fabPulse 5s ease-in-out infinite;
+}
+
+.recruiting-fab:hover {
+  transform: scale(1.35); /* adds a tiny bump beyond the pulse */
+  box-shadow: 0 14px 30px rgba(107, 70, 193, .45);
 }
