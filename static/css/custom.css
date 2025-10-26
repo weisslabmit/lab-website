@@ -1551,7 +1551,7 @@ section.wrapper {
     transform: scale(1);
   }
   50% {
-    transform: scale(1.1);
+    transform: scale(1.05);
   }
 }
 
@@ -1560,6 +1560,6 @@ section.wrapper {
 }
 
 .recruiting-fab:hover {
-  transform: scale(1.35); /* adds a tiny bump beyond the pulse */
+  transform: scale(1.08); /* adds a tiny bump beyond the pulse */
   box-shadow: 0 14px 30px rgba(107, 70, 193, .45);
 }
