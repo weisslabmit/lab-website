@@ -1792,31 +1792,35 @@ strong, b { font-weight: 700 !important; }
   font-size: .9rem;
   line-height: 1.1;
   border-radius: 9999px;
+  font-weight: 500;
 
-  background: #fff;
-  color: var(--btn-faint);
-  border: 1px solid var(--btn-border);
+  background: #eaeaea; /* lighter gray for inactive state */
+  color: #333;
+  border: 1px solid rgba(0,0,0,.08);
+  box-shadow: none;
+  text-decoration: none;
   transition: background .18s ease, color .18s ease, border-color .18s ease, transform .12s ease;
 }
 
-/* Hover = darker text */
+/* Hover = subtle darkening */
 .pubs-section .pubs-tabs .button:hover,
 .pubs-page   .pubs-tabs .button:hover {
-  color: #444;
-  background: rgba(0,0,0,.03);
+  background: #dedede;
+  color: #000;
 }
 
-/* Active = dark pill */
+/* Active = solid dark pill */
 .pubs-section .pubs-tabs .button.active,
 .pubs-page   .pubs-tabs .button.active {
-  background: var(--btn-dark) !important;
+  background: #1a1a1a !important;
   color: #fff !important;
   border-color: transparent !important;
 }
 .pubs-section .pubs-tabs .button.active:hover,
 .pubs-page   .pubs-tabs .button.active:hover {
-  background: var(--btn-hover) !important;
+  background: #000 !important;
 }
+
 
 /* === FOOTER BUTTONS === */
 .pubs-section .actions .button,
