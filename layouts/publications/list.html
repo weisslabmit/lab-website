@@ -1,17 +1,15 @@
+{{/* Full Publications page at /publications/.
+    Reads data/publications.zotero.json via site.Data["publications"]["zotero"].
+*/}}
+
 {{ define "main" }}
   <main id="publications" class="container">
     <h1>Publications</h1>
 
-    {{/* Load items from data/publications.zotero.json:
-         site.Data["publications"]["zotero"] (raw array or {items:[]}) */}}
     {{ $items := slice }}
     {{ with (index (site.Data) "publications") }}
       {{ with (index . "zotero") }}
-        {{ if (index . "items") }}
-          {{ $items = (index . "items") }}
-        {{ else }}
-          {{ $items = . }}
-        {{ end }}
+        {{ if (index . "items") }}{{ $items = (index . "items") }}{{ else }}{{ $items = . }}{{ end }}
       {{ end }}
     {{ end }}
 
@@ -40,7 +38,7 @@
         {{ end }}
       {{ end }}
 
-      {{/* Sort years desc and render */}}
+      {{/* Sort years desc */}}
       {{ $years := slice }}
       {{ range $k, $_ := $byYear }}{{ $years = $years | append $k }}{{ end }}
       {{ $years = sort $years "value" "desc" }}
@@ -52,10 +50,8 @@
             <li class="pub">
               <span class="pub-title">{{ $pub.title }}</span>
               {{ with (index $pub "author") }}
-                <span class="pub-authors"> — 
-                  {{ range $i, $a := . }}
-                    {{ if gt $i 0 }}, {{ end }}{{ $a.family }}{{ with $a.given }} {{ . }}{{ end }}
-                  {{ end }}
+                <span class="pub-authors">
+                  — {{ range $i, $a := . }}{{ if gt $i 0 }}, {{ end }}{{ $a.family }}{{ with $a.given }} {{ . }}{{ end }}{{ end }}
                 </span>
               {{ end }}
               {{ with (index $pub "container-title") }}<span class="pub-venue">, {{ . }}</span>{{ end }}

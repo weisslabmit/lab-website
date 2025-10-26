@@ -1,23 +1,25 @@
-{{/* Publications teaser (reads data/publications.zotero.json) */}}
+{{/* Publications teaser for the homepage.
+     Reads data/publications.zotero.json via site.Data["publications"]["zotero"].
+     Shows the latest 20 items and a link to the full page.
+*/}}
+
 {{ $items := slice }}
 {{ with (index (site.Data) "publications") }}
   {{ with (index . "zotero") }}
-    {{ if (index . "items") }}
-      {{ $items = (index . "items") }}
-    {{ else }}
-      {{ $items = . }}
-    {{ end }}
+    {{ if (index . "items") }}{{ $items = (index . "items") }}{{ else }}{{ $items = . }}{{ end }}
   {{ end }}
 {{ end }}
 
 {{ if ge (len $items) 1 }}
-<section id="publications">
+<section id="publications" class="container">
   <h2>Publications</h2>
   <ul>
     {{ range first 20 $items }}
       <li>
         <span class="pub-title">{{ .title }}</span>
-        {{ with (index . "author") }} — {{ range $i, $a := . }}{{ if gt $i 0 }}, {{ end }}{{ $a.family }}{{ end }}{{ end }}
+        {{ with (index . "author") }}
+          — {{ range $i, $a := . }}{{ if gt $i 0 }}, {{ end }}{{ $a.family }}{{ end }}
+        {{ end }}
         {{ with (index . "container-title") }}, <em>{{ . }}</em>{{ end }}
         {{ with (index . "issued") }}
           {{ $dp := index . "date-parts" }}
