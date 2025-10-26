@@ -1,0 +1,101 @@
+<section id="contact" class="contact-section">
+  <div class="inner">
+    <header class="major">
+      <h2>Contact</h2>
+    </header>
+
+    <div class="contact-grid">
+      <!-- LEFT: Opportunities -->
+      <div class="contact-left">
+        <h3 class="contact-subtitle">Opportunities</h3>
+        <div class="contact-card">
+          <p>
+            We are interested in exceptional students, postdoctoral associates, and technical assistants who are interested in working at the cutting-edge of synthetic biology.
+          </p>
+
+          <p>
+            – <strong>Undergraduate students</strong>, please consider applying to the MIT iGEM team or browsing UROP Announcements.
+          </p>
+
+          <p>
+            – <strong>Graduate students</strong>, MIT has decentralized admissions and while we take students from many departments (BE, ChE, EECS, Chemistry, Biology, CSBi), your best bet is to apply to the Biological Engineering or EECS graduate programs.
+          </p>
+
+          <p>
+            – <strong>Postdoctoral scholars</strong>, we often have announcements listed below for targeted projects or you may send a cover letter and CV to Professor Weiss at
+            {{ with site.Params.contacts.ron }}
+              <a href="mailto:{{ . }}">{{ . }}</a>.
+            {{ else }}
+              <em>rweiss@mit.edu</em>.
+            {{ end }}
+          </p>
+        </div>
+      </div>
+
+      <!-- RIGHT: Addresses, emails, logos, map -->
+      <div class="contact-right">
+        <div class="contact-card">
+          <h3 class="contact-subtitle">Where to find us</h3>
+
+          <div class="contact-addresses">
+            <div class="addr-block">
+              <div class="addr-k">Street Address</div>
+              <div class="addr-v">
+                500 Technology Square<br>
+                Cambridge, MA 02139
+              </div>
+            </div>
+
+            <div class="addr-block">
+              <div class="addr-k">Mailing Address</div>
+              <div class="addr-v">
+                77 Massachusetts Avenue<br>
+                Cambridge, MA 02139
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-emails">
+            <div class="email-line">
+              <span class="email-k">Ron:</span>
+              <span class="email-v">
+                {{ with site.Params.contacts.ron }}
+                  <a href="mailto:{{ . }}">{{ . }}</a>
+                {{ else }}
+                  <em>rweiss@mit.edu</em>
+                {{ end }}
+              </span>
+            </div>
+            <div class="email-line">
+              <span class="email-k">Darlene:</span>
+              <span class="email-v">
+                {{ with site.Params.contacts.darlene }}
+                  <a href="mailto:{{ . }}">{{ . }}</a>
+                {{ else }}
+                  <em>—</em>
+                {{ end }}
+              </span>
+            </div>
+          </div>
+
+          <div class="logos-row" aria-label="Affiliations">
+            <!-- Replace src paths with your actual files in /static/images/ -->
+            <img src="/images/mit-be.svg" alt="MIT Biological Engineering" class="logo">
+            <img src="/images/mit.svg" alt="Massachusetts Institute of Technology" class="logo">
+          </div>
+
+          <div class="contact-map">
+            <!-- Google Maps embed: 500 Technology Square, Cambridge, MA -->
+            <iframe
+              title="Map: 500 Technology Square, Cambridge MA"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              allowfullscreen
+              src="https://www.google.com/maps?q=500%20Technology%20Square%2C%20Cambridge%2C%20MA%2002139&output=embed">
+            </iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
