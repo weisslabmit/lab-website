@@ -1878,3 +1878,55 @@ strong, b { font-weight: 700 !important; }
 .pubs-section .actions.pubs-tabs li > a.button.active:hover {
   background: #000 !important;
 }
+/* ======================================================
+   RESEARCH spotlights — remove extra margins & padding
+   (put this at the END of custom.css)
+====================================================== */
+
+/* Kill outer spacing on the image column */
+#research .spotlights > section .image,
+#research .spotlight .image {
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+}
+
+/* Our media wrapper already had margin/padding zero, keep it strict */
+#research .spotlight .image.r-spotlight__media {
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+/* Remove any default margins that themes put on imgs/figures */
+#research .spotlight .image img,
+#research .spotlights > section .image img,
+#research .spotlight figure,
+#research .spotlights > section figure {
+  display: block !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+}
+
+/* Tighten the gap between the two columns a bit (optional) */
+@media (min-width: 980px) {
+  #research .spotlights > section,
+  #research .spotlight {
+    column-gap: 1.25rem !important;  /* reduce inter-column gap */
+    gap: 1.25rem !important;
+  }
+}
+
+/* On small screens, keep the stacked layout snug */
+@media (max-width: 979px) {
+  #research .spotlight .image.r-spotlight__media {
+    min-height: 0 !important;   /* remove enforced tall box if any */
+  }
+  #research .spotlight .image,
+  #research .spotlight .content {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+}
