@@ -1,11 +1,6 @@
-{{/* Home page Resources slice (uses same card style as /resources) */}}
+{{/* layouts/partials/resources-section.html — streamlined full grid */}}
 <section id="resources" class="resources-section">
   <div class="content">
-    <header class="major" style="text-align:center;">
-      <h2>Resources</h2>
-      <p class="section-desc">Tools, datasets, protocols, and repositories we like.</p>
-    </header>
-
     {{ $items := (where site.RegularPages "Section" "resources").ByWeight.ByTitle }}
     {{ if gt (len $items) 0 }}
       <div class="resources-grid">
@@ -23,9 +18,6 @@
             {{ with .Params.description }}<p class="rc-desc">{{ . }}</p>{{ end }}
           </a>
         {{ end }}
-      </div>
-      <div class="people-alumni-cta" style="margin-top:1.75rem;">
-        <a class="alumni-btn" href="{{ "resources/" | relURL }}">All resources</a>
       </div>
     {{ else }}
       <p style="text-align:center;">No resources yet. Check back soon.</p>
