@@ -1787,12 +1787,12 @@ strong, b { font-weight: 700 !important; }
   justify-content: center;
   gap: .35rem;
 
-  min-height: 30px;
-  padding: .35rem 1rem;
-  font-size: .9rem;
-  line-height: 1.1;
-  border-radius: 9999px;
-  font-weight: 500;
+  min-height: 26px !important;     /* was ~32px */
+  padding: 0.25rem 0.9rem !important;  /* tighter vertical space */
+  font-size: 0.88rem !important;       /* keeps proportions right */
+  border-radius: 9999px !important;    /* still rounded */
+  line-height: 1.1 !important;
+}
 
   background: #eaeaea; /* lighter gray for inactive state */
   color: #333;
