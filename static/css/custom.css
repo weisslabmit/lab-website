@@ -1753,18 +1753,18 @@ strong, b { font-weight: 700 !important; }
 }
 
 /* =========================================
-   Publications Buttons — polished unified look
+   Publications Buttons — final balanced version
+   - Unselected: very faint (light gray text)
+   - Active: dark
+   - Footer: medium dark
    - No font override
-   - Inactive top buttons fainter
-   - Active tabs dark
-   - Footer buttons medium dark
 ========================================= */
 
 :root {
   --btn-dark: #1a1a1a;  /* active tab */
-  --btn-mid:  #3b3b3b;  /* footer buttons (medium dark) */
-  --btn-faint: #777;    /* fainter inactive tab text */
-  --btn-border: rgba(0,0,0,.15);
+  --btn-mid:  #3b3b3b;  /* footer buttons */
+  --btn-faint: #aaa;    /* much lighter inactive tab text */
+  --btn-border: rgba(0,0,0,.1);
   --btn-hover: #000;
 }
 
@@ -1787,8 +1787,8 @@ strong, b { font-weight: 700 !important; }
   justify-content: center;
   gap: .35rem;
 
-  min-height: 32px;
-  padding: .4rem 1.1rem;
+  min-height: 30px;
+  padding: .35rem 1rem;
   font-size: .9rem;
   line-height: 1.1;
   border-radius: 9999px;
@@ -1796,19 +1796,17 @@ strong, b { font-weight: 700 !important; }
   background: #fff;
   color: var(--btn-faint);
   border: 1px solid var(--btn-border);
-  box-shadow: none;
-  text-decoration: none;
   transition: background .18s ease, color .18s ease, border-color .18s ease, transform .12s ease;
 }
 
-/* Hover = slightly darker text */
+/* Hover = darker text */
 .pubs-section .pubs-tabs .button:hover,
 .pubs-page   .pubs-tabs .button:hover {
-  color: var(--btn-dark);
-  background: rgba(0,0,0,.04);
+  color: #444;
+  background: rgba(0,0,0,.03);
 }
 
-/* Active = dark background */
+/* Active = dark pill */
 .pubs-section .pubs-tabs .button.active,
 .pubs-page   .pubs-tabs .button.active {
   background: var(--btn-dark) !important;
@@ -1820,7 +1818,7 @@ strong, b { font-weight: 700 !important; }
   background: var(--btn-hover) !important;
 }
 
-/* === FOOTER BUTTONS (Show 10 more, etc.) === */
+/* === FOOTER BUTTONS === */
 .pubs-section .actions .button,
 .pubs-page   .actions .button {
   display: inline-flex;
@@ -1828,16 +1826,14 @@ strong, b { font-weight: 700 !important; }
   justify-content: center;
   gap: .35rem;
 
-  min-height: 32px;
-  padding: .4rem 1.1rem;
+  min-height: 30px;
+  padding: .35rem 1rem;
   font-size: .9rem;
-  line-height: 1.1;
   border-radius: 9999px;
 
   background: var(--btn-mid);
   color: #fff !important;
   border: none;
-  text-decoration: none;
   transition: background .18s ease, transform .12s ease;
 }
 .pubs-section .actions .button:hover,
