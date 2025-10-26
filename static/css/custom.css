@@ -1167,90 +1167,122 @@ section.wrapper {
 }
 
 
-/* ======== Resources grid (Items-style) ======== */
-.resources-section .content {
-  max-width: 1200px;
-  margin-inline: auto;
-  padding-inline: clamp(1rem, 4vw, 3rem);
+/* ==============================
+   RESOURCES — Story/Items look
+   (flat cards, hairline dividers, icon focus)
+============================== */
+
+:root {
+  --res-line: rgba(0,0,0,.08);
+  --res-card-bg: #fff;
+  --res-hover: #fafafa;
 }
 
+.resources-section {
+  padding-block: clamp(1.5rem, 3vw, 3rem);
+  background: #fff;               /* keep section neutral like Items */
+}
+
+/* Section header = same rhythm as Story sections */
 .resources-section header.major h2 {
-  font-size: clamp(1.6rem, 1vw + 1rem, 2.2rem);
-  margin: 0 0 .25rem 0;
-  text-align: center;
+  font-family: var(--mit-font-family);
+  font-weight: var(--mit-font-weight);
+  font-size: clamp(1.6rem, 1vw + 1rem, 2.1rem);
+  line-height: 1.2;
+  color: #2a2a2a;
+  margin: 0 0 .35rem 0;
 }
 .resources-section .section-desc {
-  opacity: .9;
-  margin: 0 0 1.5rem 0;
-  text-align: center;
+  max-width: 56ch;
+  margin: 0 auto 1.6rem;
+  opacity: .85;
 }
 
+/* ===== Grid: “hairline” separators like Items =====
+   We use 1px gaps painted by the container and drop borders on cards.
+*/
 .resources-grid {
-  /* grid with even columns; adjust min width to control columns */
-  --min: 220px;
-  --gap: 0; /* we draw separators with borders, so no gap */
+  --min: 230px;                     /* column min width */
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(var(--min), 1fr));
-  gap: var(--gap);
-  border-top: 1px solid rgba(0,0,0,.08);
-  border-left: 1px solid rgba(0,0,0,.08);
-  background: #fff;
-  overflow: hidden;
+  gap: 1px;                         /* the separators */
+  background: var(--res-line);      /* paints the 1px lines */
+  border: 1px solid var(--res-line);
   border-radius: 14px;
+  overflow: hidden;                 /* rounded corners with grid gaps */
 }
 
-/* Each card is a link; draw the inner separators here */
+/* Card = flat tile (no shadow), all clickable */
 .resource-card {
+  background: var(--res-card-bg);
   display: grid;
   grid-template-rows: auto auto 1fr;
-  align-content: start;
-  padding: 1rem 1rem 1.1rem;
+  justify-items: center;
+  text-align: center;
+  padding: 1.4rem 1.1rem 1.35rem;
   text-decoration: none;
   color: inherit;
-  border-right: 1px solid rgba(0,0,0,.08);
-  border-bottom: 1px solid rgba(0,0,0,.08);
-  transition: background .15s ease, transform .12s ease, box-shadow .15s ease;
+  transition: background .15s ease, transform .12s ease;
 }
+.resource-card:hover { background: var(--res-hover); }
+.resource-card:active { transform: translateY(1px); }
 
-/* Icon/illustration */
+/* Icon area: circular plate like Items */
 .rc-media {
   display: grid;
   place-items: center;
-  margin-bottom: .6rem;
-  min-height: 56px; /* steady block height even if small icons */
+  width: 68px;
+  height: 68px;
+  border-radius: 9999px;
+  background: #f3f3f3;              /* subtle plate under icon */
+  margin-bottom: .75rem;
 }
 .rc-media img {
-  width: 48px;
-  height: 48px;
+  width: 36px;
+  height: 36px;
   object-fit: contain;
-  display: block;
+  filter: grayscale(100%);
+  opacity: .95;
+  transition: filter .2s ease, opacity .2s ease, transform .2s ease;
+}
+.resource-card:hover .rc-media img {
+  filter: none;
+  opacity: 1;
+  transform: scale(1.02);
 }
 
-/* Title + description */
+/* Title: bold like Story’s feature titles, underline-on-hover */
 .rc-title {
+  font-family: var(--mit-font-family);
+  font-weight: 700;
+  font-size: clamp(1rem, .55vw + .8rem, 1.15rem);
+  line-height: 1.22;
   margin: 0 0 .35rem 0;
-  line-height: 1.2;
-  font-size: clamp(1rem, 0.5vw + 0.8rem, 1.15rem);
   text-decoration: underline transparent;
+  text-underline-offset: 2px;
   transition: text-decoration-color .15s ease, color .15s ease;
 }
+.resource-card:hover .rc-title {
+  text-decoration-color: currentColor;
+}
+
+/* Description: compact, clamped to ~3 lines like theme blurbs */
 .rc-desc {
   margin: 0;
   opacity: .9;
   line-height: 1.45;
-  font-size: clamp(0.9rem, 0.4vw + 0.6rem, .98rem);
+  font-size: clamp(.9rem, .4vw + .6rem, .98rem);
+  max-width: 56ch;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;            /* clamp for WebKit */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
-/* Hover/active feel */
-.resource-card:hover {
-  background: #fafafa;
-}
-.resource-card:active {
-  transform: translateY(1px);
-}
-
-/* On very narrow screens, make tiles comfortably tall */
-@media (max-width: 480px) {
+/* Dense mobile variant like Items */
+@media (max-width: 520px) {
   .resources-grid { --min: 180px; }
-  .rc-media img { width: 42px; height: 42px; }
+  .resource-card { padding: 1.1rem .9rem 1.1rem; }
+  .rc-media { width: 60px; height: 60px; }
+  .rc-media img { width: 32px; height: 32px; }
 }
