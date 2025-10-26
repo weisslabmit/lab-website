@@ -1,7 +1,8 @@
 {{/* Homepage Publications Section (year-grouped, sorted by date, linked titles)
    - Reads data/publications.zotero.json directly (top-level array)
    - Tabs: Publications(articles+preprints) / Patents / Other(everything else)
-   - Unordered lists, extra spacing, centered buttons
+   - Authors as initials + last name
+   - Preprints labeled "Preprint"
 */}}
 
 {{ $raw := "" }}
@@ -24,7 +25,7 @@
     {{ end }}
   {{ end }}
 
-  {{/* --- Group by year (always coerce bucket to slice) --- */}}
+  {{/* --- Group by year (coerce bucket to slice) --- */}}
   {{ $pubsByYear := dict }}
   {{ range $it := $pubs }}
     {{ $y := "" }}
@@ -135,25 +136,56 @@
               {{ $it := index $row "m" }}
               {{ $t := index $it "title" }}
               {{ $au := index $it "author" }}
-              {{ $ct := index $it "container-title" }}
+              {{ $ct := index $it "container-title" | default "" }}
               {{ $iss := index $it "issued" }}
+              {{ $typ := index $it "type" | default "" | lower }}
               {{ $doi := index $it "DOI" }}
-              {{ $url := index $it "URL" }}
+              {{ $url := index $it "URL" | default "" }}
               {{ $href := "" }}
               {{ if $doi }}{{ $href = printf "https://doi.org/%s" $doi }}{{ else if $url }}{{ $href = $url }}{{ end }}
+
+              {{/* Detect preprints by type, venue, or URL */}}
+              {{ $ctLow := lower $ct }}
+              {{ $urlLow := lower $url }}
+              {{ $isPre := or (eq $typ "preprint") (or (in $ctLow "arxiv") (or (in $ctLow "biorxiv") (or (in $ctLow "medrxiv") (or (in $ctLow "chemrxiv") (in $ctLow "research square"))))) }}
+              {{ $isPre = or $isPre (or (in $urlLow "arxiv.org") (or (in $urlLow "biorxiv.org") (or (in $urlLow "medrxiv.org") (in $urlLow "chemrxiv.org")))) }}
+
               <li class="pub pub-item">
                 <span class="pub-title">
                   {{ if $href }}<a href="{{ $href }}" target="_blank" rel="noopener">{{ $t }}</a>{{ else }}{{ $t }}{{ end }}
                 </span>
+
                 {{ with $au }}
                   <span class="pub-authors">
-                    — {{ range $j, $a := . }}
-                        {{ if gt $j 0 }}, {{ end }}
-                        {{ index $a "family" }}{{ with (index $a "given") }} {{ . }}{{ end }}
+                    —
+                    {{ range $j, $a := . }}
+                      {{ if gt $j 0 }}, {{ end }}
+                      {{ $fam := index $a "family" | default "" }}
+                      {{ $giv := index $a "given" | default "" }}
+                      {{/* Build initials from given name */}}
+                      {{ $init := "" }}
+                      {{ if $giv }}
+                        {{ $parts := split $giv " " }}
+                        {{ range $p := $parts }}
+                          {{ if gt (len $p) 0 }}
+                            {{ $init = printf "%s%s." $init (upper (substr $p 0 1)) }}
+                          {{ end }}
+                        {{ end }}
                       {{ end }}
+                      {{ if and $init $fam }}{{ $init }} {{ $fam }}
+                      {{ else if $fam }}{{ $fam }}
+                      {{ else }}{{ $giv }}
+                      {{ end }}
+                    {{ end }}
                   </span>
                 {{ end }}
-                {{ with $ct }} <span class="pub-venue">, {{ . }}</span>{{ end }}
+
+                {{ if $isPre }}
+                  <span class="pub-venue">, Preprint</span>
+                {{ else }}
+                  {{ with $ct }} <span class="pub-venue">, {{ . }}</span>{{ end }}
+                {{ end }}
+
                 {{ with $iss }}
                   {{ $dp := index . "date-parts" }}
                   {{ if and $dp (gt (len $dp) 0) }}
@@ -193,24 +225,43 @@
               {{ $it := index $row "m" }}
               {{ $t := index $it "title" }}
               {{ $au := index $it "author" }}
-              {{ $ct := index $it "container-title" }}
+              {{ $ct := index $it "container-title" | default "" }}
               {{ $iss := index $it "issued" }}
+              {{ $typ := index $it "type" | default "" | lower }}
               {{ $doi := index $it "DOI" }}
-              {{ $url := index $it "URL" }}
+              {{ $url := index $it "URL" | default "" }}
               {{ $href := "" }}
               {{ if $doi }}{{ $href = printf "https://doi.org/%s" $doi }}{{ else if $url }}{{ $href = $url }}{{ end }}
+
               <li class="pub pub-item">
                 <span class="pub-title">
                   {{ if $href }}<a href="{{ $href }}" target="_blank" rel="noopener">{{ $t }}</a>{{ else }}{{ $t }}{{ end }}
                 </span>
+
                 {{ with $au }}
                   <span class="pub-authors">
-                    — {{ range $j, $a := . }}
-                        {{ if gt $j 0 }}, {{ end }}
-                        {{ index $a "family" }}{{ with (index $a "given") }} {{ . }}{{ end }}
+                    —
+                    {{ range $j, $a := . }}
+                      {{ if gt $j 0 }}, {{ end }}
+                      {{ $fam := index $a "family" | default "" }}
+                      {{ $giv := index $a "given" | default "" }}
+                      {{ $init := "" }}
+                      {{ if $giv }}
+                        {{ $parts := split $giv " " }}
+                        {{ range $p := $parts }}
+                          {{ if gt (len $p) 0 }}
+                            {{ $init = printf "%s%s." $init (upper (substr $p 0 1)) }}
+                          {{ end }}
+                        {{ end }}
                       {{ end }}
+                      {{ if and $init $fam }}{{ $init }} {{ $fam }}
+                      {{ else if $fam }}{{ $fam }}
+                      {{ else }}{{ $giv }}
+                      {{ end }}
+                    {{ end }}
                   </span>
                 {{ end }}
+
                 {{ with $ct }} <span class="pub-venue">, {{ . }}</span>{{ end }}
                 {{ with $iss }}
                   {{ $dp := index . "date-parts" }}
@@ -251,25 +302,54 @@
               {{ $it := index $row "m" }}
               {{ $t := index $it "title" }}
               {{ $au := index $it "author" }}
-              {{ $ct := index $it "container-title" }}
+              {{ $ct := index $it "container-title" | default "" }}
               {{ $iss := index $it "issued" }}
+              {{ $typ := index $it "type" | default "" | lower }}
               {{ $doi := index $it "DOI" }}
-              {{ $url := index $it "URL" }}
+              {{ $url := index $it "URL" | default "" }}
               {{ $href := "" }}
               {{ if $doi }}{{ $href = printf "https://doi.org/%s" $doi }}{{ else if $url }}{{ $href = $url }}{{ end }}
+
+              {{ $ctLow := lower $ct }}
+              {{ $urlLow := lower $url }}
+              {{ $isPre := or (eq $typ "preprint") (or (in $ctLow "arxiv") (or (in $ctLow "biorxiv") (or (in $ctLow "medrxiv") (or (in $ctLow "chemrxiv") (in $ctLow "research square"))))) }}
+              {{ $isPre = or $isPre (or (in $urlLow "arxiv.org") (or (in $urlLow "biorxiv.org") (or (in $urlLow "medrxiv.org") (in $urlLow "chemrxiv.org")))) }}
+
               <li class="pub pub-item">
                 <span class="pub-title">
                   {{ if $href }}<a href="{{ $href }}" target="_blank" rel="noopener">{{ $t }}</a>{{ else }}{{ $t }}{{ end }}
                 </span>
+
                 {{ with $au }}
                   <span class="pub-authors">
-                    — {{ range $j, $a := . }}
-                        {{ if gt $j 0 }}, {{ end }}
-                        {{ index $a "family" }}{{ with (index $a "given") }} {{ . }}{{ end }}
+                    —
+                    {{ range $j, $a := . }}
+                      {{ if gt $j 0 }}, {{ end }}
+                      {{ $fam := index $a "family" | default "" }}
+                      {{ $giv := index $a "given" | default "" }}
+                      {{ $init := "" }}
+                      {{ if $giv }}
+                        {{ $parts := split $giv " " }}
+                        {{ range $p := $parts }}
+                          {{ if gt (len $p) 0 }}
+                            {{ $init = printf "%s%s." $init (upper (substr $p 0 1)) }}
+                          {{ end }}
+                        {{ end }}
                       {{ end }}
+                      {{ if and $init $fam }}{{ $init }} {{ $fam }}
+                      {{ else if $fam }}{{ $fam }}
+                      {{ else }}{{ $giv }}
+                      {{ end }}
+                    {{ end }}
                   </span>
                 {{ end }}
-                {{ with $ct }} <span class="pub-venue">, {{ . }}</span>{{ end }}
+
+                {{ if $isPre }}
+                  <span class="pub-venue">, Preprint</span>
+                {{ else }}
+                  {{ with $ct }} <span class="pub-venue">, {{ . }}</span>{{ end }}
+                {{ end }}
+
                 {{ with $iss }}
                   {{ $dp := index . "date-parts" }}
                   {{ if and $dp (gt (len $dp) 0) }}
@@ -352,4 +432,3 @@
 
   {{ end }}
 {{ end }}
-
