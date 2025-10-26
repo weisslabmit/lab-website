@@ -1,50 +1,40 @@
-{{/* Homepage teaser: read JSON file directly (no site.Data).
-     Assumes the file exists at repo-root: data/publications.zotero.json
-*/}}
+{{/* Minimal homepage teaser: reads data/publications.zotero.json directly.
+     Assumes top-level JSON array; if file missing or invalid → renders nothing. */}}
 
-{{ $items := slice }}
-{{ $raw := readFile "data/publications.zotero.json" | transform.Unmarshal }}
-
-{{/* If someone wrapped as {"items":[...]}, unwrap; else assume top-level array */}}
+{{ $raw := "" }}
+{{ with readFile "data/publications.zotero.json" }}{{ $raw = . }}{{ end }}
 {{ if $raw }}
-  {{ if (and (reflect.IsMap $raw) (index $raw "items")) }}
-    {{ $items = (index $raw "items") }}
-  {{ else }}
-    {{ $items = $raw }}
-  {{ end }}
-{{ end }}
-
-{{ if ge (len $items) 1 }}
-<section id="publications" class="container">
-  <h2>Publications</h2>
-  <ul>
-    {{ range first 20 $items }}
-      {{ $t := index . "title" }}
-      {{ $au := index . "author" }}
-      {{ $ct := index . "container-title" }}
-      {{ $issued := index . "issued" }}
-      {{ $url := index . "URL" }}
-      <li>
-        <span class="pub-title">{{ $t }}</span>
-        {{ with $au }}
-          — {{ range $i, $a := . }}
-              {{ if gt $i 0 }}, {{ end }}
-              {{ index $a "family" }}{{ with (index $a "given") }} {{ . }}{{ end }}
+  {{ $items := $raw | transform.Unmarshal }}
+  {{ if gt (len $items) 0 }}
+    <section id="publications" class="container">
+      <h2>Publications</h2>
+      <ul>
+        {{ range first 20 $items }}
+          {{ $t := index . "title" }}
+          {{ $au := index . "author" }}
+          {{ $ct := index . "container-title" }}
+          {{ $iss := index . "issued" }}
+          {{ $url := index . "URL" }}
+          <li>
+            <span class="pub-title">{{ $t }}</span>
+            {{ with $au }}
+              — {{ range $i, $a := . }}
+                  {{ if gt $i 0 }}, {{ end }}
+                  {{ index $a "family" }}{{ with (index $a "given") }} {{ . }}{{ end }}
+                {{ end }}
             {{ end }}
+            {{ with $ct }}, <em>{{ . }}</em>{{ end }}
+            {{ with $iss }}
+              {{ $dp := index . "date-parts" }}
+              {{ if and $dp (gt (len $dp) 0) (gt (len (index $dp 0)) 0) }}
+                ({{ index (index $dp 0) 0 }})
+              {{ end }}
+            {{ end }}
+            {{ with $url }} — <a href="{{ . }}" target="_blank" rel="noopener">Link</a>{{ end }}
+          </li>
         {{ end }}
-        {{ if $ct }}, <em>{{ $ct }}</em>{{ end }}
-        {{ with $issued }}
-          {{ $dp := index . "date-parts" }}
-          {{ if and $dp (ge (len $dp) 1) (ge (len (index $dp 0)) 1) }}
-            ({{ index (index $dp 0) 0 }})
-          {{ end }}
-        {{ end }}
-        {{ with $url }} — <a href="{{ . }}" target="_blank" rel="noopener">Link</a>{{ end }}
-      </li>
-    {{ end }}
-  </ul>
-  <p><a href="/publications/">See all publications →</a></p>
-</section>
-{{ else }}
-<!-- pubs: file read OK but 0 items in data/publications.zotero.json -->
+      </ul>
+      <p><a href="/publications/">See all publications →</a></p>
+    </section>
+  {{ end }}
 {{ end }}

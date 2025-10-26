@@ -2,85 +2,90 @@
   <main id="publications" class="container">
     <h1>Publications</h1>
 
-    {{/* Read JSON file directly */}}
-    {{ $raw := readFile "data/publications.zotero.json" | transform.Unmarshal }}
-    {{ $items := cond (and (reflect.IsMap $raw) (index $raw "items")) (index $raw "items") $raw }}
+    {{/* Read the file directly. If missing or empty → show a soft message. */}}
+    {{ $raw := "" }}
+    {{ with readFile "data/publications.zotero.json" }}{{ $raw = . }}{{ end }}
 
-    {{ if lt (len $items) 1 }}
+    {{ if not $raw }}
       <p>No publications yet.</p>
     {{ else }}
+      {{ $items := $raw | transform.Unmarshal }}
+      {{ if lt (len $items) 1 }}
+        <p>No publications yet.</p>
+      {{ else }}
 
-      {{/* Group by year */}}
-      {{ $byYear := dict }}
-      {{ range $it := $items }}
-        {{ $year := "" }}
-        {{ with (index $it "issued") }}
-          {{ $dp := index . "date-parts" }}
-          {{ if and $dp (ge (len $dp) 1) (ge (len (index $dp 0)) 1) }}
-            {{ $year = printf "%v" (index (index $dp 0) 0) }}
+        {{/* Group by year */}}
+        {{ $byYear := dict }}
+        {{ range $it := $items }}
+          {{ $year := "" }}
+          {{ with (index $it "issued") }}
+            {{ $dp := index . "date-parts" }}
+            {{ if and $dp (gt (len $dp) 0) (gt (len (index $dp 0)) 0) }}
+              {{ $year = printf "%v" (index (index $dp 0) 0) }}
+            {{ else }}
+              {{ with (index . "raw") }}{{ $year = printf "%v" . }}{{ end }}
+            {{ end }}
+          {{ end }}
+          {{ if not $year }}{{ $year = "No year" }}{{ end }}
+
+          {{ $bucket := index $byYear $year }}
+          {{ if $bucket }}
+            {{ $byYear = merge $byYear (dict $year (append $bucket $it)) }}
           {{ else }}
-            {{ with (index . "raw") }}{{ $year = printf "%v" . }}{{ end }}
+            {{ $byYear = merge $byYear (dict $year (slice $it)) }}
           {{ end }}
         {{ end }}
-        {{ if not $year }}{{ $year = "No year" }}{{ end }}
 
-        {{ $bucket := index $byYear $year }}
-        {{ if not $bucket }}
-          {{ $byYear = merge $byYear (dict $year (slice $it)) }}
-        {{ else }}
-          {{ $byYear = merge $byYear (dict $year (append $bucket $it)) }}
-        {{ end }}
-      {{ end }}
+        {{/* Sort years desc and render */}}
+        {{ $years := slice }}
+        {{ range $k, $_ := $byYear }}{{ $years = $years | append $k }}{{ end }}
+        {{ $years = sort $years "value" "desc" }}
 
-      {{/* Sort years desc and render */}}
-      {{ $years := slice }}
-      {{ range $k, $_ := $byYear }}{{ $years = $years | append $k }}{{ end }}
-      {{ $years = sort $years "value" "desc" }}
+        {{ range $y := $years }}
+          <h2 class="pubs-year">{{ $y }}</h2>
+          <ol class="pubs-list">
+            {{ range $pub := (index $byYear $y) }}
+              {{ $t := index $pub "title" }}
+              {{ $au := index $pub "author" }}
+              {{ $ct := index $pub "container-title" }}
+              {{ $iss := index $pub "issued" }}
+              {{ $doi := index $pub "DOI" }}
+              {{ $url := index $pub "URL" }}
+              {{ $typ := index $pub "type" }}
 
-      {{ range $y := $years }}
-        <h2 class="pubs-year">{{ $y }}</h2>
-        <ol class="pubs-list">
-          {{ range $pub := (index $byYear $y) }}
-            {{ $t := index $pub "title" }}
-            {{ $au := index $pub "author" }}
-            {{ $ct := index $pub "container-title" }}
-            {{ $issued := index $pub "issued" }}
-            {{ $doi := index $pub "DOI" }}
-            {{ $url := index $pub "URL" }}
-            {{ $typ := index $pub "type" }}
+              <li class="pub">
+                <span class="pub-title">{{ $t }}</span>
 
-            <li class="pub">
-              <span class="pub-title">{{ $t }}</span>
-
-              {{ with $au }}
-                <span class="pub-authors">
-                  —
-                  {{ range $i, $a := . }}
-                    {{ if gt $i 0 }}, {{ end }}
-                    {{ index $a "family" }}{{ with (index $a "given") }} {{ . }}{{ end }}
-                  {{ end }}
-                </span>
-              {{ end }}
-
-              {{ if $ct }}<span class="pub-venue">, {{ $ct }}</span>{{ end }}
-
-              {{ $yInline := "" }}
-              {{ with $issued }}
-                {{ $dp := index . "date-parts" }}
-                {{ if and $dp (ge (len $dp) 1) (ge (len (index $dp 0)) 1) }}
-                  {{ $yInline = printf "%v" (index (index $dp 0) 0) }}
-                {{ else }}
-                  {{ with (index . "raw") }}{{ $yInline = printf "%v" . }}{{ end }}
+                {{ with $au }}
+                  <span class="pub-authors">
+                    —
+                    {{ range $i, $a := . }}
+                      {{ if gt $i 0 }}, {{ end }}
+                      {{ index $a "family" }}{{ with (index $a "given") }} {{ . }}{{ end }}
+                    {{ end }}
+                  </span>
                 {{ end }}
-              {{ end }}
-              {{ if $yInline }}<span class="pub-year"> ({{ $yInline }})</span>{{ end }}
 
-              {{ if $doi }}<a class="pub-link" href="https://doi.org/{{ $doi }}" target="_blank" rel="noopener">DOI</a>{{ end }}
-              {{ if $url }}<a class="pub-link" href="{{ $url }}" target="_blank" rel="noopener">Link</a>{{ end }}
-              {{ if $typ }}<span class="pub-type"> · {{ $typ }}</span>{{ end }}
-            </li>
-          {{ end }}
-        </ol>
+                {{ with $ct }}<span class="pub-venue">, {{ . }}</span>{{ end }}
+
+                {{ $yInline := "" }}
+                {{ with $iss }}
+                  {{ $dp := index . "date-parts" }}
+                  {{ if and $dp (gt (len $dp) 0) (gt (len (index $dp 0)) 0) }}
+                    {{ $yInline = printf "%v" (index (index $dp 0) 0) }}
+                  {{ else }}
+                    {{ with (index . "raw") }}{{ $yInline = printf "%v" . }}{{ end }}
+                  {{ end }}
+                {{ end }}
+                {{ if $yInline }}<span class="pub-year"> ({{ $yInline }})</span>{{ end }}
+
+                {{ with $doi }}<a class="pub-link" href="https://doi.org/{{ . }}" target="_blank" rel="noopener">DOI</a>{{ end }}
+                {{ with $url }}<a class="pub-link" href="{{ . }}" target="_blank" rel="noopener">Link</a>{{ end }}
+                {{ with $typ }}<span class="pub-type"> · {{ . }}</span>{{ end }}
+              </li>
+            {{ end }}
+          </ol>
+        {{ end }}
       {{ end }}
     {{ end }}
   </main>
