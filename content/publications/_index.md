@@ -2,4 +2,4 @@
 title: Publications
 ---
 
-{{< partial "pubs-zotero.html" . >}}
+{{< pubs-zotero >}}
