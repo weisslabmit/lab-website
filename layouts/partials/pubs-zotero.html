@@ -1,21 +1,28 @@
-{{/* Renders data/publications.zotero.json (CSL-JSON array) */}}
-{{ $items := site.Data.publications_zotero }}
+{{/* Renders data/publications.zotero.json (CSL-JSON). Accepts either:
+     - a raw array: [ {...}, {...} ]
+     - or a map { "items": [ {...}, ... ] }
+*/}}
 
-{{/* DEBUG: show item count */}}
 {{ $raw := site.Data.publications_zotero }}
-{{ $items := (index $raw "items") | default $raw }}
-<p style="opacity:.6">DEBUG: {{ len $items }} items</p>
+{{ $items := slice }}
 
+{{ if $raw }}
+  {{ $maybeItems := index $raw "items" }}
+  {{ if $maybeItems }}
+    {{ $items = $maybeItems }}
+  {{ else }}
+    {{ $items = $raw }}
+  {{ end }}
+{{ end }}
 
-{{ if not $items }}
+{{ if lt (len $items) 1 }}
   <p>No publications yet.</p>
 {{ else }}
 
-  {{/* --- Build a map: year -> []items --- */}}
+  {{/* Build year → items map */}}
   {{ $byYear := dict }}
 
   {{ range $it := $items }}
-    {{/* Derive year from issued.date-parts[0][0] or issued.raw */}}
     {{ $year := "" }}
     {{ $issued := index $it "issued" }}
     {{ if $issued }}
@@ -23,8 +30,8 @@
       {{ if and $dp (ge (len $dp) 1) (ge (len (index $dp 0)) 1) }}
         {{ $year = printf "%v" (index (index $dp 0) 0) }}
       {{ else }}
-        {{ $raw := index $issued "raw" }}
-        {{ if $raw }}{{ $year = printf "%v" $raw }}{{ end }}
+        {{ $rawy := index $issued "raw" }}
+        {{ if $rawy }}{{ $year = printf "%v" $rawy }}{{ end }}
       {{ end }}
     {{ end }}
     {{ if not $year }}{{ $year = "No year" }}{{ end }}
@@ -37,7 +44,7 @@
     {{ end }}
   {{ end }}
 
-  {{/* --- Render years in descending order --- */}}
+  {{/* Sorted years (desc) */}}
   {{ $years := slice }}
   {{ range $k, $_ := $byYear }}{{ $years = $years | append $k }}{{ end }}
   {{ $years = sort $years "value" "desc" }}
@@ -63,18 +70,17 @@
             <span class="pub-venue">, {{ . }}</span>
           {{ end }}
 
-          {{/* Recompute year for inline display (cheap) */}}
-          {{ $yearInline := "" }}
+          {{ $yInline := "" }}
           {{ with (index $pub "issued") }}
             {{ $dp := index . "date-parts" }}
             {{ if and $dp (ge (len $dp) 1) (ge (len (index $dp 0)) 1) }}
-              {{ $yearInline = printf "%v" (index (index $dp 0) 0) }}
+              {{ $yInline = printf "%v" (index (index $dp 0) 0) }}
             {{ else }}
-              {{ $raw := index . "raw" }}
-              {{ if $raw }}{{ $yearInline = printf "%v" $raw }}{{ end }}
+              {{ $rawy := index . "raw" }}
+              {{ if $rawy }}{{ $yInline = printf "%v" $rawy }}{{ end }}
             {{ end }}
           {{ end }}
-          {{ if $yearInline }}<span class="pub-year"> ({{ $yearInline }})</span>{{ end }}
+          {{ if $yInline }}<span class="pub-year"> ({{ $yInline }})</span>{{ end }}
 
           {{ with (index $pub "DOI") }}
             <a class="pub-link" href="https://doi.org/{{ . }}" target="_blank" rel="noopener">DOI</a>
