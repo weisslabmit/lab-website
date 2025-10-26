@@ -1,10 +1,10 @@
-{{/* Publications teaser for the homepage.
-     Reads data/publications.zotero.json via site.Data["publications"]["zotero"].
-     Shows the latest 20 items and a link to the full page.
+{{/* Teaser for homepage: reads data/publications.zotero.json
+     Access key: site.Data["publications"]["zotero"]
+     JSON shape: top-level ARRAY of CSL-JSON items
 */}}
 
 {{ $items := slice }}
-{{ with (index (site.Data) "publications") }}
+{{ with (index site.Data "publications") }}
   {{ with (index . "zotero") }}
     {{ if (index . "items") }}{{ $items = (index . "items") }}{{ else }}{{ $items = . }}{{ end }}
   {{ end }}
@@ -15,15 +15,28 @@
   <h2>Publications</h2>
   <ul>
     {{ range first 20 $items }}
+      {{ $t := index . "title" }}
+      {{ $au := index . "author" }}
+      {{ $ct := index . "container-title" }}
+      {{ $issued := index . "issued" }}
       <li>
-        <span class="pub-title">{{ .title }}</span>
-        {{ with (index . "author") }}
-          — {{ range $i, $a := . }}{{ if gt $i 0 }}, {{ end }}{{ $a.family }}{{ end }}
+        <span class="pub-title">{{ $t }}</span>
+        {{ with $au }}
+          — {{ range $i, $a := . }}
+              {{ if gt $i 0 }}, {{ end }}
+              {{ $fam := index $a "family" }}{{ $giv := index $a "given" }}
+              {{ $fam }}{{ if $giv }} {{ $giv }}{{ end }}
+            {{ end }}
         {{ end }}
-        {{ with (index . "container-title") }}, <em>{{ . }}</em>{{ end }}
-        {{ with (index . "issued") }}
+        {{ if $ct }}, <em>{{ $ct }}</em>{{ end }}
+        {{ with $issued }}
           {{ $dp := index . "date-parts" }}
-          {{ if and $dp (ge (len (index $dp 0)) 1) }} ({{ index (index $dp 0) 0 }}) {{ end }}
+          {{ if and $dp (ge (len $dp) 1) (ge (len (index $dp 0)) 1) }}
+            ({{ index (index $dp 0) 0 }})
+          {{ end }}
+        {{ end }}
+        {{ with (index . "URL") }}
+          — <a href="{{ . }}" target="_blank" rel="noopener">Link</a>
         {{ end }}
       </li>
     {{ end }}

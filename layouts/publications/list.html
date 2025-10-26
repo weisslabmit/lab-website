@@ -1,13 +1,10 @@
-{{/* Full Publications page at /publications/.
-    Reads data/publications.zotero.json via site.Data["publications"]["zotero"].
-*/}}
-
 {{ define "main" }}
   <main id="publications" class="container">
     <h1>Publications</h1>
 
+    {{/* Load items from site.Data["publications"]["zotero"] (array or {"items":[...]}) */}}
     {{ $items := slice }}
-    {{ with (index (site.Data) "publications") }}
+    {{ with (index site.Data "publications") }}
       {{ with (index . "zotero") }}
         {{ if (index . "items") }}{{ $items = (index . "items") }}{{ else }}{{ $items = . }}{{ end }}
       {{ end }}
@@ -47,16 +44,32 @@
         <h2 class="pubs-year">{{ $y }}</h2>
         <ol class="pubs-list">
           {{ range $pub := (index $byYear $y) }}
+            {{ $t := index $pub "title" }}
+            {{ $au := index $pub "author" }}
+            {{ $ct := index $pub "container-title" }}
+            {{ $issued := index $pub "issued" }}
+            {{ $doi := index $pub "DOI" }}
+            {{ $url := index $pub "URL" }}
+            {{ $typ := index $pub "type" }}
+
             <li class="pub">
-              <span class="pub-title">{{ $pub.title }}</span>
-              {{ with (index $pub "author") }}
+              <span class="pub-title">{{ $t }}</span>
+
+              {{ with $au }}
                 <span class="pub-authors">
-                  — {{ range $i, $a := . }}{{ if gt $i 0 }}, {{ end }}{{ $a.family }}{{ with $a.given }} {{ . }}{{ end }}{{ end }}
+                  —
+                  {{ range $i, $a := . }}
+                    {{ if gt $i 0 }}, {{ end }}
+                    {{ $fam := index $a "family" }}{{ $giv := index $a "given" }}
+                    {{ $fam }}{{ if $giv }} {{ $giv }}{{ end }}
+                  {{ end }}
                 </span>
               {{ end }}
-              {{ with (index $pub "container-title") }}<span class="pub-venue">, {{ . }}</span>{{ end }}
+
+              {{ if $ct }}<span class="pub-venue">, {{ $ct }}</span>{{ end }}
+
               {{ $yInline := "" }}
-              {{ with (index $pub "issued") }}
+              {{ with $issued }}
                 {{ $dp := index . "date-parts" }}
                 {{ if and $dp (ge (len $dp) 1) (ge (len (index $dp 0)) 1) }}
                   {{ $yInline = printf "%v" (index (index $dp 0) 0) }}
@@ -65,8 +78,10 @@
                 {{ end }}
               {{ end }}
               {{ if $yInline }}<span class="pub-year"> ({{ $yInline }})</span>{{ end }}
-              {{ with (index $pub "DOI") }}<a class="pub-link" href="https://doi.org/{{ . }}" target="_blank" rel="noopener">DOI</a>{{ end }}
-              {{ with (index $pub "URL") }}<a class="pub-link" href="{{ . }}" target="_blank" rel="noopener">Link</a>{{ end }}
+
+              {{ if $doi }}<a class="pub-link" href="https://doi.org/{{ $doi }}" target="_blank" rel="noopener">DOI</a>{{ end }}
+              {{ if $url }}<a class="pub-link" href="{{ $url }}" target="_blank" rel="noopener">Link</a>{{ end }}
+              {{ if $typ }}<span class="pub-type"> · {{ $typ }}</span>{{ end }}
             </li>
           {{ end }}
         </ol>
