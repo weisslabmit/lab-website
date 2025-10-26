@@ -1879,75 +1879,78 @@ strong, b { font-weight: 700 !important; }
   background: #000 !important;
 }
 /* ======================================================
-   RESEARCH spotlights — responsive spacing that doesn't break
-   (paste at the END of custom.css; replaces earlier research spacing tweaks)
+   RESEARCH spotlights — unified compact layout
+   (mobile padding for all, plus clear section spacing)
 ====================================================== */
 
 :root {
-  /* Tiny, responsive values so it breathes but never feels bulky */
-  --r-spotlight-gap: clamp(12px, 1.5vw, 24px);
-  --r-spotlight-pad: clamp(10px, 2.2vw, 18px); /* used only on small screens */
+  --r-gap: clamp(1rem, 2vw, 2rem);   /* gap between text & image */
+  --r-pad: clamp(10px, 2vw, 20px);   /* internal gutter */
+  --r-section-space: clamp(2rem, 5vw, 3.5rem); /* space between spotlight rows */
 }
 
-/* Desktop / tablet: strip theme padding entirely */
-@media (min-width: 980px) {
-  #research .spotlights > section,
-  #research .spotlight {
-    gap: var(--r-spotlight-gap) !important;
-  }
-
-  #research .spotlights > section .image,
-  #research .spotlight .image,
-  #research .spotlights > section .content,
-  #research .spotlight .content {
-    margin: 0 !important;
-    padding: 0 !important;   /* kill leftover inner padding */
-    border: 0 !important;
-  }
-
-  /* Keep our clean media wrapper */
-  #research .spotlight .image.r-spotlight__media {
-    margin: 0 !important;
-    padding: 0 !important;
-    box-shadow: none !important;
-  }
+/* All screen sizes: consistent compact padding & margin rhythm */
+#research .spotlights > section,
+#research .spotlight {
+  display: flex !important;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--r-gap);
+  padding-inline: var(--r-pad);
+  padding-block: 0;
+  margin: 0 0 var(--r-section-space) 0; /* vertical space between spotlights */
+  border: none !important;
 }
 
-/* Mobile: reintroduce a tiny horizontal gutter so content doesn't hit edges */
+/* Ensure image and text columns are tight and aligned */
+#research .spotlights > section .image,
+#research .spotlight .image,
+#research .spotlights > section .content,
+#research .spotlight .content {
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+}
+
+/* Image pane: clean white, no shadow, centered media */
+#research .spotlight .image.r-spotlight__media {
+  background-color: #fff !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: hidden !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  height: auto !important;
+}
+
+/* Images: full control, no extra spacing */
+#research .spotlight .image.r-spotlight__media img {
+  display: block !important;
+  width: auto !important;
+  height: auto !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  object-fit: contain !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Mobile stack: vertical layout with same margins */
 @media (max-width: 979px) {
   #research .spotlights > section,
   #research .spotlight {
-    gap: var(--r-spotlight-gap) !important;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
   }
 
-  #research .spotlights > section .image,
-  #research .spotlight .image,
-  #research .spotlights > section .content,
-  #research .spotlight .content {
-    margin: 0 !important;
-    padding-inline: var(--r-spotlight-pad) !important;  /* micro gutter */
-    padding-block: 0 !important;
-    border: 0 !important;
-  }
-
-  /* Keep the media area comfortable so layouts don't collapse */
   #research .spotlight .image.r-spotlight__media {
-    min-height: 200px !important;  /* safe floor */
-    padding: 0 !important;
-    margin: 0 !important;
+    width: 100%;
+    min-height: 220px;
+    margin-bottom: 1.5rem;
   }
-}
-
-/* Normalize images/figures: no stray margins; scale nicely */
-#research .spotlight figure,
-#research .spotlights > section figure,
-#research .spotlight .image img,
-#research .spotlights > section .image img {
-  display: block !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  width: auto !important;
-  max-width: 100% !important;
-  height: auto !important;
-  border: 0 !important;
 }
