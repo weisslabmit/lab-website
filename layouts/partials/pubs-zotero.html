@@ -1,8 +1,7 @@
-{{/* Homepage Publications Section (year-grouped, sorted by date, pretty UI)
+{{/* Homepage Publications Section (year-grouped, sorted by date, linked titles)
    - Reads data/publications.zotero.json directly (top-level array)
-   - Tabs: Publications / Patents / Other
-   - Unordered lists, more spacing
-   - "Show 10 more", "All publications", "Google Scholar" buttons (restyled)
+   - Tabs: Publications(articles+preprints) / Patents / Other(everything else)
+   - Unordered lists, extra spacing, centered buttons
 */}}
 
 {{ $raw := "" }}
@@ -11,88 +10,96 @@
   {{ $items := $raw | transform.Unmarshal }}
   {{ if lt (len $items) 1 }}{{ else }}
 
-  {{/* categorize */}}
-  {{ $paperTypes := slice "article-journal" "article" "journal-article" "paper-conference" "inproceedings" "chapter" "book" "report" "thesis" "preprint" }}
+  {{/* --- Categorize --- */}}
+  {{ $pubTypes := slice "article-journal" "journal-article" "article" "preprint" }}
   {{ $pubs := slice }} {{ $patents := slice }} {{ $others := slice }}
   {{ range $it := $items }}
-    {{ $typ := index $it "type" | default "" }}
-    {{ if eq $typ "patent" }}        {{ $patents = $patents | append $it }}
-    {{ else if in $paperTypes $typ }} {{ $pubs    = $pubs    | append $it }}
-    {{ else }}                        {{ $others  = $others  | append $it }}
+    {{ $typ := index $it "type" | default "" | lower }}
+    {{ if eq $typ "patent" }}
+      {{ $patents = $patents | append $it }}
+    {{ else if in $pubTypes $typ }}
+      {{ $pubs = $pubs | append $it }}
+    {{ else }}
+      {{ $others = $others | append $it }}
     {{ end }}
   {{ end }}
 
-  {{/* helper: year from issued */}}
-  {{/* group slices by year (always coerce bucket to slice) */}}
-  {{ $pubsByYear := dict }}
-  {{ range $it := $pubs }}
-    {{ $y := "" }}
-    {{ with (index $it "issued") }}
-      {{ $dp := index . "date-parts" }}
-      {{ if and $dp (gt (len $dp) 0) (gt (len (index $dp 0)) 0) }}
-        {{ $y = printf "%v" (index (index $dp 0) 0) }}
-      {{ else }}{{ with (index . "raw") }}{{ $y = printf "%v" . }}{{ end }}{{ end }}
+  {{/* --- Helpers: year/group + per-year sort by issued date (desc) --- */}}
+  {{/* group to dict[year][] with slice-coercion to avoid append errors */}}
+  {{ $groupByYear := func (sliceIn) }}
+    {{ $by := dict }}
+    {{ range $it := sliceIn }}
+      {{ $y := "" }}
+      {{ with (index $it "issued") }}
+        {{ $dp := index . "date-parts" }}
+        {{ if and $dp (gt (len $dp) 0) (gt (len (index $dp 0)) 0) }}
+          {{ $y = printf "%v" (index (index $dp 0) 0) }}
+        {{ else }}{{ with (index . "raw") }}{{ $y = printf "%v" . }}{{ end }}{{ end }}
+      {{ end }}
+      {{ if not $y }}{{ $y = "No year" }}{{ end }}
+      {{ $ex := index $by $y }} {{ $bucket := slice }}
+      {{ if $ex }}{{ if (reflect.IsSlice $ex) }}{{ $bucket = $ex }}{{ else }}{{ $bucket = slice $ex }}{{ end }}{{ end }}
+      {{ $bucket = $bucket | append $it }}
+      {{ $by = merge $by (dict $y $bucket) }}
     {{ end }}
-    {{ if not $y }}{{ $y = "No year" }}{{ end }}
-    {{ $ex := index $pubsByYear $y }} {{ $bucket := slice }}
-    {{ if $ex }}{{ if (reflect.IsSlice $ex) }}{{ $bucket = $ex }}{{ else }}{{ $bucket = slice $ex }}{{ end }}{{ end }}
-    {{ $bucket = $bucket | append $it }}
-    {{ $pubsByYear = merge $pubsByYear (dict $y $bucket) }}
+    {{ return $by }}
   {{ end }}
 
-  {{ $patByYear := dict }}
-  {{ range $it := $patents }}
-    {{ $y := "" }}
-    {{ with (index $it "issued") }}
-      {{ $dp := index . "date-parts" }}
-      {{ if and $dp (gt (len $dp) 0) (gt (len (index $dp 0)) 0) }}
-        {{ $y = printf "%v" (index (index $dp 0) 0) }}
-      {{ else }}{{ with (index . "raw") }}{{ $y = printf "%v" . }}{{ end }}{{ end }}
-    {{ end }}
-    {{ if not $y }}{{ $y = "No year" }}{{ end }}
-    {{ $ex := index $patByYear $y }} {{ $bucket := slice }}
-    {{ if $ex }}{{ if (reflect.IsSlice $ex) }}{{ $bucket = $ex }}{{ else }}{{ $bucket = slice $ex }}{{ end }}{{ end }}
-    {{ $bucket = $bucket | append $it }}
-    {{ $patByYear = merge $patByYear (dict $y $bucket) }}
+  {{ $sortYearKeysDesc := func (m) }}
+    {{ $ys := slice }}
+    {{ range $k, $_ := m }}{{ $ys = $ys | append $k }}{{ end }}
+    {{ $ys = sort $ys "value" "desc" }}
+    {{ return $ys }}
   {{ end }}
 
-  {{ $othByYear := dict }}
-  {{ range $it := $others }}
-    {{ $y := "" }}
-    {{ with (index $it "issued") }}
-      {{ $dp := index . "date-parts" }}
-      {{ if and $dp (gt (len $dp) 0) (gt (len (index $dp 0)) 0) }}
-        {{ $y = printf "%v" (index (index $dp 0) 0) }}
-      {{ else }}{{ with (index . "raw") }}{{ $y = printf "%v" . }}{{ end }}{{ end }}
+  {{/* Given a year-slice, return it sorted by issued date (YYYY-MM-DD desc) */}}
+  {{ $sortItemsByDateDesc := func (yearSlice) }}
+    {{ $rows := slice }}
+    {{ range $it := yearSlice }}
+      {{ $yy := 0 }}{{ $mm := 0 }}{{ $dd := 0 }}
+      {{ with (index $it "issued") }}
+        {{ $dp := index . "date-parts" }}
+        {{ if and $dp (gt (len $dp) 0) }}
+          {{ $yy = index (index $dp 0) 0 | default 0 }}
+          {{ if gt (len (index $dp 0)) 1 }}{{ $mm = index (index $dp 0) 1 | default 0 }}{{ end }}
+          {{ if gt (len (index $dp 0)) 2 }}{{ $dd = index (index $dp 0) 2 | default 0 }}{{ end }}
+        {{ end }}
+      {{ end }}
+      {{ $k := printf "%04d-%02d-%02d" $yy $mm $dd }}
+      {{ $rows = $rows | append (dict "k" $k "m" $it) }}
     {{ end }}
-    {{ if not $y }}{{ $y = "No year" }}{{ end }}
-    {{ $ex := index $othByYear $y }} {{ $bucket := slice }}
-    {{ if $ex }}{{ if (reflect.IsSlice $ex) }}{{ $bucket = $ex }}{{ else }}{{ $bucket = slice $ex }}{{ end }}{{ end }}
-    {{ $bucket = $bucket | append $it }}
-    {{ $othByYear = merge $othByYear (dict $y $bucket) }}
+    {{ $rows = sort $rows "k" "desc" }}
+    {{ $out := slice }}
+    {{ range $r := $rows }}{{ $out = $out | append (index $r "m") }}{{ end }}
+    {{ return $out }}
   {{ end }}
 
-  {{/* collect sorted years (desc) */}}
-  {{ $pubYears := slice }}{{ range $k, $_ := $pubsByYear }}{{ $pubYears = $pubYears | append $k }}{{ end }}{{ $pubYears = sort $pubYears "value" "desc" }}
-  {{ $patYears := slice }}{{ range $k, $_ := $patByYear }}{{ $patYears = $patYears | append $k }}{{ end }}{{ $patYears = sort $patYears "value" "desc" }}
-  {{ $othYears := slice }}{{ range $k, $_ := $othByYear }}{{ $othYears = $othYears | append $k }}{{ end }}{{ $othYears = sort $othYears "value" "desc" }}
+  {{ $pubsByYear := $groupByYear $pubs }}
+  {{ $patByYear  := $groupByYear $patents }}
+  {{ $othByYear  := $groupByYear $others  }}
+
+  {{ $pubYears := $sortYearKeysDesc $pubsByYear }}
+  {{ $patYears := $sortYearKeysDesc $patByYear  }}
+  {{ $othYears := $sortYearKeysDesc $othByYear  }}
 
   <style>
     .pubs-section{padding:2rem 0}
-    .pubs-tabs{display:flex;gap:.6rem;margin-bottom:1rem;flex-wrap:wrap}
+    .pubs-tabs{display:flex;gap:.6rem;margin-bottom:1rem;flex-wrap:wrap;justify-content:center}
     .pubs-tabs button{padding:.55rem 1rem;border:1px solid #d3d3d3;border-radius:.7rem;background:#fff;cursor:pointer;transition:.15s;box-shadow:0 1px 0 rgba(0,0,0,.03)}
     .pubs-tabs button:hover{background:#f6f6f6}
     .pubs-tabs button.active{background:#111;color:#fff;border-color:#111}
-    .year-group{margin:1.25rem 0 1rem}
-    .pubs-year{margin:.25rem 0 .5rem;font-weight:800}
+    .year-group{margin:1.5rem 0 1.25rem}
+    .pubs-year{margin:.25rem 0 .75rem;font-weight:800;text-align:left}
     .pubs-list{list-style:none;padding-left:0;margin:0}
-    .pub{margin:.8rem 0 1rem;line-height:1.5}
+    .pub{margin:1rem 0 1.1rem;line-height:1.6}
     .pub-title{font-weight:700}
+    .pub-title a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(0,0,0,.1)}
+    .pub-title a:hover{border-bottom-color:rgba(0,0,0,.35)}
     .pub-authors{color:#222}
     .pub-venue{font-style:italic;color:#444}
     .pub-year{color:#666}
-    .pubs-footer{display:flex;gap:.6rem;margin-top:1.25rem;flex-wrap:wrap}
-    .pubs-footer a,.pubs-footer button{padding:.6rem 1rem;border:1px solid #d3d3d3;border-radius:.7rem;background:#fff;cursor:pointer;text-decoration:none;transition:.15s}
+    .pubs-footer{display:flex;gap:.6rem;margin-top:1.25rem;flex-wrap:wrap;justify-content:center}
+    .pubs-footer a,.pubs-footer button{padding:.65rem 1.05rem;border:1px solid #d3d3d3;border-radius:.7rem;background:#fff;cursor:pointer;text-decoration:none;transition:.15s;min-width:150px;text-align:center}
     .pubs-footer a:hover,.pubs-footer button:hover{background:#f6f6f6}
     .pubs-footer .primary{background:#111;color:#fff;border-color:#111}
     .hidden{display:none}
@@ -105,36 +112,26 @@
       <button data-tab="others">Other</button>
     </div>
 
-    {{/* === Publications Pane === */}}
+    {{/* === Publications Pane (articles + preprints) === */}}
     <div class="pubs-pane" id="pubs-pane">
       {{ range $y := $pubYears }}
+        {{ $yslice := index $pubsByYear $y | $sortItemsByDateDesc }}
         <div class="year-group" data-year-group>
           <h3 class="pubs-year">{{ $y }}</h3>
           <ul class="pubs-list">
-            {{/* Build a sortable slice of {k: "YYYY-MM-DD", m: item} per year */}}
-            {{ $rows := slice }}
-            {{ range $it := (index $pubsByYear $y) }}
-              {{ $yy := 0 }}{{ $mm := 0 }}{{ $dd := 0 }}
-              {{ with (index $it "issued") }}
-                {{ $dp := index . "date-parts" }}
-                {{ if and $dp (gt (len $dp) 0) }}
-                  {{ $yy = index (index $dp 0) 0 | default 0 }}
-                  {{ if gt (len (index $dp 0)) 1 }}{{ $mm = index (index $dp 0) 1 | default 0 }}{{ end }}
-                  {{ if gt (len (index $dp 0)) 2 }}{{ $dd = index (index $dp 0) 2 | default 0 }}{{ end }}
-                {{ end }}
-              {{ end }}
-              {{ $k := printf "%04d-%02d-%02d" $yy $mm $dd }}
-              {{ $rows = $rows | append (dict "k" $k "m" $it) }}
-            {{ end }}
-            {{ $rows = sort $rows "k" "desc" }}
-            {{ range $idx, $row := $rows }}
-              {{ $it := index $row "m" }}
+            {{ range $it := $yslice }}
               {{ $t := index $it "title" }}
               {{ $au := index $it "author" }}
               {{ $ct := index $it "container-title" }}
               {{ $iss := index $it "issued" }}
+              {{ $doi := index $it "DOI" }}
+              {{ $url := index $it "URL" }}
+              {{ $href := "" }}
+              {{ if $doi }}{{ $href = printf "https://doi.org/%s" $doi }}{{ else if $url }}{{ $href = $url }}{{ end }}
               <li class="pub pub-item">
-                <span class="pub-title">{{ $t }}</span>
+                <span class="pub-title">
+                  {{ if $href }}<a href="{{ $href }}" target="_blank" rel="noopener">{{ $t }}</a>{{ else }}{{ $t }}{{ end }}
+                </span>
                 {{ with $au }}
                   <span class="pub-authors">
                     — {{ range $j, $a := . }}
@@ -160,32 +157,23 @@
     {{/* === Patents Pane === */}}
     <div class="pubs-pane hidden" id="patents-pane">
       {{ range $y := $patYears }}
+        {{ $yslice := index $patByYear $y | $sortItemsByDateDesc }}
         <div class="year-group" data-year-group>
           <h3 class="pubs-year">{{ $y }}</h3>
           <ul class="pubs-list">
-            {{ $rows := slice }}
-            {{ range $it := (index $patByYear $y) }}
-              {{ $yy := 0 }}{{ $mm := 0 }}{{ $dd := 0 }}
-              {{ with (index $it "issued") }}
-                {{ $dp := index . "date-parts" }}
-                {{ if and $dp (gt (len $dp) 0) }}
-                  {{ $yy = index (index $dp 0) 0 | default 0 }}
-                  {{ if gt (len (index $dp 0)) 1 }}{{ $mm = index (index $dp 0) 1 | default 0 }}{{ end }}
-                  {{ if gt (len (index $dp 0)) 2 }}{{ $dd = index (index $dp 0) 2 | default 0 }}{{ end }}
-                {{ end }}
-              {{ end }}
-              {{ $k := printf "%04d-%02d-%02d" $yy $mm $dd }}
-              {{ $rows = $rows | append (dict "k" $k "m" $it) }}
-            {{ end }}
-            {{ $rows = sort $rows "k" "desc" }}
-            {{ range $row := $rows }}
-              {{ $it := index $row "m" }}
+            {{ range $it := $yslice }}
               {{ $t := index $it "title" }}
               {{ $au := index $it "author" }}
               {{ $ct := index $it "container-title" }}
               {{ $iss := index $it "issued" }}
+              {{ $doi := index $it "DOI" }}
+              {{ $url := index $it "URL" }}
+              {{ $href := "" }}
+              {{ if $doi }}{{ $href = printf "https://doi.org/%s" $doi }}{{ else if $url }}{{ $href = $url }}{{ end }}
               <li class="pub pub-item">
-                <span class="pub-title">{{ $t }}</span>
+                <span class="pub-title">
+                  {{ if $href }}<a href="{{ $href }}" target="_blank" rel="noopener">{{ $t }}</a>{{ else }}{{ $t }}{{ end }}
+                </span>
                 {{ with $au }}
                   <span class="pub-authors">
                     — {{ range $j, $a := . }}
@@ -211,32 +199,23 @@
     {{/* === Others Pane === */}}
     <div class="pubs-pane hidden" id="others-pane">
       {{ range $y := $othYears }}
+        {{ $yslice := index $othByYear $y | $sortItemsByDateDesc }}
         <div class="year-group" data-year-group>
           <h3 class="pubs-year">{{ $y }}</h3>
           <ul class="pubs-list">
-            {{ $rows := slice }}
-            {{ range $it := (index $othByYear $y) }}
-              {{ $yy := 0 }}{{ $mm := 0 }}{{ $dd := 0 }}
-              {{ with (index $it "issued") }}
-                {{ $dp := index . "date-parts" }}
-                {{ if and $dp (gt (len $dp) 0) }}
-                  {{ $yy = index (index $dp 0) 0 | default 0 }}
-                  {{ if gt (len (index $dp 0)) 1 }}{{ $mm = index (index $dp 0) 1 | default 0 }}{{ end }}
-                  {{ if gt (len (index $dp 0)) 2 }}{{ $dd = index (index $dp 0) 2 | default 0 }}{{ end }}
-                {{ end }}
-              {{ end }}
-              {{ $k := printf "%04d-%02d-%02d" $yy $mm $dd }}
-              {{ $rows = $rows | append (dict "k" $k "m" $it) }}
-            {{ end }}
-            {{ $rows = sort $rows "k" "desc" }}
-            {{ range $row := $rows }}
-              {{ $it := index $row "m" }}
+            {{ range $it := $yslice }}
               {{ $t := index $it "title" }}
               {{ $au := index $it "author" }}
               {{ $ct := index $it "container-title" }}
               {{ $iss := index $it "issued" }}
+              {{ $doi := index $it "DOI" }}
+              {{ $url := index $it "URL" }}
+              {{ $href := "" }}
+              {{ if $doi }}{{ $href = printf "https://doi.org/%s" $doi }}{{ else if $url }}{{ $href = $url }}{{ end }}
               <li class="pub pub-item">
-                <span class="pub-title">{{ $t }}</span>
+                <span class="pub-title">
+                  {{ if $href }}<a href="{{ $href }}" target="_blank" rel="noopener">{{ $t }}</a>{{ else }}{{ $t }}{{ end }}
+                </span>
                 {{ with $au }}
                   <span class="pub-authors">
                     — {{ range $j, $a := . }}
@@ -312,7 +291,7 @@
           tabs.forEach(b=>b.classList.remove('active'));
           btn.classList.add('active');
           active = btn.getAttribute('data-tab');
-          shown = pageSize; // reset count on tab switch
+          shown = pageSize; // reset on tab switch
           applyVisibility();
         });
       });
