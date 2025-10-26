@@ -2,7 +2,7 @@
   <main id="publications" class="container">
     <h1>Publications</h1>
 
-    {{/* Read the file directly. If missing or empty → show a soft message. */}}
+    {{/* Read JSON file directly to avoid any site.Data/mount issues */}}
     {{ $raw := "" }}
     {{ with readFile "data/publications.zotero.json" }}{{ $raw = . }}{{ end }}
 
@@ -14,9 +14,10 @@
         <p>No publications yet.</p>
       {{ else }}
 
-        {{/* Group by year */}}
+        {{/* -------- Group by year (robust: always coerce bucket to a slice) -------- */}}
         {{ $byYear := dict }}
         {{ range $it := $items }}
+          {{/* extract year from issued.date-parts or issued.raw */}}
           {{ $year := "" }}
           {{ with (index $it "issued") }}
             {{ $dp := index . "date-parts" }}
@@ -28,15 +29,21 @@
           {{ end }}
           {{ if not $year }}{{ $year = "No year" }}{{ end }}
 
-          {{ $bucket := index $byYear $year }}
-          {{ if $bucket }}
-            {{ $byYear = merge $byYear (dict $year (append $bucket $it)) }}
-          {{ else }}
-            {{ $byYear = merge $byYear (dict $year (slice $it)) }}
+          {{/* get existing bucket; if not a slice, wrap it into a slice */}}
+          {{ $existing := index $byYear $year }}
+          {{ $bucket := slice }}
+          {{ if $existing }}
+            {{ if (reflect.IsSlice $existing) }}
+              {{ $bucket = $existing }}
+            {{ else }}
+              {{ $bucket = slice $existing }}
+            {{ end }}
           {{ end }}
+          {{ $bucket = $bucket | append $it }}
+          {{ $byYear = merge $byYear (dict $year $bucket) }}
         {{ end }}
 
-        {{/* Sort years desc and render */}}
+        {{/* -------- Sort years desc and render -------- */}}
         {{ $years := slice }}
         {{ range $k, $_ := $byYear }}{{ $years = $years | append $k }}{{ end }}
         {{ $years = sort $years "value" "desc" }}
