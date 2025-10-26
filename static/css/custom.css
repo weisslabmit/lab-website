@@ -1262,7 +1262,7 @@ section.wrapper {
 
 /* === Resources subtext spacing & typography tweak === */
 .resources-section .section-desc {
-  margin-top: 2.5rem;                /* more space above grid */
+  margin-top: 5rem;                /* more space above grid */
   margin-bottom: 2rem;               /* keep consistent with below */
   font-size: clamp(1rem, 0.45vw + 0.8rem, 1.15rem); /* a bit larger */
   line-height: 1.55;
