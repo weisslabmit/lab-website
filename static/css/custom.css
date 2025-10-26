@@ -1564,14 +1564,24 @@ section.wrapper {
   box-shadow: 0 14px 30px rgba(107, 70, 193, .45);
 }
 
-/* === Footer centered layout === */
+/* === Footer pinned to bottom, centered text === */
 footer {
-  display: flex;
-  justify-content: center;   /* centers horizontally */
-  align-items: center;       /* centers vertically */
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
   text-align: center;
-  min-height: 80px;          /* adjust based on your design */
-  padding: 1.5rem 1rem;
+  background: #f8f8f8;        /* or match your site background */
+  color: #555;
+  font-size: 0.85rem;
+  padding: 0.75rem 1rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  z-index: 999;
+}
+
+/* Prevent content overlap (add bottom padding to body) */
+body {
+  padding-bottom: 2.5rem;     /* same or slightly more than footer height */
 }
 
 
