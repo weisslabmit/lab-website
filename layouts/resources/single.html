@@ -1,0 +1,7 @@
+{{ $target := .Params.link | default .RelPermalink }}
+{{ define "main" }}
+<section class="resources-redirect">
+  <meta http-equiv="refresh" content="0;url={{ $target }}">
+  <p>Redirecting to <a href="{{ $target }}">{{ .Title }}</a>…</p>
+</section>
+{{ end }}

@@ -84,3 +84,29 @@ collections:
           options: ["Graduate Alumni", "Postdoctoral Alumni", "Undergraduate Alumni", "Other Alumni"] }
       - { label: "Image", name: "image", widget: "image", required: false }
       - { label: "Weight (order)", name: "weight", widget: "number", required: false, hint: "Lower appears first" }
+
+  - name: "resources"
+    label: "Resources"
+    folder: "content/resources"
+    extension: "md"
+    create: true
+    slug: "{{slug}}"
+    format: "frontmatter"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Image (icon)", name: "image", widget: "image", hint: "Square PNG/SVG preferred. Stored under /uploads/resources/." }
+      - label: "Description"
+        name: "description"
+        widget: "text"
+        hint: "Keep it ≤ 30 words."
+        pattern:
+          - "^(\\s*\\S+\\s*){0,30}$"
+          - "Please keep the description to 30 words or fewer."
+      - label: "Link"
+        name: "link"
+        widget: "string"
+        hint: "Full URL to the resource (https://…)"
+        pattern:
+          - "^(https?:)?//[\\w.-].+"
+          - "Enter a valid URL starting with http(s)://"
+      - { label: "Weight (order)", name: "weight", widget: "number", required: false, hint: "Lower = earlier" }

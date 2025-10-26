@@ -1165,3 +1165,92 @@ section.wrapper {
   .profile-card, .profile-content { box-shadow: none; border: 0; padding: 0; }
   .profile-photo img { width: 120px; height: 120px; }
 }
+
+
+/* ======== Resources grid (Items-style) ======== */
+.resources-section .content {
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 4vw, 3rem);
+}
+
+.resources-section header.major h2 {
+  font-size: clamp(1.6rem, 1vw + 1rem, 2.2rem);
+  margin: 0 0 .25rem 0;
+  text-align: center;
+}
+.resources-section .section-desc {
+  opacity: .9;
+  margin: 0 0 1.5rem 0;
+  text-align: center;
+}
+
+.resources-grid {
+  /* grid with even columns; adjust min width to control columns */
+  --min: 220px;
+  --gap: 0; /* we draw separators with borders, so no gap */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(var(--min), 1fr));
+  gap: var(--gap);
+  border-top: 1px solid rgba(0,0,0,.08);
+  border-left: 1px solid rgba(0,0,0,.08);
+  background: #fff;
+  overflow: hidden;
+  border-radius: 14px;
+}
+
+/* Each card is a link; draw the inner separators here */
+.resource-card {
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  align-content: start;
+  padding: 1rem 1rem 1.1rem;
+  text-decoration: none;
+  color: inherit;
+  border-right: 1px solid rgba(0,0,0,.08);
+  border-bottom: 1px solid rgba(0,0,0,.08);
+  transition: background .15s ease, transform .12s ease, box-shadow .15s ease;
+}
+
+/* Icon/illustration */
+.rc-media {
+  display: grid;
+  place-items: center;
+  margin-bottom: .6rem;
+  min-height: 56px; /* steady block height even if small icons */
+}
+.rc-media img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  display: block;
+}
+
+/* Title + description */
+.rc-title {
+  margin: 0 0 .35rem 0;
+  line-height: 1.2;
+  font-size: clamp(1rem, 0.5vw + 0.8rem, 1.15rem);
+  text-decoration: underline transparent;
+  transition: text-decoration-color .15s ease, color .15s ease;
+}
+.rc-desc {
+  margin: 0;
+  opacity: .9;
+  line-height: 1.45;
+  font-size: clamp(0.9rem, 0.4vw + 0.6rem, .98rem);
+}
+
+/* Hover/active feel */
+.resource-card:hover {
+  background: #fafafa;
+}
+.resource-card:active {
+  transform: translateY(1px);
+}
+
+/* On very narrow screens, make tiles comfortably tall */
+@media (max-width: 480px) {
+  .resources-grid { --min: 180px; }
+  .rc-media img { width: 42px; height: 42px; }
+}
