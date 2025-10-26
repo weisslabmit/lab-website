@@ -29,12 +29,15 @@ jobs:
 
       - name: Commit changes (if any)
         run: |
-          if [[ -n "$(git status --porcelain)" ]]; then
+          # Stage only the file we expect
+          git add data/publications.zotero.json || true
+
+          # Commit only if something is staged
+          if git diff --cached --quiet; then
+            echo "No changes."
+          else
             git config user.name "github-actions[bot]"
             git config user.email "github-actions[bot]@users.noreply.github.com"
-            git add data/publications.zotero.json
             git commit -m "chore(pubs): update from Zotero [skip ci]"
             git push
-          else
-            echo "No changes."
           fi

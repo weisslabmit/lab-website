@@ -1,17 +1,24 @@
-{{/* Renders data/publications.zotero.json (CSL-JSON). Accepts either:
-     - a raw array: [ {...}, {...} ]
-     - or a map { "items": [ {...}, ... ] }
+{{/* Reads from data/publications.json (preferred) or data/publications.zotero.json (fallback).
+     Accepts either:
+       - raw array: [ {...}, {...} ]
+       - or map: { "items": [ {...}, ... ] }  (not expected here, but tolerated)
 */}}
 
-{{ $raw := site.Data.publications_zotero }}
 {{ $items := slice }}
 
-{{ if $raw }}
-  {{ $maybeItems := index $raw "items" }}
-  {{ if $maybeItems }}
-    {{ $items = $maybeItems }}
+{{ with site.Data.publications }}
+  {{ if (index . "items") }}
+    {{ $items = (index . "items") }}
   {{ else }}
-    {{ $items = $raw }}
+    {{ $items = . }}
+  {{ end }}
+{{ else }}
+  {{ with site.Data.publications_zotero }}
+    {{ if (index . "items") }}
+      {{ $items = (index . "items") }}
+    {{ else }}
+      {{ $items = . }}
+    {{ end }}
   {{ end }}
 {{ end }}
 
@@ -19,9 +26,8 @@
   <p>No publications yet.</p>
 {{ else }}
 
-  {{/* Build year → items map */}}
+  {{/* Group items by year */}}
   {{ $byYear := dict }}
-
   {{ range $it := $items }}
     {{ $year := "" }}
     {{ $issued := index $it "issued" }}
@@ -44,7 +50,7 @@
     {{ end }}
   {{ end }}
 
-  {{/* Sorted years (desc) */}}
+  {{/* Sort years desc */}}
   {{ $years := slice }}
   {{ range $k, $_ := $byYear }}{{ $years = $years | append $k }}{{ end }}
   {{ $years = sort $years "value" "desc" }}
