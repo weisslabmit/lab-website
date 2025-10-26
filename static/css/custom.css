@@ -1878,77 +1878,47 @@ strong, b { font-weight: 700 !important; }
 .pubs-section .actions.pubs-tabs li > a.button.active:hover {
   background: #000 !important;
 }
-/* ============================================
-   RESEARCH — balanced spacing: wider gap + more vertical rhythm
-   (final tuned layout)
-============================================ */
+/* =========================================================
+   RESEARCH — make text further from image (hard override)
+   Drop at END of custom.css
+========================================================= */
 
 :root{
-  /* Column balance + spacing variables */
-  --rs-split-img: clamp(30%, 35vw, 42%);        /* image column width */
-  --rs-gap:       clamp(2rem, 3vw, 3.5rem);     /* horizontal gap between columns */
-  --rs-section-space: clamp(3.5rem, 6vw, 6rem); /* vertical space between sections */
+  /* tweak this to taste */
+  --rs-gap: clamp(2.25rem, 3.5vw, 4rem);
 }
 
-/* Apply clean margin rhythm between spotlight rows */
+/* Ensure the container actually has a gap */
 #research .spotlights > section,
 #research .spotlight{
-  margin-bottom: var(--rs-section-space);
-  border: none !important;
+  display: flex !important;
+  align-items: center !important;
+  column-gap: var(--rs-gap) !important; /* explicit column-gap */
+  gap: var(--rs-gap) !important;        /* modern flex gap */
 }
 
-/* Medium & large screens: two-column layout with wider gap */
-@media (min-width: 980px){
-  #research .spotlights > section,
-  #research .spotlight{
-    display: flex !important;
-    align-items: center !important;
-    justify-content: space-between;
-    gap: var(--rs-gap) !important;
-  }
-
-  #research .spotlight .image.r-spotlight__media{
-    flex: 0 1 var(--rs-split-img) !important;
-    height: var(--rs-desktop-h) !important;
-    max-height: 70vh !important;
-    margin: 0 !important;
-  }
-
-  #research .spotlight .content{
-    flex: 1 1 calc(100% - var(--rs-split-img)) !important;
-    max-width: none !important;
-    margin: 0 !important;
-    padding: 0 !important;
-  }
+/* --- Fallback margin in case theme/layout swallows flex gap --- */
+/* When IMAGE is on the left (default) */
+#research .spotlights > section .image.r-spotlight__media + .content,
+#research .spotlight .image.r-spotlight__media + .content{
+  margin-left: var(--rs-gap) !important;
 }
 
-/* Mobile / small screens: stacked layout, keep good breathing room */
-@media (max-width: 979px){
-  #research .spotlights > section,
-  #research .spotlight{
-    display: flex !important;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 1.75rem;
-    margin-bottom: var(--rs-section-space);
-  }
-
-  #research .spotlight .image.r-spotlight__media{
-    width: 100%;
-    height: var(--rs-mobile-h) !important;
-    margin-bottom: 1.5rem;
-  }
+/* When IMAGE is on the right (Story often adds .alt) */
+#research .spotlights > section.alt .content,
+#research .spotlight.alt .content{
+  margin-right: var(--rs-gap) !important;
+  margin-left: 0 !important;
 }
 
-/* Image styling */
-#research .spotlight .image.r-spotlight__media img{
-  display: block !important;
-  width: auto !important;
-  height: 100% !important;
-  max-height: 100% !important;
-  max-width: 100% !important;
-  object-fit: contain !important;
-  margin: 0 !important;
+/* Keep the image pane snug (no extra internal padding that fakes a smaller gap) */
+#research .spotlight .image.r-spotlight__media{
   padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Optional: a touch more vertical space between spotlight rows */
+#research .spotlights > section,
+#research .spotlight{
+  margin-bottom: clamp(3rem, 5vw, 5rem) !important;
 }
