@@ -2,7 +2,6 @@
 import json, os, sys, time
 import requests
 
-# Hardcoded Zotero Group ID
 GROUP_ID = "6271906"
 
 SESSION = requests.Session()
@@ -104,10 +103,13 @@ def main():
         url = next_link(resp)
 
     os.makedirs("data", exist_ok=True)
+    # Write BOTH names so either key works in Hugo
     with open("data/publications.zotero.json", "w", encoding="utf-8") as f:
         json.dump(all_items, f, ensure_ascii=False, indent=2)
+    with open("data/publications.json", "w", encoding="utf-8") as f:
+        json.dump(all_items, f, ensure_ascii=False, indent=2)
 
-    print(f"Done. Wrote data/publications.zotero.json with {len(all_items)} items.", flush=True)
+    print(f"Done. Wrote data/publications.zotero.json and data/publications.json with {len(all_items)} items.", flush=True)
 
 if __name__ == "__main__":
     main()
