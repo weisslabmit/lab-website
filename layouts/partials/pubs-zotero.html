@@ -1,12 +1,16 @@
-{{/* Teaser for homepage: reads data/publications.zotero.json
-     Access key: site.Data["publications"]["zotero"]
-     JSON shape: top-level ARRAY of CSL-JSON items
+{{/* Homepage teaser: read JSON file directly (no site.Data).
+     Assumes the file exists at repo-root: data/publications.zotero.json
 */}}
 
 {{ $items := slice }}
-{{ with (index site.Data "publications") }}
-  {{ with (index . "zotero") }}
-    {{ if (index . "items") }}{{ $items = (index . "items") }}{{ else }}{{ $items = . }}{{ end }}
+{{ $raw := readFile "data/publications.zotero.json" | transform.Unmarshal }}
+
+{{/* If someone wrapped as {"items":[...]}, unwrap; else assume top-level array */}}
+{{ if $raw }}
+  {{ if (and (reflect.IsMap $raw) (index $raw "items")) }}
+    {{ $items = (index $raw "items") }}
+  {{ else }}
+    {{ $items = $raw }}
   {{ end }}
 {{ end }}
 
@@ -19,13 +23,13 @@
       {{ $au := index . "author" }}
       {{ $ct := index . "container-title" }}
       {{ $issued := index . "issued" }}
+      {{ $url := index . "URL" }}
       <li>
         <span class="pub-title">{{ $t }}</span>
         {{ with $au }}
           — {{ range $i, $a := . }}
               {{ if gt $i 0 }}, {{ end }}
-              {{ $fam := index $a "family" }}{{ $giv := index $a "given" }}
-              {{ $fam }}{{ if $giv }} {{ $giv }}{{ end }}
+              {{ index $a "family" }}{{ with (index $a "given") }} {{ . }}{{ end }}
             {{ end }}
         {{ end }}
         {{ if $ct }}, <em>{{ $ct }}</em>{{ end }}
@@ -35,12 +39,12 @@
             ({{ index (index $dp 0) 0 }})
           {{ end }}
         {{ end }}
-        {{ with (index . "URL") }}
-          — <a href="{{ . }}" target="_blank" rel="noopener">Link</a>
-        {{ end }}
+        {{ with $url }} — <a href="{{ . }}" target="_blank" rel="noopener">Link</a>{{ end }}
       </li>
     {{ end }}
   </ul>
   <p><a href="/publications/">See all publications →</a></p>
 </section>
+{{ else }}
+<!-- pubs: file read OK but 0 items in data/publications.zotero.json -->
 {{ end }}

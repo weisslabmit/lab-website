@@ -2,17 +2,14 @@
   <main id="publications" class="container">
     <h1>Publications</h1>
 
-    {{/* Load items from site.Data["publications"]["zotero"] (array or {"items":[...]}) */}}
-    {{ $items := slice }}
-    {{ with (index site.Data "publications") }}
-      {{ with (index . "zotero") }}
-        {{ if (index . "items") }}{{ $items = (index . "items") }}{{ else }}{{ $items = . }}{{ end }}
-      {{ end }}
-    {{ end }}
+    {{/* Read JSON file directly */}}
+    {{ $raw := readFile "data/publications.zotero.json" | transform.Unmarshal }}
+    {{ $items := cond (and (reflect.IsMap $raw) (index $raw "items")) (index $raw "items") $raw }}
 
     {{ if lt (len $items) 1 }}
       <p>No publications yet.</p>
     {{ else }}
+
       {{/* Group by year */}}
       {{ $byYear := dict }}
       {{ range $it := $items }}
@@ -35,7 +32,7 @@
         {{ end }}
       {{ end }}
 
-      {{/* Sort years desc */}}
+      {{/* Sort years desc and render */}}
       {{ $years := slice }}
       {{ range $k, $_ := $byYear }}{{ $years = $years | append $k }}{{ end }}
       {{ $years = sort $years "value" "desc" }}
@@ -60,8 +57,7 @@
                   —
                   {{ range $i, $a := . }}
                     {{ if gt $i 0 }}, {{ end }}
-                    {{ $fam := index $a "family" }}{{ $giv := index $a "given" }}
-                    {{ $fam }}{{ if $giv }} {{ $giv }}{{ end }}
+                    {{ index $a "family" }}{{ with (index $a "given") }} {{ . }}{{ end }}
                   {{ end }}
                 </span>
               {{ end }}
