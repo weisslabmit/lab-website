@@ -140,16 +140,31 @@
 <script>
 (function() {
   const fab = document.querySelector('.recruiting-fab');
-  if (!fab) return;
 
-  function toggleFab() {
-    const scrollY = window.scrollY || document.documentElement.scrollTop;
-    const threshold = window.innerHeight * 0.9; // near the end of banner
-    fab.classList.toggle('is-active', scrollY < threshold);
-  }
+  // Fail-safe: only run on the homepage and if the button exists
+  if (!fab || location.pathname !== '/') return;
 
-  window.addEventListener('scroll', toggleFab);
-  window.addEventListener('resize', toggleFab);
-  toggleFab(); // initial check
+  // Require a banner to scope visibility to "banner area"
+  const banner = document.getElementById('banner');
+  if (!banner) { fab.classList.remove('is-active'); return; }
+
+  // Create a sentinel at the end of the banner
+  const sentinel = document.createElement('div');
+  sentinel.setAttribute('aria-hidden', 'true');
+  sentinel.style.cssText = 'position:absolute; bottom:0; left:0; width:1px; height:1px;';
+  banner.style.position = banner.style.position || 'relative';
+  banner.appendChild(sentinel);
+
+  // Show the FAB only while the sentinel (bottom of banner) is in view
+  const io = new IntersectionObserver(([entry]) => {
+    fab.classList.toggle('is-active', entry.isIntersecting);
+  }, { root: null, threshold: 0 });
+
+  io.observe(sentinel);
+
+  // Extra hard guard: hide on route changes (if SPA-like nav ever happens)
+  window.addEventListener('pageshow', () => {
+    fab.classList.toggle('is-active', sentinel.getBoundingClientRect().top < innerHeight);
+  });
 })();
 </script>
