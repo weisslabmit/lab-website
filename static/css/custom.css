@@ -1167,69 +1167,73 @@ section.wrapper {
 }
 
 
-/* === Resources tuning: bigger images, no circle, smaller full text === */
+/* === Resources: restore grid separators + keep new sizing === */
 
-/* Slightly larger tiles, but still dense */
+/* 1) Container draws the lines; cards stay borderless */
 .resources-grid {
-  --min: 260px;                 /* was ~230px — allows bigger media & readable lines */
-}
-
-/* Card padding a touch larger to fit bigger image comfortably */
-.resource-card {
-  padding: 1.6rem 1.25rem 1.35rem;
-}
-
-/* Media: remove circular plate; grow image */
-.rc-media {
-  width: auto;                  /* remove fixed plate */
-  height: auto;
-  background: transparent;      /* no grey disk */
-  margin-bottom: 0.85rem;
+  --min: 260px;                    /* keep your larger tiles */
+  --res-line: rgba(0,0,0,.08);
   display: grid;
-  place-items: center;
+  grid-template-columns: repeat(auto-fit, minmax(var(--min), 1fr));
+  gap: 1px;                        /* 1px lines created by the container bg */
+  background: var(--res-line);     /* paints the separators */
+  border: 1px solid var(--res-line);
+  border-radius: 14px;
+  overflow: hidden;                /* keep rounded corners with gaps */
+}
+
+/* 2) Cards are flat tiles so the lines show through the 1px gaps */
+.resource-card {
+  background: #fff;                /* must be solid to see the gap lines */
+  padding: 1.6rem 1.25rem 1.35rem; /* from your “bigger but not too big” tuning */
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  justify-items: center;
+  text-align: center;
+  text-decoration: none;
+  color: inherit;
+  transition: background .15s ease, transform .12s ease;
+}
+.resource-card:hover { background: #f8f8f8; }
+.resource-card:active { transform: translateY(1px); }
+
+/* 3) Media: larger images, no circle plate */
+.rc-media {
+  margin-bottom: 0.85rem;
+  display: grid; place-items: center;
+  background: transparent;
 }
 .rc-media img {
-  width: clamp(56px, 7vw, 80px); /* bigger image; scales with viewport */
-  height: auto;                  /* preserve aspect ratio */
+  width: clamp(56px, 7vw, 80px);
+  height: auto;
   object-fit: contain;
-  filter: none;                  /* no desaturation */
-  opacity: 1;
-  transform: none;
   transition: transform .18s ease;
 }
-.resource-card:hover .rc-media img {
-  transform: scale(1.03);       /* tiny lift only */
-}
+.resource-card:hover .rc-media img { transform: scale(1.03); }
 
-/* Title: keep punchy but compact */
+/* 4) Title + description: compact title, full text (no clamp) */
 .rc-title {
   font-size: clamp(0.95rem, 0.5vw + 0.75rem, 1.05rem);
   line-height: 1.22;
   margin: 0 0 .35rem 0;
 }
-
-/* Description: smaller, full text (no clamp), comfortable line-length */
 .rc-desc {
-  font-size: clamp(0.85rem, 0.35vw + 0.55rem, 0.95rem);  /* smaller overall */
+  font-size: clamp(0.85rem, 0.35vw + 0.55rem, 0.95rem);
   line-height: 1.5;
   opacity: 0.9;
-  max-width: 62ch;               /* avoid overlong lines on wide tiles */
-  display: block;                /* remove -webkit-line-clamp */
+  max-width: 62ch;
+  margin: 0;
+  display: block;                  /* ensure no line clamp leftovers */
   -webkit-line-clamp: initial;
   -webkit-box-orient: initial;
   overflow: visible;
 }
 
-/* Subtle hover without making cards feel “heavy” */
-.resource-card:hover {
-  background: #f8f8f8;
-}
-
-/* Mobile: keep it tidy */
+/* 5) Mobile density */
 @media (max-width: 520px) {
   .resources-grid { --min: 200px; }
   .resource-card { padding: 1.25rem 1rem 1.1rem; }
   .rc-media img { width: clamp(48px, 12vw, 64px); }
   .rc-title { font-size: clamp(0.95rem, 1.8vw + 0.7rem, 1.05rem); }
-  .rc-desc { font-size: clamp(0.85rem, 1.5vw + 0.55rem, 0.92rem); }
+  .rc-desc  { font-size: clamp(0.85rem, 1.5vw + 0.55rem, 0.92rem); }
 }
