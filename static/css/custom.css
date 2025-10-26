@@ -1372,9 +1372,8 @@ section.wrapper {
 }
 
 
-
 /* ============================
-   CONTACT SECTION
+   CONTACT SECTION — minimal version
 ============================ */
 .contact-section .inner {
   max-width: 1100px;
@@ -1391,20 +1390,25 @@ section.wrapper {
 .contact-section header.major h2 {
   font-size: clamp(1.6rem, 1vw + 1rem, 2.2rem);
   font-weight: 700;
-  line-height: 1.2;
-  margin: 0;
   color: #2a2a2a;
+  margin: 0;
 }
 
+/* Two columns with divider */
 .contact-grid {
   display: grid;
-  grid-template-columns: 1.2fr 1fr;      /* left wider for long text */
-  gap: clamp(1rem, 3vw, 2rem);
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: clamp(2rem, 4vw, 3rem);
   align-items: start;
+  border-top: 1px solid rgba(0,0,0,.1);
+  border-bottom: 1px solid rgba(0,0,0,.1);
+  padding-top: 2rem;
+  padding-bottom: 2rem;
 }
-@media (max-width: 980px) {
+@media (max-width: 900px) {
   .contact-grid {
     grid-template-columns: 1fr;
+    border: none;
   }
 }
 
@@ -1413,69 +1417,79 @@ section.wrapper {
   font-weight: var(--mit-font-weight);
   font-size: clamp(1rem, 0.6vw + 0.8rem, 1.25rem);
   color: #2a2a2a;
-  margin: 0 0 .75rem 0;
+  margin: 0 0 1rem 0;
 }
 
-.contact-card {
-  background: #fff;
-  border: 1px solid rgba(0,0,0,.06);
-  box-shadow: 0 10px 30px rgba(0,0,0,.04);
-  border-radius: 16px;
-  padding: clamp(1rem, 2.5vw, 1.5rem);
+/* Vertical divider line between columns */
+.contact-left {
+  padding-right: 2rem;
+  border-right: 1px solid rgba(0,0,0,.1);
+}
+.contact-right {
+  padding-left: 2rem;
+}
+@media (max-width: 900px) {
+  .contact-left {
+    border-right: none;
+    padding-right: 0;
+    border-bottom: 1px solid rgba(0,0,0,.1);
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+  }
+  .contact-right {
+    padding-left: 0;
+  }
 }
 
-.contact-card p {
-  margin: 0 0 0.9rem 0;
+.contact-left p {
+  margin: 0 0 1rem 0;
   line-height: 1.6;
 }
 
-/* Addresses */
+/* Logos */
+.logos-row {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+.logos-row .logo {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+
+/* Addresses + Emails */
 .contact-addresses {
   display: grid;
   gap: .75rem;
-  margin: .5rem 0 1rem;
+  margin-bottom: 1.5rem;
 }
 .addr-block {
   display: grid;
   grid-template-columns: 140px 1fr;
   gap: .5rem;
-  align-items: baseline;
 }
 .addr-k { font-weight: 700; opacity: .9; }
 .addr-v { opacity: .92; }
 
-/* Emails */
 .contact-emails {
   display: grid;
   gap: .4rem;
-  margin: .6rem 0 1rem;
+  margin-bottom: 1.5rem;
 }
 .email-line {
   display: grid;
   grid-template-columns: 80px 1fr;
   gap: .5rem;
-  align-items: baseline;
 }
 .email-k { font-weight: 700; opacity: .95; }
-.email-v a { text-decoration: none; border-bottom: 1px solid rgba(0,0,0,.12); }
+.email-v a {
+  text-decoration: none;
+  border-bottom: 1px solid rgba(0,0,0,.12);
+}
 .email-v a:hover { border-bottom-color: rgba(0,0,0,.35); }
-
-/* Logos row */
-.logos-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: .8rem 1rem;
-  align-items: center;
-  margin: .5rem 0 1rem;
-}
-.logos-row .logo {
-  height: 34px;
-  width: auto;
-  display: block;
-  object-fit: contain;
-  filter: grayscale(0); /* keep brand colors; change to 1 for gray */
-  opacity: .95;
-}
 
 /* Map */
 .contact-map {
