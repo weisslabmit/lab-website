@@ -65,3 +65,25 @@
               {{ $yearInline = printf "%v" (index (index $dp 0) 0) }}
             {{ else }}
               {{ $raw := index . "raw" }}
+              {{ if $raw }}{{ $yearInline = printf "%v" $raw }}{{ end }}
+            {{ end }}
+          {{ end }}
+          {{ if $yearInline }}<span class="pub-year"> ({{ $yearInline }})</span>{{ end }}
+
+          {{ with (index $pub "DOI") }}
+            <a class="pub-link" href="https://doi.org/{{ . }}" target="_blank" rel="noopener">DOI</a>
+          {{ end }}
+
+          {{ with (index $pub "URL") }}
+            <a class="pub-link" href="{{ . }}" target="_blank" rel="noopener">Link</a>
+          {{ end }}
+
+          {{ with (index $pub "type") }}
+            <span class="pub-type"> · {{ . }}</span>
+          {{ end }}
+        </li>
+      {{ end }}
+    </ol>
+  {{ end }}
+
+{{ end }}
