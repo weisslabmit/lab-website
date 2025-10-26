@@ -11,7 +11,7 @@ jobs:
     permissions:
       contents: write
     env:
-      ZOTERO_GROUP_ID: 6271906   # Ron Weiss Publications group
+      ZOTERO_GROUP_ID: 6271906
     steps:
       - uses: actions/checkout@v4
 
@@ -24,6 +24,7 @@ jobs:
         run: pip install requests
 
       - name: Fetch Zotero library (CSL-JSON)
+        timeout-minutes: 15
         run: python scripts/fetch_from_zotero.py
 
       - name: Commit changes (if any)
