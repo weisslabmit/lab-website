@@ -1,0 +1,54 @@
+{{/* Renders data/publications.zotero.json (CSL-JSON array) */}}
+{{ $items := site.Data.publications_zotero }}
+
+{{ if not $items }}
+  <p>No publications yet.</p>
+{{ else }}
+  {{/* Group by year */}}
+  {{ $byYear := dict }}
+  {{ range $items }}
+    {{ $issued := index . "issued" }}
+    {{ $year := "" }}
+    {{ if $issued }}
+      {{ if and (isset $issued "date-parts") (gt (len (index $issued "date-parts")) 0) (gt (len (index (index $issued "date-parts") 0)) 0) }}
+        {{ $year = printf "%v" (index (index (index $issued "date-parts") 0) 0) }}
+      {{ else if (isset $issued "raw") }}
+        {{ $year = printf "%v" (index $issued "raw") }}
+      {{ end }}
+    {{ end }}
+    {{ if not $year }}{{ $year = "No year" }}{{ end }}
+    {{ if not (isset $byYear $year) }}
+      {{ $byYear = merge $byYear (dict $year (slice .)) }}
+    {{ else }}
+      {{ $byYear = merge $byYear (dict $year (append (index $byYear $year) .)) }}
+    {{ end }}
+  {{ end }}
+
+  {{ $years := slice }}
+  {{ range $k, $_ := $byYear }}{{ $years = $years | append $k }}{{ end }}
+  {{ $years = sort $years "value" "desc" }}
+
+  {{ range $years }}
+    <h2 class="pubs-year">{{ . }}</h2>
+    <ol class="pubs-list">
+      {{ range (index $byYear .) }}
+        <li class="pub">
+          <span class="pub-title">{{ .title }}</span>
+          {{ with .author }}
+            <span class="pub-authors"> —
+              {{ range $i, $a := . }}
+                {{ if gt $i 0 }}, {{ end }}
+                {{ $a.family }}{{ with $a.given }} {{ . }}{{ end }}
+              {{ end }}
+            </span>
+          {{ end }}
+          {{ with .container-title }}<span class="pub-venue">, {{ . }}</span>{{ end }}
+          {{ with (index . "issued" "date-parts" 0 0) }}<span class="pub-year"> ({{ . }})</span>{{ end }}
+          {{ with .DOI }} <a class="pub-link" href="https://doi.org/{{ . }}" target="_blank" rel="noopener">DOI</a>{{ end }}
+          {{ with .URL }} <a class="pub-link" href="{{ . }}" target="_blank" rel="noopener">Link</a>{{ end }}
+          {{ with .type }}<span class="pub-type"> · {{ . }}</span>{{ end }}
+        </li>
+      {{ end }}
+    </ol>
+  {{ end }}
+{{ end }}
