@@ -1,6 +1,12 @@
 {{/* Renders data/publications.zotero.json (CSL-JSON array) */}}
 {{ $items := site.Data.publications_zotero }}
 
+{{/* DEBUG: show item count */}}
+{{ $raw := site.Data.publications_zotero }}
+{{ $items := (index $raw "items") | default $raw }}
+<p style="opacity:.6">DEBUG: {{ len $items }} items</p>
+
+
 {{ if not $items }}
   <p>No publications yet.</p>
 {{ else }}
