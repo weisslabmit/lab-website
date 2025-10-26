@@ -1,40 +1,299 @@
-{{/* Minimal homepage teaser: reads data/publications.zotero.json directly.
-     Assumes top-level JSON array; if file missing or invalid → renders nothing. */}}
+{{/* Homepage Publications Section (pretty, tabbed, year-grouped)
+   - Reads data/publications.zotero.json directly (top-level array)
+   - Tabs: Publications (papers), Patents, Other
+   - Year groups; each item shows: Title (bold) — Authors — *Journal/venue* (italic) (Year)
+   - Buttons below list: Show 10 more, All publications, Google Scholar
+*/}}
 
+{{/* ---- Load JSON directly (avoid site.Data) ---- */}}
 {{ $raw := "" }}
 {{ with readFile "data/publications.zotero.json" }}{{ $raw = . }}{{ end }}
-{{ if $raw }}
+{{ if not $raw }}{{/* file missing → render nothing */}}{{ else }}
   {{ $items := $raw | transform.Unmarshal }}
-  {{ if gt (len $items) 0 }}
-    <section id="publications" class="container">
-      <h2>Publications</h2>
-      <ul>
-        {{ range first 20 $items }}
-          {{ $t := index . "title" }}
-          {{ $au := index . "author" }}
-          {{ $ct := index . "container-title" }}
-          {{ $iss := index . "issued" }}
-          {{ $url := index . "URL" }}
-          <li>
-            <span class="pub-title">{{ $t }}</span>
-            {{ with $au }}
-              — {{ range $i, $a := . }}
-                  {{ if gt $i 0 }}, {{ end }}
-                  {{ index $a "family" }}{{ with (index $a "given") }} {{ . }}{{ end }}
-                {{ end }}
-            {{ end }}
-            {{ with $ct }}, <em>{{ . }}</em>{{ end }}
-            {{ with $iss }}
-              {{ $dp := index . "date-parts" }}
-              {{ if and $dp (gt (len $dp) 0) (gt (len (index $dp 0)) 0) }}
-                ({{ index (index $dp 0) 0 }})
+  {{ if lt (len $items) 1 }}{{ else }}
+
+  {{/* ---- Categorize items (by CSL type) ---- */}}
+  {{/* publications: most paper-like types */}}
+  {{ $paperTypes := slice "article-journal" "article" "journal-article" "paper-conference" "inproceedings" "chapter" "book" "report" "thesis" "preprint" }}
+  {{ $pubs := slice }}
+  {{ $patents := slice }}
+  {{ $others := slice }}
+
+  {{ range $it := $items }}
+    {{ $typ := index $it "type" | default "" }}
+    {{ if eq $typ "patent" }}
+      {{ $patents = $patents | append $it }}
+    {{ else if in $paperTypes $typ }}
+      {{ $pubs = $pubs | append $it }}
+    {{ else }}
+      {{ $others = $others | append $it }}
+    {{ end }}
+  {{ end }}
+
+  {{/* ---- Helper: group a slice by year (robust: always-coerce bucket to slice) ---- */}}
+  {{/* Hugo doesn't support functions, so we inline the grouping three times. */}}
+
+  {{/* group $pubs */}}
+  {{ $pubsByYear := dict }}
+  {{ range $it := $pubs }}
+    {{ $year := "" }}
+    {{ with (index $it "issued") }}
+      {{ $dp := index . "date-parts" }}
+      {{ if and $dp (gt (len $dp) 0) (gt (len (index $dp 0)) 0) }}
+        {{ $year = printf "%v" (index (index $dp 0) 0) }}
+      {{ else }}
+        {{ with (index . "raw") }}{{ $year = printf "%v" . }}{{ end }}
+      {{ end }}
+    {{ end }}
+    {{ if not $year }}{{ $year = "No year" }}{{ end }}
+
+    {{ $existing := index $pubsByYear $year }}
+    {{ $bucket := slice }}
+    {{ if $existing }}
+      {{ if (reflect.IsSlice $existing) }}{{ $bucket = $existing }}{{ else }}{{ $bucket = slice $existing }}{{ end }}
+    {{ end }}
+    {{ $bucket = $bucket | append $it }}
+    {{ $pubsByYear = merge $pubsByYear (dict $year $bucket) }}
+  {{ end }}
+
+  {{/* group $patents */}}
+  {{ $patByYear := dict }}
+  {{ range $it := $patents }}
+    {{ $year := "" }}
+    {{ with (index $it "issued") }}
+      {{ $dp := index . "date-parts" }}
+      {{ if and $dp (gt (len $dp) 0) (gt (len (index $dp 0)) 0) }}
+        {{ $year = printf "%v" (index (index $dp 0) 0) }}
+      {{ else }}
+        {{ with (index . "raw") }}{{ $year = printf "%v" . }}{{ end }}
+      {{ end }}
+    {{ end }}
+    {{ if not $year }}{{ $year = "No year" }}{{ end }}
+
+    {{ $existing := index $patByYear $year }}
+    {{ $bucket := slice }}
+    {{ if $existing }}
+      {{ if (reflect.IsSlice $existing) }}{{ $bucket = $existing }}{{ else }}{{ $bucket = slice $existing }}{{ end }}
+    {{ end }}
+    {{ $bucket = $bucket | append $it }}
+    {{ $patByYear = merge $patByYear (dict $year $bucket) }}
+  {{ end }}
+
+  {{/* group $others */}}
+  {{ $othByYear := dict }}
+  {{ range $it := $others }}
+    {{ $year := "" }}
+    {{ with (index $it "issued") }}
+      {{ $dp := index . "date-parts" }}
+      {{ if and $dp (gt (len $dp) 0) (gt (len (index $dp 0)) 0) }}
+        {{ $year = printf "%v" (index (index $dp 0) 0) }}
+      {{ else }}
+        {{ with (index . "raw") }}{{ $year = printf "%v" . }}{{ end }}
+      {{ end }}
+    {{ end }}
+    {{ if not $year }}{{ $year = "No year" }}{{ end }}
+
+    {{ $existing := index $othByYear $year }}
+    {{ $bucket := slice }}
+    {{ if $existing }}
+      {{ if (reflect.IsSlice $existing) }}{{ $bucket = $existing }}{{ else }}{{ $bucket = slice $existing }}{{ end }}
+    {{ end }}
+    {{ $bucket = $bucket | append $it }}
+    {{ $othByYear = merge $othByYear (dict $year $bucket) }}
+  {{ end }}
+
+  {{/* ---- Sorted year arrays ---- */}}
+  {{ $pubYears := slice }}{{ range $k, $_ := $pubsByYear }}{{ $pubYears = $pubYears | append $k }}{{ end }}
+  {{ $pubYears = sort $pubYears "value" "desc" }}
+  {{ $patYears := slice }}{{ range $k, $_ := $patByYear }}{{ $patYears = $patYears | append $k }}{{ end }}
+  {{ $patYears = sort $patYears "value" "desc" }}
+  {{ $othYears := slice }}{{ range $k, $_ := $othByYear }}{{ $othYears = $othYears | append $k }}{{ end }}
+  {{ $othYears = sort $othYears "value" "desc" }}
+
+  {{/* ---- Inline styles (scoped) ---- */}}
+  <style>
+    .pubs-section{padding:2rem 0}
+    .pubs-tabs{display:flex;gap:.5rem;margin-bottom:1rem;flex-wrap:wrap}
+    .pubs-tabs button{padding:.5rem .9rem;border:1px solid #ddd;border-radius:.75rem;background:#fafafa;cursor:pointer}
+    .pubs-tabs button.active{background:#111;color:#fff;border-color:#111}
+    .pubs-year{margin:1.25rem 0 .5rem;font-weight:700}
+    .pubs-list{padding-left:1.25rem;margin:0}
+    .pub-title{font-weight:700}
+    .pub-authors{color:#333}
+    .pub-venue{font-style:italic;color:#444}
+    .pub-year{color:#666}
+    .pubs-footer{display:flex;gap:.5rem;margin-top:1rem;flex-wrap:wrap}
+    .pubs-footer a, .pubs-footer button{padding:.55rem .9rem;border:1px solid #ddd;border-radius:.6rem;background:#fff;cursor:pointer;text-decoration:none}
+    .pubs-footer .primary{background:#111;color:#fff;border-color:#111}
+    .hidden{display:none}
+  </style>
+
+  <section id="publications" class="container pubs-section" data-show="10">
+    <div class="pubs-tabs">
+      <button class="active" data-tab="pubs">Publications</button>
+      <button data-tab="patents">Patents</button>
+      <button data-tab="others">Other</button>
+    </div>
+
+    {{/* RENDERER: one container per tab; we hide/show with JS */}}
+    <div class="pubs-pane" id="pubs-pane">
+      {{ range $y := $pubYears }}
+        <h3 class="pubs-year">{{ $y }}</h3>
+        <ol class="pubs-list">
+          {{ range $i, $it := (index $pubsByYear $y) }}
+            {{ $t := index $it "title" }}
+            {{ $au := index $it "author" }}
+            {{ $ct := index $it "container-title" }}
+            {{ $iss := index $it "issued" }}
+            <li class="pub pub-item" data-tabitem="pubs" data-idx="{{ $i }}">
+              <span class="pub-title">{{ $t }}</span>
+              {{ with $au }}
+                <span class="pub-authors">
+                  — {{ range $j, $a := . }}
+                      {{ if gt $j 0 }}, {{ end }}
+                      {{ index $a "family" }}{{ with (index $a "given") }} {{ . }}{{ end }}
+                    {{ end }}
+                </span>
               {{ end }}
-            {{ end }}
-            {{ with $url }} — <a href="{{ . }}" target="_blank" rel="noopener">Link</a>{{ end }}
-          </li>
-        {{ end }}
-      </ul>
-      <p><a href="/publications/">See all publications →</a></p>
-    </section>
+              {{ with $ct }}<span class="pub-venue">, {{ . }}</span>{{ end }}
+              {{ with $iss }}
+                {{ $dp := index . "date-parts" }}
+                {{ if and $dp (gt (len $dp) 0) (gt (len (index $dp 0)) 0) }}
+                  <span class="pub-year"> ({{ index (index $dp 0) 0 }})</span>
+                {{ end }}
+              {{ end }}
+            </li>
+          {{ end }}
+        </ol>
+      {{ end }}
+    </div>
+
+    <div class="pubs-pane hidden" id="patents-pane">
+      {{ range $y := $patYears }}
+        <h3 class="pubs-year">{{ $y }}</h3>
+        <ol class="pubs-list">
+          {{ range $i, $it := (index $patByYear $y) }}
+            {{ $t := index $it "title" }}
+            {{ $au := index $it "author" }}
+            {{ $ct := index $it "container-title" }}
+            {{ $iss := index $it "issued" }}
+            <li class="pub pub-item" data-tabitem="patents" data-idx="{{ $i }}">
+              <span class="pub-title">{{ $t }}</span>
+              {{ with $au }}
+                <span class="pub-authors">
+                  — {{ range $j, $a := . }}
+                      {{ if gt $j 0 }}, {{ end }}
+                      {{ index $a "family" }}{{ with (index $a "given") }} {{ . }}{{ end }}
+                    {{ end }}
+                </span>
+              {{ end }}
+              {{ with $ct }}<span class="pub-venue">, {{ . }}</span>{{ end }}
+              {{ with $iss }}
+                {{ $dp := index . "date-parts" }}
+                {{ if and $dp (gt (len $dp) 0) (gt (len (index $dp 0)) 0) }}
+                  <span class="pub-year"> ({{ index (index $dp 0) 0 }})</span>
+                {{ end }}
+              {{ end }}
+            </li>
+          {{ end }}
+        </ol>
+      {{ end }}
+    </div>
+
+    <div class="pubs-pane hidden" id="others-pane">
+      {{ range $y := $othYears }}
+        <h3 class="pubs-year">{{ $y }}</h3>
+        <ol class="pubs-list">
+          {{ range $i, $it := (index $othByYear $y) }}
+            {{ $t := index $it "title" }}
+            {{ $au := index $it "author" }}
+            {{ $ct := index $it "container-title" }}
+            {{ $iss := index $it "issued" }}
+            <li class="pub pub-item" data-tabitem="others" data-idx="{{ $i }}">
+              <span class="pub-title">{{ $t }}</span>
+              {{ with $au }}
+                <span class="pub-authors">
+                  — {{ range $j, $a := . }}
+                      {{ if gt $j 0 }}, {{ end }}
+                      {{ index $a "family" }}{{ with (index $a "given") }} {{ . }}{{ end }}
+                    {{ end }}
+                </span>
+              {{ end }}
+              {{ with $ct }}<span class="pub-venue">, {{ . }}</span>{{ end }}
+              {{ with $iss }}
+                {{ $dp := index . "date-parts" }}
+                {{ if and $dp (gt (len $dp) 0) (gt (len (index $dp 0)) 0) }}
+                  <span class="pub-year"> ({{ index (index $dp 0) 0 }})</span>
+                {{ end }}
+              {{ end }}
+            </li>
+          {{ end }}
+        </ol>
+      {{ end }}
+    </div>
+
+    <div class="pubs-footer">
+      <button id="btn-more" class="primary">Show 10 more</button>
+      <a class="primary" href="/publications/">All publications</a>
+      <a href="https://scholar.google.com/citations?user=st2YzBwAAAAJ&hl=en&oi=ao" target="_blank" rel="noopener">Google Scholar</a>
+    </div>
+  </section>
+
+  <script>
+    (function(){
+      const root = document.getElementById('publications');
+      if(!root) return;
+
+      const panes = {
+        pubs: document.getElementById('pubs-pane'),
+        patents: document.getElementById('patents-pane'),
+        others: document.getElementById('others-pane')
+      };
+      const tabs = root.querySelectorAll('.pubs-tabs button');
+      const moreBtn = document.getElementById('btn-more');
+      const pageSize = 10;
+      let shown = parseInt(root.dataset.show || '10', 10);
+      let active = 'pubs';
+
+      function applyVisibility(){
+        // Hide all items beyond `shown` within active pane
+        Object.keys(panes).forEach(k=>{
+          const pane = panes[k];
+          if(!pane) return;
+          const show = (k === active);
+          pane.classList.toggle('hidden', !show);
+
+          if(show){
+            const items = pane.querySelectorAll('.pub-item');
+            items.forEach((li, idx)=>{
+              li.classList.toggle('hidden', idx >= shown);
+            });
+            // If everything visible, hide the button
+            const anyHidden = Array.from(items).some((li, idx)=> idx >= shown);
+            moreBtn.style.display = anyHidden ? '' : 'none';
+          }
+        });
+      }
+
+      tabs.forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+          tabs.forEach(b=>b.classList.remove('active'));
+          btn.classList.add('active');
+          active = btn.getAttribute('data-tab');
+          shown = pageSize; // reset
+          applyVisibility();
+        });
+      });
+
+      moreBtn.addEventListener('click', ()=>{
+        shown += pageSize;
+        applyVisibility();
+      });
+
+      // initial
+      applyVisibility();
+    })();
+  </script>
+
   {{ end }}
 {{ end }}
