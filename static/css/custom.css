@@ -1167,73 +1167,95 @@ section.wrapper {
 }
 
 
-/* === Resources: restore grid separators + keep new sizing === */
+/* === RESOURCES (Story-style) FINAL ===
+   - large uniform icons
+   - aligned titles/descriptions
+   - subtle grid separators
+======================================= */
 
-/* 1) Container draws the lines; cards stay borderless */
 .resources-grid {
-  --min: 260px;                    /* keep your larger tiles */
-  --res-line: rgba(0,0,0,.08);
+  --min: 260px;
+  --res-line: rgba(0, 0, 0, 0.08);
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(var(--min), 1fr));
-  gap: 1px;                        /* 1px lines created by the container bg */
-  background: var(--res-line);     /* paints the separators */
+  gap: 1px;
+  background: var(--res-line);
   border: 1px solid var(--res-line);
   border-radius: 14px;
-  overflow: hidden;                /* keep rounded corners with gaps */
+  overflow: hidden;
 }
 
-/* 2) Cards are flat tiles so the lines show through the 1px gaps */
 .resource-card {
-  background: #fff;                /* must be solid to see the gap lines */
-  padding: 1.6rem 1.25rem 1.35rem; /* from your “bigger but not too big” tuning */
+  background: #fff;
+  padding: 1.6rem 1.25rem 1.45rem;
   display: grid;
-  grid-template-rows: auto auto 1fr;
+  grid-template-rows: auto auto 1fr;  /* icon, text block, filler */
   justify-items: center;
   text-align: center;
   text-decoration: none;
   color: inherit;
-  transition: background .15s ease, transform .12s ease;
+  transition: background 0.15s ease, transform 0.12s ease;
 }
-.resource-card:hover { background: #f8f8f8; }
-.resource-card:active { transform: translateY(1px); }
+.resource-card:hover {
+  background: #f8f8f8;
+}
+.resource-card:active {
+  transform: translateY(1px);
+}
 
-/* 3) Media: larger images, no circle plate */
+/* --- FIXED ICON AREA --- */
 .rc-media {
-  margin-bottom: 0.85rem;
-  display: grid; place-items: center;
-  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 140px;                    /* fixed vertical space for alignment */
+  margin-bottom: 0.9rem;
 }
 .rc-media img {
-  width: clamp(56px, 7vw, 80px);
+  max-width: 110px;
+  max-height: 110px;
+  width: auto;
   height: auto;
   object-fit: contain;
-  transition: transform .18s ease;
+  transition: transform 0.18s ease;
 }
-.resource-card:hover .rc-media img { transform: scale(1.03); }
+.resource-card:hover .rc-media img {
+  transform: scale(1.05);
+}
 
-/* 4) Title + description: compact title, full text (no clamp) */
+/* --- TITLES --- */
 .rc-title {
-  font-size: clamp(0.95rem, 0.5vw + 0.75rem, 1.05rem);
+  font-family: var(--mit-font-family);
+  font-weight: 700;
+  font-size: clamp(0.95rem, 0.45vw + 0.75rem, 1.1rem);
   line-height: 1.22;
-  margin: 0 0 .35rem 0;
+  margin: 0 0 0.4rem 0;
 }
+
+/* --- DESCRIPTIONS --- */
 .rc-desc {
-  font-size: clamp(0.85rem, 0.35vw + 0.55rem, 0.95rem);
-  line-height: 1.5;
+  font-size: clamp(0.83rem, 0.35vw + 0.55rem, 0.9rem);
+  line-height: 1.55;
   opacity: 0.9;
   max-width: 62ch;
   margin: 0;
-  display: block;                  /* ensure no line clamp leftovers */
-  -webkit-line-clamp: initial;
-  -webkit-box-orient: initial;
-  overflow: visible;
+  display: block;
 }
 
-/* 5) Mobile density */
+/* --- MOBILE --- */
 @media (max-width: 520px) {
-  .resources-grid { --min: 200px; }
-  .resource-card { padding: 1.25rem 1rem 1.1rem; }
-  .rc-media img { width: clamp(48px, 12vw, 64px); }
-  .rc-title { font-size: clamp(0.95rem, 1.8vw + 0.7rem, 1.05rem); }
-  .rc-desc  { font-size: clamp(0.85rem, 1.5vw + 0.55rem, 0.92rem); }
+  .resources-grid {
+    --min: 200px;
+  }
+  .resource-card {
+    padding: 1.3rem 1rem 1.1rem;
+  }
+  .rc-media {
+    height: 110px;                  /* proportionally smaller fixed space */
+  }
+  .rc-media img {
+    max-width: 90px;
+    max-height: 90px;
+  }
 }
