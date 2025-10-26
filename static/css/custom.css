@@ -356,7 +356,7 @@ section[id]:not(#banner) {
 #research-timeline header.major,
 #research header.major {
   margin-top: 1rem;        /* small top margin (tight to section start) */
-  margin-bottom: 2.5rem;     /* more space before the content below */
+  margin-bottom: 1.5rem;     /* more space before the content below */
   text-align: center;
 }
 
