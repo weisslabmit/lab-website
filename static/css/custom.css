@@ -1372,7 +1372,7 @@ section.wrapper {
 }
 
 
-/* === Contact Section Layout === */
+/* === CONTACT SECTION FINAL === */
 .contact-grid {
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
@@ -1393,53 +1393,50 @@ section.wrapper {
   padding-left: 2rem;
 }
 
-/* === Addresses stacked === */
+/* Address blocks: stacked titles */
 .addr-block {
-  margin-bottom: 1.4rem;
+  margin-bottom: 1.6rem;
 }
-
 .addr-k {
   font-weight: 700;
   font-family: var(--mit-font-family);
   color: #2a2a2a;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.35rem;
 }
-
 .addr-v {
   line-height: 1.55;
   opacity: 0.9;
 }
 
-/* === Larger Logos === */
+/* === Logos centered and larger === */
 .logos-row {
   display: flex;
-  justify-content: flex-start;
-  gap: 1.8rem;
-  margin-top: 2.5rem;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(2rem, 4vw, 3rem);
+  margin-top: 3rem;
 }
-
 .logos-row .logo {
-  height: 70px;          /* bigger, balanced size */
+  height: 100px;
   width: auto;
   opacity: 0.95;
   transition: transform .15s ease, opacity .15s ease;
 }
-
 .logos-row .logo:hover {
   transform: translateY(-2px);
   opacity: 1;
 }
 
-/* === Map === */
+/* === Map fills column === */
 .contact-map iframe {
   width: 100%;
-  height: 250px;
+  height: 400px;
   border: 1px solid rgba(0,0,0,.08);
-  border-radius: 8px;
+  border-radius: 10px;
   margin-top: 1rem;
 }
 
-/* === Mobile layout === */
+/* === Responsive stacking === */
 @media (max-width: 900px) {
   .contact-grid {
     grid-template-columns: 1fr;
@@ -1456,9 +1453,13 @@ section.wrapper {
     padding-left: 0;
   }
   .logos-row {
-    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
   }
   .logos-row .logo {
-    height: 60px;
+    height: 80px;
+  }
+  .contact-map iframe {
+    height: 300px;
   }
 }
