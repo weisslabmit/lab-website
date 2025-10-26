@@ -214,6 +214,7 @@ p, li, blockquote, .content {
   color: #fff;
   transform: translateY(-100%); /* hidden by default */
   opacity: 0;
+  font-family: "Roboto Mono", monospace;
   pointer-events: none;
   transition: transform .25s ease, opacity .25s ease;
 }
