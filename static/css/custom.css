@@ -1823,30 +1823,25 @@ strong, b { font-weight: 700 !important; }
 
 
 /* === FOOTER BUTTONS === */
-.pubs-section .actions .button,
-.pubs-page   .actions .button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: .35rem;
-
-  min-height: 30px;
-  padding: .35rem 1rem;
-  font-size: .9rem;
-  border-radius: 9999px;
-
-  background: var(--btn-mid);
+.pubs-page   .actions li > a.button,
+.pubs-section .actions li > a.button {
+  background: #3b3b3b !important;   /* was #1a1a1a → lighter neutral gray */
   color: #fff !important;
-  border: none;
+  border: none !important;
+  box-shadow: none !important;
   transition: background .18s ease, transform .12s ease;
 }
-.pubs-section .actions .button:hover,
-.pubs-page   .actions .button:hover {
-  background: var(--btn-dark);
+
+/* Hover = subtle darkening */
+.pubs-page   .actions li > a.button:hover,
+.pubs-section .actions li > a.button:hover {
+  background: #1f1f1f !important;
   transform: translateY(-1px);
 }
-.pubs-section .actions .button:active,
-.pubs-page   .actions .button:active {
+
+/* Active (on click) */
+.pubs-page   .actions li > a.button:active,
+.pubs-section .actions li > a.button:active {
   transform: translateY(0);
 }
 
