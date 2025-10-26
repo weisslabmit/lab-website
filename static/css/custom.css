@@ -1622,3 +1622,49 @@ footer {
   opacity: 1;
   pointer-events: auto;
 }
+
+/* === Fix global weight override just where we need it === */
+
+/* Make strong actually bold on the site (safe override) */
+strong, b { font-weight: 700 !important; }
+
+/* Publications: titles always bold (linked or not) */
+.pubs-page .pub-title strong,
+.pubs-page .pub-title a {
+  font-weight: 700 !important;
+  color: #000;
+  text-decoration: none;
+}
+
+/* Publications tabs: bigger text + active = black pill */
+.pubs-page .pubs-tabs .button {
+  font-size: 1rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: 9999px;
+}
+.pubs-page .pubs-tabs .button.active {
+  background: #000 !important;
+  color: #fff !important;
+  border: none !important;
+}
+.pubs-page .pubs-tabs .button:not(.active) {
+  background: transparent;
+  color: #222;
+  border: 1px solid rgba(0,0,0,.15);
+}
+.pubs-page .pubs-tabs .button:not(.active):hover {
+  background: rgba(0,0,0,.05);
+}
+
+/* Contact: ensure bold headings inside the left column still pop */
+.contact-left strong { font-weight: 700 !important; color: #2a2a2a; }
+
+/* Logos: keep exactly one definition; choose your final size */
+.logos-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(2.5rem, 5vw, 4rem);
+  margin-top: 3.5rem;
+}
+.logos-row .logo { height: 120px; width: auto; }
