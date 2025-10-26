@@ -1,43 +1,31 @@
-{{/* Reads publications from data/publications.zotero.json
-     Primary key: site.Data.publications.zotero (because of the dot in filename)
-     Fallbacks: site.Data.publications_zotero (older attempts), site.Data.publications (if you ever rename)
-*/}}
-
-{{/* Load items (raw array or {"items":[...]}) in a resilient way */}}
+{{/* Publications teaser (reads data/publications.zotero.json) */}}
 {{ $items := slice }}
-
-{{ with site.Data.publications }}                {{/* e.g., data/publications.json (if you ever add it) */}}
-  {{ if (index . "items") }} {{ $items = (index . "items") }} {{ else }} {{ $items = . }} {{ end }}
-{{ else }}
-  {{ with site.Data.publications.zotero }}      {{/* <-- this matches data/publications.zotero.json */}}
-    {{ if (index . "items") }} {{ $items = (index . "items") }} {{ else }} {{ $items = . }} {{ end }}
-  {{ else }}
-    {{ with site.Data.publications_zotero }}    {{/* legacy fallback */}}
-      {{ if (index . "items") }} {{ $items = (index . "items") }} {{ else }} {{ $items = . }} {{ end }}
+{{ with (index (site.Data) "publications") }}
+  {{ with (index . "zotero") }}
+    {{ if (index . "items") }}
+      {{ $items = (index . "items") }}
+    {{ else }}
+      {{ $items = . }}
     {{ end }}
   {{ end }}
 {{ end }}
 
-{{ if lt (len $items) 1 }}
-  <p>No publications yet.</p>
-{{ else }}
-  <section id="publications">
-    <h2>Publications</h2>
-    <ul>
-      {{ range first 20 $items }}  {{/* show first 20 on homepage; change as you like */}}
-        <li>
-          <span class="pub-title">{{ .title }}</span>
-          {{ with (index . "author") }}
-            — {{ range $i, $a := . }}{{ if gt $i 0 }}, {{ end }}{{ $a.family }}{{ end }}
-          {{ end }}
-          {{ with (index . "container-title") }}, <em>{{ . }}</em>{{ end }}
-          {{ with (index . "issued") }}
-            {{ $dp := index . "date-parts" }}
-            {{ if and $dp (ge (len (index $dp 0)) 1) }} ({{ index (index $dp 0) 0 }}) {{ end }}
-          {{ end }}
-        </li>
-      {{ end }}
-    </ul>
-    <p><a href="/publications/">See all publications →</a></p>
-  </section>
+{{ if ge (len $items) 1 }}
+<section id="publications">
+  <h2>Publications</h2>
+  <ul>
+    {{ range first 20 $items }}
+      <li>
+        <span class="pub-title">{{ .title }}</span>
+        {{ with (index . "author") }} — {{ range $i, $a := . }}{{ if gt $i 0 }}, {{ end }}{{ $a.family }}{{ end }}{{ end }}
+        {{ with (index . "container-title") }}, <em>{{ . }}</em>{{ end }}
+        {{ with (index . "issued") }}
+          {{ $dp := index . "date-parts" }}
+          {{ if and $dp (ge (len (index $dp 0)) 1) }} ({{ index (index $dp 0) 0 }}) {{ end }}
+        {{ end }}
+      </li>
+    {{ end }}
+  </ul>
+  <p><a href="/publications/">See all publications →</a></p>
+</section>
 {{ end }}
