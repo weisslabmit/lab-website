@@ -9,8 +9,10 @@
       <p>Open calls and targeted project announcements from the Weiss Lab.</p>
     </header>
 
-    {{/* Grab all non-draft items in this section, newest first */}}
-    {{ $pages := where .RegularPages "Params.draft" "ne" true | sort "Date" "desc" }}
+    {{/* Get all non-draft items in this section */}}
+    {{ $all := where .RegularPages "Params.draft" "ne" true }}
+    {{ $pages := $all.ByDate.Reverse }}
+
     {{ if lt (len $pages) 1 }}
       <p>No active opportunities at the moment.</p>
     {{ else }}
@@ -18,13 +20,17 @@
         {{ range $p := $pages }}
           <article class="opportunity-card">
             <h2 class="opp-title">{{ $p.Title }}</h2>
+
             <div class="opp-body">
               {{ $p.Content }}
             </div>
 
+            {{/* Use optional external link if provided, else link to this page */}}
             {{ $href := cond (and (isset $p.Params "link") $p.Params.link) $p.Params.link $p.RelPermalink }}
             <div class="opp-actions">
-              <a class="button opp-link" href="{{ $href }}" target="_blank" rel="noopener">Learn more</a>
+              <a class="button opp-link" href="{{ $href }}" {{ if $p.Params.link }}target="_blank" rel="noopener"{{ end }}>
+                Learn more
+              </a>
             </div>
           </article>
         {{ end }}
