@@ -1879,81 +1879,47 @@ strong, b { font-weight: 700 !important; }
   background: #000 !important;
 }
 /* ============================================
-   RESEARCH images — fix scale on all breakpoints
-   (bigger on desktop, restrained on mobile)
-   Drop at the END of custom.css
+   RESEARCH — wider text column, tighter gutter
+   (paste at END of custom.css)
 ============================================ */
 
-:root {
-  /* tune these two numbers if you want */
-  --rs-desktop-h: clamp(360px, 34vw, 560px);  /* desktop image pane height */
-  --rs-mobile-h:  clamp(160px, 42vw, 240px);  /* mobile image pane height  */
+:root{
+  /* Image vs text share on desktop: smaller image, wider text */
+  --rs-split-img: clamp(28%, 34vw, 40%);       /* image column width */
+  --rs-gap:      clamp(1rem, 1.6vw, 2rem);     /* gutter between columns */
 }
 
-/* Kill old size constraints everywhere */
-#research .spotlight .image.r-spotlight__media,
-#research .spotlights > section .image.r-spotlight__media {
-  height: auto !important;
-  min-height: 0 !important;
-  max-height: none !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  background: #fff !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  overflow: hidden !important;
-}
-
-/* Desktop / medium+ — side-by-side with a taller pane */
-@media (min-width: 980px) {
+/* Medium & large screens: shift boundary toward image */
+@media (min-width: 980px){
   #research .spotlights > section,
-  #research .spotlight {
+  #research .spotlight{
     display: flex !important;
     align-items: center !important;
-    gap: clamp(1.5rem, 2.5vw, 3rem);
+    gap: var(--rs-gap) !important; /* tighter gap */
   }
 
-  #research .spotlight .image.r-spotlight__media {
-    flex: 1 1 48%;
-    height: var(--rs-desktop-h) !important; /* ⬅ bigger on large screens */
-    max-height: 70vh !important;            /* guard against ultra-tall */
+  /* Image column gets smaller share */
+  #research .spotlight .image.r-spotlight__media{
+    flex: 0 1 var(--rs-split-img) !important;   /* narrower image column */
+    height: var(--rs-desktop-h) !important;     /* from previous block */
+    max-height: 70vh !important;
+    margin: 0 !important;
   }
 
-  #research .spotlight .content {
-    flex: 1 1 52%;
-  }
-}
-
-/* Mobile / small — stack and cap height so it doesn't dominate */
-@media (max-width: 979px) {
-  #research .spotlights > section,
-  #research .spotlight {
-    display: flex !important;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: clamp(1rem, 2.5vw, 1.5rem);
-  }
-
-  #research .spotlight .image.r-spotlight__media {
-    width: 100%;
-    height: var(--rs-mobile-h) !important;   /* ⬅ smaller on small screens */
-    max-height: var(--rs-mobile-h) !important;
-    margin-bottom: 1.25rem !important;
+  /* Text column gets the rest (wider), no internal padding/margins */
+  #research .spotlight .content{
+    flex: 1 1 calc(100% - var(--rs-split-img)) !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 }
 
-/* Image element — fill the pane cleanly */
-#research .spotlight .image.r-spotlight__media img {
-  display: block !important;
+/* Ensure the image itself fits its pane cleanly */
+#research .spotlight .image.r-spotlight__media img{
   width: auto !important;
-  height: 100% !important;            /* scale by height of the pane */
+  height: 100% !important;
   max-height: 100% !important;
   max-width: 100% !important;
   object-fit: contain !important;
-  margin: 0 !important;
-  padding: 0 !important;
 }
