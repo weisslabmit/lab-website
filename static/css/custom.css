@@ -1709,3 +1709,41 @@ strong, b { font-weight: 700 !important; }
 }
 .opp-body p { margin: 0 0 .75rem 0; line-height: 1.6; }
 .opp-actions { margin-top: .4rem; }
+
+/* Smaller, subtler subtitle under "Opportunities" */
+.opps-page .opps-subtitle {
+  margin-top: 0.35rem;
+  font-size: 0.85rem;      /* smaller size */
+  line-height: 1.4;
+  color: #555;
+  opacity: 0.85;
+  font-weight: 400;
+}
+
+/* Compact, centered bottom note */
+.opps-note {
+  margin-top: 1.8rem;
+  text-align: center;
+  font-size: 0.85rem;         /* same base as body text */
+  line-height: 1.45;
+  color: #444;
+  background: #f9f9f9;
+  border: 1px solid rgba(0,0,0,0.05);
+  border-radius: 6px;
+  padding: 0.8rem 1rem;
+  max-width: 700px;
+  margin-inline: auto;        /* centers horizontally */
+}
+
+.opps-note strong {
+  color: #222;
+}
+
+.opps-note a {
+  font-weight: 700;
+  color: #6b46c1;             /* purple accent to match buttons */
+  text-decoration: none;
+}
+.opps-note a:hover {
+  text-decoration: underline;
+}
