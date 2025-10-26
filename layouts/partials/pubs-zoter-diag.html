@@ -1,0 +1,44 @@
+{{/* Minimal, hardproof check for data/publications.zotero.json */}}
+{{ $d := site.Data }}
+{{ $pubs := index $d "publications" }}
+{{ $z := cond (not (eq $pubs nil)) (index $pubs "zotero") nil }}
+
+<section id="pubs-diag" class="container" style="padding:1rem;border:1px dashed #ccc;margin:1rem 0;font-family:system-ui;">
+  <h2 style="margin:0 0 .5rem 0">Publications (diag)</h2>
+
+  <div><strong>Has site.Data?</strong> {{ if $d }}yes{{ else }}no{{ end }}</div>
+  <div><strong>Has site.Data["publications"]?</strong> {{ if $pubs }}yes{{ else }}no{{ end }}</div>
+  <div><strong>Has site.Data["publications"]["zotero"]?</strong> {{ if $z }}yes{{ else }}no{{ end }}</div>
+
+  {{/* Normalize to an items slice: either {"items":[...]} or a raw array [...] */}}
+  {{ $items := slice }}
+  {{ if $z }}
+    {{ if (and (reflect.IsMap $z) (index $z "items")) }}
+      {{ $items = (index $z "items") }}
+    {{ else }}
+      {{ $items = $z }}
+    {{ end }}
+  {{ end }}
+
+  <div><strong>Items length:</strong> {{ len $items }}</div>
+
+  {{/* Show FIRST title to be 100% sure we can read fields */}}
+  {{ if ge (len $items) 1 }}
+    {{ $first := index $items 0 }}
+    {{ $t := index $first "title" }}
+    {{ $au := index $first "author" }}
+    <div><strong>First title:</strong> {{ $t }}</div>
+    <div><strong>First authors:</strong>
+      {{ with $au }}
+        {{- range $i, $a := . -}}
+          {{- if gt $i 0 }}, {{ end -}}
+          {{- index $a "family" -}}{{ with (index $a "given") }} {{ . }}{{ end }}
+        {{- end -}}
+      {{ end }}
+    </div>
+  {{ end }}
+
+  <div style="opacity:.6;font-size:.9em;margin-top:.5rem">
+    Source: <code>data/publications.zotero.json</code> → <code>site.Data["publications"]["zotero"]</code>
+  </div>
+</section>
