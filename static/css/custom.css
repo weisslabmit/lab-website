@@ -1878,65 +1878,56 @@ strong, b { font-weight: 700 !important; }
 .pubs-section .actions.pubs-tabs li > a.button.active:hover {
   background: #000 !important;
 }
-/* ======================================================
-   RESEARCH spotlights — final balanced layout
-   (compact internal padding, restored side-by-side, clear spacing)
-====================================================== */
+/* ============================================
+   RESEARCH images — fix scale on all breakpoints
+   (bigger on desktop, restrained on mobile)
+   Drop at the END of custom.css
+============================================ */
 
 :root {
-  --r-gap: clamp(1.5rem, 2.5vw, 3rem);       /* gap between image and text */
-  --r-pad: clamp(1rem, 2vw, 2rem);           /* internal horizontal padding */
-  --r-section-space: clamp(3rem, 6vw, 5rem); /* vertical space between sections */
+  /* tune these two numbers if you want */
+  --rs-desktop-h: clamp(360px, 34vw, 560px);  /* desktop image pane height */
+  --rs-mobile-h:  clamp(160px, 42vw, 240px);  /* mobile image pane height  */
 }
 
-/* Shared base: margin rhythm between spotlight sections */
-#research .spotlights > section,
-#research .spotlight {
-  margin-bottom: var(--r-section-space);
-  border: none !important;
+/* Kill old size constraints everywhere */
+#research .spotlight .image.r-spotlight__media,
+#research .spotlights > section .image.r-spotlight__media {
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: #fff !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: hidden !important;
 }
 
-/* === MEDIUM & LARGE SCREENS: side-by-side layout === */
+/* Desktop / medium+ — side-by-side with a taller pane */
 @media (min-width: 980px) {
   #research .spotlights > section,
   #research .spotlight {
     display: flex !important;
     align-items: center !important;
-    justify-content: space-between;
-    gap: var(--r-gap);
-    padding-inline: var(--r-pad);
+    gap: clamp(1.5rem, 2.5vw, 3rem);
   }
 
-  #research .spotlights > section .image,
-  #research .spotlight .image,
-  #research .spotlights > section .content,
-  #research .spotlight .content {
-    margin: 0 !important;
-    padding: 0 !important;
-    border: 0 !important;
-  }
-
-  /* Image pane styling */
   #research .spotlight .image.r-spotlight__media {
-    flex: 1 1 45%;
-    background: #fff !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    overflow: hidden !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-    height: clamp(220px, 25vw, 340px);
-    margin: 0 !important;
+    flex: 1 1 48%;
+    height: var(--rs-desktop-h) !important; /* ⬅ bigger on large screens */
+    max-height: 70vh !important;            /* guard against ultra-tall */
   }
 
-  /* Text column */
   #research .spotlight .content {
-    flex: 1 1 55%;
+    flex: 1 1 52%;
   }
 }
 
-/* === SMALL SCREENS: stacked with compact padding === */
+/* Mobile / small — stack and cap height so it doesn't dominate */
 @media (max-width: 979px) {
   #research .spotlights > section,
   #research .spotlight {
@@ -1944,28 +1935,24 @@ strong, b { font-weight: 700 !important; }
     flex-direction: column;
     align-items: center;
     text-align: center;
-    padding-inline: var(--r-pad);
+    gap: clamp(1rem, 2.5vw, 1.5rem);
   }
 
   #research .spotlight .image.r-spotlight__media {
     width: 100%;
-    min-height: 220px;
-    margin-bottom: 1.75rem;
-  }
-
-  #research .spotlight .image.r-spotlight__media img {
-    max-width: 100%;
-    height: auto;
+    height: var(--rs-mobile-h) !important;   /* ⬅ smaller on small screens */
+    max-height: var(--rs-mobile-h) !important;
+    margin-bottom: 1.25rem !important;
   }
 }
 
-/* Ensure images are cleanly centered with no stray margins */
+/* Image element — fill the pane cleanly */
 #research .spotlight .image.r-spotlight__media img {
   display: block !important;
   width: auto !important;
-  height: auto !important;
-  max-width: 100% !important;
+  height: 100% !important;            /* scale by height of the pane */
   max-height: 100% !important;
+  max-width: 100% !important;
   object-fit: contain !important;
   margin: 0 !important;
   padding: 0 !important;
