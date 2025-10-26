@@ -1952,3 +1952,34 @@ strong, b { font-weight: 700 !important; }
   margin: 0 !important;
   padding: 0 !important;
 }
+
+
+/* =====================================================
+   Subtle section dividers between main homepage blocks
+   (except above Research — keep banner seamless)
+===================================================== */
+
+/* Base divider line */
+section[id]:not(#banner):not(:last-of-type) {
+  border-top: 1px solid rgba(0, 0, 0, 0.08);   /* thin neutral gray line */
+  margin-top: 0;                               /* no double spacing */
+}
+
+/* Add some breathing room so the divider has space to read */
+section[id]:not(#banner) {
+  padding-top: clamp(3rem, 5vw, 4.5rem);
+  padding-bottom: clamp(3rem, 5vw, 4.5rem);
+}
+
+/* Make sure the banner and first section join perfectly */
+#banner + section {
+  border-top: none !important;
+  margin-top: 0 !important;
+}
+
+/* Optional: make the divider even subtler */
+@media (prefers-color-scheme: light) {
+  section[id]:not(#banner):not(:last-of-type) {
+    border-top-color: rgba(0, 0, 0, 0.06);
+  }
+}
