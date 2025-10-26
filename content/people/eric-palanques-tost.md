@@ -12,5 +12,5 @@ bs_university: Polytechnic University of Catalonia, Spain
 bs_date: "2018"
 experience: MS, Ecole Centrale de Nantes - 2018, MS Polytechnic University of
   Catalonia, Spain - 2020
-weight: 1
+weight: 2
 ---
