@@ -156,28 +156,33 @@
                 </span>
 
                 {{ with $au }}
-                  <span class="pub-authors">
-                    —
-                    {{ range $j, $a := . }}
-                      {{ if gt $j 0 }}, {{ end }}
-                      {{ $fam := index $a "family" | default "" }}
-                      {{ $giv := index $a "given" | default "" }}
-                      {{/* Build initials from given name */}}
-                      {{ $init := "" }}
-                      {{ if $giv }}
+                <span class="pub-authors"> —
+                    {{ $n := len $au }}
+                    {{ range $j, $a := $au }}
+                    {{ $fam := index $a "family" | default "" }}
+                    {{ $giv := index $a "given"  | default "" }}
+
+                    {{/* Build initials from given name: "I. I." */}}
+                    {{ $init := "" }}
+                    {{ if $giv }}
                         {{ $parts := split $giv " " }}
                         {{ range $p := $parts }}
-                          {{ if gt (len $p) 0 }}
+                        {{ if gt (len $p) 0 }}
                             {{ $init = printf "%s%s." $init (upper (substr $p 0 1)) }}
-                          {{ end }}
                         {{ end }}
-                      {{ end }}
-                      {{ if and $init $fam }}{{ $init }} {{ $fam }}
-                      {{ else if $fam }}{{ $fam }}
-                      {{ else }}{{ $giv }}
-                      {{ end }}
+                        {{ end }}
                     {{ end }}
-                  </span>
+
+                    {{/* Print as "I. Lastname" (or fallbacks) */}}
+                    {{ if and $init $fam }}{{ $init }} {{ $fam }}
+                    {{ else if $fam }}{{ $fam }}
+                    {{ else }}{{ $giv }}
+                    {{ end }}
+
+                    {{/* Comma immediately after the name, no preceding space */}}
+                    {{ if lt $j (sub $n 1) }}, {{ end }}
+                    {{ end }}
+                </span>
                 {{ end }}
 
                 {{ if $isPre }}
