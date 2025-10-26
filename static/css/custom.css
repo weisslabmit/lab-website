@@ -1753,48 +1753,101 @@ strong, b { font-weight: 700 !important; }
 }
 
 
-/* === Unified tab button styling (home + full page) === */
+/* ======================================
+   Unified Publications Buttons (Neue Haas)
+   Applies to tabs + action buttons sitewide
+====================================== */
 
-/* Slightly larger text and pill shape */
-.pubs-tabs .button {
-  font-size: 1rem;                 /* larger text */
-  padding: 0.6rem 1.3rem;
+:root {
+  --btn-dark: #1a1a1a;            /* softer dark */
+  --btn-border: rgba(0,0,0,.2);
+  --btn-hover: #141414;
+}
+
+/* Common button layout */
+.pubs-tabs,
+.pubs-footer,
+.pubs-section .pubs-tabs,
+.pubs-section .actions,
+.pubs-page .pubs-tabs,
+.pubs-page .actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+
+/* Base button style (unselected) */
+.pubs-tabs .button,
+.pubs-footer .button,
+.pubs-section .pubs-tabs .button,
+.pubs-section .actions .button,
+.pubs-page .pubs-tabs .button,
+.pubs-page .actions .button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .35rem;
+
+  min-height: 34px;
+  padding: 0 12px;
+  font-size: 0.9rem;
+  line-height: 1;
   border-radius: 9999px;
-  transition: background 0.2s ease, color 0.2s ease, border 0.2s ease;
-  font-weight: 600;
+
+  font-family: "neue-haas-grotesk-display", sans-serif !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.01em;
+
+  background: #fff;
+  color: var(--btn-dark);
+  border: 1px solid var(--btn-border);
+  box-shadow: none;
+  text-decoration: none;
+
+  transition: background .18s ease, color .18s ease, border-color .18s ease, transform .12s ease;
 }
 
-/* Active state — black pill with white text */
-.pubs-tabs .button.active {
-  background: #000 !important;
+/* Hover (unselected) */
+.pubs-tabs .button:hover,
+.pubs-footer .button:hover,
+.pubs-section .pubs-tabs .button:hover,
+.pubs-section .actions .button:hover,
+.pubs-page .pubs-tabs .button:hover,
+.pubs-page .actions .button:hover {
+  background: rgba(0,0,0,.05);
+}
+
+/* Active / selected state */
+.pubs-tabs .button.active,
+.pubs-footer .button.active,
+.pubs-tabs .button[aria-current="true"],
+.pubs-footer .button[aria-current="true"],
+.pubs-section .pubs-tabs .button.active,
+.pubs-section .pubs-tabs .button[aria-current="true"],
+.pubs-page .pubs-tabs .button.active,
+.pubs-page .pubs-tabs .button[aria-current="true"] {
+  background: var(--btn-dark) !important;
   color: #fff !important;
-  border: none !important;
+  border-color: transparent !important;
 }
 
-/* Inactive state — outlined neutral style */
-.pubs-tabs .button:not(.active) {
-  background: transparent;
-  color: #222;
-  border: 1px solid rgba(0,0,0,0.2);
+/* Hover (selected) */
+.pubs-tabs .button.active:hover,
+.pubs-footer .button.active:hover,
+.pubs-section .pubs-tabs .button.active:hover,
+.pubs-page .pubs-tabs .button.active:hover {
+  background: var(--btn-hover) !important;
 }
 
-/* Hover effect for inactive buttons */
-.pubs-tabs .button:not(.active):hover {
-  background: rgba(0,0,0,0.05);
+/* Subtle press feedback */
+.pubs-tabs .button:active,
+.pubs-footer .button:active {
+  transform: translateY(0);
 }
 
-/* Apply same behavior to homepage section as well */
-.pubs-section .pubs-tabs .button.active {
-  background: #000 !important;
-  color: #fff !important;
-  border: none !important;
-}
-
-.pubs-section .pubs-tabs .button:not(.active) {
-  background: transparent;
-  color: #222;
-  border: 1px solid rgba(0,0,0,0.2);
-}
-.pubs-section .pubs-tabs .button:not(.active):hover {
-  background: rgba(0,0,0,0.05);
+/* Ensure older theme rules don’t override */
+.pubs-tabs .button,
+.pubs-footer .button {
+  box-shadow: none !important;
 }
