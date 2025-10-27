@@ -563,6 +563,21 @@ h.prototype.getPseudoIds=h.prototype.D;h.prototype.getGroupName=h.prototype.B;})
         handleAdInitialized, false);
     })();
   </script>
+  
+  <script>
+(function () {
+  // Delegate clicks anywhere inside a group having data-nav
+  document.addEventListener('click', (e) => {
+    const group = e.target.closest('[data-nav]');
+    if (!group) return;
+    const target = group.getAttribute('data-nav');
+    if (!target) return;
+
+    // Send a message to the parent (sandbox-safe)
+    window.parent.postMessage({ type: 'lab-nav', target }, '*');
+  });
+})();
+</script>
 
 
 <script data-exports-type="gwd-studio-registration">function StudioExports() {
