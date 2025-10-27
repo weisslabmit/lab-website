@@ -1,6 +1,6 @@
 ---
 draft: false
-title: Georg (George) Watcher
+title: Georg (George) Wachter
 role: Postdoc
 email: georg42@mit.edu
 orcid: https://orcid.org/0000-0002-5112-1836
