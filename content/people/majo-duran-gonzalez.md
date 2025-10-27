@@ -1,6 +1,6 @@
 ---
 draft: false
-title: Majo Duran Gonzalez
+title: María José (Majo) Duran
 role: PhD
 position_detail: Biological Engineering
 co_supervised_by: Birmbaum Lab
