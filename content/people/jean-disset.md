@@ -1,5 +1,6 @@
 ---
-title: Jean Disset
+draft: false
+title: Jean (Juan) Disset
 role: Postdoc
 email: jdisset@mit.edu
 website: https://jdisset.com
@@ -9,5 +10,4 @@ phd_university: University of Toulouse + EPFL
 bs_university: University of Toulouse
 bio: I like computers although it's a pretty one-sided relationship.
 weight: 1
-draft: false
 ---
