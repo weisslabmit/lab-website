@@ -1,6 +1,6 @@
 ---
 draft: false
-title: Winson (Shuo-Hsiu) Kuo
+title: Shuo-Hsiu (Winson) Kuo
 role: PhD
 position_detail: Chemical Engineering
 email: shkuo@mit.edu
