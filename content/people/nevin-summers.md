@@ -2,6 +2,7 @@
 draft: false
 title: Nevin Summers
 role: Other
+position_detail: Research Affiliate
 email: summersn@mit.edu
 scholar: https://scholar.google.com/citations?user=LfGuiC8AAAAJ&hl=en
 orcid: http://orcid.org/0000-0002-0151-0286
