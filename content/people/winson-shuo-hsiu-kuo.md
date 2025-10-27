@@ -6,6 +6,7 @@ position_detail: Chemical Engineering
 email: shkuo@mit.edu
 scholar: https://scholar.google.com/citations?user=sAkK4H4AAAAJ&hl=en
 orcid: https://orcid.org/0009-0004-2071-7356
+linkedin: https://www.linkedin.com/in/shuohsiukuo
 phd_university: ""
 summary: ""
 image: /uploads/kuoshuohsiu.jpg
