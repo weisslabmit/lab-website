@@ -1795,7 +1795,8 @@ strong, b { font-weight: 700 !important; }
   font-size: 0.88rem !important;       /* keeps proportions right */
   border-radius: 9999px !important;    /* still rounded */
   line-height: 1.1 !important;
-
+}
+/* lighter gray for inactive state */
   background: #eaeaea; 
   color: #333;
   border: 1px solid rgba(0,0,0,.08);
