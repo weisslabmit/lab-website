@@ -2,7 +2,7 @@
 draft: false
 title: Winson (Shuo-Hsiu) Kuo
 role: PhD
-position_detail: Mechanical Engineering
+position_detail: Chemical Engineering
 email: shkuo@mit.edu
 scholar: https://scholar.google.com/citations?user=sAkK4H4AAAAJ&hl=en
 orcid: https://orcid.org/0009-0004-2071-7356
