@@ -1,6 +1,7 @@
 ---
 title: Joanne McHugh
-role: Other
+role: Staff
+position_detail: Lab Administrator
 email: jamchugh@mit.edu
 image: /uploads/mchugh_image.png
 experience: ""
