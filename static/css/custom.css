@@ -2135,10 +2135,4 @@ section[id]:not(#banner) .inner { padding-top: 0 !important; margin-top: 0 !impo
   }
 }
 
-/* Zoom the banner iframe menu on phones */
-@media (max-width: 600px) {
-  #banner iframe {
-    transform: scale(1.5);
-    transform-origin: center center;
-  }
-}
+
