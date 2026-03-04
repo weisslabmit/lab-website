@@ -2135,12 +2135,10 @@ section[id]:not(#banner) .inner { padding-top: 0 !important; margin-top: 0 !impo
   }
 }
 
-/* =========================================
-   Publications tabs: thinner buttons
-========================================= */
-
-.pubs-tabs .button {
-  padding: 0.25rem 0.9rem;   /* reduce vertical padding */
-  line-height: 1.2;
-  font-size: 0.9rem;
+/* Zoom the banner iframe menu on phones */
+@media (max-width: 600px) {
+  #banner iframe {
+    transform: scale(1.5);
+    transform-origin: center center;
+  }
 }
