@@ -46,6 +46,40 @@
     showNav();
   }
 
+  /* =========================================================
+     FIX: dynamic nav height -> CSS variable (phones wrap to 2 lines)
+     This prevents anchored sections from being covered by the bar.
+  ========================================================== */
+  function updateNavHeightVar() {
+    // Measure the element that actually wraps (inner), not the outer fixed bar
+    const h = Math.ceil(inner.getBoundingClientRect().height);
+
+    // Keep both vars in sync (you use both names in CSS in places)
+    document.documentElement.style.setProperty('--menu-height', h + 'px');
+    document.documentElement.style.setProperty('--floating-nav-h', h + 'px');
+  }
+
+  // Initial measurement
+  updateNavHeightVar();
+
+  // Re-measure on viewport changes
+  window.addEventListener('resize', updateNavHeightVar, { passive: true });
+  window.addEventListener('orientationchange', updateNavHeightVar, { passive: true });
+
+  // Fonts can change wrapping after first paint
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(updateNavHeightVar);
+  }
+
+  // Best: observe actual size changes of the inner bar (wrap/unwrap)
+  if ('ResizeObserver' in window) {
+    new ResizeObserver(updateNavHeightVar).observe(inner);
+  } else {
+    // Fallback: a couple delayed passes
+    setTimeout(updateNavHeightVar, 50);
+    setTimeout(updateNavHeightVar, 250);
+  }
+
   /* --- Active link helpers --- */
   function setActiveByHash(hash) {
     let any = false;
@@ -54,7 +88,7 @@
       a.classList.toggle('is-active', active);
       any = any || active;
     });
-    inner.classList.toggle('has-active', any);
+    nav.classList.toggle('has-active', any);   // <-- class is on #floating-nav in your CSS
   }
 
   function setActive(id) {
@@ -77,7 +111,6 @@
   window.addEventListener('hashchange', () => setActiveByHash(window.location.hash || ''));
 })();
 </script>
-
 
 
 
