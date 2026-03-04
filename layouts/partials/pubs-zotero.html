@@ -69,11 +69,29 @@
     {{ $byOth = merge $byOth (dict $y $bucket) }}
   {{ end }}
 
-  {{/* sorted year lists (desc) */}}
-  {{ $yPub := slice }}{{ range $k, $_ := $byPub }}{{ $yPub = $yPub | append $k }}{{ end }}{{ $yPub = sort $yPub "value" "desc" }}
-  {{ $yPat := slice }}{{ range $k, $_ := $byPat }}{{ $yPat = $yPat | append $k }}{{ end }}{{ $yPat = sort $yPat "value" "desc" }}
-  {{ $yOth := slice }}{{ range $k, $_ := $byOth }}{{ $yOth = $yOth | append $k }}{{ end }}{{ $yOth = sort $yOth "value" "desc" }}
+{{/* sorted year lists (desc), but force "No year" to be LAST */}}
+{{ $NO := "No year" }}
 
+{{ $yPub := slice }}{{ $hasNoPub := false }}
+{{ range $k, $_ := $byPub }}
+  {{ if eq $k $NO }}{{ $hasNoPub = true }}{{ else }}{{ $yPub = $yPub | append $k }}{{ end }}
+{{ end }}
+{{ $yPub = sort $yPub "value" "desc" }}
+{{ if $hasNoPub }}{{ $yPub = $yPub | append $NO }}{{ end }}
+
+{{ $yPat := slice }}{{ $hasNoPat := false }}
+{{ range $k, $_ := $byPat }}
+  {{ if eq $k $NO }}{{ $hasNoPat = true }}{{ else }}{{ $yPat = $yPat | append $k }}{{ end }}
+{{ end }}
+{{ $yPat = sort $yPat "value" "desc" }}
+{{ if $hasNoPat }}{{ $yPat = $yPat | append $NO }}{{ end }}
+
+{{ $yOth := slice }}{{ $hasNoOth := false }}
+{{ range $k, $_ := $byOth }}
+  {{ if eq $k $NO }}{{ $hasNoOth = true }}{{ else }}{{ $yOth = $yOth | append $k }}{{ end }}
+{{ end }}
+{{ $yOth = sort $yOth "value" "desc" }}
+{{ if $hasNoOth }}{{ $yOth = $yOth | append $NO }}{{ end }}
   <section id="publications" class="container pubs-section" data-show="10">
     <ul class="actions pubs-tabs">
       <li><a href="#" class="button active" data-tab="pubs">Publications</a></li>
