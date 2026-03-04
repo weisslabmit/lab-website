@@ -282,42 +282,62 @@ html { scroll-behavior: smooth; }
 /* Hover: no underline, slight brighten */
 #floating-nav a:hover { opacity: .95; text-decoration: none; }
 
-/* Anchor landing: add small internal space at top of sections */
-:root { --floating-nav-h: 56px; } /* tweak if your bar is taller */
+/* =========================================
+   Anchor landing + floating-nav wrapping rules
+   (JS sets --menu-height / --floating-nav-h dynamically)
+========================================= */
+
+/* Fallback only; JS overwrites these with real height */
+:root { --menu-height: 56px; --floating-nav-h: 56px; }
+
+/* Make ALL anchor jumps account for the fixed nav */
+html {
+  scroll-padding-top: var(--menu-height);
+}
+
+/* Each anchored section lands below the bar */
 section[id]:not(#banner) {
   position: relative;
-  padding-top: 0.75rem; /* visible white space under the bar */
+  scroll-margin-top: var(--menu-height);
+  padding-top: calc(var(--menu-height) + 1.5rem); /* your “breathing room” */
 }
 
-@media (max-width: 520px) {
-  #floating-nav .floating-nav__inner {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    font-family: "Roboto Mono", monospace !important;
-    row-gap: .3rem;
-  }
-  #floating-nav a {
-    flex: 0 1 auto;       /* don't force a width */
-    white-space: nowrap;  /* keep words on one line */
-    font-family: "Roboto Mono", monospace  !important;
-    padding: 0 .5rem;
-  }
-}
-
+/* Remove double-top spacing from theme */
 section[id]:not(#banner) > *:first-child { margin-top: 0 !important; }
 section[id]:not(#banner) .inner { padding-top: 0 !important; margin-top: 0 !important; }
 
-/* === Real internal top spacing for sections === */
-:root { --menu-height: 56px; } /* exact height of your floating nav */
+/* =========================================
+   PHONE: keep floating nav ONE LINE
+   (prevents height growth that covers content)
+========================================= */
+@media (max-width: 520px) {
+  #floating-nav .floating-nav__inner {
+    display: flex !important;
+    flex-wrap: nowrap !important;     /* <-- no 2-line nav */
+    justify-content: flex-start !important;
+    overflow-x: auto !important;      /* sideways scroll instead of wrapping */
+    overflow-y: hidden !important;
+    -webkit-overflow-scrolling: touch;
+    row-gap: 0 !important;
+    gap: .75rem !important;
+    padding: .6rem .75rem !important;
+  }
 
-section[id]:not(#banner) {
-  padding-top: calc(var(--menu-height) + 1.5rem);  /* real visible white space */
+  #floating-nav a {
+    flex: 0 0 auto !important;
+    white-space: nowrap !important;
+    padding: 0 .35rem !important;
+    font-size: .92rem !important;
+  }
+
+  /* Optional: hide scrollbars */
+  #floating-nav .floating-nav__inner::-webkit-scrollbar { display: none; }
+  #floating-nav .floating-nav__inner { scrollbar-width: none; }
 }
 
-#research-top {
-  scroll-margin-top: var(--menu-height);
-}
+/* Keep any special anchors consistent */
+#research-top { scroll-margin-top: var(--menu-height); }
+
 
 /* ===== Timeline: center + responsive downscale (no drift) ===== */
 .timeline-frame {
@@ -2107,4 +2127,18 @@ section[id]:not(#banner) {
     border: 0 !important;
     display: block !important;
   }
+}
+
+/* ==============================
+   Anchor offset uses dynamic menu height (set by JS)
+============================== */
+:root { --menu-height: 56px; --floating-nav-h: 56px; } /* fallback */
+
+html {
+  scroll-padding-top: var(--menu-height);
+}
+
+/* Any jump to #section lands below the floating nav */
+section[id]:not(#banner) {
+  scroll-margin-top: var(--menu-height);
 }
