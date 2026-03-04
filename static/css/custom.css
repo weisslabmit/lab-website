@@ -2078,12 +2078,13 @@ section[id]:not(#banner) {
    - Keeps 2-line nav on phones
    - Prevents covered content
    - Does NOT change layout spacing between sections
+   - SPECIAL: #research-top lands tighter (no extra gap)
 ========================================================= */
 
 :root{
   --menu-height: 56px;         /* fallback; JS overwrites */
   --floating-nav-h: 56px;      /* fallback; JS overwrites */
-  --anchor-gap: 12px;          /* extra breathing room below the bar */
+  --anchor-gap: 12px;          /* default breathing room below the bar */
 }
 
 /* Browser-native anchor offset (works for hash changes + scrollIntoView) */
@@ -2101,32 +2102,32 @@ section[id]:not(#banner)::before{
   pointer-events: none;
 }
 
-/* Keep your normal section spacing (small, consistent) */
+/* Keep your normal section spacing */
 section[id]:not(#banner){
   position: relative;
-  padding-top: 0.75rem; /* your original small top whitespace */
-}
-
-/* Research section: remove extra anchor gap */
-#research {
-  --anchor-gap: 0px;
+  padding-top: 0.75rem;
 }
 
 /* Theme guards */
 section[id]:not(#banner) > *:first-child { margin-top: 0 !important; }
 section[id]:not(#banner) .inner { padding-top: 0 !important; margin-top: 0 !important; }
 
-/* Keep any special anchors consistent (optional) */
-#research-top { scroll-margin-top: calc(var(--menu-height) + var(--anchor-gap)); }
+/* -----------------------------------------
+   SPECIAL CASE: Research should land tighter
+----------------------------------------- */
+#research-top{
+  --anchor-gap: 0px;
+}
 
-/* PHONE: KEEP 2-line floating nav (wrap) like you liked */
+/* PHONE: keep 2-line floating nav (wrap) */
 @media (max-width: 520px){
   #floating-nav .floating-nav__inner{
     display: flex;
-    flex-wrap: wrap;          /* <-- restore 2-line behavior */
+    flex-wrap: wrap;
     justify-content: center;
     row-gap: .3rem;
   }
+
   #floating-nav a{
     flex: 0 1 auto;
     white-space: nowrap;
