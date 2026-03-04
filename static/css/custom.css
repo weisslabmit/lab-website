@@ -104,54 +104,75 @@ body {
   color: #222;
   background: #fff;
 }
-/* Responsive GWD menu iframe
-   - scales only below 500px
-   - fills available width (no side white space)
-   - no inner scrollbars */
-/* Center + scale the menu iframe correctly at all widths */
-.embed-frame {
+/* ==============================
+   HOME MENU iframe — responsive, centered, full-bleed on mobile
+   Replace your existing .embed-frame blocks with this
+============================== */
+
+.embed-frame{
+  /* GWD stage size */
+  --stage-w: 500px;
+  --stage-h: 350px;
+
   position: relative;
   z-index: 5;
+
   width: 100%;
-  max-width: 500px;
+  max-width: var(--stage-w);
+  margin: 0 auto;
+
+  /* Keep a predictable box that matches the stage aspect */
   aspect-ratio: 500 / 350;
-  margin: 0 auto;         /* centers the wrapper itself */
+
   overflow: hidden;
-  container-type: inline-size; /* keep for 100cqw to work */
 }
 
-.embed-frame iframe {
+.embed-frame iframe{
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 500px;           /* internal stage size */
-  height: 350px;
+
+  width: var(--stage-w);
+  height: var(--stage-h);
+
   border: 0;
   display: block;
 
-  /* center first, then scale to wrapper width */
   transform-origin: center;
-  transform:
-    translate(-50%, -50%)
-    scale( clamp(0.2, calc(100cqw / 500px), 1) );
+  /* Fallback scale: based on wrapper width (works everywhere) */
+  transform: translate(-50%, -50%) scale(clamp(0.2, calc(100% / var(--stage-w)), 1));
 }
 
-/* Tighten side spacing on small screens */
-@media (max-width: 520px) {
-  #banner {
-    padding: 0;              /* no outer spacing */
+/* If the browser supports container query units, use them (more precise) */
+@supports (width: 1cqw){
+  .embed-frame{
+    container-type: inline-size;
   }
-
-  #banner .content {
-    padding: 0;              /* no inner spacing */
-  }
-
-
-  .embed-frame {
-    max-width: 100%;     /* allow full device width */
+  .embed-frame iframe{
+    transform: translate(-50%, -50%) scale(clamp(0.2, calc(100cqw / var(--stage-w)), 1));
   }
 }
 
+/* === MOBILE: go truly edge-to-edge, no “boxed” margins, still centered === */
+@media (max-width: 520px){
+  .embed-frame{
+    width: 100vw;
+    max-width: none;
+
+    /* This makes it full-bleed even if the parent section has padding */
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+
+    /* If your GWD animation spills vertically, bump this a bit:
+       e.g. 500/380 or 500/400 */
+    aspect-ratio: 500 / 350;
+  }
+
+  /* Use viewport width for scaling on mobile to avoid any parent constraints */
+  .embed-frame iframe{
+    transform: translate(-50%, -50%) scale(clamp(0.2, calc(100vw / var(--stage-w)), 1));
+  }
+}
 
 /* ======================================
    Limit global text scaling (balanced)
