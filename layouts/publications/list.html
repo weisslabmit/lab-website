@@ -79,10 +79,62 @@
           {{ $byOth = merge $byOth (dict $y $bucket) }}
         {{ end }}
 
-        {{/* sorted year lists (desc) */}}
-        {{ $yPub := slice }}{{ range $k, $_ := $byPub }}{{ $yPub = $yPub | append $k }}{{ end }}{{ $yPub = sort $yPub "value" "desc" }}
-        {{ $yPat := slice }}{{ range $k, $_ := $byPat }}{{ $yPat = $yPat | append $k }}{{ end }}{{ $yPat = sort $yPat "value" "desc" }}
-        {{ $yOth := slice }}{{ range $k, $_ := $byOth }}{{ $yOth = $yOth | append $k }}{{ end }}{{ $yOth = sort $yOth "value" "desc" }}
+       {{/* sorted year lists (desc), but place "No year" as 2nd (not first/last) */}}
+{{ $NO := "No year" }}
+
+{{/* ---- Publications years ---- */}}
+{{ $yPub := slice }}{{ $hasNoPub := false }}
+{{ range $k, $_ := $byPub }}
+  {{ if eq $k $NO }}{{ $hasNoPub = true }}{{ else }}{{ $yPub = $yPub | append $k }}{{ end }}
+{{ end }}
+{{ $yPub = sort $yPub "value" "desc" }}
+{{ if $hasNoPub }}
+  {{ if ge (len $yPub) 2 }}
+    {{ $head := first 1 $yPub }}
+    {{ $tail := after 1 $yPub }}
+    {{ $yPub = $head | append $NO | append $tail }}
+  {{ else if eq (len $yPub) 1 }}
+    {{ $yPub = (first 1 $yPub) | append $NO }}
+  {{ else }}
+    {{ $yPub = slice $NO }}
+  {{ end }}
+{{ end }}
+
+{{/* ---- Patents years ---- */}}
+{{ $yPat := slice }}{{ $hasNoPat := false }}
+{{ range $k, $_ := $byPat }}
+  {{ if eq $k $NO }}{{ $hasNoPat = true }}{{ else }}{{ $yPat = $yPat | append $k }}{{ end }}
+{{ end }}
+{{ $yPat = sort $yPat "value" "desc" }}
+{{ if $hasNoPat }}
+  {{ if ge (len $yPat) 2 }}
+    {{ $head := first 1 $yPat }}
+    {{ $tail := after 1 $yPat }}
+    {{ $yPat = $head | append $NO | append $tail }}
+  {{ else if eq (len $yPat) 1 }}
+    {{ $yPat = (first 1 $yPat) | append $NO }}
+  {{ else }}
+    {{ $yPat = slice $NO }}
+  {{ end }}
+{{ end }}
+
+{{/* ---- Other years ---- */}}
+{{ $yOth := slice }}{{ $hasNoOth := false }}
+{{ range $k, $_ := $byOth }}
+  {{ if eq $k $NO }}{{ $hasNoOth = true }}{{ else }}{{ $yOth = $yOth | append $k }}{{ end }}
+{{ end }}
+{{ $yOth = sort $yOth "value" "desc" }}
+{{ if $hasNoOth }}
+  {{ if ge (len $yOth) 2 }}
+    {{ $head := first 1 $yOth }}
+    {{ $tail := after 1 $yOth }}
+    {{ $yOth = $head | append $NO | append $tail }}
+  {{ else if eq (len $yOth) 1 }}
+    {{ $yOth = (first 1 $yOth) | append $NO }}
+  {{ else }}
+    {{ $yOth = slice $NO }}
+  {{ end }}
+{{ end }}
 
         <ul class="actions pubs-tabs">
           <li><a href="#" class="button active" data-tab="pubs">Publications</a></li>
