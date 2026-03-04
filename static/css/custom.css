@@ -2107,6 +2107,11 @@ section[id]:not(#banner){
   padding-top: 0.75rem; /* your original small top whitespace */
 }
 
+/* Research section: remove extra anchor gap */
+#research {
+  --anchor-gap: 0px;
+}
+
 /* Theme guards */
 section[id]:not(#banner) > *:first-child { margin-top: 0 !important; }
 section[id]:not(#banner) .inner { padding-top: 0 !important; margin-top: 0 !important; }
