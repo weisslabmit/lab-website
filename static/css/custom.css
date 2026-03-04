@@ -282,62 +282,6 @@ html { scroll-behavior: smooth; }
 /* Hover: no underline, slight brighten */
 #floating-nav a:hover { opacity: .95; text-decoration: none; }
 
-/* =========================================
-   Anchor landing + floating-nav wrapping rules
-   (JS sets --menu-height / --floating-nav-h dynamically)
-========================================= */
-
-/* Fallback only; JS overwrites these with real height */
-:root { --menu-height: 56px; --floating-nav-h: 56px; }
-
-/* Make ALL anchor jumps account for the fixed nav */
-html {
-  scroll-padding-top: var(--menu-height);
-}
-
-/* Each anchored section lands below the bar */
-section[id]:not(#banner) {
-  position: relative;
-  scroll-margin-top: var(--menu-height);
-  padding-top: calc(var(--menu-height) + 1.5rem); /* your “breathing room” */
-}
-
-/* Remove double-top spacing from theme */
-section[id]:not(#banner) > *:first-child { margin-top: 0 !important; }
-section[id]:not(#banner) .inner { padding-top: 0 !important; margin-top: 0 !important; }
-
-/* =========================================
-   PHONE: keep floating nav ONE LINE
-   (prevents height growth that covers content)
-========================================= */
-@media (max-width: 520px) {
-  #floating-nav .floating-nav__inner {
-    display: flex !important;
-    flex-wrap: nowrap !important;     /* <-- no 2-line nav */
-    justify-content: flex-start !important;
-    overflow-x: auto !important;      /* sideways scroll instead of wrapping */
-    overflow-y: hidden !important;
-    -webkit-overflow-scrolling: touch;
-    row-gap: 0 !important;
-    gap: .75rem !important;
-    padding: .6rem .75rem !important;
-  }
-
-  #floating-nav a {
-    flex: 0 0 auto !important;
-    white-space: nowrap !important;
-    padding: 0 .35rem !important;
-    font-size: .92rem !important;
-  }
-
-  /* Optional: hide scrollbars */
-  #floating-nav .floating-nav__inner::-webkit-scrollbar { display: none; }
-  #floating-nav .floating-nav__inner { scrollbar-width: none; }
-}
-
-/* Keep any special anchors consistent */
-#research-top { scroll-margin-top: var(--menu-height); }
-
 
 /* ===== Timeline: center + responsive downscale (no drift) ===== */
 .timeline-frame {
@@ -2129,16 +2073,58 @@ section[id]:not(#banner) {
   }
 }
 
-/* ==============================
-   Anchor offset uses dynamic menu height (set by JS)
-============================== */
-:root { --menu-height: 56px; --floating-nav-h: 56px; } /* fallback */
+/* =========================================================
+   FINAL: Anchor offset for floating nav (dynamic height via JS)
+   - Keeps 2-line nav on phones
+   - Prevents covered content
+   - Does NOT change layout spacing between sections
+========================================================= */
 
-html {
-  scroll-padding-top: var(--menu-height);
+:root{
+  --menu-height: 56px;         /* fallback; JS overwrites */
+  --floating-nav-h: 56px;      /* fallback; JS overwrites */
+  --anchor-gap: 12px;          /* extra breathing room below the bar */
 }
 
-/* Any jump to #section lands below the floating nav */
-section[id]:not(#banner) {
-  scroll-margin-top: var(--menu-height);
+/* Browser-native anchor offset (works for hash changes + scrollIntoView) */
+html{
+  scroll-padding-top: calc(var(--menu-height) + var(--anchor-gap));
+}
+
+/* Anchor shim: offset scroll target WITHOUT adding visible layout space */
+section[id]:not(#banner)::before{
+  content: "";
+  display: block;
+  height: calc(var(--menu-height) + var(--anchor-gap));
+  margin-top: calc(-1 * (var(--menu-height) + var(--anchor-gap)));
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Keep your normal section spacing (small, consistent) */
+section[id]:not(#banner){
+  position: relative;
+  padding-top: 0.75rem; /* your original small top whitespace */
+}
+
+/* Theme guards */
+section[id]:not(#banner) > *:first-child { margin-top: 0 !important; }
+section[id]:not(#banner) .inner { padding-top: 0 !important; margin-top: 0 !important; }
+
+/* Keep any special anchors consistent (optional) */
+#research-top { scroll-margin-top: calc(var(--menu-height) + var(--anchor-gap)); }
+
+/* PHONE: KEEP 2-line floating nav (wrap) like you liked */
+@media (max-width: 520px){
+  #floating-nav .floating-nav__inner{
+    display: flex;
+    flex-wrap: wrap;          /* <-- restore 2-line behavior */
+    justify-content: center;
+    row-gap: .3rem;
+  }
+  #floating-nav a{
+    flex: 0 1 auto;
+    white-space: nowrap;
+    padding: 0 .5rem;
+  }
 }
