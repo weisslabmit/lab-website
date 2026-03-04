@@ -124,10 +124,10 @@ collections:
       - { label: "Draft", name: "draft", widget: "boolean", default: false }
 
   - name: "lab_photos"
-    label: "Lab Photos"
+    label: "Fun"
     files:
       - name: "lab_photos_data"
-        label: "Lab Photos Gallery"
+        label: "Fun"
         file: "data/lab_photos.yaml"
         fields:
           - { label: "Title", name: "title", widget: "string", required: false }
