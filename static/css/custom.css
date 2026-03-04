@@ -2134,3 +2134,13 @@ section[id]:not(#banner) .inner { padding-top: 0 !important; margin-top: 0 !impo
     padding: 0 .5rem;
   }
 }
+
+/* =========================================
+   Publications tabs: thinner buttons
+========================================= */
+
+.pubs-tabs .button {
+  padding: 0.25rem 0.9rem;   /* reduce vertical padding */
+  line-height: 1.2;
+  font-size: 0.9rem;
+}
