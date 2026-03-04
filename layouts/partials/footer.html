@@ -197,3 +197,29 @@
   fab.classList.toggle('is-active', sentinel.getBoundingClientRect().top < window.innerHeight);
 })();
 </script>
+
+
+<script>
+(function () {
+  const track = document.querySelector('[data-lab-track]');
+  if (!track) return;
+
+  // Only shuffle the first half (original set), then re-duplicate for looping
+  const items = Array.from(track.children);
+  const half = items.length / 2;
+  if (!Number.isInteger(half) || half < 2) return;
+
+  const first = items.slice(0, half);
+
+  // Fisher-Yates shuffle
+  for (let i = first.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [first[i], first[j]] = [first[j], first[i]];
+  }
+
+  // Rebuild track: shuffled first + cloned second
+  track.innerHTML = '';
+  first.forEach(el => track.appendChild(el));
+  first.forEach(el => track.appendChild(el.cloneNode(true)));
+})();
+</script>
