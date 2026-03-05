@@ -2136,36 +2136,32 @@ section[id]:not(#banner) .inner { padding-top: 0 !important; margin-top: 0 !impo
 }
 
 /* ===========================
-   Lab Photos carousel (fixed HEIGHT, width follows)
-   - slightly taller images
-   - slightly faster animation
-   - sharper corners
-   - centered button
+   Lab Photos carousel — full-bleed + slower
 =========================== */
-
-:root{
-  --lab-card-h: 300px;          /* taller images (was ~190) */
-  --lab-card-r: 8px;            /* sharper corners */
-  --lab-card-gap: 14px;
-  --lab-card-ar: 4 / 3;
-}
 
 .lab-carousel{
   position: relative;
   overflow: hidden;
-  width: 100%;
-  margin: 1.5rem auto 1rem;
-  border-radius: var(--lab-card-r);
+
+  /* full-bleed (uses whole viewport width even inside centered containers) */
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+
+  border-radius: 10px; /* slightly sharper than 14px */
 }
 
 .lab-carousel__track{
   display: flex;
-  gap: var(--lab-card-gap);
+  gap: 14px;
   align-items: center;
   width: max-content;
 
-  /* slightly faster */
-  animation: labMarquee 90s linear infinite;
+  /* slower */
+  animation: labMarquee 85s linear infinite;
 
   will-change: transform;
 }
@@ -2174,12 +2170,12 @@ section[id]:not(#banner) .inner { padding-top: 0 !important; margin-top: 0 !impo
   display: block;
   flex: 0 0 auto;
 
-  height: var(--lab-card-h);
-  aspect-ratio: var(--lab-card-ar);
-  width: auto;
+  /* keep height consistent; width follows from aspect ratio */
+  height: clamp(140px, 22vw, 220px);
+ 
 
   overflow: hidden;
-  border-radius: calc(var(--lab-card-r) - 2px);
+  border-radius: 10px; /* sharper corners */
   background: #f3f3f3;
 }
 
@@ -2190,50 +2186,18 @@ section[id]:not(#banner) .inner { padding-top: 0 !important; margin-top: 0 !impo
   display: block;
 }
 
-/* Pause on hover */
+/* Pause on hover (desktop) */
 .lab-carousel:hover .lab-carousel__track{
   animation-play-state: paused;
 }
 
+/* same keyframes logic (needs duplicated items in HTML) */
 @keyframes labMarquee{
-  from{ transform: translateX(0); }
-  to{ transform: translateX(-50%); }
-}
-
-/* Center button overlay */
-.lab-carousel__button{
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-}
-
-.lab-carousel__button a{
-  pointer-events: auto;
-  padding: 0.65rem 1.4rem;
-  border-radius: 9999px;
-  background: rgba(0,0,0,.65);
-  color: #fff;
-  font-weight: 600;
-  text-decoration: none;
-  align-items: center;
-  backdrop-filter: blur(4px);
-  transition: transform .15s ease, background .2s ease;
-}
-
-.lab-carousel__button a:hover{
-  background: rgba(0,0,0,.8);
-  transform: translateY(-1px);
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
 }
 
 /* Respect reduced motion */
 @media (prefers-reduced-motion: reduce){
   .lab-carousel__track{ animation: none; }
-}
-
-/* Smaller height on phones */
-@media (max-width: 520px){
-  :root{ --lab-card-h: 180px; }
 }
