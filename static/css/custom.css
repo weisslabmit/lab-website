@@ -2144,7 +2144,7 @@ section[id]:not(#banner) .inner { padding-top: 0 !important; margin-top: 0 !impo
 =========================== */
 
 :root{
-  --lab-card-h: 220px;          /* taller images (was ~190) */
+  --lab-card-h: 300px;          /* taller images (was ~190) */
   --lab-card-r: 8px;            /* sharper corners */
   --lab-card-gap: 14px;
   --lab-card-ar: 4 / 3;
