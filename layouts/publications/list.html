@@ -106,12 +106,13 @@
 {{ $yOth = sort $yOth "value" "desc" }}
 {{ if $hasNoOth }}{{ $yOth = $yOth | append $NO }}{{ end }}
     
-        <ul class="actions pubs-tabs">
-          <li><a href="#" class="button active" data-tab="pubs">Publications</a></li>
-          <li><a href="#" class="button" data-tab="patents">Patents</a></li>
-          <li><a href="#" class="button" data-tab="others">Other</a></li>
-        </ul>
+<section id="publications" class="container pubs-section" data-show="10">
 
+  <header class="major">
+    <h2>Publications</h2>
+  </header>
+
+  <div class="pubs-pane" id="pubs-pane">
         {{/* === Publications Pane (all visible) === */}}
         <div class="pubs-pane" id="pubs-pane">
           {{ range $y := $yPub }}
@@ -193,75 +194,6 @@
           {{ end }}
         </div>
 
-        {{/* === Patents Pane === */}}
-        <div class="pubs-pane hidden" id="patents-pane">
-          {{ range $y := $yPat }}
-            {{ $rows := slice }}
-            {{ range $it := (index $byPat $y) }}
-              {{ $yy := 0 }}{{ $mm := 0 }}{{ $dd := 0 }}
-              {{ with (index $it "issued") }}
-                {{ $dp := index . "date-parts" }}
-                {{ if and $dp (gt (len $dp) 0) }}
-                  {{ $yy = index (index $dp 0) 0 | default 0 }}
-                  {{ if gt (len (index $dp 0)) 1 }}{{ $mm = index (index $dp 0) 1 | default 0 }}{{ end }}
-                  {{ if gt (len (index $dp 0)) 2 }}{{ $dd = index (index $dp 0) 2 | default 0 }}{{ end }}
-                {{ end }}
-              {{ end }}
-              {{ $rows = $rows | append (dict "k" (printf "%04d-%02d-%02d" $yy $mm $dd) "m" $it) }}
-            {{ end }}
-            {{ $rows = sort $rows "k" "desc" }}
-
-            <div class="year-group" data-year-group>
-              <h2 class="pubs-year">{{ $y }}</h2>
-              <ul class="pubs-list">
-                {{ range $row := $rows }}
-                  {{ $it := index $row "m" }}
-                  {{ $t := index $it "title" }}
-                  {{ $au := index $it "author" }}
-                  {{ $ct := index $it "container-title" | default "" }}
-                  {{ $iss := index $it "issued" }}
-                  {{ $doi := index $it "DOI" }}
-                  {{ $url := index $it "URL" | default "" }}
-                  {{ $href := "" }}
-                  {{ if $doi }}{{ $href = printf "https://doi.org/%s" $doi }}{{ else if $url }}{{ $href = $url }}{{ end }}
-
-                  <li class="pub">
-                    <span class="pub-title">
-                      {{ if $href }}<strong><a href="{{ $href }}" target="_blank" rel="noopener">{{ $t }}</a></strong>{{ else }}<strong>{{ $t }}</strong>{{ end }}
-                    </span>
-
-                    {{ with $au }}
-                      <span class="pub-authors"> —
-                        {{ $names := slice }}
-                        {{ range $a := $au }}
-                          {{ $fam := index $a "family" | default "" }}
-                          {{ $giv := index $a "given"  | default "" }}
-                          {{ $init := "" }}
-                          {{ if $giv }}
-                            {{ range (split $giv " ") }}
-                              {{ if gt (len .) 0 }}{{ $init = printf "%s%s." $init (upper (substr . 0 1)) }}{{ end }}
-                            {{ end }}
-                          {{ end }}
-                          {{ $name := cond (and $init $fam) (printf "%s %s" $init $fam) (cond (ne $fam "") $fam $giv) }}
-                          {{ $names = $names | append $name }}
-                        {{ end }}
-                        {{ delimit $names ", " }}
-                      </span>
-                    {{ end }}
-
-                    {{ with $ct }}<span class="pub-venue">, {{ . }}</span>{{ end }}
-                    {{ with $iss }}
-                      {{ $dp := index . "date-parts" }}
-                      {{ if and $dp (gt (len $dp) 0) }}
-                        <span class="pub-year"> ({{ index (index $dp 0) 0 }})</span>
-                      {{ end }}
-                    {{ end }}
-                  </li>
-                {{ end }}
-              </ul>
-            </div>
-          {{ end }}
-        </div>
 
         {{/* === Others Pane === */}}
         <div class="pubs-pane hidden" id="others-pane">
@@ -354,7 +286,6 @@
             const tabs = root.querySelectorAll('.pubs-tabs .button');
             const panes = {
               pubs: document.getElementById('pubs-pane'),
-              patents: document.getElementById('patents-pane'),
               others: document.getElementById('others-pane')
             };
             let active = 'pubs';
