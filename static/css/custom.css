@@ -2165,7 +2165,7 @@ section[id]:not(#banner) .inner { padding-top: 0 !important; margin-top: 0 !impo
   width: max-content;
 
   /* slightly faster */
-  animation: labMarquee 48s linear infinite;
+  animation: labMarquee 90s linear infinite;
 
   will-change: transform;
 }
