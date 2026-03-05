@@ -124,16 +124,16 @@ collections:
       - { label: "Draft", name: "draft", widget: "boolean", default: false }
 
   - name: "lab_photos"
-    label: "Fun"
-    files:
-      - name: "lab_photos_data"
-        label: "Fun"
-        file: "data/lab_photos.yaml"
-        fields:
-          - { label: "Title", name: "title", widget: "string", required: false }
-          - label: "Photos"
-            name: "items"
-            widget: "list"
-            fields:
-              - { label: "Image", name: "image", widget: "image" }
-              - { label: "Alt text", name: "alt", widget: "string", required: false }
+  label: "Lab Photos"
+  files:
+    - name: "lab_photos_data"
+      label: "Lab Photos Gallery"
+      file: "data/lab_photos.yaml"
+      fields:
+        - { label: "Title", name: "title", widget: "string", required: false }
+        - label: "Photos"
+          name: "items"
+          widget: "list"
+          fields:
+            - { label: "Image", name: "image", widget: "image" }
+            - { label: "Alt text", name: "alt", widget: "string", required: false }
