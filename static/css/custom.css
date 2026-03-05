@@ -2137,14 +2137,17 @@ section[id]:not(#banner) .inner { padding-top: 0 !important; margin-top: 0 !impo
 
 /* ===========================
    Lab Photos carousel (fixed HEIGHT, width follows)
+   - slightly taller images
+   - slightly faster animation
    - sharper corners
+   - centered button
 =========================== */
 
 :root{
-  --lab-card-h: 190px;          /* pick your preset height */
-  --lab-card-r: 8px;            /* sharper corners (was ~12–14px) */
+  --lab-card-h: 220px;          /* taller images (was ~190) */
+  --lab-card-r: 8px;            /* sharper corners */
   --lab-card-gap: 14px;
-  --lab-card-ar: 4 / 3;         /* keeps your current 4:3 look */
+  --lab-card-ar: 4 / 3;
 }
 
 .lab-carousel{
@@ -2160,7 +2163,10 @@ section[id]:not(#banner) .inner { padding-top: 0 !important; margin-top: 0 !impo
   gap: var(--lab-card-gap);
   align-items: center;
   width: max-content;
-  animation: labMarquee 55s linear infinite;
+
+  /* slightly faster */
+  animation: labMarquee 48s linear infinite;
+
   will-change: transform;
 }
 
@@ -2168,7 +2174,6 @@ section[id]:not(#banner) .inner { padding-top: 0 !important; margin-top: 0 !impo
   display: block;
   flex: 0 0 auto;
 
-  /* FIXED HEIGHT, width derived from aspect ratio */
   height: var(--lab-card-h);
   aspect-ratio: var(--lab-card-ar);
   width: auto;
@@ -2185,14 +2190,41 @@ section[id]:not(#banner) .inner { padding-top: 0 !important; margin-top: 0 !impo
   display: block;
 }
 
-/* Pause on hover (nice on desktop) */
+/* Pause on hover */
 .lab-carousel:hover .lab-carousel__track{
   animation-play-state: paused;
 }
 
 @keyframes labMarquee{
   from{ transform: translateX(0); }
-  to  { transform: translateX(-50%); } /* because we duplicated the items */
+  to{ transform: translateX(-50%); }
+}
+
+/* Center button overlay */
+.lab-carousel__button{
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.lab-carousel__button a{
+  pointer-events: auto;
+  padding: 0.65rem 1.4rem;
+  border-radius: 9999px;
+  background: rgba(0,0,0,.65);
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  backdrop-filter: blur(4px);
+  transition: transform .15s ease, background .2s ease;
+}
+
+.lab-carousel__button a:hover{
+  background: rgba(0,0,0,.8);
+  transform: translateY(-1px);
 }
 
 /* Respect reduced motion */
@@ -2200,74 +2232,7 @@ section[id]:not(#banner) .inner { padding-top: 0 !important; margin-top: 0 !impo
   .lab-carousel__track{ animation: none; }
 }
 
-/* ===========================
-   Lab Photos page: grid + lightbox
-   - same fixed HEIGHT behavior
-   - sharper corners
-=========================== */
-
-.lab-grid{
-  display: grid;
-  gap: var(--lab-card-gap);
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  margin-top: 1.5rem;
-}
-
-.lab-thumb{
-  border: 0;
-  padding: 0;
-  background: transparent;
-  border-radius: var(--lab-card-r);
-  overflow: hidden;
-  cursor: pointer;
-}
-
-.lab-thumb img{
-  width: 100%;
-
-  /* FIXED HEIGHT; crop to fill */
-  height: var(--lab-card-h);
-  object-fit: cover;
-
-  display: block;
-}
-
-.lab-lightbox{
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.85);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 2000;
-  padding: 2rem;
-}
-
-.lab-lightbox.is-open{ display: flex; }
-
-.lab-lightbox__img{
-  max-width: min(1200px, 95vw);
-  max-height: 85vh;
-  object-fit: contain;
-  border-radius: 10px;
-}
-
-.lab-lightbox__close{
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  width: 44px;
-  height: 44px;
-  border-radius: 9999px;
-  border: 0;
-  background: rgba(255,255,255,.15);
-  color: #fff;
-  font-size: 28px;
-  line-height: 44px;
-  cursor: pointer;
-}
-
-/* Optional: smaller fixed height on phones */
+/* Smaller height on phones */
 @media (max-width: 520px){
-  :root{ --lab-card-h: 155px; }
+  :root{ --lab-card-h: 180px; }
 }
