@@ -2218,6 +2218,7 @@ section[id]:not(#banner) .inner { padding-top: 0 !important; margin-top: 0 !impo
   color: #fff;
   font-weight: 600;
   text-decoration: none;
+  align-items: center;
   backdrop-filter: blur(4px);
   transition: transform .15s ease, background .2s ease;
 }
