@@ -123,17 +123,17 @@ collections:
       - { label: "Link URL (optional)", name: "link", widget: "string", required: false }
       - { label: "Draft", name: "draft", widget: "boolean", default: false }
 
-  - name: "data"
-    label: "Data"
-    files:
-      - name: "lab_photos_data"
-        label: "Lab Photos Gallery"
-        file: "data/lab_photos.yaml"
-        fields:
-          - { label: "Title", name: "title", widget: "string", required: false }
-          - label: "Photos"
-            name: "items"
-            widget: "list"
-            fields:
-              - { label: "Image", name: "image", widget: "image" }
-              - { label: "Alt text", name: "alt", widget: "string", required: false }
+  - name: "lab_photos"
+   label: "Lab Photos"
+   files:
+    - name: "lab_photos_data"
+      label: "Lab Photos Gallery"
+      file: "data/lab_photos.yaml"
+      fields:
+        - { label: "Title", name: "title", widget: "string", required: false }
+        - label: "Photos"
+          name: "items"
+          widget: "list"
+          fields:
+            - { label: "Image", name: "image", widget: "image" }
+            - { label: "Alt text", name: "alt", widget: "string", required: false }
