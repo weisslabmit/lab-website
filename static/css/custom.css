@@ -2034,44 +2034,6 @@ section[id]:not(#banner) {
 }
 
 
-/* =========================================================
-   iPad (and small tablets): scale menu to available width
-   WITHOUT using 100cqw/container queries.
-   Keeps desktop behavior unchanged.
-========================================================= */
-@media (min-width: 601px) and (max-width: 1024px) {
-  .embed-frame {
-    --stage-w: 500px;   /* GWD stage width */
-    --stage-h: 350px;   /* GWD stage height */
-
-    width: 100% !important;
-    max-width: none !important;          /* let it grow with the iPad */
-    margin: 0 auto !important;
-
-    /* scale based on actual available width (container), not cqw */
-    --menu-scale: min(1, calc(100% / var(--stage-w)));
-
-    /* CRITICAL: height follows scale => no clipping */
-    height: calc(var(--stage-h) * var(--menu-scale)) !important;
-
-    position: relative !important;
-    overflow: visible !important;
-  }
-
-  .embed-frame iframe {
-    position: absolute !important;
-    top: 0 !important;
-    left: 50% !important;
-
-    width: var(--stage-w) !important;
-    height: var(--stage-h) !important;
-
-    transform-origin: top center !important;
-    transform: translateX(-50%) scale(var(--menu-scale)) !important;
-    border: 0 !important;
-    display: block !important;
-  }
-}
 
 /* =========================================================
    FINAL: Anchor offset for floating nav (dynamic height via JS)
